@@ -21,7 +21,7 @@ specifiers:
   socket.io-client: 2.4.0
   vite: 2.2.1
   vite-plugin-components: 0.8.4
-  vite-plugin-icons: 0.3.3
+  vite-plugin-icons: 0.5.0
   vite-plugin-md: 0.6.3
   vite-plugin-pages: 0.7.2
   vite-plugin-pwa: 0.5.6
@@ -58,7 +58,7 @@ devDependencies:
   markdown-it-prism: 2.1.6
   vite: 2.2.1
   vite-plugin-components: 0.8.4_vite@2.2.1
-  vite-plugin-icons: 0.3.3_faa3cf5b1c35d6750b84d3fcf4f1d55a
+  vite-plugin-icons: 0.5.0_faa3cf5b1c35d6750b84d3fcf4f1d55a
   vite-plugin-md: 0.6.3_vite@2.2.1
   vite-plugin-pages: 0.7.2_vite@2.2.1+vue@3.0.11
   vite-plugin-pwa: 0.5.6
@@ -3477,8 +3477,8 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-icons/0.3.3_faa3cf5b1c35d6750b84d3fcf4f1d55a:
-    resolution: {integrity: sha512-jYIbpb+Y3qh9eTf335o98Y10mQICSNlzrs+VL6z733J9179dC7w4j13NNQgSXEub5WRG+lb1DVURjXVeNhISeA==}
+  /vite-plugin-icons/0.5.0_faa3cf5b1c35d6750b84d3fcf4f1d55a:
+    resolution: {integrity: sha512-YsnoYixkp0HVIx6SvQWTyXXiWBCfc9gtKx3iqyPmN4fsE5hf7NvPp1LKiIazilP+zRUvHEyNeEbH4y6wUX8jMw==}
     peerDependencies:
       '@iconify/json': '*'
       '@vue/compiler-sfc': ^3.0.2
