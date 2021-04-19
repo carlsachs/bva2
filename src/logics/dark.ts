@@ -6,7 +6,8 @@ const preferredDark = usePreferredDark()
 
 export const isDark = computed({
   get() {
-    return colorSchema.value === 'auto' ? preferredDark.value : colorSchema.value === 'dark'
+    //return colorSchema.value === 'auto' ? preferredDark.value : colorSchema.value === 'dark'
+    return true
   },
   set(v: boolean) {
     if (v === preferredDark.value)
