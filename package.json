@@ -18,7 +18,7 @@
     "feathers-hooks-common": "5.0.5",
     "nprogress": "0.2.0",
     "prism-theme-vars": "0.2.2",
-    "socket.io-client": "2.4.0",
+    "socket.io-client": "4.0.1",
     "vite-plugin-windicss": "0.7.2",
     "vue": "3.0.11",
     "vue-router": "4.0.6",
