@@ -17,7 +17,7 @@
 
     <div class="p-5 m-6">
       <h2 class="text-xl font-bold">Auth State</h2>
-      <pre class="text-xs text-white bg-black">{{ authState }}</pre>
+      <pre class="text-xs text-white bg-black">{{  }}</pre>
     </div>
 
   </div>

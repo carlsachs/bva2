@@ -3,7 +3,7 @@
   <router-view></router-view>
   <div class="p-5 m-6">
     <h2 class="text-xl font-bold">Auth State</h2>
-    <pre class="text-xs text-white bg-black">{{ authState }}</pre>
+    <pre class="text-xs text-white bg-black">{{  }}</pre>
   </div>
 </template>
 
@@ -16,9 +16,10 @@ import { useStore } from "vuex";
 export default {
   name: "App",
   setup() {
-    const { state } = useStore();
-    const authState = computed(() => state.auth);
-    return { authState };
+    //const { state } = useStore();
+    //const authState = computed(() => state.auth);
+    //return { authState };
+    return;
   },
 };
 </script>

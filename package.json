@@ -1,5 +1,5 @@
 {
-  "name": "feathers-vuex-vite-spa",
+  "name": "vuex-vite-spa",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
@@ -8,17 +8,11 @@
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "1.14.0",
-    "@feathersjs/authentication-client": "4.5.11",
-    "@feathersjs/feathers": "4.5.11",
-    "@feathersjs/socketio-client": "4.5.11",
-    "@feathersjs/vuex": "4.0.1-pre.16",
     "@vueuse/core": "4.8.2",
     "@vueuse/head": "0.5.1",
     "events": "3.3.0",
-    "feathers-hooks-common": "5.0.5",
     "nprogress": "0.2.0",
     "prism-theme-vars": "0.2.2",
-    "socket.io-client": "2.4.0",
     "vite-plugin-windicss": "0.7.2",
     "vue": "3.0.11",
     "vue-router": "4.0.6",
