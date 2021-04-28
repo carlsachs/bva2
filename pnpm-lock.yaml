@@ -9,6 +9,7 @@ specifiers:
   '@vue/compiler-sfc': 3.0.11
   '@vueuse/core': 4.8.2
   '@vueuse/head': 0.5.1
+  axios: 0.21.1
   events: 3.3.0
   markdown-it-prism: 2.1.6
   nprogress: 0.2.0
@@ -22,6 +23,7 @@ specifiers:
   vite-plugin-vue-layouts: 0.2.2
   vite-plugin-windicss: 0.7.2
   vue: 3.0.11
+  vue-native-websocket-vue3: 3.1.0
   vue-router: 4.0.6
   vuex: 4.0.0
 
@@ -29,11 +31,13 @@ dependencies:
   '@auth0/auth0-spa-js': 1.14.0
   '@vueuse/core': 4.8.2_vue@3.0.11
   '@vueuse/head': 0.5.1_vue@3.0.11
+  axios: 0.21.1
   events: 3.3.0
   nprogress: 0.2.0
   prism-theme-vars: 0.2.2
   vite-plugin-windicss: 0.7.2_vite@2.2.1
   vue: 3.0.11
+  vue-native-websocket-vue3: 3.1.0_vue@3.0.11
   vue-router: 4.0.6_vue@3.0.11
   vuex: 4.0.0_vue@3.0.11
 
@@ -1433,6 +1437,14 @@ packages:
       array-filter: 1.0.0
     dev: true
 
+  /axios/0.21.1:
+    resolution: {integrity: sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==}
+    dependencies:
+      follow-redirects: 1.14.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /babel-plugin-dynamic-import-node/2.3.3:
     resolution: {integrity: sha512-jZVI+s9Zg3IqA/kdi0i6UDCybUI3aSBLnglhYbSSjKlV7yF1F/5LWv8MakQmvYpnbJDS6fcBL2KzHSxNCMtWSQ==}
     dependencies:
@@ -1936,6 +1948,16 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       to-regex-range: 5.0.1
+
+  /follow-redirects/1.14.0:
+    resolution: {integrity: sha512-0vRwd7RKQBTt+mgu87mtYeofLFZpTas2S9zY+jIeuLJMNvudIgF52nr19q40HOwH5RrhWIPuj9puybzSJiRrVg==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    dev: false
 
   /foreach/2.0.5:
     resolution: {integrity: sha1-C+4AUBiusmDQo6865ljdATbsG5k=}
@@ -3096,6 +3118,15 @@ packages:
     peerDependenciesMeta:
       '@vue/composition-api':
         optional: true
+    dependencies:
+      vue: 3.0.11
+    dev: false
+
+  /vue-native-websocket-vue3/3.1.0_vue@3.0.11:
+    resolution: {integrity: sha512-pa53/81O7V+rm3asVDx402ruCUgPBE1CKAp+TEachvhN8geUqsIclj8N56+EoUFu/hpsbEI7eIVvVvGRNTn33A==}
+    peerDependencies:
+      core-js: ^3.6.5
+      vue: ^3.0.0
     dependencies:
       vue: 3.0.11
     dev: false

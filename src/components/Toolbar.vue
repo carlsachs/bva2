@@ -33,6 +33,7 @@ defineProps({
 
 function login() {
   // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#loginwithredirect
+  console.log("-0-0-0-0-0-0-0-")
   auth0.client.loginWithRedirect();
 }
 function logout() {

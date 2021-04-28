@@ -1,8 +1,10 @@
 import { reactive, App } from 'vue'
 import createAuth0Client, { Auth0Client } from '@auth0/auth0-spa-js'
+import axios from "axios"
 
 const domain = import.meta.env.VITE_AUTH0_DOMAIN as string
 const client_id = import.meta.env.VITE_AUTH0_CLIENT_ID as string
+const api_url = import.meta.env.VITE_API_URL as String
 
 console.log("client_id", client_id)
 console.log("domain", domain)
@@ -37,6 +39,16 @@ export async function setupAuth0() {
     $auth0.state.isAuthenticated = await $auth0.client.isAuthenticated()
     $auth0.state.user = await $auth0.client.getUser()
     $auth0.state.isLoading = false
+    console.log("this.user 4")
+    console.log(JSON.stringify($auth0.state.user))
+    const userid = await signInUser($auth0.state.user.sub, $auth0.state.user.nickname)
+    console.log("USER ID", userid)
+    if (!userid) {
+      console.log("USER UNKNOWN")
+    }
+    else {
+      console.log("WELCOME USER")
+    }
   }
 }
 
@@ -64,7 +76,6 @@ export const install = ({ app }: { app: App }) => {
     }
   })
 }
-
 
 /**
  * Vue 2.0 plugin to expose the wrapper object throughout the application.
@@ -105,4 +116,18 @@ interface $Auth0Defaults {
     error: Error | null
     user: any | null
   }
+}
+
+async function signInUser(sub, nickname) {
+  console.log("signInUser", sub, nickname)
+  return axios
+    .get(api_url + '/api/getusersignin?sub=' + sub + '&nickname=' + nickname)
+    .then( (response) => {
+      console.log("USERID", response.data.id)
+      return response.data.id
+    })
+    .catch( (e) => {
+      console.log("signInUser ERROR", e)
+      return 0
+    })
 }
