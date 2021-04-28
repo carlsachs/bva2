@@ -21,6 +21,35 @@ export const $auth0 = reactive({
   }
 } as $Auth0Defaults)
 
+/*
+export const authGuard = (to, from, next) => {
+  const verify = () => {
+    // If the user is authenticated, continue with the route
+    if ($auth0.state.isAuthenticated.value) {
+      return next()
+    }
+    // Otherwise, log in
+    loginWithRedirect({ appState: { targetUrl: to.fullPath } })
+  }
+
+  // If loading has already finished, check our auth state using `verify()`
+  if (!$auth0.state.loading.value) {
+    return verify()
+  }
+
+  // Watch for the loading property to change before we check isAuthenticated
+  watchEffect(() => {
+    if ($auth0.state.loading.value === false) {
+      return verify()
+    }
+  })
+}
+
+function loginWithRedirect(o) {
+  return $auth0.client.loginWithRedirect(o)
+}
+*/
+
 export async function setupAuth0() {
   $auth0.client = await setupClient()
   const search = window.location.search

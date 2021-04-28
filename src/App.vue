@@ -1,5 +1,18 @@
 <template>
-  <div class="text-center text-gray-300">[App.vue]</div>
+  <div class="text-center text-gray-300">
+    <nav>
+      <h1>Bitcoin vs. Altcoins</h1>
+      <p>v. 2.0.6. beta</p>
+      <ul>
+        <li>
+          <router-link to="/">Dashboard</router-link>
+        </li>
+        <li>
+          <router-link to="/profile">Profile</router-link>
+        </li>
+      </ul>
+    </nav>
+  </div>
   <router-view></router-view>
   <div class="p-5 m-6">
     <h2 class="text-xl font-bold">Auth State</h2>

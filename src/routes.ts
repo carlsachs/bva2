@@ -4,7 +4,10 @@ import { setupLayouts } from 'layouts-generated'
 
 const routes = setupLayouts(generatedRoutes)
 
+console.log(routes)
+
 export const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+

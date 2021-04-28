@@ -2,8 +2,8 @@
   <div>
 
     <p>
-      <a href="profile">
-        Bitcoin Vs. Altcoins
+      <a href="/">
+        PROFILE
       </a>
     </p>
     

@@ -1,6 +1,16 @@
 <template>
   <div class="flex flex-row items-center justify-center p-2 space-x-5">
     <DarkModeToggle />
+    <router-link to="/">
+      <button class="button" type="button">
+        HOME
+      </button>
+    </router-link>
+    <router-link to="/profile">
+      <button class="button" type="button">
+        PROFILE
+      </button>
+    </router-link>
     <button v-if="auth0.state.isLoading" class="button" type="button">
       Loading
       <feather-loader class="ml-2" />
