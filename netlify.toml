@@ -1,6 +1,7 @@
 [build.environment]
   NPM_FLAGS = "--prefix=/dev/null"
   NODE_VERSION = "14"
+  VITE_API_URL="https://api.bitcoinvsalts.com"
 
 [build]
   publish = "dist"
