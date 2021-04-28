@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@auth0/auth0-spa-js': 1.14.0
-  '@iconify/json': 1.1.330
+  '@iconify/json': 1.1.335
   '@types/nprogress': 0.2.0
   '@typescript-eslint/eslint-plugin': 4.22.0
   '@vitejs/plugin-vue': 1.1.5
@@ -42,7 +42,7 @@ dependencies:
   vuex: 4.0.0_vue@3.0.11
 
 devDependencies:
-  '@iconify/json': 1.1.330
+  '@iconify/json': 1.1.335
   '@types/nprogress': 0.2.0
   '@typescript-eslint/eslint-plugin': 4.22.0
   '@vitejs/plugin-vue': 1.1.5_@vue+compiler-sfc@3.0.11
@@ -50,7 +50,7 @@ devDependencies:
   markdown-it-prism: 2.1.6
   vite: 2.2.1
   vite-plugin-components: 0.8.4_vite@2.2.1
-  vite-plugin-icons: 0.3.3_faa3cf5b1c35d6750b84d3fcf4f1d55a
+  vite-plugin-icons: 0.3.3_68285259574601e84c8dff0f86e760ff
   vite-plugin-md: 0.6.3_vite@2.2.1
   vite-plugin-pages: 0.7.2_vite@2.2.1+vue@3.0.11
   vite-plugin-pwa: 0.5.6
@@ -1081,8 +1081,8 @@ packages:
     resolution: {integrity: sha512-LFelJDOLZ6JHlmlAkgrvmcu4hpNPB91KYcr4f60D/exzU1eNOb4/KCVHIydGHIQFaOacIOD+Xy+B7P1z812cZg==}
     dev: true
 
-  /@iconify/json/1.1.330:
-    resolution: {integrity: sha512-mkO+AchoOZQJyWoK/S1WglmVwq7wneT7iOXztaCYiMVGof/4L4vmSOpzBogwS4d8x1Lh+i+VjTWI7vxYrtYSog==}
+  /@iconify/json/1.1.335:
+    resolution: {integrity: sha512-Bbi2CjwCrK1Ndsg/0hnyKyQfZCIGwqV+TykZ2F+CX4FQmFq+cWfPm/K0s9CrAyUQLR8V36rK5jzuSRPkZPn8tQ==}
     dev: true
 
   /@nodelib/fs.scandir/2.1.4:
@@ -3013,14 +3013,14 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-icons/0.3.3_faa3cf5b1c35d6750b84d3fcf4f1d55a:
+  /vite-plugin-icons/0.3.3_68285259574601e84c8dff0f86e760ff:
     resolution: {integrity: sha512-jYIbpb+Y3qh9eTf335o98Y10mQICSNlzrs+VL6z733J9179dC7w4j13NNQgSXEub5WRG+lb1DVURjXVeNhISeA==}
     peerDependencies:
       '@iconify/json': '*'
       '@vue/compiler-sfc': ^3.0.2
       vue-template-compiler: ^2.6.12
     dependencies:
-      '@iconify/json': 1.1.330
+      '@iconify/json': 1.1.335
       '@iconify/json-tools': 1.0.10
       '@vue/compiler-sfc': 3.0.11_vue@3.0.11
       vue-template-es2015-compiler: 1.9.1
