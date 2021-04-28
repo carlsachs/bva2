@@ -40,14 +40,16 @@ export async function setupAuth0() {
     $auth0.state.user = await $auth0.client.getUser()
     $auth0.state.isLoading = false
     console.log("this.user 4")
-    console.log(JSON.stringify($auth0.state.user))
-    const userid = await signInUser($auth0.state.user.sub, $auth0.state.user.nickname)
-    console.log("USER ID", userid)
-    if (!userid) {
-      console.log("USER UNKNOWN")
-    }
-    else {
-      console.log("WELCOME USER")
+    if ($auth0.state.user) {
+      console.log(JSON.stringify($auth0.state.user))
+      const userid = await signInUser($auth0.state.user.sub, $auth0.state.user.nickname)
+      console.log("USER ID", userid)
+      if (!userid) {
+        console.log("USER UNKNOWN")
+      }
+      else {
+        console.log("WELCOME USER")
+      }
     }
   }
 }
