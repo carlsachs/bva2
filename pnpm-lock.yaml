@@ -7,7 +7,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': 4.22.0
   '@vitejs/plugin-vue': 1.1.5
   '@vue/compiler-sfc': 3.0.11
-  '@vueuse/core': 4.8.2
+  '@vueuse/core': 4.9.1
   '@vueuse/head': 0.5.1
   axios: 0.21.1
   events: 3.3.0
@@ -29,7 +29,7 @@ specifiers:
 
 dependencies:
   '@auth0/auth0-spa-js': 1.14.0
-  '@vueuse/core': 4.8.2_vue@3.0.11
+  '@vueuse/core': 4.9.1_vue@3.0.11
   '@vueuse/head': 0.5.1_vue@3.0.11
   axios: 0.21.1
   events: 3.3.0
@@ -1343,10 +1343,10 @@ packages:
   /@vue/shared/3.0.11:
     resolution: {integrity: sha512-b+zB8A2so8eCE0JsxjL24J7vdGl8rzPQ09hZNhystm+KqSbKcAej1A+Hbva1rCMmTTqA+hFnUSDc5kouEo0JzA==}
 
-  /@vueuse/core/4.8.2_vue@3.0.11:
-    resolution: {integrity: sha512-d6SX9YSWC8svdCEZvlKH3zmstPqNS1h1RHgZUbkxAC/zoNIYP88Ivl1pF3SYm0Iksl6D4Zu/oImKXWCBW21r6g==}
+  /@vueuse/core/4.9.1_vue@3.0.11:
+    resolution: {integrity: sha512-BmmEEaistQqNsGlmmpwS2fRkzpf/2riBnUAmm4uDOj4ZDUpssCvCyTeOoIGbZYg92Hzaz0YF9qSeE7megjYLCg==}
     dependencies:
-      '@vueuse/shared': 4.8.2_vue@3.0.11
+      '@vueuse/shared': 4.9.1_vue@3.0.11
       vue-demi: 0.7.5_vue@3.0.11
     transitivePeerDependencies:
       - '@vue/composition-api'
@@ -1361,8 +1361,8 @@ packages:
       vue: 3.0.11
     dev: false
 
-  /@vueuse/shared/4.8.2_vue@3.0.11:
-    resolution: {integrity: sha512-Bjy15IHyqUpRbg9cRE9afFwD0gLtGI0tJW7fITWGCwYmSWpBoD+EnGBBGvnoP9pOtxkri9Wte/uKwcVnDos7QA==}
+  /@vueuse/shared/4.9.1_vue@3.0.11:
+    resolution: {integrity: sha512-5jj+/Ve7e82LP4OFpU8jBRhjC7QGUxI95U2m4bB2BGuWA8v6r2EVV7AVkU/rXZ5EvRoYkAnUs8jWRCj0QlD6XQ==}
     dependencies:
       vue-demi: 0.7.5_vue@3.0.11
     transitivePeerDependencies:
