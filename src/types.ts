@@ -7,4 +7,4 @@ interface ModuleOptions {
   router: Router
 }
 
-export type Module = ({ app, isClient, router }: ModuleOptions) => void
+export type UserModule = ({ app, isClient, router }: ModuleOptions) => void

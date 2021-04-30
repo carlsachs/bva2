@@ -16,5 +16,5 @@ export default {
 
 <route lang="yaml">
 meta:
-  layout: feature
+  layout: default
 </route>

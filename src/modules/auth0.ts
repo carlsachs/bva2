@@ -1,4 +1,4 @@
-import { reactive, App } from 'vue'
+import { reactive, App, watchEffect } from 'vue'
 import createAuth0Client, { Auth0Client } from '@auth0/auth0-spa-js'
 import axios from "axios"
 
@@ -21,45 +21,38 @@ export const $auth0 = reactive({
   }
 } as $Auth0Defaults)
 
-/*
+
 export const authGuard = (to, from, next) => {
-  const verify = () => {
-    // If the user is authenticated, continue with the route
-    if ($auth0.state.isAuthenticated.value) {
-      return next()
-    }
-    // Otherwise, log in
-    loginWithRedirect({ appState: { targetUrl: to.fullPath } })
-  }
-
-  // If loading has already finished, check our auth state using `verify()`
-  if (!$auth0.state.loading.value) {
-    return verify()
-  }
-
-  // Watch for the loading property to change before we check isAuthenticated
+  next()
+  /*
   watchEffect(() => {
-    if ($auth0.state.loading.value === false) {
-      return verify()
+    if (!$auth0.state.loading) {
+      if ($auth0.state.isAuthenticated) {
+        console.log("NEXTTTTT")
+        next()
+      }
+      else {
+        if ($auth0.client) {
+          $auth0.client.loginWithRedirect({ appState: { targetUrl: to.fullPath } })
+        }
+      }
     }
   })
+  */
 }
 
-function loginWithRedirect(o) {
-  return $auth0.client.loginWithRedirect(o)
-}
-*/
-
-export async function setupAuth0() {
+export async function setupAuth0(router) {
   $auth0.client = await setupClient()
   const search = window.location.search
-  const comingFromRedirect =
-    search.includes('code=') && search.includes('state=')
+  const comingFromRedirect = search.includes('code=') && search.includes('state=')
+  console.log("YYYYYYYYY")
   try {
     // If the user is returning to the app after auth success with Auth0.
     if (comingFromRedirect) {
       // handle the redirect and retrieve tokens
       const { appState } = await $auth0.client.handleRedirectCallback()
+      console.log("XXXXXXXXXXXX", JSON.stringify(appState))
+      onRedirectCallback(appState, router)
     }
   } catch (e) {
     $auth0.state.error = e
@@ -68,9 +61,9 @@ export async function setupAuth0() {
     $auth0.state.isAuthenticated = await $auth0.client.isAuthenticated()
     $auth0.state.user = await $auth0.client.getUser()
     $auth0.state.isLoading = false
-    console.log("this.user 4")
+    //console.log("this.user :: ", $auth0.state.user)
     if ($auth0.state.user) {
-      console.log(JSON.stringify($auth0.state.user))
+      //console.log(JSON.stringify($auth0.state.user))
       const userid = await signInUser($auth0.state.user.sub, $auth0.state.user.nickname)
       console.log("USER ID", userid)
       if (!userid) {
@@ -81,6 +74,14 @@ export async function setupAuth0() {
       }
     }
   }
+}
+
+function onRedirectCallback(appState, router) {
+  router.push(
+    appState && appState.targetUrl
+      ? appState.targetUrl
+      : window.location.pathname
+  )
 }
 
 function setupClient(): Promise<Auth0Client> {
@@ -108,37 +109,6 @@ export const install = ({ app }: { app: App }) => {
   })
 }
 
-/**
- * Vue 2.0 plugin to expose the wrapper object throughout the application.
- * The Auth0 client is available as $auth0.client.
- */
-// export const Auth0Plugin = {
-//   install(Vue, options) {
-//     Vue.prototype.$auth0 = $auth0
-//   }
-// }
-
-/**
- * Storage provider for the FeathersJS Authentication Client.
- * The getItem and setItem are not needed, but have to be stubbed out to prevent errors.
- */
-export const storage = {
-  async getItem() {
-    let token
-
-    try {
-      $auth0.client = await setupClient()
-      token = await $auth0.client?.getTokenSilently()
-    } catch (error) {
-      console.error('feathers auth0 storage error', error)
-      token = ''
-    }
-    return token
-  },
-  setItem() {},
-  removeItem() {}
-}
-
 interface $Auth0Defaults {
   client: Auth0Client | null
   state: {
@@ -148,6 +118,8 @@ interface $Auth0Defaults {
     user: any | null
   }
 }
+
+///////// ///////// ///////// ///////// ///////// /////////
 
 async function signInUser(sub, nickname) {
   console.log("signInUser", sub, nickname)
@@ -162,3 +134,5 @@ async function signInUser(sub, nickname) {
       return 0
     })
 }
+
+///////// ///////// ///////// ///////// ///////// /////////

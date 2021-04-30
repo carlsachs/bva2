@@ -26,10 +26,15 @@
 <script lang="ts">
 export default {
   setup() {
-    return {};
+    return {}
   },
-};
+}
 </script>
 
 <style lang="postcss" scoped>
 </style>
+
+<route lang="yaml">
+meta:
+  layout: default
+</route>

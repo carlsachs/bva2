@@ -1,16 +1,10 @@
 <template>
   <div class="text-center text-gray-300">
     <nav>
-      <h1>Bitcoin vs. Altcoins</h1>
-      <p>v. 2.0.6. beta</p>
-      <ul>
-        <li>
-          <router-link to="/">Dashboard</router-link>
-        </li>
-        <li>
-          <router-link to="/profile">Profile</router-link>
-        </li>
-      </ul>
+      <a href="/" class="m-auto m-5 text-lg">Bitcoin vs. Altcoins</a>
+      <div class="m-auto m-5 text-sm text-center opacity-25">
+        2.0.6. beta
+      </div>
     </nav>
   </div>
   <router-view></router-view>

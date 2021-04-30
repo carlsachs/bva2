@@ -1,11 +1,11 @@
 import 'windi.css'
-import { setupAuth0, storage } from '~/modules/auth0'
+import { setupAuth0 } from '~/modules/auth0'
 import { createApp, App as AppType } from 'vue'
 import store from "./store";
 import { router } from './routes'
 import App from './App.vue'
 
-setupAuth0()
+setupAuth0(router)
 
 const app = createApp(App)
 app.use(router)

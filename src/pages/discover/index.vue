@@ -3,7 +3,11 @@
 </template>
 
 <script lang="ts">
-export default {};
+export default {
+  setup() {
+    return {};
+  },
+};
 </script>
 
 <style lang="postcss" scoped>

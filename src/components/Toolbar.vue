@@ -11,6 +11,21 @@
         PROFILE
       </button>
     </router-link>
+    <router-link to="/discover">
+      <button class="button" type="button">
+        DISCOVER
+      </button>
+    </router-link>
+    <router-link to="/sample">
+      <button class="button" type="button">
+        SAMPLE
+      </button>
+    </router-link>
+    <router-link to="/test">
+      <button class="button" type="button">
+        TEST
+      </button>
+    </router-link>
     <button v-if="auth0.state.isLoading" class="button" type="button">
       Loading
       <feather-loader class="ml-2" />
@@ -33,22 +48,19 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, inject } from "vue";
 
-const auth0: any = inject("auth0");
+import { defineProps, inject } from "vue"
 
-defineProps({
-  msg: String,
-});
+const auth0: any = inject("auth0")
 
 function login() {
   // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#loginwithredirect
-  console.log("-0-0-0-0-0-0-0-")
-  auth0.client.loginWithRedirect();
+  console.log("-0-0-0-0-0-0-0-", window.location.href)
+  auth0.client.loginWithRedirect({ appState: { targetUrl: window.location.href } })
 }
 function logout() {
   // https://auth0.github.io/auth0-spa-js/interfaces/logoutoptions.html
-  auth0.client.logout({ returnTo: window.location.origin });
+  auth0.client.logout({ returnTo: window.location.origin })
 }
 </script>
 
