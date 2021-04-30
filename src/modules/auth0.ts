@@ -23,19 +23,55 @@ export const $auth0 = reactive({
 
 
 export const authGuard = (to, from, next) => {
-  next()
+
+  console.log("authGuard")
+
+  const verify = () => {
+    if ($auth0.state.isAuthenticated) {
+      console.log("isAuthenticated!!")
+      return next()
+    }
+    console.log("...")
+    if ($auth0.client) {
+      console.log("loginWithRedirect")
+      $auth0.client.loginWithRedirect({ appState: { targetUrl: to.fullPath } })
+    }
+    else {
+      console.log("auth0.client not set")
+      return next()
+    }
+    //next()
+  }
+
+  if (!$auth0.state.loading) {
+    return verify()
+  }
+
+  watchEffect( () => {
+    console.log("watchEffect...")
+    if (!$auth0.state.loading) {
+      console.log("watchEffect verify")
+      return verify()
+    }
+  })
   /*
   watchEffect(() => {
     if (!$auth0.state.loading) {
+      console.log("STATE :: ", $auth0.state)
       if ($auth0.state.isAuthenticated) {
-        console.log("NEXTTTTT")
+        console.log("isAuthenticated", $auth0.state.isAuthenticated)
         next()
       }
       else {
         if ($auth0.client) {
-          $auth0.client.loginWithRedirect({ appState: { targetUrl: to.fullPath } })
+          console.log("909090909090909090909")
+          //$auth0.client.loginWithRedirect({ appState: { targetUrl: to.fullPath } })
         }
       }
+    }
+    else {
+      console.log("121212123121211")
+      next()
     }
   })
   */
@@ -45,7 +81,7 @@ export async function setupAuth0(router) {
   $auth0.client = await setupClient()
   const search = window.location.search
   const comingFromRedirect = search.includes('code=') && search.includes('state=')
-  console.log("YYYYYYYYY")
+  console.log("Logged In")
   try {
     // If the user is returning to the app after auth success with Auth0.
     if (comingFromRedirect) {
@@ -64,14 +100,12 @@ export async function setupAuth0(router) {
     //console.log("this.user :: ", $auth0.state.user)
     if ($auth0.state.user) {
       //console.log(JSON.stringify($auth0.state.user))
+      /*
       const userid = await signInUser($auth0.state.user.sub, $auth0.state.user.nickname)
       console.log("USER ID", userid)
-      if (!userid) {
-        console.log("USER UNKNOWN")
-      }
-      else {
-        console.log("WELCOME USER")
-      }
+      if (!userid) { console.log("USER UNKNOWN") }
+      else { console.log("WELCOME USER") }
+      */
     }
   }
 }
