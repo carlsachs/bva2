@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-row items-center justify-center p-2 space-x-5">
-    <DarkModeToggle />
+    <!--DarkModeToggle /-->
     <router-link to="/">
       <button class="button" type="button">
         HOME
@@ -9,21 +9,6 @@
     <router-link to="/profile">
       <button class="button" type="button">
         PROFILE
-      </button>
-    </router-link>
-    <router-link to="/discover">
-      <button class="button" type="button">
-        DISCOVER
-      </button>
-    </router-link>
-    <router-link to="/sample">
-      <button class="button" type="button">
-        SAMPLE
-      </button>
-    </router-link>
-    <router-link to="/test">
-      <button class="button" type="button">
-        TEST
       </button>
     </router-link>
     <button v-if="auth0.state.isLoading" class="button" type="button">

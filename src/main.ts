@@ -11,7 +11,6 @@ const app = createApp(App)
 app.use(router)
 app.use(store)
 
-// install all modules under `modules/`
 Object.values(import.meta.globEager('./modules/*.ts')).map(i =>
   i.install?.({ app, isClient: true, router }),
 )
