@@ -1,5 +1,7 @@
 <template>
   <div>
+    <Hero />
+    <Features />
     <p>{{ user }}</p>
   </div>
 </template>
