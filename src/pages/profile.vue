@@ -1,37 +1,19 @@
 <template>
-  <div>
-
-    <p>
-      <a href="/">
-        PROFILE
-      </a>
-    </p>
-    
-    <p class="text-4xl">
-      <img src="/bva.png" alt="Bitcoin vs. Altcoins" height=40 class="inline-block"/>
-    </p>
-
-    <p>
-      <em class="text-sm opacity-75">intro.desc</em>
-    </p>
-
-    <div class="p-5 m-6">
-      <h2 class="text-xl font-bold">Auth State</h2>
-      <pre class="text-xs text-white bg-black">{{  }}</pre>
-    </div>
-
+  <div class="text-center bg-black text-gray-300">
+    <h1>Profile</h1>
+    <span>{{ auth0.state }}</span>
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  setup() {
-    return {}
-  },
-}
+<script setup lang="ts">
+
+import { inject } from "vue"
+
+const auth0: any = inject("auth0")
+
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 </style>
 
 <route lang="yaml">

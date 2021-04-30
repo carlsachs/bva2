@@ -1,16 +1,15 @@
 <template>
-  <div class="text-center text-gray-300">
+  <div class="mt-5 pt-3 text-center text-gray-300">
     <nav>
       <a href="/" class="m-auto m-5 text-lg">Bitcoin vs. Altcoins</a>
       <div class="m-auto m-5 text-sm text-center opacity-25">
-        2.0.7. beta
+        2.0.8. beta
       </div>
     </nav>
   </div>
   <router-view></router-view>
-  <div class="p-5 m-6">
-    <h2 class="text-xl font-bold">Auth State</h2>
-    <pre class="text-xs text-white bg-black">{{  }}</pre>
+  <div class="text-center text-gray-300 p-5 m-6">
+    <h2 class="">Footer</h2>
   </div>
 </template>
 

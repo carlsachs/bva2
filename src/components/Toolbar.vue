@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 
-import { defineProps, inject } from "vue"
+import { inject } from "vue"
 
 const auth0: any = inject("auth0")
 
@@ -47,6 +47,7 @@ function logout() {
   // https://auth0.github.io/auth0-spa-js/interfaces/logoutoptions.html
   auth0.client.logout({ returnTo: window.location.origin })
 }
+
 </script>
 
 <style lang="postcss" scoped>
