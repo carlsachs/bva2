@@ -1,35 +1,38 @@
 <template>
   <div>
-
-    <p>
-      <a href="/">
-        HOME
-      </a>
-    </p>
-    
-    <p class="text-4xl">
-      <img src="/bva.png" alt="Bitcoin vs. Altcoins" height=40 class="inline-block"/>
-    </p>
-
-    <p>
-      <em class="text-sm opacity-75">intro.desc</em>
-    </p>
-
-    <div class="p-5 m-6">
-      <h2 class="text-xl font-bold">Auth State</h2>
-      <pre class="text-xs text-white bg-black">{{  }}</pre>
-    </div>
-
+    <p>{{ user }}</p>
   </div>
 </template>
 
 <script lang="ts">
-export default {
-  setup() {
-    return {};
+
+import { onMounted, reactive, ref, toRefs, defineComponent } from "vue";
+import axios from "~/utils/axios";
+
+export default defineComponent({
+  name: "Dashboard",
+  setup: () => {
+
+    const state = reactive({
+        user: null,
+    })
+
+    onMounted(() => {
+      axios.get('/api/signals')
+      .then(res => {
+        state.user = res
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    })
+    
+    return {
+      ...toRefs(state),
+    }
   },
-};
+})
 </script>
 
-<style lang="postcss" scoped>
+<style>
 </style>
