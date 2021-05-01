@@ -3,7 +3,7 @@
     <nav>
       <a href="/" class="m-auto m-5 text-lg">Bitcoin vs. Altcoins</a>
       <div class="m-auto m-5 text-sm text-center opacity-25">
-        2.0.8. beta
+        2.0.9. beta
       </div>
     </nav>
   </div>

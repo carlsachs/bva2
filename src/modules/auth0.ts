@@ -98,8 +98,6 @@ export async function setupAuth0(router) {
         console.log("WELCOME USER", $auth0.state.user['userid'])
       }
     }
-    console.log("======111======")
-    router.replace("/")
   }
 }
 
