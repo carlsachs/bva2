@@ -40,7 +40,6 @@ export const authGuard = (to, from, next) => {
       console.log("auth0.client not set")
       return next()
     }
-    //next()
   }
 
   if (!$auth0.state.loading) {
@@ -54,27 +53,6 @@ export const authGuard = (to, from, next) => {
       return verify()
     }
   })
-  /*
-  watchEffect(() => {
-    if (!$auth0.state.loading) {
-      console.log("STATE :: ", $auth0.state)
-      if ($auth0.state.isAuthenticated) {
-        console.log("isAuthenticated", $auth0.state.isAuthenticated)
-        next()
-      }
-      else {
-        if ($auth0.client) {
-          console.log("909090909090909090909")
-          //$auth0.client.loginWithRedirect({ appState: { targetUrl: to.fullPath } })
-        }
-      }
-    }
-    else {
-      console.log("121212123121211")
-      next()
-    }
-  })
-  */
 }
 
 export async function setupAuth0(router) {
@@ -96,16 +74,22 @@ export async function setupAuth0(router) {
     // Initialize authentication state
     $auth0.state.isAuthenticated = await $auth0.client.isAuthenticated()
     $auth0.state.user = await $auth0.client.getUser()
+    $auth0.state.user.token = await $auth0.client.getTokenSilently()
     $auth0.state.isLoading = false
     //console.log("this.user :: ", $auth0.state.user)
     if ($auth0.state.user) {
       //console.log(JSON.stringify($auth0.state.user))
-      /*
+
       const userid = await signInUser($auth0.state.user.sub, $auth0.state.user.nickname)
       console.log("USER ID", userid)
-      if (!userid) { console.log("USER UNKNOWN") }
-      else { console.log("WELCOME USER") }
-      */
+      if (!userid) {
+        $auth0.state.user = null
+        console.log("USER UNKNOWN")
+      }
+      else {
+        $auth0.state.user['userid'] = userid
+        console.log("WELCOME USER", $auth0.state.user['userid'])
+      }
     }
   }
 }
