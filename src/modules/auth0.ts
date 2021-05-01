@@ -68,18 +68,25 @@ export async function setupAuth0(router) {
       console.log("XXXXXXXXXXXX", JSON.stringify(appState))
       onRedirectCallback(appState, router)
     }
+    console.log("======-...======")
   } catch (e) {
+    console.log("======---======")
     $auth0.state.error = e
+    router.replace("/")
   } finally {
+    console.log("======+++======1")
     // Initialize authentication state
     $auth0.state.isAuthenticated = await $auth0.client.isAuthenticated()
+    console.log("======+++======2", $auth0.state.isAuthenticated)
     $auth0.state.user = await $auth0.client.getUser()
-    $auth0.state.user.token = await $auth0.client.getTokenSilently()
+    console.log("======+++======3", $auth0.state.user)
     $auth0.state.isLoading = false
     //console.log("this.user :: ", $auth0.state.user)
+    console.log("======000======")
     if ($auth0.state.user) {
+      $auth0.state.user.token = await $auth0.client.getTokenSilently()
+      console.log("======+++======4", $auth0.state.user.token)
       //console.log(JSON.stringify($auth0.state.user))
-
       const userid = await signInUser($auth0.state.user.sub, $auth0.state.user.nickname)
       console.log("USER ID", userid)
       if (!userid) {
@@ -91,6 +98,8 @@ export async function setupAuth0(router) {
         console.log("WELCOME USER", $auth0.state.user['userid'])
       }
     }
+    console.log("======111======")
+    router.replace("/")
   }
 }
 

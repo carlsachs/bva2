@@ -34,9 +34,10 @@
 
 <script setup lang="ts">
 
-import { inject } from "vue"
+import { inject, reactive } from "vue"
 
 const auth0: any = inject("auth0")
+const state = reactive({ auth0 })
 
 function login() {
   // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#loginwithredirect

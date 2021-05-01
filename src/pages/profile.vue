@@ -28,7 +28,6 @@ import axios from 'axios'
 export default {
   setup() {
 
-
     const auth0: any = inject("auth0")
     const state = reactive({ auth0 })
 
