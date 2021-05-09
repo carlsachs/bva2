@@ -2,7 +2,8 @@
   <div>
     <Hero />
     <apexchart
-        type="bar"
+        type="line"
+        height="350"
         :options="chartOptions"
         :series="series"
     ></apexchart>
@@ -22,88 +23,38 @@ export default defineComponent({
 
     const state = reactive({
         user: null,
-        series: [
-        {
-          data: [
-            {
-              x: 'html',
-              y: 218,
+        series: [{
+            name: "Desktops",
+            data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+        }],
+        chartOptions: {
+            chart: {
+                height: 350,
+                type: 'line',
+                zoom: {
+                enabled: false
+                }
             },
-            {
-              x: 'css',
-              y: 149,
+            dataLabels: {
+                enabled: false
             },
-            {
-              x: 'javascript',
-              y: 84,
+            stroke: {
+                curve: 'straight'
             },
-            {
-              x: 'typescript',
-              y: 55,
+            title: {
+                text: 'Product Trends by Month',
+                align: 'left'
             },
-            {
-              x: 'nodejs',
-              y: 84,
+            grid: {
+                row: {
+                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                opacity: 0.5
+                },
             },
-            {
-              x: 'koajs',
-              y: 31,
-            },
-            {
-              x: 'nestjs',
-              y: 70,
-            },
-            {
-              x: 'vuejs',
-              y: 80,
-            },
-            {
-              x: 'reactjs',
-              y: 44,
-            },
-            {
-              x: 'algorithm',
-              y: 68,
-            },
-            {
-              x: 'design',
-              y: 48,
-            },
-          ],
+            xaxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+            }
         },
-      ],
-      chartOptions: {
-        legend: {
-          show: false,
-        },
-        title: {
-          text: 'Distibuted Treemap',
-          align: 'left',
-          margin: 0,
-          offsetX: 0,
-          offsetY: 10,
-          style: {
-            color: '#388bfc',
-          },
-        },
-        chart: {
-          toolbar: {
-            offsetY: 8,
-            style: {
-              color: 'red',
-            },
-          },
-        },
-        theme: {
-          palette: 'palette4',
-        },
-        plotOptions: {
-          treemap: {
-            distributed: true,
-            enableShades: false,
-          },
-        },
-      },
     })
 
     onMounted(() => {
@@ -115,6 +66,12 @@ export default defineComponent({
         console.log(err)
       })
     })
+
+    /*
+    onBeforeMount( () => {
+        fetchResults();
+    })
+    */ 
     
     return {
       ...toRefs(state),
