@@ -1,0 +1,21 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 error pnpm": {
+    "code": "ELIFECYCLE",
+    "errno": "ENOENT",
+    "syscall": "spawn",
+    "file": "sh",
+    "pkgid": "bva2@0.0.0",
+    "stage": "dev",
+    "script": "vite",
+    "pkgname": "bva2",
+    "err": {
+      "name": "Error",
+      "message": "bva2@0.0.0 dev: `vite`\nspawn ENOENT",
+      "code": "ELIFECYCLE",
+      "stack": "Error: bva2@0.0.0 dev: `vite`\nspawn ENOENT\n    at ChildProcess.<anonymous> (/Users/hervefulchiron/.nvm/versions/node/v15.5.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.2.5/node_modules/pnpm/dist/pnpm.cjs:89015:20)\n    at ChildProcess.emit (node:events:376:20)\n    at maybeClose (node:internal/child_process:1063:16)\n    at Process.ChildProcess._handle.onexit (node:internal/child_process:295:5)"
+    }
+  }
+}

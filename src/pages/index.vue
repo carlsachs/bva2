@@ -30,8 +30,18 @@ export default defineComponent({
         ],
         chartOptions: {
             chart: {
-                width: "100%",
+                width: "80%",
                 id: "bitcoin-chart",
+            },
+            dataLabels: {
+                enabled: false,
+                enabledOnSeries: false,
+            },
+            legend: {
+                show: true,
+                labels: {
+                    colors: '#ffffff',
+                },
             },
             stroke: { 
                 curve: 'smooth',
