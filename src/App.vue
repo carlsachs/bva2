@@ -3,7 +3,7 @@
     <nav>
       <a href="/" class="m-auto m-5 text-lg">Bitcoin vs. Altcoins</a>
       <div class="m-auto m-5 text-sm text-center opacity-25">
-        2.1.2. beta
+        2.1.3 beta
       </div>
     </nav>
   </div>
@@ -14,6 +14,7 @@
 </template>
 
 <script lang="ts">
+
 import { computed } from "vue";
 import { useStore } from "vuex";
 

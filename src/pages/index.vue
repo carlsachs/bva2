@@ -76,7 +76,6 @@ export default defineComponent({
         ////// ////// ////// ////// //////
         axios.get('/api/strategy?id=466')
         .then(res => {
-            console.log(res.data.length)
             let tpnl = []
             let pnl = 0
             for ( var item of res.data.reverse() ) {
