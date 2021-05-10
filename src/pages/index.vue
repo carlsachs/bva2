@@ -1,7 +1,7 @@
 <template>
   <div>
     <Hero />
-    <apexchart type="line" height="350" :options="chartOptions" :series="series"></apexchart>
+    <apexchart type="line" height="550" :options="chartOptions" :series="series"></apexchart>
     <Features />
     <p>{{ user }}</p>
   </div>
@@ -21,78 +21,28 @@ export default defineComponent({
         series: [
             {
                 name: "Bitcoin",
-                data: [30, 40, 45, 50, 49, 60, 70, 99],
+                data: [],
             },
             {
                 name: "BVA",
-                data: [34, 49, 54, 67, 69, 160, 170, 199],
+                data: [],
             }
         ],
         chartOptions: {
             chart: {
                 width: "100%",
                 id: "bitcoin-chart",
-                //stacked: false,
             },
-            stroke: {
+            stroke: { 
                 curve: 'smooth',
-            },
-            legend: {
-                show: false,
-            },
-            //colors: ["#02182B"],
-            dataLabels: {
-                enabled: false,
+                width: 1,
             },
             tooltip: {
                 enabled: true,
                 theme: 'dark',
             },
-            markers: {
-                size: 0,
-            },
-            grid: {
-                show: true,
-            },
-            /*
-            fill: {
-                type: "gradient",
-                gradient: {
-                    shadeIntensity: 1,
-                    inverseColors: true,
-                    opacityFrom: 0.45,
-                    opacityTo: 0.05,
-                    stops: [20, 100, 100, 100],
-                },
-            },
-            */
             xaxis: {
-                categories: [
-                    1578798000000,
-                    1581476400000,
-                    1583982000000,
-                    1586660400000,
-                    1589252400000,
-                    1591930800000,
-                    1594522800000,
-                    1597201200000,
-                ],
                 type: "datetime",
-                axisBorder: {
-                    show: false,
-                },
-                axisTicks: {
-                    show: false,
-                },
-                tooltip: {
-                    shared: true,
-                },
-                legend: {
-                    show: false,
-                    position: "top",
-                    horizontalAlign: "right",
-                    offsetX: -10,
-                },
                 labels: {
                     show: true,
                     style: {
@@ -101,7 +51,10 @@ export default defineComponent({
                     },
                 }
             },
-            yaxis: {
+            yaxis: [{
+                title: {
+                    text: "BTC"
+                },
                 labels: {
                     show: true,
                     style: {
@@ -115,18 +68,57 @@ export default defineComponent({
                         }).format(value);
                     },
                 },
-            }
+            },
+            {
+                opposite: true,
+                title: {
+                    text: "BVA / BTC PnL"
+                },
+                labels: {
+                    show: true,
+                    style: {
+                        colors: ['#FFFFFF'],
+                        fontSize: '12px',
+                    },
+                    formatter: (value) => { return value+'%' },
+                },
+            }]
         }
     })
 
     onMounted(() => {
-      axios.get('/api/signals')
-      .then(res => {
-        state.user = res
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+        axios.get('/api/signals')
+        .then(res => {
+            state.user = res
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+        ////// ////// ////// ////// //////
+        axios.get('/api/strategy?id=466')
+        .then(res => {
+            console.log(res.data.length)
+            let tpnl = []
+            let pnl = 0
+            for ( var item of res.data.reverse() ) {
+                if (item.pnl) {
+                    pnl = Number(item.pnl) + pnl
+                    tpnl.push([Number(item.updated_time), pnl.toFixed(2)])
+                }
+            }
+            state.series[1].data = tpnl
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+        ////// ////// ////// ////// //////
+        axios.get('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=350')
+        .then(res => {
+            state.series[0].data = res.data.map( r => [r[0], Number(r[1])])
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     })
 
     /*

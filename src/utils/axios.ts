@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const baseURL = "https://bitcoinvsaltcoins.com";
+const baseURL = import.meta.env.VITE_API_URL as String
 
 const axios = Axios.create({
     baseURL,
