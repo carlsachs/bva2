@@ -109,53 +109,21 @@ export default defineComponent({
                     },
                 }
             },
-            yaxis: [
-                {
-                    title: {
-                        text: "BTC",
-                        style: {
-                            colors: '#FFFFFF',
-                            fontSize: '12px',
-                        },
+            yaxis: {
+                labels: {
+                    show: true,
+                    style: {
+                        colors: ['#FFFFFF'],
+                        fontSize: '12px',
                     },
-                    labels: {
-                        show: true,
-                        style: {
-                            colors: ['#FFFFFF'],
-                            fontSize: '12px',
-                        },
-                        formatter: function (value) {
-                            return new Intl.NumberFormat("en-US", {
-                                style: "currency",
-                                currency: "USD",
-                            }).format(value);
-                        },
+                    formatter: function (value) {
+                        return new Intl.NumberFormat("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                        }).format(value);
                     },
                 },
-                {
-                    opposite: true,
-                    title: {
-                        text: "BVA",
-                        style: {
-                            colors: '#FFFFFF',
-                            fontSize: '12px',
-                        },
-                    },
-                    labels: {
-                        show: true,
-                        style: {
-                            colors: ['#FFFFFF'],
-                            fontSize: '12px',
-                        },
-                        formatter: function (value) {
-                            return new Intl.NumberFormat("en-US", {
-                                style: "currency",
-                                currency: "USD",
-                            }).format(value);
-                        },
-                    },
-                }
-            ]
+            }
         }
     })
 
