@@ -37,14 +37,6 @@ export default defineComponent({
             stroke: {
                 curve: 'smooth',
             },
-            title: {
-                text: "BVA vs. BTC",
-                align: 'center',
-                style: {
-                    colors: '#FFFFFF',
-                    fontSize: '12px',
-                },
-            },
             legend: {
                 show: false,
             },
