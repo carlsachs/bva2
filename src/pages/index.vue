@@ -51,38 +51,17 @@ export default defineComponent({
                     },
                 }
             },
-            yaxis: [{
-                title: {
-                    text: "BTC"
-                },
+            yaxis: {
+                min: 0,
                 labels: {
                     show: true,
                     style: {
-                        colors: ['#FFFFFF'],
-                        fontSize: '12px',
-                    },
-                    formatter: function (value) {
-                        return new Intl.NumberFormat("en-US", {
-                            style: "currency",
-                            currency: "USD",
-                        }).format(value);
-                    },
-                },
-            },
-            {
-                opposite: true,
-                title: {
-                    text: "BVA / BTC PnL"
-                },
-                labels: {
-                    show: true,
-                    style: {
-                        colors: ['#FFFFFF'],
-                        fontSize: '12px',
+                        colors: '#FFFFFF',
+                        fontSize: '10px',
                     },
                     formatter: (value) => { return value+'%' },
                 },
-            }]
+            }
         }
     })
 
@@ -103,7 +82,7 @@ export default defineComponent({
             for ( var item of res.data.reverse() ) {
                 if (item.pnl) {
                     pnl = Number(item.pnl) + pnl
-                    tpnl.push([Number(item.updated_time), pnl.toFixed(2)])
+                    tpnl.push([Number(item.updated_time), parseInt(pnl)])
                 }
             }
             state.series[1].data = tpnl
@@ -114,7 +93,13 @@ export default defineComponent({
         ////// ////// ////// ////// //////
         axios.get('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=350')
         .then(res => {
-            state.series[0].data = res.data.map( r => [r[0], Number(r[1])])
+            let tpnl = []
+            let pnl = 0
+            for ( var item of res.data ) {
+                pnl = 100 * (Number(item[4]) - Number(item[1])) / Number(item[1]) + pnl
+                tpnl.push([item[0], parseInt(pnl)])
+            }
+            state.series[0].data = tpnl
         })
         .catch((err) => {
             console.log(err)
