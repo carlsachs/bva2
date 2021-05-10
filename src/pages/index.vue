@@ -1,12 +1,7 @@
 <template>
   <div>
     <Hero />
-    <apexchart
-        type="line"
-        height="350"
-        :options="chartOptions"
-        :series="series"
-    ></apexchart>
+    <apexchart type="area" height="350" :options="chartOptions" :series="series"></apexchart>
     <Features />
     <p>{{ user }}</p>
   </div>
@@ -24,37 +19,74 @@ export default defineComponent({
     const state = reactive({
         user: null,
         series: [{
-            name: "Desktops",
-            data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+            name: "Bitcoin",
+            data: [30, 40, 45, 50, 49, 60, 70, 99],
         }],
         chartOptions: {
-            chart: {
-                height: 350,
-                type: 'line',
-                zoom: {
-                enabled: false
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-                curve: 'straight'
-            },
-            title: {
-                text: 'Product Trends by Month',
-                align: 'left'
-            },
-            grid: {
-                row: {
-                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                opacity: 0.5
-                },
-            },
-            xaxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-            }
+        chart: {
+          width: "100%",
+          id: "bitcoin-chart",
+          type: "area",
+          stacked: false,
+          zoom: {
+            enabled: false,
+          },
         },
+        colors: ["#02182B"],
+        dataLabels: {
+          enabled: false,
+        },
+        markers: {
+          size: 0,
+        },
+        fill: {
+          type: "gradient",
+          gradient: {
+            shadeIntensity: 1,
+            inverseColors: false,
+            opacityFrom: 0.45,
+            opacityTo: 0.05,
+            stops: [20, 100, 100, 100],
+          },
+        },
+        xaxis: {
+          categories: [
+            1578798000000,
+            1581476400000,
+            1583982000000,
+            1586660400000,
+            1589252400000,
+            1591930800000,
+            1594522800000,
+            1597201200000,
+          ],
+          type: "datetime",
+          axisBorder: {
+            show: false,
+          },
+          axisTicks: {
+            show: false,
+          },
+          tooltip: {
+            shared: true,
+          },
+          legend: {
+            position: "top",
+            horizontalAlign: "right",
+            offsetX: -10,
+          },
+        },
+        yaxis: {
+          labels: {
+            formatter: function (value) {
+              return new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "BRL",
+              }).format(value);
+            },
+          },
+        },
+      }
     })
 
     onMounted(() => {
