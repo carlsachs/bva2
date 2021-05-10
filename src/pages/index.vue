@@ -29,18 +29,32 @@ export default defineComponent({
                 type: "area",
                 stacked: false,
             },
+            title: {
+                text: "BVA",
+                align: 'center',
+            },
+            legend: {
+                show: false,
+            },
             //colors: ["#02182B"],
             dataLabels: {
                 enabled: false,
             },
+            tooltip: {
+                enabled: true,
+                theme: 'dark',
+            },
             markers: {
                 size: 0,
+            },
+            grid: {
+                show: true,
             },
             fill: {
                 type: "gradient",
                 gradient: {
                     shadeIntensity: 1,
-                    inverseColors: false,
+                    inverseColors: true,
                     opacityFrom: 0.45,
                     opacityTo: 0.05,
                     stops: [20, 100, 100, 100],
@@ -67,16 +81,27 @@ export default defineComponent({
                 tooltip: {
                     shared: true,
                 },
-                /*
                 legend: {
+                    show: false,
                     position: "top",
                     horizontalAlign: "right",
                     offsetX: -10,
                 },
-                */
+                labels: {
+                    show: true,
+                    style: {
+                        colors: '#FFFFFF',
+                        fontSize: '12px',
+                    },
+                }
             },
             yaxis: {
                 labels: {
+                    show: true,
+                    style: {
+                        colors: ['#FFFFFF'],
+                        fontSize: '12px',
+                    },
                     formatter: function (value) {
                         return new Intl.NumberFormat("en-US", {
                             style: "currency",
