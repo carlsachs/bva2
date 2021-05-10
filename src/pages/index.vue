@@ -1,7 +1,7 @@
 <template>
   <div>
     <Hero />
-    <apexchart type="area" height="350" :options="chartOptions" :series="series"></apexchart>
+    <apexchart type="line" height="350" :options="chartOptions" :series="series"></apexchart>
     <Features />
     <p>{{ user }}</p>
   </div>
@@ -18,20 +18,32 @@ export default defineComponent({
 
     const state = reactive({
         user: null,
-        series: [{
-            name: "Bitcoin",
-            data: [30, 40, 45, 50, 49, 60, 70, 99],
-        }],
+        series: [
+            {
+                name: "Bitcoin",
+                data: [30, 40, 45, 50, 49, 60, 70, 99],
+            },
+            {
+                name: "BVA",
+                data: [34, 49, 54, 67, 69, 160, 170, 199],
+            }
+        ],
         chartOptions: {
             chart: {
                 width: "100%",
                 id: "bitcoin-chart",
-                type: "area",
-                stacked: false,
+                //stacked: false,
+            },
+            stroke: {
+                curve: 'smooth',
             },
             title: {
-                text: "BVA",
+                text: "BVA vs. BTC",
                 align: 'center',
+                style: {
+                    colors: '#FFFFFF',
+                    fontSize: '12px',
+                },
             },
             legend: {
                 show: false,
@@ -50,6 +62,7 @@ export default defineComponent({
             grid: {
                 show: true,
             },
+            /*
             fill: {
                 type: "gradient",
                 gradient: {
@@ -60,6 +73,7 @@ export default defineComponent({
                     stops: [20, 100, 100, 100],
                 },
             },
+            */
             xaxis: {
                 categories: [
                     1578798000000,
@@ -95,21 +109,53 @@ export default defineComponent({
                     },
                 }
             },
-            yaxis: {
-                labels: {
-                    show: true,
-                    style: {
-                        colors: ['#FFFFFF'],
-                        fontSize: '12px',
+            yaxis: [
+                {
+                    title: {
+                        text: "BTC",
+                        style: {
+                            colors: '#FFFFFF',
+                            fontSize: '12px',
+                        },
                     },
-                    formatter: function (value) {
-                        return new Intl.NumberFormat("en-US", {
-                            style: "currency",
-                            currency: "USD",
-                        }).format(value);
+                    labels: {
+                        show: true,
+                        style: {
+                            colors: ['#FFFFFF'],
+                            fontSize: '12px',
+                        },
+                        formatter: function (value) {
+                            return new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                            }).format(value);
+                        },
                     },
                 },
-            },
+                {
+                    opposite: true,
+                    title: {
+                        text: "BVA",
+                        style: {
+                            colors: '#FFFFFF',
+                            fontSize: '12px',
+                        },
+                    },
+                    labels: {
+                        show: true,
+                        style: {
+                            colors: ['#FFFFFF'],
+                            fontSize: '12px',
+                        },
+                        formatter: function (value) {
+                            return new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                            }).format(value);
+                        },
+                    },
+                }
+            ]
         }
     })
 
