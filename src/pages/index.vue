@@ -9,21 +9,21 @@
             <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                 <div>
                     <span>Period PnL</span>
-                    <span class="text-justify text-blue-300 block">+134%</span>
+                    <span class="text-justify text-blue-300 block">{{ total_pnl }}%</span>
                 </div>
             </div>
 
             <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                 <div>
                     <span>Avg. Profit per Trade</span>
-                    <span class="text-justify text-blue-300 block">1.34%</span>
+                    <span class="text-justify text-blue-300 block">{{ avg_pnl }}%</span>
                 </div>
             </div>
 
             <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                 <div>
                     <span>Win Rate</span>
-                    <span class="text-justify text-blue-300 block">54%</span>
+                    <span class="text-justify text-blue-300 block">{{ win_rate }}%</span>
                 </div>
             </div>
 
@@ -52,6 +52,10 @@ export default defineComponent({
   setup: () => {
 
     const state = reactive({
+        total_pnl: 0,
+        avg_pnl: 0,
+        strat_lifetime: 0,
+        win_rate: 0,
         user: null,
         ///////// ///////// ///////// /////////
         series: [
@@ -161,23 +165,15 @@ export default defineComponent({
                 state.series[0].data = tpnl_btc
                 state.series[1].data = tpnl_bva
 
+                console.log("TPNL:", tpnl_bva[tpnl_bva.length-1][1])
+                state.total_pnl = tpnl_bva[tpnl_bva.length-1][1]
                 console.log("TOTAL:", bvas.data.length)
-
-                const positifs = bvas.data.filter( bva => { 
-                    return Number(bva.pnl) > 0 
-                })
+                console.log("TRADE MEAN:", _.meanBy(bvas.data, o => {return Number(o.pnl)}).toFixed(2))
+                state.avg_pnl = _.meanBy(bvas.data, o => {return Number(o.pnl)}).toFixed(2)
+                const positifs = bvas.data.filter( bva => { return Number(bva.pnl) > 0 })
                 console.log("POS COUNT:", positifs.length)
-                console.log("POS MAX:", Number(_.maxBy(positifs, o => {return Number(o.pnl)}).pnl).toFixed(2))
-                console.log("POS MEAN:", _.meanBy(positifs, o => {return Number(o.pnl)}).toFixed(2))
-
-                const negatifs = bvas.data.filter( bva => { 
-                    return Number(bva.pnl) < 0 
-                })
-                console.log("NEG COUNT:", negatifs.length)
-                console.log("NEG MIN:", Number(_.minBy(negatifs, o => {return Number(o.pnl)}).pnl).toFixed(2))
-                console.log("NEG MEAN:", _.meanBy(negatifs, o => {return Number(o.pnl)}).toFixed(2))
-
-                console.log("WIN / LOSS RATIO:", Number(positifs.length / negatifs.length).toFixed(2) )
+                console.log("WIN RATE:", (100 * positifs.length / bvas.data.length).toFixed(2) )
+                state.win_rate = (100 * positifs.length / bvas.data.length).toFixed(2)
 
             })
             .catch((err) => {
