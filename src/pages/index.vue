@@ -1,7 +1,8 @@
 <template>
   <div>
     <Hero />
-    <apexchart type="line" height="550" :options="chartOptions" :series="series"></apexchart>
+    <apexchart type="area" height="550" :options="chartOptions" :series="series"></apexchart>
+    <apexchart type="bar" height="550" :options="chartOptions2" :series="series2"></apexchart>
     <Features />
     <p>{{ user }}</p>
   </div>
@@ -18,6 +19,7 @@ export default defineComponent({
 
     const state = reactive({
         user: null,
+        ///////// ///////// ///////// /////////
         series: [
             {
                 name: "Bitcoin",
@@ -31,7 +33,18 @@ export default defineComponent({
         chartOptions: {
             chart: {
                 width: "80%",
-                id: "bitcoin-chart",
+                type: 'area',
+                stacked: false,
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    opacityFrom: 0.6,
+                    opacityTo: 0.8,
+                }
             },
             dataLabels: {
                 enabled: false,
@@ -72,7 +85,58 @@ export default defineComponent({
                     formatter: (value) => { return value+'%' },
                 },
             }
+        },
+        ///////// ///////// ///////// /////////
+        series2: [
+            {
+                name: "BVA",
+                data: [],
+            }
+        ],
+        chartOptions2: {
+            chart: {
+                width: "80%",
+            },
+            dataLabels: {
+                enabled: false,
+                enabledOnSeries: false,
+            },
+            legend: {
+                show: true,
+                labels: {
+                    colors: '#ffffff',
+                },
+            },
+            stroke: { 
+                curve: 'smooth',
+                width: 1,
+            },
+            tooltip: {
+                enabled: true,
+                theme: 'dark',
+            },
+            xaxis: {
+                type: "datetime",
+                labels: {
+                    show: true,
+                    style: {
+                        colors: '#FFFFFF',
+                        fontSize: '12px',
+                    },
+                }
+            },
+            yaxis: {
+                labels: {
+                    show: true,
+                    style: {
+                        colors: '#FFFFFF',
+                        fontSize: '10px',
+                    },
+                    formatter: (value) => { return value+'%' },
+                },
+            }
         }
+        ///////// ///////// ///////// /////////
     })
 
     onMounted(() => {
@@ -87,14 +151,17 @@ export default defineComponent({
         axios.get('/api/strategy?id=466')
         .then(res => {
             let tpnl = []
+            let tpnl2 = []
             let pnl = 0
             for ( var item of res.data.reverse() ) {
                 if (item.pnl) {
-                    pnl = Number(item.pnl) + pnl
+                    pnl = Number(item.pnl) / 15 + pnl
                     tpnl.push([Number(item.updated_time), parseInt(pnl)])
+                    tpnl2.push([Number(item.updated_time), Number(item.pnl).toFixed(2) ])
                 }
             }
             state.series[1].data = tpnl
+            state.series2[0].data = tpnl2
         })
         .catch((err) => {
             console.log(err)
@@ -113,6 +180,7 @@ export default defineComponent({
         .catch((err) => {
             console.log(err)
         })
+        ////// ////// ////// ////// //////
     })
 
     /*
