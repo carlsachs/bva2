@@ -2,6 +2,40 @@
   <div>
     <Hero />
     <apexchart type="area" height="550" :options="chartOptions" :series="series"></apexchart>
+    <div class="text-white relative">
+        <h3 class="text-uppercase font-semibold">Strategie Performance</h3>
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
+
+            <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <div>
+                    <span>Period PnL</span>
+                    <span class="text-justify text-blue-300 block">+134%</span>
+                </div>
+            </div>
+
+            <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <div>
+                    <span>Avg. Profit per Trade</span>
+                    <span class="text-justify text-blue-300 block">1.34%</span>
+                </div>
+            </div>
+
+            <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <div>
+                    <span>Win Rate</span>
+                    <span class="text-justify text-blue-300 block">54%</span>
+                </div>
+            </div>
+
+            <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <div>
+                    <span>Verified Trade History</span>
+                    <span class="text-justify text-blue-300 block">1 year</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
     <Features />
     <p>{{ user }}</p>
   </div>
