@@ -126,6 +126,25 @@ export default defineComponent({
 
                 state.series[0].data = tpnl_btc
                 state.series[1].data = tpnl_bva
+
+                console.log("TOTAL:", bvas.data.length)
+
+                const positifs = bvas.data.filter( bva => { 
+                    return Number(bva.pnl) > 0 
+                })
+                console.log("POS COUNT:", positifs.length)
+                console.log("POS MAX:", Number(_.maxBy(positifs, o => {return Number(o.pnl)}).pnl).toFixed(2))
+                console.log("POS MEAN:", _.meanBy(positifs, o => {return Number(o.pnl)}).toFixed(2))
+
+                const negatifs = bvas.data.filter( bva => { 
+                    return Number(bva.pnl) < 0 
+                })
+                console.log("NEG COUNT:", negatifs.length)
+                console.log("NEG MIN:", Number(_.minBy(negatifs, o => {return Number(o.pnl)}).pnl).toFixed(2))
+                console.log("NEG MEAN:", _.meanBy(negatifs, o => {return Number(o.pnl)}).toFixed(2))
+
+                console.log("WIN / LOSS RATIO:", Number(positifs.length / negatifs.length).toFixed(2) )
+
             })
             .catch((err) => {
                 console.log(err)
