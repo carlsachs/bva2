@@ -2,7 +2,6 @@
   <div>
     <Hero />
     <apexchart type="area" height="550" :options="chartOptions" :series="series"></apexchart>
-    <apexchart type="bar" height="550" :options="chartOptions2" :series="series2"></apexchart>
     <Features />
     <p>{{ user }}</p>
   </div>
@@ -12,6 +11,7 @@
 
 import { onMounted, reactive, ref, toRefs, defineComponent } from "vue";
 import axios from "~/utils/axios";
+import _ from "lodash";
 
 export default defineComponent({
   name: "Dashboard",
@@ -34,11 +34,9 @@ export default defineComponent({
             chart: {
                 width: "80%",
                 type: 'area',
-                stacked: false,
+                stacked: true,
             },
-            stroke: {
-                curve: 'smooth'
-            },
+            colors: ['#0080FB', '#00E396'],
             fill: {
                 type: 'gradient',
                 gradient: {
@@ -56,9 +54,16 @@ export default defineComponent({
                     colors: '#ffffff',
                 },
             },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    opacityFrom: 0.6,
+                    opacityTo: 0.8,
+                }
+            },
             stroke: { 
                 curve: 'smooth',
-                width: 1,
+                width: 2,
             },
             tooltip: {
                 enabled: true,
@@ -76,6 +81,7 @@ export default defineComponent({
             },
             yaxis: {
                 min: 0,
+                forceNiceScale: true,
                 labels: {
                     show: true,
                     style: {
@@ -86,56 +92,6 @@ export default defineComponent({
                 },
             }
         },
-        ///////// ///////// ///////// /////////
-        series2: [
-            {
-                name: "BVA",
-                data: [],
-            }
-        ],
-        chartOptions2: {
-            chart: {
-                width: "80%",
-            },
-            dataLabels: {
-                enabled: false,
-                enabledOnSeries: false,
-            },
-            legend: {
-                show: true,
-                labels: {
-                    colors: '#ffffff',
-                },
-            },
-            stroke: { 
-                curve: 'smooth',
-                width: 1,
-            },
-            tooltip: {
-                enabled: true,
-                theme: 'dark',
-            },
-            xaxis: {
-                type: "datetime",
-                labels: {
-                    show: true,
-                    style: {
-                        colors: '#FFFFFF',
-                        fontSize: '12px',
-                    },
-                }
-            },
-            yaxis: {
-                labels: {
-                    show: true,
-                    style: {
-                        colors: '#FFFFFF',
-                        fontSize: '10px',
-                    },
-                    formatter: (value) => { return value+'%' },
-                },
-            }
-        }
         ///////// ///////// ///////// /////////
     })
 
@@ -148,34 +104,32 @@ export default defineComponent({
             console.log(err)
         })
         ////// ////// ////// ////// //////
-        axios.get('/api/strategy?id=466')
-        .then(res => {
-            let tpnl = []
-            let tpnl2 = []
-            let pnl = 0
-            for ( var item of res.data.reverse() ) {
-                if (item.pnl) {
-                    pnl = Number(item.pnl) / 15 + pnl
-                    tpnl.push([Number(item.updated_time), parseInt(pnl)])
-                    tpnl2.push([Number(item.updated_time), Number(item.pnl).toFixed(2) ])
-                }
-            }
-            state.series[1].data = tpnl
-            state.series2[0].data = tpnl2
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-        ////// ////// ////// ////// //////
         axios.get('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=350')
-        .then(res => {
-            let tpnl = []
-            let pnl = 0
-            for ( var item of res.data ) {
-                pnl = 100 * (Number(item[4]) - Number(item[1])) / Number(item[1]) + pnl
-                tpnl.push([item[0], parseInt(pnl)])
-            }
-            state.series[0].data = tpnl
+        .then( btcs => {
+            axios.get('/api/strategy?id=466')
+            .then( bvas => {
+
+                let tpnl_btc = []
+                let tpnl_bva = []
+                let pnl_btc = 0
+                let pnl_bva = 0
+
+                for ( var btc of btcs.data ) {
+                    pnl_btc = 100 * (Number(btc[4]) - Number(btc[1])) / Number(btc[1]) + pnl_btc
+                    tpnl_btc.push([ btc[0], pnl_btc.toFixed(0) ])
+                    const sum = bvas.data.filter( bva => { 
+                        return Number(bva.updated_time) > btc[0] && Number(bva.updated_time) <= btc[6] 
+                    })
+                    pnl_bva = _.sumBy(sum, o => { return Number(o.pnl) }) / 15 + pnl_bva
+                    tpnl_bva.push([ btc[0], pnl_bva.toFixed(0) ])
+                }
+
+                state.series[0].data = tpnl_btc
+                state.series[1].data = tpnl_bva
+            })
+            .catch((err) => {
+                console.log(err)
+            })
         })
         .catch((err) => {
             console.log(err)

@@ -13,6 +13,7 @@
     "apexcharts": "^3.26.2",
     "axios": "0.21.1",
     "events": "3.3.0",
+    "lodash": "^4.17.21",
     "nprogress": "0.2.0",
     "prism-theme-vars": "0.2.2",
     "vite-plugin-windicss": "0.7.2",
