@@ -7,6 +7,11 @@
       </button>
     </router-link>
     <!--p class="text-white">{{ router.currentRoute._rawValue.path }}</p-->
+    <router-link to="/test">
+      <button class="dark_button" type="button">
+        Test
+      </button>
+    </router-link>
     <router-link v-if="auth0.state.isAuthenticated" to="/profile">
       <button class="green_button" type="button">
         Profile
@@ -67,5 +72,11 @@ function logout() {
 }
 .orange_button {
   @apply border-2 border-yellow-600 rounded-lg px-3 py-2 text-yellow-400 cursor-pointer hover:bg-yellow-600 hover:text-yellow-200 flex flex-row items-center;
+}
+.red_button {
+  @apply border-2 border-red-600 rounded-lg px-3 py-2 text-red-400 cursor-pointer hover:bg-red-600 hover:text-red-200 flex flex-row items-center;
+}
+.dark_button {
+  @apply border-2 border-gray-800 rounded-lg px-3 py-2 text-gray-400 cursor-pointer hover:bg-gray-800 hover:text-gray-200 flex flex-row items-center;
 }
 </style>
