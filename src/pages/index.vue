@@ -1,46 +1,37 @@
 <template>
   <div>
-    <div class="m-4 p-4 border-2 border-blue-900 rounded-lg">
-        <p class="text-white">whdgs dgsugfusgfiusuifgsiuafiasgfiasifasiuiu</p>
+    <div class="mx-4 my-14 p-4 border-2 border-blue-900 rounded-lg">
+        <p class="text-white">Welcome to Bitcoin vs. Alts, ...</p>
     </div>
-    <div class="m-4 p-0 border-2 border-blue-900 rounded-lg">
+    <div class="mx-4 my-14 pt-4 border-2 border-blue-900 rounded-lg">
         <apexchart type="area" height="550" :options="chartOptions" :series="series"></apexchart>
     </div>
-    <div class="text-white relative">
-        <h3 class="text-uppercase font-semibold">Strategie Performance</h3>
-        <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
+    <div class="mx-4 my-14 p-4 border-2 border-blue-900 rounded-lg text-white relative">
+        <h3 class="mt-4 text-uppercase font-semibold">BVA Strategie Performance</h3>
+        <div class="m-6 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
 
-            <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                <div>
-                    <span>Period PnL</span>
-                    <span class="text-justify text-blue-300 block">{{ total_pnl }}%</span>
-                </div>
+            <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <div class="flex-initial">Period PnL</div>
+                <div class="flex-initial text-justify text-blue-300 block">{{ total_pnl }}%</div>
             </div>
 
             <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                <div>
-                    <span>Avg. Profit per Trade</span>
-                    <span class="text-justify text-blue-300 block">{{ avg_pnl }}%</span>
-                </div>
+                <div class="flex-initial">Avg. Profit per Trade</div>
+                <div class="flex-initial text-justify text-blue-300 block">{{ avg_pnl }}%</div>
             </div>
 
             <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                <div>
-                    <span>Win Rate</span>
-                    <span class="text-justify text-blue-300 block">{{ win_rate }}%</span>
-                </div>
+                <div class="flex-initial">Win Rate</div>
+                <div class="flex-initial text-justify text-blue-300 block">{{ win_rate }}%</div>
             </div>
 
             <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                <div>
-                    <span>Verified Trade History</span>
-                    <span class="text-justify text-blue-300 block">1 year</span>
-                </div>
+                <div class="flex-initial">Verified Trade History</div>
+                <div class="flex-initial text-justify text-blue-300 block">1 year</div>
             </div>
 
         </div>
     </div>
-    <Features />
     <!--p>{{ user }}</p-->
   </div>
 </template>

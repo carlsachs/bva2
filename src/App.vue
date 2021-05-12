@@ -8,7 +8,7 @@
   </div>
   <router-view></router-view>
   <div class="text-center text-gray-300 p-5 m-6">
-    <h2 class="">Footer</h2>
+    <h2 class="">Bitcoin vs. Altcoins © 2019–2021</h2>
   </div>
 </template>
 
