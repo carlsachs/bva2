@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="m-4 p-4 border-2 border-blue-900 rounded-lg">
+    <div class="m-4 p-4 border-2 border-gray-800 rounded-lg">
         <p class="text-white">whdgs dgsugfusgfiusuifgsiuafiasgfiasifasiuiu</p>
     </div>
-    <div class="m-4 p-0 border-2 border-blue-900 rounded-lg">
+    <div class="m-4 p-0 border-2 border-gray-800 rounded-lg">
         <apexchart type="area" height="550" :options="chartOptions" :series="series"></apexchart>
     </div>
     <div class="text-white relative">
