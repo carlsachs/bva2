@@ -8,7 +8,7 @@
     </router-link>
     <router-link v-if="auth0.state.isAuthenticated" to="/profile">
       <button class="green_button" type="button">
-        Profile
+        Account
       </button>
     </router-link>
     <button v-if="auth0.state.isLoading" class="blue_button" type="button">

@@ -1,6 +1,11 @@
 <template>
   <div>
-    <apexchart type="area" height="550" :options="chartOptions" :series="series"></apexchart>
+    <div class="m-4 p-4 border-2 border-blue-900 rounded-lg">
+        <p class="text-white">whdgs dgsugfusgfiusuifgsiuafiasgfiasifasiuiu</p>
+    </div>
+    <div class="m-4 p-0 border-2 border-blue-900 rounded-lg">
+        <apexchart type="area" height="550" :options="chartOptions" :series="series"></apexchart>
+    </div>
     <div class="text-white relative">
         <h3 class="text-uppercase font-semibold">Strategie Performance</h3>
         <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
