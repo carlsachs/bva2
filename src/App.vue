@@ -2,7 +2,7 @@
   <div class="bg-gray-900">
     <nav>
       <div class='p-5 mt-5'>
-        <img class="mx-auto" width=200 alt="BvA" src="bva_small.png"/>
+        <img class="mx-auto" width=200 alt="BvA" src="/bva_small.png"/>
       </div>
     </nav>
   </div>
