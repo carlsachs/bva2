@@ -1,9 +1,8 @@
 <template>
-  <div class="mt-5 pt-3 text-center text-gray-300">
+  <div class="bg-gray-900">
     <nav>
-      <a href="/" class="m-auto m-5 text-lg">Bitcoin vs. Altcoins</a>
-      <div class="m-auto m-5 text-sm text-center opacity-25">
-        2.1.4 beta
+      <div>
+        <img class="mx-auto" width=200 alt="BvA" src="/bva.png"/>
       </div>
     </nav>
   </div>

@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-row items-center justify-center p-2 space-x-5">
     <!--DarkModeToggle /-->
-    <router-link to="/">
-      <button class="button" type="button">
+    <!--router-link to="/">
+      <button class="border-2 border-yellow-600 rounded-lg px-3 py-2 text-yellow-400 cursor-pointer hover:bg-yellow-600 hover:text-yellow-200" type="button">
         HOME
       </button>
     </router-link>
@@ -10,7 +10,7 @@
       <button class="button" type="button">
         PROFILE
       </button>
-    </router-link>
+    </router-link-->
     <button v-if="auth0.state.isLoading" class="button" type="button">
       Loading
       <feather-loader class="ml-2" />
@@ -22,11 +22,11 @@
         type="button"
         @click="logout"
       >
-        Logout
+        Sign Out
         <feather-log-out class="ml-2" />
       </button>
       <button v-else class="button" type="button" @click="login">
-        Login <feather-log-in class="ml-2" />
+        Sign In <feather-log-in class="ml-2" />
       </button>
     </div>
   </div>
@@ -53,6 +53,6 @@ function logout() {
 
 <style lang="postcss" scoped>
 .button {
-  @apply bg-blue-600 text-white px-4 py-2 rounded-lg flex flex-row items-center;
+  @apply text-blue-400 cursor-pointer border-2 border-blue-600 hover:bg-blue-600 hover:text-blue-200 px-4 py-2 rounded-lg flex flex-row items-center;
 }
 </style>

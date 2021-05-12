@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Hero />
     <apexchart type="area" height="550" :options="chartOptions" :series="series"></apexchart>
     <div class="text-white relative">
         <h3 class="text-uppercase font-semibold">Strategie Performance</h3>
@@ -37,7 +36,7 @@
         </div>
     </div>
     <Features />
-    <p>{{ user }}</p>
+    <!--p>{{ user }}</p-->
   </div>
 </template>
 
