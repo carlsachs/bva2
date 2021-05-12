@@ -6,12 +6,6 @@
         Home
       </button>
     </router-link>
-    <!--p class="text-white">{{ router.currentRoute._rawValue.path }}</p-->
-    <router-link to="/test">
-      <button class="dark_button" type="button">
-        Test
-      </button>
-    </router-link>
     <router-link v-if="auth0.state.isAuthenticated" to="/profile">
       <button class="green_button" type="button">
         Profile

@@ -74,13 +74,6 @@ export default defineComponent({
                 stacked: true,
             },
             colors: ['#0080FB', '#00E396'],
-            fill: {
-                type: 'gradient',
-                gradient: {
-                    opacityFrom: 0.6,
-                    opacityTo: 0.8,
-                }
-            },
             dataLabels: {
                 enabled: false,
                 enabledOnSeries: false,
