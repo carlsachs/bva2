@@ -10,7 +10,7 @@
   <div class="text-center p-5 m-6 flex flex-row items-center justify-center p-2 space-x-5 mb-5">
     <a href="https://twitter.com/BitcoinvsAlts" target="_new" class="text-blue-500">@BitcoinvsAlts</a> &nbsp;
     <a href="https://github.com/jsappme/node-binance-trader" class="text-green-500" target="_new">Node Binance Trader</a> &nbsp;
-    <a href="https://discordapp.com/invite/4EQrEgj" target="_new" class="text-purple-500">Our Discord Server</a>
+    <a href="https://discordapp.com/invite/4EQrEgj" target="_new" class="text-purple-500">Discord Server</a>
   </div>
   <div class="text-center text-gray-300 p-5 m-6 flex flex-row items-center justify-center p-2 space-x-5 mb-5">
     Bitcoin vs. Alts © 2019–2021 developed by&nbsp;<a href="https://jsapp.me" target="_new">JSapp.me</a> 

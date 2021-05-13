@@ -77,6 +77,11 @@ export async function setupAuth0(router) {
     console.log("======+++======1")
     // Initialize authentication state
     $auth0.state.isAuthenticated = await $auth0.client.isAuthenticated()
+    /// /// /// /// /// /// /// /// ///
+    if (!$auth0.state.isAuthenticated) {
+      $auth0.client.loginWithRedirect({ appState: { targetUrl: '/profile' } })
+    }
+    /// /// /// /// /// /// /// /// ///
     console.log("======+++======2", $auth0.state.isAuthenticated)
     $auth0.state.user = await $auth0.client.getUser()
     console.log("======+++======3", $auth0.state.user)
