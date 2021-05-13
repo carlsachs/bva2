@@ -29,8 +29,8 @@ export default {
           quantity: 1,
         },
       ],
-      successURL: 'http://localhost:3000/profile?success',
-      cancelURL: 'http://localhost:3000/profile?cancel',
+      successURL: 'https://bva2.netlify.app/profile?success',
+      cancelURL: 'https://bva2.netlify.app/profile?cancel',
     };
   },
   methods: {
