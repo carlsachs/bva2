@@ -31,8 +31,8 @@ export default {
           quantity: 1,
         },
       ],
-      successURL: 'http://localhost:3000/profile?success',
-      cancelURL: 'http://localhost:3000/profile',
+      successURL: 'https://bva2.netlify.app/profile',
+      cancelURL: 'https://bva2.netlify.app/profile',
       customerEmail: 'herve76@gmail.com',
       clientReferenceId: "1"
     };
