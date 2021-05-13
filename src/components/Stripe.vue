@@ -25,7 +25,7 @@ export default {
       loading: false,
       lineItems: [
         {
-          price: 'price_1Iqgs84v5ia3fxwPjV01AVke',
+          price: 'price_1IqheJ4v5ia3fxwPKEJMLptX',
           quantity: 1,
         },
       ],
