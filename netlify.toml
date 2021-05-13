@@ -2,8 +2,8 @@
   NPM_FLAGS = "--prefix=/dev/null"
   NODE_VERSION = "14"
   VITE_API_URL="https://api-bva.herokuapp.com"
-  VITE_APP_STRIPE_PUBLIC_KEY="pk_live_tdxzkzFxFZr4oa8QgFMCndI8"
-
+  VITE_APP_STRIPE_PUBLIC_KEY="pk_test_qcrZ4YhOGhfxXiKZ0Fsg2X8r"
+  
 [build]
   publish = "dist"
   command = "npx pnpm i --store=node_modules/.pnpm-store && npx pnpm run build"
