@@ -1,6 +1,9 @@
 <template>
-  <div class="text-center bg-black text-gray-300">
-    <h1>Profile</h1>
+  <div class="text-center bg-black text-gray-300 p-4">
+    <h1 class="text-green-500 text-3xl mt-3">Account</h1>
+    <br><br>
+    <Stripe />
+    <br><br>
     <span>{{ auth0.state }}</span>
     <div class="py-4">
       <input

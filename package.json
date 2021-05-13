@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "1.14.0",
+    "@vue-stripe/vue-stripe": "^4.2.0",
     "@vueuse/core": "4.8.2",
     "@vueuse/head": "0.5.1",
     "apexcharts": "^3.26.2",
