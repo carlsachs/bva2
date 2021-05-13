@@ -7,9 +7,11 @@
       :line-items="lineItems"
       :success-url="successURL"
       :cancel-url="cancelURL"
+      :clientReferenceId="clientReferenceId"
+      :customerEmail="customerEmail"
       @loading="v => loading = v"
     />
-    <button class="green_button mx-auto" @click="submit">Subscribe!</button>
+    <button class="green_button mx-auto" @click="submit">Subscribe</button>
   </div>
 </template>
 
@@ -29,8 +31,10 @@ export default {
           quantity: 1,
         },
       ],
-      successURL: 'https://bva2.netlify.app/profile?success',
-      cancelURL: 'https://bva2.netlify.app/profile?cancel',
+      successURL: 'http://localhost:3000/profile?success',
+      cancelURL: 'http://localhost:3000/profile',
+      customerEmail: 'herve76@gmail.com',
+      clientReferenceId: "1"
     };
   },
   methods: {
