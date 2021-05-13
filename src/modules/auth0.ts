@@ -91,16 +91,16 @@ export async function setupAuth0(router) {
     if ($auth0.state.user) {
       $auth0.state.user.token = await $auth0.client.getTokenSilently()
       console.log("======+++======4", $auth0.state.user.token)
-      //console.log(JSON.stringify($auth0.state.user))
-      const userid = await signInUser($auth0.state.user.sub, $auth0.state.user.nickname)
-      console.log("USER ID", userid)
-      if (!userid) {
+      console.log(JSON.stringify($auth0.state.user))
+      const user_data = await signInUser($auth0.state.user.sub, $auth0.state.user.nickname, $auth0.state.user.email)
+      console.log("USER DATA", user_data)
+      if (!user_data) {
         $auth0.state.user = null
         console.log("USER UNKNOWN")
       }
       else {
-        $auth0.state.user['userid'] = userid
-        console.log("WELCOME USER", $auth0.state.user['userid'])
+        $auth0.state.user['user_data'] = user_data
+        console.log("WELCOME USER", $auth0.state.user['user_data'].id )
       }
     }
   }
@@ -151,13 +151,13 @@ interface $Auth0Defaults {
 
 ///////// ///////// ///////// ///////// ///////// /////////
 
-async function signInUser(sub, nickname) {
+async function signInUser(sub, nickname, email) {
   console.log("signInUser", sub, nickname)
   return axios
-    .get(api_url + '/api/getusersignin?sub=' + sub + '&nickname=' + nickname)
+    .get(api_url + '/api/getusersignin?sub=' + sub + '&nickname=' + nickname + '&email=' + email)
     .then( (response) => {
-      console.log("USERID", response.data.id)
-      return response.data.id
+      console.log("signInUser ID ::: ", response.data.id)
+      return response.data
     })
     .catch( (e) => {
       console.log("signInUser ERROR", e)

@@ -4,7 +4,7 @@
     <br><br>
     <Stripe />
     <br><br>
-    <span>{{ auth0.state }}</span>
+    <span>{{ auth0.state.user }}</span>
     <div class="py-4">
       <input
         id="input"
