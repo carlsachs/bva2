@@ -75,18 +75,10 @@ export async function setupAuth0(router) {
     router.replace("/")
   } finally {
     console.log("======+++======1")
-    // Initialize authentication state
     $auth0.state.isAuthenticated = await $auth0.client.isAuthenticated()
-    /// /// /// /// /// /// /// /// ///
-    /*
-    if (!$auth0.state.isAuthenticated) {
-      $auth0.client.loginWithRedirect({ appState: { targetUrl: '/profile' } })
-    }
-    */
-    /// /// /// /// /// /// /// /// ///
     console.log("======+++======2", $auth0.state.isAuthenticated)
     $auth0.state.user = await $auth0.client.getUser()
-    console.log("======+++======3", $auth0.state.user)
+    console.log("======+++======3", JSON.stringify($auth0.state.user))
     $auth0.state.isLoading = false
     //console.log("this.user :: ", $auth0.state.user)
     console.log("======000======")
@@ -165,6 +157,13 @@ async function signInUser(sub, nickname, email) {
       console.log("signInUser ERROR", e)
       return 0
     })
+}
+
+///////// ///////// ///////// ///////// ///////// /////////
+
+export function updateUsername(nickname: String) {
+  console.log("updateUsername", nickname)
+  $auth0.state.user['user_data']['nickname'] = nickname
 }
 
 ///////// ///////// ///////// ///////// ///////// /////////

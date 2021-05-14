@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="m-5">
     <stripe-checkout
       ref="checkoutRef"
       mode="subscription"
@@ -7,17 +7,22 @@
       :line-items="lineItems"
       :success-url="successURL"
       :cancel-url="cancelURL"
-      :clientReferenceId="clientReferenceId"
       :customerEmail="customerEmail"
       @loading="v => loading = v"
     />
-    <button class="green_button mx-auto" @click="submit">Subscribe</button>
+    <button class="green_button" @click="submit">Subscribe to {{ description }} for {{ price }} USD per month</button>
   </div>
 </template>
 
 <script>
-import { StripeCheckout } from '@vue-stripe/vue-stripe';
+import { StripeCheckout } from '@vue-stripe/vue-stripe'
 export default {
+  props: {
+    customerEmail: { type: String, required: true },
+    lineItems: { type: Array, required: true },
+    description: { type: String, required: true },
+    price: { type: Number, required: true },
+  },
   components: {
     StripeCheckout,
   },
@@ -25,32 +30,23 @@ export default {
     this.publishableKey = import.meta.env.VITE_APP_STRIPE_PUBLIC_KEY
     return {
       loading: false,
-      lineItems: [
-        {
-          price: 'price_1IqheJ4v5ia3fxwPKEJMLptX',
-          quantity: 1,
-        },
-      ],
       successURL: 'https://bva2.netlify.app/profile',
       cancelURL: 'https://bva2.netlify.app/profile',
-      customerEmail: 'herve76@gmail.com',
-      clientReferenceId: "1"
-    };
+      //successURL: 'http://localhost:3000/profile',
+      //cancelURL: 'http://localhost:3000/profile',
+    }
   },
   methods: {
     submit () {
       this.$refs.checkoutRef.redirectToCheckout();
     },
   },
-};
+}
 </script>
 
 
 <style lang="postcss" scoped>
-.blue_button {
-  @apply text-blue-400 cursor-pointer border-2 border-blue-600 hover:bg-blue-600 hover:text-blue-200 px-3 py-2 rounded-lg flex flex-row items-center;
-}
 .green_button {
-  @apply border-2 border-green-600 rounded-lg px-3 py-2 text-green-400 cursor-pointer hover:bg-green-600 hover:text-green-200 flex flex-row items-center;
+  @apply border-2 border-green-600 rounded-lg px-3 py-2 text-green-400 cursor-pointer hover:bg-green-600 hover:text-green-200;
 }
 </style>
