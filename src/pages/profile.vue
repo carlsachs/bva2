@@ -1,24 +1,31 @@
 <template>
   <div class="text-center bg-black text-gray-300 p-4">
-    <h1 class="text-green-500 text-3xl mt-3">Account</h1>
-    <br><br>
-    <Stripe />
-    <br><br>
-    <span>{{ auth0.state.user }}</span>
-    <div class="py-4">
-      <input
-        id="input"
-        v-model="form.password"
-        placeholder="password"
-        aria-label="password"
-        type="text"
-        autocomplete="false"
-        class="px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
-        style="width: 250px"
-        @keydown.enter="savePass"
-      >
-      <button class="m-3 text-sm btn" :disabled="!form.password" @click="savePass">Submit</button>
-      <span>{{ form.result }}</span>
+    <div v-if="auth0.state.isAuthenticated">
+      <h1 class="text-green-500 text-3xl mt-3">Account</h1>
+      <br><br>
+      <Stripe />
+      <br><br>
+      <span>{{ auth0.state.user }}</span>
+      <div class="py-4">
+        <input
+          id="input"
+          v-model="form.password"
+          placeholder="password"
+          aria-label="password"
+          type="text"
+          autocomplete="false"
+          class="px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
+          style="width: 250px"
+          @keydown.enter="savePass"
+        >
+        <button class="m-3 text-sm btn" :disabled="!form.password" @click="savePass">Submit</button>
+        <span>{{ form.result }}</span>
+      </div>
+    </div>
+    <div v-else>
+      <button class="blue_button" type="button" @click="login">
+        Sign in <feather-log-in class="ml-2" />
+      </button>
     </div>
   </div>
 </template>
@@ -40,6 +47,10 @@ export default {
     })
 
     const api_url = import.meta.env.VITE_API_URL
+
+    function login() {
+      auth0.client.loginWithRedirect({ appState: { targetUrl: '/profile' } })
+    }
 
     const savePass = async () => {
       console.log("PASSWORD", form.password)
