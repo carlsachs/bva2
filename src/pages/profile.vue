@@ -3,45 +3,58 @@
     <h1 class="text-green-500 text-3xl mt-3">Account</h1>
     <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
       <span>{{ auth0.state.user.user_data }}</span>
+      <br/><br/>
+      <button @click="showModal = true">Open Modal</button><br/>
     </div>
     <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
-      <Stripe 
-        :customerEmail="auth0.state.user.email" 
-        lineItems="[{ price: 'price_1IqheJ4v5ia3fxwPKEJMLptX', quantity: 1 }]" 
-        description="BVA"
-        price="49.90"
-      />
-      <Stripe 
-        :customerEmail="auth0.state.user.email" 
-        lineItems="[{ price: 'price_1IqheJ4v5ia3fxwPKEJMLptX', quantity: 1 }]" 
-        description="BVA LONG ONLY"
-        price="29.90"
-      />
+
+        <Stripe 
+            :customerEmail="auth0.state.user.email" 
+            :lineItems="[{ 'price': 'price_1IqheJ4v5ia3fxwPKEJMLptX', 'quantity': 1 }]" 
+            description="BVA"
+            price="49.90"
+        />
+
+        <Stripe 
+            :customerEmail="auth0.state.user.email" 
+            :lineItems="[{ 'price': 'price_1IqheJ4v5ia3fxwPKEJMLptX', 'quantity': 1 }]"
+            description="BVA LONG ONLY"
+            price="29.90"
+        />
+
+        <vue-final-modal v-model="showModal" classes="modal-container" content-class="modal-content">
+            <span class="modal__title">Hello, vue-final-modal</span>
+        </vue-final-modal>
+
     </div>
-    <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
-      <div class="my-3">Your Binance API Key Information: &nbsp;</div>
-      <input
-        id="key"
-        v-model="form.key"
-        placeholder="your api key"
-        aria-label="key"
-        type="text"
-        autocomplete="false"
-        class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
-      >&nbsp;
-      <input
-        id="secret"
-        v-model="form.secret"
-        placeholder="your api secret"
-        aria-label="secret"
-        type="text"
-        autocomplete="false"
-        class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
-      >&nbsp;
-      <button class="dark_button" :disabled="!form.secret&&!form.key" @click="saveUserKey">Submit</button>
-      &nbsp;
-      <span>{{ form.key_result }}</span>
-    </div>
+
+    <section id="apikey" ref="apikey">
+      <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
+        <div class="my-3">Your Binance API Key Information: &nbsp;</div>
+        <input
+          id="key"
+          v-model="form.key"
+          placeholder="your api key"
+          aria-label="key"
+          type="text"
+          autocomplete="false"
+          class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
+        >&nbsp;
+        <input
+          id="secret"
+          v-model="form.secret"
+          placeholder="your api secret"
+          aria-label="secret"
+          type="text"
+          autocomplete="false"
+          class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
+        >&nbsp;
+        <button class="dark_button" :disabled="!form.secret&&!form.key" @click="saveUserKey">Submit</button>
+        &nbsp;
+        <span>{{ form.key_result }}</span>
+      </div>
+    </section>
+
     <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
       <div class="my-3">Change your username: &nbsp;</div>
       <input
@@ -87,7 +100,11 @@ export default {
   setup() {
 
     const auth0: any = inject("auth0")
-    const state = reactive({ auth0 })
+    const state = reactive({ 
+      auth0, 
+      showModal:false,
+      apikey: null,
+    })
 
     const form = reactive({
       key: auth0.state.user?.user_data?.cle,
@@ -97,6 +114,8 @@ export default {
       user_result: '',
       password: '',
       pwd_result: '',
+      searchEnabled: true,
+      showModal: false,
     })
 
     watch( () =>  auth0.state.user?.user_data, (user) => {
@@ -197,6 +216,35 @@ export default {
 }
 .dark_button {
   @apply my-3 border-1 border-gray-800 rounded-lg py-1 px-3 text-gray-400 cursor-pointer hover:bg-gray-800 hover:text-gray-200;
+}
+
+::v-deep .modal-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+::v-deep .modal-content {
+  display: flex;
+  flex-direction: column;
+  margin: 0 1rem;
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.25rem;
+  border-color: #2d3748;
+  background-color: #1a202c;
+}
+.modal__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.modal {
+  width: 300px;
+  padding: 30px;
+  box-sizing: border-box;
+  background-color: #fff;
+  font-size: 20px;
+  text-align: center;
 }
 </style>
 
