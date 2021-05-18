@@ -12,14 +12,14 @@
             :customerEmail="auth0.state.user.email" 
             :lineItems="[{ 'price': 'price_1IqheJ4v5ia3fxwPKEJMLptX', 'quantity': 1 }]" 
             description="BVA"
-            price="49.90"
+            price="4.90"
         />
 
         <Stripe 
             :customerEmail="auth0.state.user.email" 
-            :lineItems="[{ 'price': 'price_1IqheJ4v5ia3fxwPKEJMLptX', 'quantity': 1 }]"
+            :lineItems="[{ 'price': 'price_1IsYQc4v5ia3fxwPD4j8g01f', 'quantity': 1 }]"
             description="BVA LONG ONLY"
-            price="29.90"
+            price="5.90"
         />
 
         <vue-final-modal v-model="showModal" classes="modal-container" content-class="modal-content">
