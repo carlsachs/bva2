@@ -8,19 +8,29 @@
     </div>
     <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
 
-        <Stripe 
+      <h1 class="text-xl mb-2">Your subscriptions</h1>
+
+        <div v-if="form.bva_subs">
+          <button class="dark_button" @click="cancelSubs('bva_subs')">Cancel your BVA subscription</button>
+        </div>
+        <Stripe v-else
             :customerEmail="auth0.state.user.email" 
             :lineItems="[{ 'price': 'price_1IqheJ4v5ia3fxwPKEJMLptX', 'quantity': 1 }]" 
             description="BVA"
             price="4.90"
         />
 
-        <Stripe 
+        <div v-if="form.bva_long_only_subs">
+          <button class="dark_button" @click="cancelSubs('bva_long_only_subs')">Cancel your BVA LONG ONLY subscription</button>
+        </div>
+        <Stripe v-else
             :customerEmail="auth0.state.user.email" 
             :lineItems="[{ 'price': 'price_1IsYQc4v5ia3fxwPD4j8g01f', 'quantity': 1 }]"
             description="BVA LONG ONLY"
             price="5.90"
         />
+
+        <span>{{ form.cancel_sub_result }}</span>
 
         <vue-final-modal v-model="showModal" classes="modal-container" content-class="modal-content">
             <span class="modal__title">Hello, vue-final-modal</span>
@@ -49,7 +59,7 @@
           autocomplete="false"
           class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
         >&nbsp;
-        <button class="dark_button" :disabled="!form.secret&&!form.key" @click="saveUserKey">Submit</button>
+        <button class="dark_button" :disabled="!form.secret&&!form.key" @click="saveUserKey">Save</button>
         &nbsp;
         <span>{{ form.key_result }}</span>
       </div>
@@ -67,7 +77,7 @@
         class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
         @keydown.enter="saveUser"
       >&nbsp;
-      <button class="dark_button" :disabled="!form.username" @click="saveUser">Submit</button>
+      <button class="dark_button" :disabled="!form.username" @click="saveUser">Save</button>
       &nbsp;
       <span>{{ form.user_result }}</span>
     </div>
@@ -83,7 +93,7 @@
         class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
         @keydown.enter="savePass"
       >&nbsp;
-      <button class="dark_button" :disabled="!form.password" @click="savePass">Submit</button>
+      <button class="dark_button" :disabled="!form.password" @click="savePass">Save</button>
       &nbsp;
       <span>{{ form.pwd_result }}</span>
     </div>
@@ -100,6 +110,7 @@ export default {
   setup() {
 
     const auth0: any = inject("auth0")
+
     const state = reactive({ 
       auth0, 
       showModal:false,
@@ -109,6 +120,10 @@ export default {
     const form = reactive({
       key: auth0.state.user?.user_data?.cle,
       secret: auth0.state.user?.user_data?.cles,
+      bva_subs: auth0.state.user?.user_data?.bva_subs,
+      bva_long_only_subs: auth0.state.user?.user_data?.bva_long_only_subs,
+      woltiks_subs: auth0.state.user?.user_data?.woltiks_subs,
+      cancel_sub_result: '',
       key_result: '',
       username: auth0.state.user?.user_data?.nickname,
       user_result: '',
@@ -122,6 +137,9 @@ export default {
       form.username = user.nickname
       form.key = user.cle
       form.secret = user.cles
+      form.bva_subs = user.bva_subs
+      form.bva_long_only_subs = user.bva_long_only_subs
+      form.woltiks_subs = user.woltiks_subs
     })
 
     const api_url = import.meta.env.VITE_API_URL
@@ -197,12 +215,36 @@ export default {
         form.key_result = "error"
       })
     }
+
+    const cancelSubs = async (subscription) => {
+      console.log("cancelSubs", subscription, auth0.state.user.user_data[subscription] )
+      await axios.put(
+        api_url + '/api/cancelsub?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
+        { subs: subscription, subs_id: auth0.state.user.user_data[subscription] },
+        { headers: { Authorization: `${auth0.state.user.token}` } }
+      )
+      .then( (response) => {
+        console.log("cancelSubs result:", response.data)
+        if (response.data.msg == 'success') {
+          form.cancel_sub_result = response.data.msg
+          form[subscription] = null
+        }
+        else {
+          form.cancel_sub_result = "error"
+        }
+      })
+      .catch( (error) => {
+        console.log("ERROR cancelSubs:", error)
+        form.cancel_sub_result = "error"
+      })
+    }
     
     return {
       ...toRefs(state),
       savePass,
       saveUser,
       saveUserKey,
+      cancelSubs,
       form
     }
 
@@ -215,7 +257,7 @@ export default {
   @apply my-3 border-1 border-red-600 rounded-lg py-1 px-3 text-red-400 cursor-pointer hover:bg-red-600 hover:text-red-200;
 }
 .dark_button {
-  @apply my-3 border-1 border-gray-800 rounded-lg py-1 px-3 text-gray-400 cursor-pointer hover:bg-gray-800 hover:text-gray-200;
+  @apply my-1 border-2 px-3 py-2 border-gray-800 rounded-lg text-gray-400 cursor-pointer hover:bg-gray-800 hover:text-gray-200;
 }
 
 ::v-deep .modal-container {

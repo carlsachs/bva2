@@ -47,6 +47,6 @@ export default {
 
 <style lang="postcss" scoped>
 .green_button {
-  @apply border-2 border-green-600 rounded-lg px-3 py-2 text-green-400 cursor-pointer hover:bg-green-600 hover:text-green-200;
+  @apply border-2 px-3 py-2 border-green-600 rounded-lg text-green-400 cursor-pointer hover:bg-green-600 hover:text-green-200;
 }
 </style>

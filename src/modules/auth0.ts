@@ -85,7 +85,7 @@ export async function setupAuth0(router) {
     if ($auth0.state.user) {
       $auth0.state.user.token = await $auth0.client.getTokenSilently()
       console.log("======+++======4", $auth0.state.user.token)
-      console.log(JSON.stringify($auth0.state.user))
+      //console.log(JSON.stringify($auth0.state.user))
       const user_data = await signInUser($auth0.state.user.sub, $auth0.state.user.nickname, $auth0.state.user.email)
       console.log("USER DATA", user_data)
       if (!user_data) {
