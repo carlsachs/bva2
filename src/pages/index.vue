@@ -33,6 +33,14 @@
                 <div class="flex-auto text-justify text-blue-300 block">1 year</div>
             </div>
 
+            <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <div class="flex-auto">Subscribe</div>
+            </div>
+
+            <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <div class="flex-auto">Follow</div>
+            </div>
+
         </div>
     </div>
 
