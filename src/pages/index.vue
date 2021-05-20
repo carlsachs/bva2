@@ -139,13 +139,19 @@ export default defineComponent({
     })
 
     onMounted(() => {
+        ////// ////// ////// ////// //////
+        /*
         axios.get('/api/signals')
         .then(res => {
+            console.log(res.data.rows[0])
+            console.log(res.data.rows[1])
+            console.log(res.data.rows[2])
             state.user = res
         })
         .catch((err) => {
             console.log(err)
         })
+        */
         ////// ////// ////// ////// //////
         axios.get('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=350')
         .then( btcs => {
