@@ -4,9 +4,9 @@
         <p class="text-white">Welcome to Bitcoin vs. Alts, ...</p>
     </div>
     <div class="mx-4 my-14 pt-4 border-2 border-blue-900 rounded-lg">
-        <apexchart type="area" height="500" width="500" :options="chartOptions" :series="series"></apexchart>
-        <apexchart type="area" height="500" width="500" :options="chartOptions" :series="series"></apexchart>
-        <apexchart type="area" height="500" width="500" :options="chartOptions" :series="series"></apexchart>
+        <apexchart type="area" height="500" :options="chartOptions" :series="series"></apexchart>
+        <apexchart type="area" height="500" :options="chartOptions" :series="series"></apexchart>
+        <apexchart type="area" height="500" :options="chartOptions" :series="series"></apexchart>
     </div>
     <div class="mx-4 my-14 p-4 border-2 border-blue-900 rounded-lg text-white relative">
         <h3 class="mt-4 text-uppercase font-semibold">BVA Strategie Performance</h3>
@@ -67,7 +67,7 @@ export default defineComponent({
         ],
         chartOptions: {
             chart: {
-                //width: "80%",
+                width: "100%",
                 type: 'area',
                 stacked: true,
             },
