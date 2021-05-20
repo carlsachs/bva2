@@ -1,6 +1,33 @@
 <template>
   <div v-if="auth0.state.isAuthenticated && auth0.state.user" class="text-center bg-black text-gray-300 p-4">
     <h1 class="text-green-500 text-3xl mt-3">Account</h1>
+
+    <section id="apikey" ref="apikey">
+      <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
+        <div class="my-3">Your Binance API Key Information: &nbsp;</div>
+        <input
+          id="key"
+          v-model="form.key"
+          placeholder="your api key"
+          aria-label="key"
+          type="text"
+          autocomplete="false"
+          class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
+        >&nbsp;
+        <input
+          id="secret"
+          v-model="form.secret"
+          placeholder="your api secret"
+          aria-label="secret"
+          type="text"
+          autocomplete="false"
+          class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
+        >&nbsp;
+        <button class="dark_button" :disabled="!form.secret&&!form.key" @click="saveUserKey">Save</button>
+        &nbsp;
+        <span>{{ form.key_result }}</span>
+      </div>
+    </section>
   
     <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
 
@@ -33,33 +60,6 @@
         </vue-final-modal>
 
     </div>
-
-    <section id="apikey" ref="apikey">
-      <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
-        <div class="my-3">Your Binance API Key Information: &nbsp;</div>
-        <input
-          id="key"
-          v-model="form.key"
-          placeholder="your api key"
-          aria-label="key"
-          type="text"
-          autocomplete="false"
-          class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
-        >&nbsp;
-        <input
-          id="secret"
-          v-model="form.secret"
-          placeholder="your api secret"
-          aria-label="secret"
-          type="text"
-          autocomplete="false"
-          class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
-        >&nbsp;
-        <button class="dark_button" :disabled="!form.secret&&!form.key" @click="saveUserKey">Save</button>
-        &nbsp;
-        <span>{{ form.key_result }}</span>
-      </div>
-    </section>
 
     <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
       <div class="my-3">Change your username: &nbsp;</div>
