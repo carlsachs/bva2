@@ -143,9 +143,6 @@ export default defineComponent({
         /*
         axios.get('/api/signals')
         .then(res => {
-            console.log(res.data.rows[0])
-            console.log(res.data.rows[1])
-            console.log(res.data.rows[2])
             state.user = res
         })
         .catch((err) => {

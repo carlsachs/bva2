@@ -1,5 +1,5 @@
 <template>
-  <div v-if="auth0.state.isAuthenticated && auth0.state.user" class="text-center bg-black text-gray-300 p-4">
+  <div v-if="auth0.state.isAuthenticated && auth0.state.user" class="text-center text-gray-300">
     <h1 class="text-green-500 text-3xl mt-3">Account</h1>
 
     <section id="apikey" ref="apikey">
