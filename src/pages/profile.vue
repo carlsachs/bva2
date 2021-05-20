@@ -1,11 +1,7 @@
 <template>
   <div v-if="auth0.state.isAuthenticated && auth0.state.user" class="text-center bg-black text-gray-300 p-4">
     <h1 class="text-green-500 text-3xl mt-3">Account</h1>
-    <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
-      <span>{{ auth0.state.user.user_data }}</span>
-      <br/><br/>
-      <button @click="showModal = true">Open Modal</button><br/>
-    </div>
+  
     <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
 
       <h1 class="text-xl mb-2">Your subscriptions</h1>
@@ -81,6 +77,7 @@
       &nbsp;
       <span>{{ form.user_result }}</span>
     </div>
+
     <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
       <div class="my-3">Change your password: &nbsp;</div>
       <input
@@ -97,6 +94,13 @@
       &nbsp;
       <span>{{ form.pwd_result }}</span>
     </div>
+
+    <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
+      <span>{{ auth0.state.user.user_data }}</span>
+      <br/><br/>
+      <button @click="showModal = true">Open Modal</button><br/>
+    </div>
+
   </div>
 </template>
 
