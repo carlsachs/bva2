@@ -20,7 +20,7 @@
 <script lang="ts">
 
 import { computed } from "vue";
-import { useStore } from "vuex";
+//import { useStore } from "vuex";
 
 export default {
   name: "App",

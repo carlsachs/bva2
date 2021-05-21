@@ -86,7 +86,7 @@ export async function setupAuth0(router) {
       $auth0.state.user.token = await $auth0.client.getTokenSilently()
       console.log("======+++======4", $auth0.state.user.token)
       //console.log(JSON.stringify($auth0.state.user))
-      const user_data = await signInUser($auth0.state.user.sub, $auth0.state.user.nickname, $auth0.state.user.email)
+      const user_data = await signInUser($auth0.state.user.token, $auth0.state.user.email)
       console.log("USER DATA", user_data)
       if (!user_data) {
         $auth0.state.user = null
@@ -145,12 +145,12 @@ interface $Auth0Defaults {
 
 ///////// ///////// ///////// ///////// ///////// /////////
 
-async function signInUser(sub, nickname, email) {
-  console.log("signInUser", sub, nickname)
+async function signInUser(token: String, email: String) {
+  console.log("signInUser", token, email)
   return axios
-    .get(api_url + '/api/getusersignin?sub=' + sub + '&nickname=' + nickname + '&email=' + email)
+    .get(api_url + '/api/getusersignin?email=' + email, { headers: {Authorization:`Bearer ${token}`} })
     .then( (response) => {
-      console.log("signInUser ID ::: ", response.data.id)
+      console.log("signInUser ID result ::: ", response.data.id)
       return response.data
     })
     .catch( (e) => {

@@ -1,9 +1,9 @@
-import { createStore, useStore } from "vuex"
+//import { createStore, useStore } from "vuex"
 import axios from "axios"
 
 export default createStore({
   state: {
-    userid: 0,
+    //userid: 0,
     rows: [],
     /*
     socket: {
@@ -50,6 +50,7 @@ export default createStore({
     },
   },
   actions: {
+    /*
     getItems({ commit }, term) {
       console.log("getItems...")
       return axios
@@ -63,6 +64,7 @@ export default createStore({
           console.log("ERRR)R)R)R")
         })
     },
+    */
   },
   modules: {}
 });

@@ -151,13 +151,13 @@ export default {
     const savePass = async () => {
       console.log("PASSWORD", form.password)
       console.log(JSON.stringify(auth0.state.user) )
-      console.log("USERID!!!!!!", JSON.stringify(auth0.state.user.userid) )
+      //console.log("USERID!!!!!!", JSON.stringify(auth0.state.user.userid) )
       console.log("Authorization!!!!!!", JSON.stringify(auth0.state.user.token) )
       console.log("api_url", api_url)
       await axios.put(
         api_url + '/api/pwduser?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
         { password: form.password },
-        { headers: { Authorization: `${auth0.state.user.token}` } }
+        { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
       .then( (response) => {
         console.log("savePwd.response.data:", response.data)
@@ -180,7 +180,7 @@ export default {
       await axios.put(
         api_url + '/api/setusername?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
         { username: form.username },
-        { headers: { Authorization: `${auth0.state.user.token}` } }
+        { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
       .then( (response) => {
         console.log("saveUser.response.data:", response.data)
@@ -203,7 +203,7 @@ export default {
       await axios.put(
         api_url + '/api/setuserkey?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
         { key: form.key, secret: form.secret },
-        { headers: { Authorization: `${auth0.state.user.token}` } }
+        { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
       .then( (response) => {
         console.log("saveUserKey.response.data:", response.data)
@@ -225,7 +225,7 @@ export default {
       await axios.put(
         api_url + '/api/cancelsub?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
         { subs: subscription, subs_id: auth0.state.user.user_data[subscription] },
-        { headers: { Authorization: `${auth0.state.user.token}` } }
+        { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
       .then( (response) => {
         console.log("cancelSubs result:", response.data)
