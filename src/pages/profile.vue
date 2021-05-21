@@ -99,6 +99,7 @@
       <span>{{ auth0.state.user.user_data }}</span>
       <br/><br/>
       <button @click="showModal = true">Open Modal</button><br/>
+      <a href="#apikey">TOTOOOOO</a>
     </div>
 
   </div>
@@ -118,7 +119,7 @@ export default {
     const state = reactive({ 
       auth0, 
       showModal:false,
-      apikey: null,
+      //apikey: null,
     })
 
     const form = reactive({

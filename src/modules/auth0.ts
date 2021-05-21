@@ -65,29 +65,29 @@ export async function setupAuth0(router) {
     if (comingFromRedirect) {
       // handle the redirect and retrieve tokens
       const { appState } = await $auth0.client.handleRedirectCallback()
-      console.log("XXXXXXXXXXXX", JSON.stringify(appState))
+      //console.log("XXXXXXXXXXXX", JSON.stringify(appState))
       onRedirectCallback(appState, router)
     }
-    console.log("======-...======")
+    //console.log("======-...======")
   } catch (e) {
-    console.log("======---======")
+    //console.log("======---======")
     $auth0.state.error = e
     router.replace("/")
   } finally {
-    console.log("======+++======1")
+    //console.log("======+++======1")
     $auth0.state.isAuthenticated = await $auth0.client.isAuthenticated()
     console.log("======+++======2", $auth0.state.isAuthenticated)
     $auth0.state.user = await $auth0.client.getUser()
     console.log("======+++======3", JSON.stringify($auth0.state.user))
     $auth0.state.isLoading = false
     //console.log("this.user :: ", $auth0.state.user)
-    console.log("======000======")
+    //console.log("======000======")
     if ($auth0.state.user) {
       $auth0.state.user.token = await $auth0.client.getTokenSilently()
-      console.log("======+++======4", $auth0.state.user.token)
+      //console.log("======+++======4", $auth0.state.user.token)
       //console.log(JSON.stringify($auth0.state.user))
       const user_data = await signInUser($auth0.state.user.token, $auth0.state.user.email)
-      console.log("USER DATA", user_data)
+      //console.log("USER DATA", user_data)
       if (!user_data) {
         $auth0.state.user = null
         console.log("USER UNKNOWN")

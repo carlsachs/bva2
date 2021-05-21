@@ -10,7 +10,7 @@
       :customerEmail="customerEmail"
       @loading="v => loading = v"
     />
-    <button class="green_button" @click="submit">Subscribe to {{ description }} for {{ price }} USD per month</button>
+    <button class="green_button" @click="subscribe">Subscribe to {{ description }} for {{ price }} USD per month</button>
   </div>
 </template>
 
@@ -37,7 +37,7 @@ export default {
     }
   },
   methods: {
-    submit () {
+    subscribe () {
       this.$refs.checkoutRef.redirectToCheckout();
     },
   },
