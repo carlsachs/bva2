@@ -15,6 +15,7 @@ specifiers:
   events: 3.3.0
   lodash: ^4.17.21
   markdown-it-prism: 2.1.6
+  moment: ^2.29.1
   nprogress: 0.2.0
   prism-theme-vars: 0.2.2
   vite: 2.2.1
@@ -42,6 +43,7 @@ dependencies:
   axios: 0.21.1
   events: 3.3.0
   lodash: 4.17.21
+  moment: 2.29.1
   nprogress: 0.2.0
   prism-theme-vars: 0.2.2
   vite-plugin-windicss: 0.7.2_vite@2.2.1
@@ -2472,6 +2474,10 @@ packages:
   /minimist/1.2.5:
     resolution: {integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==}
     dev: true
+
+  /moment/2.29.1:
+    resolution: {integrity: sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==}
+    dev: false
 
   /ms/2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}

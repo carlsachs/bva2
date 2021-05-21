@@ -53,54 +53,44 @@
                                 <thead>
                                     <tr>
                                         <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            <div class="flex cursor-pointer">
-                                                <span class="mr-2">PAIR</span>
-                                            </div>
+                                            <div class="text-center">TIME</div>
                                         </th>
                                         <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            <div class="flex cursor-pointer">
-                                                <span class="mr-2">PNL</span>
-                                            </div>
+                                            <div class="text-center">PAIR</div>
                                         </th>
                                         <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            <div class="flex cursor-pointer">
-                                                <span class="mr-2">TYPE</span>
-                                            </div>
+                                            <div class="text-center">PNL</div>
                                         </th>
                                         <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            <div class="flex cursor-pointer">
-                                                <span class="mr-2">BUY PRICE</span>
-                                            </div>
+                                            <div class="text-center">TYPE</div>
                                         </th>
                                         <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            <div class="flex cursor-pointer">
-                                                <span class="mr-2">SELL PRICE</span>
-                                            </div>
+                                            <div class="text-center">BUY PRICE</div>
+                                        </th>
+                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                            <div class="text-center">SELL PRICE</div>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200" v-for="(row, i) in rows">
                                     <tr>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                            <p>{{ row.pair }}</p>
+                                            {{ moment(Number(row.updated_time)).fromNow() }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                            <p>{{ Number(row.pnl).toFixed(2) }}%</p>
+                                            {{ row.pair }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                            <div class="flex text-green-500">
-                                                <p>{{ row.type }}</p>
-                                            </div>
+                                            {{ Number(row.pnl).toFixed(2) }}%
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                            <div class="flex text-green-500">
-                                                <p>{{ row.buy_price }}</p>
-                                            </div>
+                                            {{ row.type }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                            <div class="flex text-green-500">
-                                                <p>{{ row.sell_price }}</p>
-                                            </div>
+                                        <td class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                            {{ row.buy_price }}
+                                        </td>
+                                        <td class="text-red-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                            {{ row.sell_price }}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -118,9 +108,10 @@
 
 <script lang="ts">
 
-import { onMounted, reactive, ref, toRefs, defineComponent } from "vue";
-import axios from "~/utils/axios";
-import _ from "lodash";
+import { onMounted, reactive, ref, toRefs, defineComponent } from "vue"
+import axios from "~/utils/axios"
+import moment from "moment"
+import _ from "lodash"
 
 export default defineComponent({
   name: "Dashboard",
@@ -273,6 +264,7 @@ export default defineComponent({
     
     return {
       ...toRefs(state),
+      moment
     }
   },
 })
