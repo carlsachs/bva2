@@ -74,13 +74,13 @@
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 cursor-pointer" v-for="(row, i) in rows" :key="row.id" v-on:click="openSignal(row)">
                                     <tr>
-                                        <td v-if="row.type === 'LONG'" class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                            {{ moment(Number(row.buy_time)).fromNow() }}
+                                        <td v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                            {{ row.pnl ? moment(Number(row.sell_time)).fromNow() : moment(Number(row.updated_time)).fromNow() }}
                                         </td>
-                                        <td v-else class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                            {{ moment(Number(row.sell_time)).fromNow() }}
+                                        <td v-else :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                            {{ row.pnl ? moment(Number(row.buy_time)).fromNow() : moment(Number(row.updated_time)).fromNow() }}
                                         </td>
-                                        <td class="px-6 py-4 text-gray-200 font-bold whitespace-no-wrap text-sm leading-5">
+                                        <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
                                             {{ row.pair }}
                                         </td>
                                         <td v-if="Number(row.pnl)>0" :class="{ 'font-bold': row.pnl }" class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
@@ -96,10 +96,10 @@
                                             {{ row.type }}
                                         </td>
                                         <td class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                            {{ row.buy_price }}
+                                            {{ row.buy_price ? row.buy_price : '---' }}
                                         </td>
                                         <td class="text-red-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                            {{ row.sell_price }}
+                                            {{ row.sell_price ? row.sell_price : '---' }}
                                         </td>
                                     </tr>
                                 </tbody>
