@@ -52,74 +52,35 @@ export default defineComponent({
       pair: null,
       pnl: 0,
       ///////// ///////// ///////// /////////
-      series: [{
-        name: 'candle',
-        data: []
-      }],
+      series: [{ name: 'candle', data: [] }],
       chartOptions: {
-        chart: {
-          height: 400,
-          type: 'candlestick',
-        },
-        title: {
-          text: '',
-          align: 'center'
-        },
-        tooltip: {
-          enabled: true,
-          theme: 'dark',
-        },
+        chart: { height: 400, type: 'candlestick' },
+        tooltip: { enabled: true, theme: 'dark' },
         annotations: {
           points: [
-            {
-              marker: {
-                size: 8,
-                fillColor: "red",
-              },
-              label: { text: '' }
-            },
-            {
-              marker: {
-                size: 8,
-                fillColor: "green",
-              },
-              label: { text: '' }
-            }
+            { marker: { size: 8, fillColor: "red" }, label: { text: '' } },
+            { marker: { size: 8, fillColor: "green" }, label: { text: '' } },
           ]
         },
-        xaxis: {
-          type: 'category',
-          floating: true,
-        },
-        yaxis: {
-          show: false,
-          tooltip: {
-            enabled: false
-          }
-        }
+        xaxis: { type: 'category', floating: true },
+        yaxis: { show: false, tooltip: { enabled: false } }
       }
       ///////// ///////// ///////// /////////
     })
-
-    /*
-    watch(state.chartOptions, (newVal: any, oldVal: any) => {
-      console.log(JSON.stringify(oldVal), JSON.stringify(newVal))
-    })
-    */
 
     onMounted(() => {
       ////// ////// ////// ////// //////
       console.log("ID", props.id)
       axios.get('/api/signal?id='+props.id)
         .then( signal => {
-          console.log(signal.data[0])
+          //console.log(signal.data[0])
 
           state.pair = signal.data[0].pair
           state.signal_type = signal.data[0].type
           state.pnl = Number(signal.data[0].pnl).toFixed()
 
           const startTime = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time) - 60000000 : Number(signal.data[0].sell_time) - 60000000
-          console.log( "startTime", moment(startTime).format('MMM DD HH:mm') )
+          //console.log( "startTime", moment(startTime).format('MMM DD HH:mm') )
 
           axios.get('https://api.binance.com/api/v3/klines?interval=15m&symbol='+signal.data[0].pair+'&startTime='+startTime+'&endTime='+Date.now())
           .then( prices => {
@@ -136,14 +97,14 @@ export default defineComponent({
                 //console.log( "=======>", price[0] , price[1] )
                 state.chartOptions.annotations.points[0].x = moment(price[0]).format('MMM DD HH:mm')
                 state.chartOptions.annotations.points[0].y = Number(price[1])
-                state.chartOptions.annotations.points[0].label.text = 'SHORT'
+                state.chartOptions.annotations.points[0].label.text = 'SELL'
               }
 
               if ( price[0] < Number(signal.data[0].buy_time) && Number(signal.data[0].buy_time) < (price[0]+900000) ) {
                 //console.log( "=======>", price[0] , price[1] )
                 state.chartOptions.annotations.points[1].x = moment(price[0]).format('MMM DD HH:mm')
                 state.chartOptions.annotations.points[1].y = Number(price[1])
-                state.chartOptions.annotations.points[1].label.text = 'LONG'
+                state.chartOptions.annotations.points[1].label.text = 'BUY'
               }
       
             }
