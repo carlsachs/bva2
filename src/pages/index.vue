@@ -84,10 +84,10 @@
                                             {{ row.pair }}
                                         </td>
                                         <td v-if="Number(row.pnl)>0" :class="{ 'font-bold': row.pnl }" class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                            {{ Number(row.pnl).toFixed(2) }}%
+                                            {{ row.pnl ? Number(row.pnl).toFixed(2) : '' }}%
                                         </td>
                                         <td v-else :class="{ 'font-bold': row.pnl }" class="text-red-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                            {{ Number(row.pnl).toFixed(2) }}%
+                                            {{ row.pnl ? Number(row.pnl).toFixed(2)+'%' : '---' }}
                                         </td>
                                         <td v-if="row.type==='SHORT'" class="text-orange-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                             {{ row.type }}
