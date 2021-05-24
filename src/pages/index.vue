@@ -74,8 +74,11 @@
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 cursor-pointer" v-for="(row, i) in rows" :key="row.id" v-on:click="openSignal(row)">
                                     <tr>
-                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                            {{ moment(Number(row.updated_time)).fromNow() }}
+                                        <td v-if="row.type === 'LONG'" class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                            {{ moment(Number(row.buy_time)).fromNow() }}
+                                        </td>
+                                        <td v-else class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                            {{ moment(Number(row.sell_time)).fromNow() }}
                                         </td>
                                         <td class="px-6 py-4 text-gray-200 font-bold whitespace-no-wrap text-sm leading-5">
                                             {{ row.pair }}
