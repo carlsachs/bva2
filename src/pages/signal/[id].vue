@@ -62,29 +62,29 @@ export default defineComponent({
           type: 'candlestick',
         },
         title: {
-          text: 'CandleStick Chart - Category X-axis',
-          align: 'left'
+          text: '',
+          align: 'center'
         },
         annotations: {
           points: [
             {
               marker: {
                 size: 8,
-                fillColor: "green",
+                fillColor: "red",
               },
               label: { text: '' }
             },
             {
               marker: {
                 size: 8,
-                fillColor: "red",
+                fillColor: "green",
               },
               label: { text: '' }
             }
           ]
         },
         tooltip: {
-          enabled: true,
+          enabled: false,
         },
         xaxis: {
           type: 'category',
@@ -96,7 +96,7 @@ export default defineComponent({
         },
         yaxis: {
           tooltip: {
-            enabled: true
+            enabled: false
           }
         }
       }
@@ -106,19 +106,6 @@ export default defineComponent({
     /*
     watch(state.chartOptions, (newVal: any, oldVal: any) => {
       console.log(JSON.stringify(oldVal), JSON.stringify(newVal))
-      state.chartOptions.annotations.points[0] = {
-        x: moment(new Date(1621787400000)).format('MMM DD HH:mm'),
-        y: 0.00142570,
-        marker: {
-          size: 3,
-          fillColor: "red",
-          strokeColor: "red",
-          radius: 3,
-        },
-        label: {
-          text: 'YOO',
-        }
-      }
     })
     */
 
@@ -133,7 +120,10 @@ export default defineComponent({
           state.signal_type = signal.data[0].type
           state.pnl = Number(signal.data[0].pnl).toFixed()
 
-          axios.get('https://api.binance.com/api/v3/klines?interval=15m&limit=150&symbol=' + signal.data[0].pair)
+          const startTime = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time) - 60000000 : Number(signal.data[0].sell_time) - 60000000
+          console.log("startTime", moment(startTime).format('MMM DD HH:mm'))
+
+          axios.get('https://api.binance.com/api/v3/klines?interval=15m&symbol='+signal.data[0].pair+'&startTime='+startTime+'&endTime='+Date.now())
           .then( prices => {
             //console.log(prices.data.slice(0, 1))
             let data = []
