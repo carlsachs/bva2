@@ -72,7 +72,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-gray-200" v-for="(row, i) in rows">
+                                <tbody class="divide-y divide-gray-200 cursor-pointer" v-for="(row, i) in rows" :key="row.id" v-on:click="openSignal(row)">
                                     <tr>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                             {{ moment(Number(row.updated_time)).fromNow() }}
@@ -80,10 +80,10 @@
                                         <td class="px-6 py-4 text-gray-200 font-bold whitespace-no-wrap text-sm leading-5">
                                             {{ row.pair }}
                                         </td>
-                                        <td v-if="Number(row.pnl)>0" class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                        <td v-if="Number(row.pnl)>0" :class="{ 'font-bold': row.pnl }" class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                             {{ Number(row.pnl).toFixed(2) }}%
                                         </td>
-                                        <td v-else class="text-red-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                        <td v-else :class="{ 'font-bold': row.pnl }" class="text-red-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                             {{ Number(row.pnl).toFixed(2) }}%
                                         </td>
                                         <td v-if="row.type==='SHORT'" class="text-orange-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
@@ -118,10 +118,17 @@ import { onMounted, reactive, ref, toRefs, defineComponent } from "vue"
 import axios from "~/utils/axios"
 import moment from "moment"
 import _ from "lodash"
+import { useRouter } from "vue-router"
 
 export default defineComponent({
   name: "Dashboard",
   setup: () => {
+
+    const router = useRouter()
+
+    const openSignal = (row) => {
+        router.push("/signal/"+ row.id)
+    }
 
     const state = reactive({
         total_pnl: 0,
@@ -226,7 +233,7 @@ export default defineComponent({
                 let pnl_btc = 0
                 let pnl_bva = 0
                 
-                state.rows = bvas.data.slice(0, 10)
+                state.rows = bvas.data.slice(0, 30)
 
                 for ( var btc of btcs.data ) {
                     pnl_btc = 100 * (Number(btc[4]) - Number(btc[1])) / Number(btc[1]) + pnl_btc
@@ -270,7 +277,8 @@ export default defineComponent({
     
     return {
       ...toRefs(state),
-      moment
+      moment,
+      openSignal
     }
   },
 })

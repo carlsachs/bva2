@@ -76,9 +76,9 @@ export async function setupAuth0(router) {
   } finally {
     //console.log("======+++======1")
     $auth0.state.isAuthenticated = await $auth0.client.isAuthenticated()
-    console.log("======+++======2", $auth0.state.isAuthenticated)
+    //console.log("======+++======2", $auth0.state.isAuthenticated)
     $auth0.state.user = await $auth0.client.getUser()
-    console.log("======+++======3", JSON.stringify($auth0.state.user))
+    //console.log("======+++======3", JSON.stringify($auth0.state.user))
     $auth0.state.isLoading = false
     //console.log("this.user :: ", $auth0.state.user)
     //console.log("======000======")
