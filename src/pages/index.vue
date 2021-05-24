@@ -1,118 +1,117 @@
 <template>
-  <div>
+    <div>
 
-    <!--div class="mx-4 my-14 p-4 border-2 border-blue-900 rounded-lg">
-        <p class="text-white">Welcome to Bitcoin vs. Alts, ...</p>
-    </div-->
+        <!--div class="mx-4 my-14 p-4 border-2 border-blue-900 rounded-lg">
+            <p class="text-white">Welcome to Bitcoin vs. Alts, ...</p>
+        </div-->
 
-    <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
+        <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
-        <h1 class="mb-7 text-uppercase font-semibold">The BVA Strategy</h1>
+            <h1 class="mb-7 text-uppercase font-semibold">The BVA Strategy</h1>
 
-        <apexchart type="area" height="400" :options="chartOptions" :series="series"></apexchart>
-        
-        <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
+            <apexchart type="area" height="400" :options="chartOptions" :series="series"></apexchart>
+            
+            <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
 
-            <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                <div class="flex-auto">Period PnL</div>
-                <div class="flex-auto text-justify text-blue-300 block">{{ total_pnl }}%</div>
+                <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                    <div class="flex-auto">Period PnL</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ total_pnl }}%</div>
+                </div>
+
+                <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                    <div class="flex-auto">Avg. Profit per Trade</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ avg_pnl }}%</div>
+                </div>
+
+                <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                    <div class="flex-auto">Win Rate</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ win_rate }}%</div>
+                </div>
+
+                <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                    <div class="flex-auto">Verif. Trade History</div>
+                    <div class="flex-auto text-justify text-blue-300 block">1 year</div>
+                </div>
+
+                <router-link to="/profile#apikey" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                    <div class="flex-auto">Subscribe</div>
+                </router-link>
+
+                <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                    <div class="flex-auto">Follow</div>
+                </div>
+
             </div>
 
-            <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                <div class="flex-auto">Avg. Profit per Trade</div>
-                <div class="flex-auto text-justify text-blue-300 block">{{ avg_pnl }}%</div>
-            </div>
 
-            <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                <div class="flex-auto">Win Rate</div>
-                <div class="flex-auto text-justify text-blue-300 block">{{ win_rate }}%</div>
-            </div>
-
-            <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                <div class="flex-auto">Verif. Trade History</div>
-                <div class="flex-auto text-justify text-blue-300 block">1 year</div>
-            </div>
-
-            <router-link to="/profile#apikey" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                <div class="flex-auto">Subscribe</div>
-            </router-link>
-
-            <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                <div class="flex-auto">Follow</div>
-            </div>
-
-        </div>
-
-
-        <div class="mt-4 p-4">
-            <div class="flex flex-col">
-                <div class="-my-2 overflow-x-auto">
-                    <div class="py-2 align-middle inline-block min-w-full">
-                        <div class=" overflow-hidden border-1 border-blue-900 rounded-lg">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead>
-                                    <tr>
-                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            <div class="text-center">TIME</div>
-                                        </th>
-                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            <div class="text-center">PAIR</div>
-                                        </th>
-                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            <div class="text-center">PNL</div>
-                                        </th>
-                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            <div class="text-center">TYPE</div>
-                                        </th>
-                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            <div class="text-center">BUY PRICE</div>
-                                        </th>
-                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            <div class="text-center">SELL PRICE</div>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-200 cursor-pointer" v-for="(row, i) in rows" :key="row.id" v-on:click="openSignal(row)">
-                                    <tr>
-                                        <td v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                            {{ row.pnl ? moment(Number(row.sell_time)).fromNow() : moment(Number(row.updated_time)).fromNow() }}
-                                        </td>
-                                        <td v-else :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                            {{ row.pnl ? moment(Number(row.buy_time)).fromNow() : moment(Number(row.updated_time)).fromNow() }}
-                                        </td>
-                                        <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
-                                            {{ row.pair }}
-                                        </td>
-                                        <td v-if="Number(row.pnl)>0" :class="{ 'font-bold': row.pnl }" class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                            {{ row.pnl ? Number(row.pnl).toFixed(2) : '' }}%
-                                        </td>
-                                        <td v-else :class="{ 'font-bold': row.pnl }" class="text-red-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                            {{ row.pnl ? Number(row.pnl).toFixed(2)+'%' : '---' }}
-                                        </td>
-                                        <td v-if="row.type==='SHORT'" class="text-orange-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                            {{ row.type }}
-                                        </td>
-                                        <td v-else class="text-blue-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                            {{ row.type }}
-                                        </td>
-                                        <td class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                            {{ row.buy_price ? row.buy_price : '---' }}
-                                        </td>
-                                        <td class="text-red-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                            {{ row.sell_price ? row.sell_price : '---' }}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+            <div class="mt-4 p-4">
+                <div class="flex flex-col">
+                    <div class="-my-2 overflow-x-auto">
+                        <div class="py-2 align-middle inline-block min-w-full">
+                            <div class=" overflow-hidden border-1 border-blue-900 rounded-lg">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead>
+                                        <tr>
+                                            <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                                <div class="text-center">TIME</div>
+                                            </th>
+                                            <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                                <div class="text-center">PAIR</div>
+                                            </th>
+                                            <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                                <div class="text-center">PNL</div>
+                                            </th>
+                                            <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                                <div class="text-center">TYPE</div>
+                                            </th>
+                                            <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                                <div class="text-center">BUY PRICE</div>
+                                            </th>
+                                            <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                                <div class="text-center">SELL PRICE</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-200 cursor-pointer" v-for="(row, i) in rows" :key="row.id" v-on:click="openSignal(row)">
+                                        <tr>
+                                            <td v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                {{ row.pnl ? moment(Number(row.sell_time)).fromNow() : moment(Number(row.updated_time)).fromNow() }}
+                                            </td>
+                                            <td v-else :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                {{ row.pnl ? moment(Number(row.buy_time)).fromNow() : moment(Number(row.updated_time)).fromNow() }}
+                                            </td>
+                                            <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
+                                                {{ row.pair }}
+                                            </td>
+                                            <td v-if="Number(row.pnl)>0" :class="{ 'font-bold': row.pnl }" class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                {{ row.pnl ? Number(row.pnl).toFixed(2) : '' }}%
+                                            </td>
+                                            <td v-else :class="{ 'font-bold': row.pnl }" class="text-red-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                {{ row.pnl ? Number(row.pnl).toFixed(2)+'%' : '---' }}
+                                            </td>
+                                            <td v-if="row.type==='SHORT'" class="text-orange-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                {{ row.type }}
+                                            </td>
+                                            <td v-else class="text-blue-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                {{ row.type }}
+                                            </td>
+                                            <td class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                {{ row.buy_price ? row.buy_price : '---' }}
+                                            </td>
+                                            <td class="text-red-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                {{ row.sell_price ? row.sell_price : '---' }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
-
-
     </div>
-  </div>
 </template>
 
 <script lang="ts">
@@ -215,16 +214,6 @@ export default defineComponent({
     })
 
     onMounted(() => {
-        ////// ////// ////// ////// //////
-        /*
-        axios.get('/api/signals')
-        .then(res => {
-            state.user = res
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-        */
         ////// ////// ////// ////// //////
         axios.get('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=350')
         .then( btcs => {
