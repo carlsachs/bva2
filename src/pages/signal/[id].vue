@@ -65,6 +65,10 @@ export default defineComponent({
           text: '',
           align: 'center'
         },
+        tooltip: {
+          enabled: true,
+          theme: 'dark',
+        },
         annotations: {
           points: [
             {
@@ -83,18 +87,12 @@ export default defineComponent({
             }
           ]
         },
-        tooltip: {
-          enabled: false,
-        },
         xaxis: {
           type: 'category',
-          labels: {
-            formatter: function(val) {
-              return moment(val).format('MMM DD HH:mm')
-            }
-          }
+          floating: true,
         },
         yaxis: {
+          show: false,
           tooltip: {
             enabled: false
           }
@@ -121,7 +119,7 @@ export default defineComponent({
           state.pnl = Number(signal.data[0].pnl).toFixed()
 
           const startTime = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time) - 60000000 : Number(signal.data[0].sell_time) - 60000000
-          console.log("startTime", moment(startTime).format('MMM DD HH:mm'))
+          console.log( "startTime", moment(startTime).format('MMM DD HH:mm') )
 
           axios.get('https://api.binance.com/api/v3/klines?interval=15m&symbol='+signal.data[0].pair+'&startTime='+startTime+'&endTime='+Date.now())
           .then( prices => {
@@ -130,26 +128,22 @@ export default defineComponent({
             
             for ( var price of prices.data ) {
               data.push({
-                x: new Date(price[0]),
+                x: moment(price[0]).format('MMM DD HH:mm'),
                 y: [ Number(price[1]), Number(price[2]), Number(price[3]), Number(price[4]) ]
               })
               
               if ( price[0] < Number(signal.data[0].sell_time) && Number(signal.data[0].sell_time) < (price[0]+900000) ) {
-                console.log( "=======>", price[0] , price[1] )
-
-                state.chartOptions.annotations.points[0].x = moment(new Date(price[0])).format('MMM DD HH:mm')
+                //console.log( "=======>", price[0] , price[1] )
+                state.chartOptions.annotations.points[0].x = moment(price[0]).format('MMM DD HH:mm')
                 state.chartOptions.annotations.points[0].y = Number(price[1])
                 state.chartOptions.annotations.points[0].label.text = 'SHORT'
-
               }
 
               if ( price[0] < Number(signal.data[0].buy_time) && Number(signal.data[0].buy_time) < (price[0]+900000) ) {
-                console.log( "=======>", price[0] , price[1] )
-
-                state.chartOptions.annotations.points[1].x = moment(new Date(price[0])).format('MMM DD HH:mm')
+                //console.log( "=======>", price[0] , price[1] )
+                state.chartOptions.annotations.points[1].x = moment(price[0]).format('MMM DD HH:mm')
                 state.chartOptions.annotations.points[1].y = Number(price[1])
                 state.chartOptions.annotations.points[1].label.text = 'LONG'
-
               }
       
             }
