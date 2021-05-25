@@ -6,8 +6,7 @@
     <div class="flex flex-col items-center text-center lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 md:items-start md:text-left">
       <Heading1> Vite ⚡ - Vue 2 starter template </Heading1>
       <p class="mb-8 leading-relaxed text-gray-300">
-        This example project shows how to speed up your Vue 2 application with
-        the next generation frontend tooling Vite.
+        {{ rows.slice(0,1)}}
       </p>
       <div class="flex justify-center">
         <RouterLink :to="{ name: 'profile' }">
@@ -17,3 +16,31 @@
     </div>
   </section>
 </template>
+
+
+<script lang="ts">
+
+import { onMounted, reactive, ref, toRefs, defineComponent } from "vue"
+import axios from "~/utils/axios"
+
+export default defineComponent({
+  name: "Hero",
+  setup: () => {
+
+    const state = reactive({
+        rows: [],
+    })
+
+    onMounted(() => {
+        
+    })
+    
+    return {
+      ...toRefs(state),
+    }
+  },
+})
+</script>
+
+<style>
+</style>

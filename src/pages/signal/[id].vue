@@ -39,7 +39,7 @@ import moment from "moment"
 import _ from "lodash"
 
 export default defineComponent({
-  name: "Signal",
+  name: "signal",
   props: {
     id: String,
   },
@@ -49,6 +49,8 @@ export default defineComponent({
       signal_type: null,
       pair: null,
       pnl: 0,
+      buy_price: null,
+      sell_price: null,
       ///////// ///////// ///////// /////////
       series: [{ name: 'candle', data: [] }],
       chartOptions: {
@@ -75,7 +77,9 @@ export default defineComponent({
 
           state.pair = signal.data[0].pair
           state.signal_type = signal.data[0].type
-          state.pnl = Number(signal.data[0].pnl).toFixed()
+          state.buy_price = signal.data[0].buy_price
+          state.sell_price = signal.data[0].sell_price
+          state.pnl = Number(signal.data[0].pnl).toFixed(2)
 
           const startTime = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time) - 60000000 : Number(signal.data[0].sell_time) - 60000000
           //console.log( "startTime", moment(startTime).format('MMM DD HH:mm') )
@@ -94,23 +98,27 @@ export default defineComponent({
               if ( price[0] < Number(signal.data[0].sell_time) && Number(signal.data[0].sell_time) < (price[0]+900000) ) {
                 //console.log( "=======>", price[0] , price[1] )
                 state.chartOptions.annotations.points[0].x = moment(price[0]).format('MMM DD HH:mm')
-                state.chartOptions.annotations.points[0].y = Number(price[1])
+                state.chartOptions.annotations.points[0].y = Number(signal.data[0].sell_price)
                 state.chartOptions.annotations.points[0].label.text = 'SELL'
               }
 
               if ( price[0] < Number(signal.data[0].buy_time) && Number(signal.data[0].buy_time) < (price[0]+900000) ) {
                 //console.log( "=======>", price[0] , price[1] )
                 state.chartOptions.annotations.points[1].x = moment(price[0]).format('MMM DD HH:mm')
-                state.chartOptions.annotations.points[1].y = Number(price[1])
+                state.chartOptions.annotations.points[1].y = Number(signal.data[0].buy_price)
                 state.chartOptions.annotations.points[1].label.text = 'BUY'
               }
-      
             }
             //state.series.push({'data': data})
             //console.log(JSON.stringify(state.series))
-
             state.series[0].data = data
-            
+
+            if (signal.data[0].pnl == null) {
+              const last_price = Number(prices.data[prices.data.length-1][4])
+              state.pnl = (state.signal_type === 'LONG') ? (100 * (last_price-state.buy_price)/state.buy_price) : (100 * (state.sell_price-last_price)/last_price)
+              state.pnl = state.pnl.toFixed(2)
+            }
+
           })
           .catch((err) => {
             console.log(err)

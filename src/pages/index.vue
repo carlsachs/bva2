@@ -83,12 +83,20 @@
                                             <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
                                                 {{ row.pair }}
                                             </td>
+                                            <td v-if="row.pnl" :class="{ 'text-green-500': Number(row.pnl)>0, 'text-red-500': Number(row.pnl)<0 }" class="px-6 py-4 font-bold whitespace-no-wrap text-sm leading-5">
+                                                {{ Number(row.pnl).toFixed(2) }}%
+                                            </td>
+                                            <td v-else class="italic px-6 py-4 text-gray-400 whitespace-no-wrap text-sm leading-5">
+                                                {{ getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
+                                            </td>
+                                            <!--
                                             <td v-if="Number(row.pnl)>0" :class="{ 'font-bold': row.pnl }" class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                                {{ row.pnl ? Number(row.pnl).toFixed(2) : '' }}%
+                                                {{ row.pnl ? Number(row.pnl).toFixed(2) : getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
                                             </td>
                                             <td v-else :class="{ 'font-bold': row.pnl }" class="text-red-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                                {{ row.pnl ? Number(row.pnl).toFixed(2)+'%' : '---' }}
+                                                {{ row.pnl ? Number(row.pnl).toFixed(2) : getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
                                             </td>
+                                            -->
                                             <td v-if="row.type==='SHORT'" class="text-orange-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                 {{ row.type }}
                                             </td>
@@ -139,6 +147,7 @@ export default defineComponent({
         win_rate: 0,
         user: null,
         rows: [],
+        prices: [],
         ///////// ///////// ///////// /////////
         series: [
             {
@@ -165,7 +174,7 @@ export default defineComponent({
                 show: true,
                 offsetY: 20,
                 itemMargin: {
-                    //horizontal: 5,
+                    horizontal: 0,
                     vertical: 20
                 },
                 labels: {
@@ -213,7 +222,32 @@ export default defineComponent({
         ///////// ///////// ///////// /////////
     })
 
+    const getCurrentPnL = (symbol, sell_price, buy_price) => {
+        let pnl = 0
+        if (state.prices.length) {
+            const currentPrice = state.prices.find( (r) => { return r.symbol === symbol }).price
+            if (currentPrice) {
+                if (sell_price > 0) {
+                    pnl = 100 * (sell_price - currentPrice) / currentPrice
+                }
+                else if (buy_price > 0) {
+                    pnl = 100 * (currentPrice - buy_price) / buy_price
+                }
+            }
+        }
+        //console.log(symbol, pnl)
+        return pnl.toFixed(2)
+    }
+
     onMounted(() => {
+        ////// ////// ////// ////// //////
+        axios.get('https://api.binance.com/api/v3/ticker/price')
+        .then( prices => {
+          state.prices = prices.data
+        })
+        .catch((err) => {
+          console.log(err)
+        })
         ////// ////// ////// ////// //////
         axios.get('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=350')
         .then( btcs => {
@@ -240,14 +274,14 @@ export default defineComponent({
                 state.series[0].data = tpnl_btc
                 state.series[1].data = tpnl_bva
 
-                console.log("TPNL:", tpnl_bva[tpnl_bva.length-1][1])
+                //console.log("TPNL:", tpnl_bva[tpnl_bva.length-1][1])
                 state.total_pnl = tpnl_bva[tpnl_bva.length-1][1]
-                console.log("TOTAL:", bvas.data.length)
-                console.log("TRADE MEAN:", _.meanBy(bvas.data, o => {return Number(o.pnl)}).toFixed(2))
+                //console.log("TOTAL:", bvas.data.length)
+                //console.log("TRADE MEAN:", _.meanBy(bvas.data, o => {return Number(o.pnl)}).toFixed(2))
                 state.avg_pnl = _.meanBy(bvas.data, o => {return Number(o.pnl)}).toFixed(2)
                 const positifs = bvas.data.filter( bva => { return Number(bva.pnl) > 0 })
-                console.log("POS COUNT:", positifs.length)
-                console.log("WIN RATE:", (100 * positifs.length / bvas.data.length).toFixed(2) )
+                //console.log("POS COUNT:", positifs.length)
+                //console.log("WIN RATE:", (100 * positifs.length / bvas.data.length).toFixed(2) )
                 state.win_rate = (100 * positifs.length / bvas.data.length).toFixed(2)
 
             })
@@ -270,7 +304,8 @@ export default defineComponent({
     return {
       ...toRefs(state),
       moment,
-      openSignal
+      openSignal,
+      getCurrentPnL
     }
   },
 })

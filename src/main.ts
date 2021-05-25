@@ -7,8 +7,6 @@ import App from './App.vue'
 import VueApexChart from 'vue3-apexcharts'
 import VueFinalModal from 'vue-final-modal'
 import VueSmoothScroll from 'vue3-smooth-scroll'
-import VueMoment from 'vue-moment'
-import moment from 'moment-timezone'
 
 setupAuth0(router)
 

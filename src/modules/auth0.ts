@@ -146,11 +146,11 @@ interface $Auth0Defaults {
 ///////// ///////// ///////// ///////// ///////// /////////
 
 async function signInUser(token: String, email: String) {
-  console.log("signInUser", token, email)
+  //console.log("signInUser", token, email)
   return axios
     .get(api_url + '/api/getusersignin?email=' + email, { headers: {Authorization:`Bearer ${token}`} })
     .then( (response) => {
-      console.log("signInUser ID result ::: ", response.data.id)
+      //console.log("signInUser ID result ::: ", response.data.id)
       return response.data
     })
     .catch( (e) => {
