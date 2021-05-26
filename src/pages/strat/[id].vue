@@ -265,12 +265,12 @@ export default defineComponent({
 
                 for ( var btc of btcs.data ) {
                     pnl_btc = 100 * (Number(btc[4]) - Number(btc[1])) / Number(btc[1]) + pnl_btc
-                    tpnl_btc.push([ btc[0], pnl_btc.toFixed(0) ])
+                    tpnl_btc.push([ btc[0], pnl_btc.toFixed(2) ])
                     const sum = bvas.data.filter( bva => { 
                         return Number(bva.updated_time) > btc[0] && Number(bva.updated_time) <= btc[6] 
                     })
                     pnl_bva = _.sumBy(sum, o => { return Number(o.pnl) }) / 15 + pnl_bva
-                    tpnl_bva.push([ btc[0], pnl_bva.toFixed(0) ])
+                    tpnl_bva.push([ btc[0], pnl_bva.toFixed(2) ])
                 }
 
                 state.series[0].data = tpnl_btc
