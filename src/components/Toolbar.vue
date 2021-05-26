@@ -2,7 +2,7 @@
   <div class="flex flex-row items-center justify-center p-2 space-x-5 mb-5">
     <!--DarkModeToggle /-->
     <button v-if="router.options.history.state.back" class="dark_button p-2" type="button" @click="$router.go(-1)">
-      <feather-skip-back class="ml-2" />
+      <feather-skip-back class="" />
     </button>
     <router-link v-if="!isHomePage" to="/">
       <button class="orange_button" type="button">
@@ -18,8 +18,8 @@
       Loading <feather-loader class="ml-2" />
     </button>
     <div v-else>
-      <button v-if="auth0.state.isAuthenticated" class="blue_button" type="button" @click="logout">
-        Sign out <feather-log-out class="ml-2" />
+      <button v-if="auth0.state.isAuthenticated" class="dark_button" type="button" @click="logout">
+        <feather-log-out class="" />
       </button>
       <button v-else class="blue_button" type="button" @click="login">
         Sign in <feather-log-in class="ml-2" />
