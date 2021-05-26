@@ -36,21 +36,33 @@
 
         <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
           <div class="text-xl">BVA Strategy</div>
-            <div class="mt-3 text-gray-400 text-center">BTC amount to trade: &nbsp;</div>
-            &nbsp;
-            <input
-              id="amount"
-              size="50"
-              v-model="form.amount"
-              placeholder=""
-              aria-label="btc qty"
-              type="number"
-              autocomplete="false"
-              class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
-            >&nbsp;
-            <button class="dark_button" :disabled="!form.secret&&!form.key" @click="saveUserKey">Save</button>
-            &nbsp;
-            <span>{{ form.key_result }}</span>
+          <div class="flex items-center justify-center mt-5">
+            <label for="toogleA" class="flex items-center cursor-pointer">
+              <div class="relative">
+                <input id="toogleA" type="checkbox" class="sr-only" />
+                <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+                <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
+              </div>
+              <div class="ml-3 text-gray-700 font-medium">
+                Active
+              </div>
+            </label>
+          </div>
+          <div class="mt-3 text-gray-400 text-center">BTC amount to trade: &nbsp;</div>
+          &nbsp;
+          <input
+            id="amount"
+            size="50"
+            v-model="form.bva_qty"
+            placeholder=""
+            aria-label="btc qty"
+            type="number"
+            autocomplete="false"
+            class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
+          >&nbsp;
+          <button class="dark_button" :disabled="!form.bva_qty">Save</button>
+          &nbsp;
+          <span>{{ form.bva_qty_result }}</span>
           <div v-if="form.bva_subs">
             <button class="dark_button" @click="cancelSubs('bva_subs')">Cancel your BVA subscription</button>
           </div>
@@ -64,6 +76,33 @@
 
         <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
           <div class="text-xl">BVA Long Only Strategy</div>
+          <div class="flex items-center justify-center mt-5">
+            <label for="toogleA" class="flex items-center cursor-pointer">
+              <div class="relative">
+                <input id="toogleA" type="checkbox" class="sr-only" />
+                <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+                <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
+              </div>
+              <div class="ml-3 text-gray-700 font-medium">
+                Active
+              </div>
+            </label>
+          </div>
+          <div class="mt-3 text-gray-400 text-center">BTC amount to trade: &nbsp;</div>
+          &nbsp;
+          <input
+            id="amount"
+            size="50"
+            v-model="form.bva_long_only_qty"
+            placeholder=""
+            aria-label="btc qty"
+            type="number"
+            autocomplete="false"
+            class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
+          >&nbsp;
+          <button class="dark_button" :disabled="!form.bva_long_only_qty">Save</button>
+          &nbsp;
+          <span>{{ form.bva_long_only_qty_result }}</span>
           <div v-if="form.bva_long_only_subs">
             <button class="dark_button" @click="cancelSubs('bva_long_only_subs')">Cancel your BVA LONG ONLY subscription</button>
           </div>
@@ -149,6 +188,8 @@ export default {
       secret: auth0.state.user?.user_data?.cles,
       bva_subs: auth0.state.user?.user_data?.bva_subs,
       bva_long_only_subs: auth0.state.user?.user_data?.bva_long_only_subs,
+      bva_qty: Number(auth0.state.user?.user_data?.bva_qty),
+      bva_long_only_qty: Number(auth0.state.user?.user_data?.bva_long_only_qty),
       woltiks_subs: auth0.state.user?.user_data?.woltiks_subs,
       cancel_sub_result: '',
       key_result: '',
@@ -167,6 +208,8 @@ export default {
       form.bva_subs = user.bva_subs
       form.bva_long_only_subs = user.bva_long_only_subs
       form.woltiks_subs = user.woltiks_subs
+      form.bva_long_only_qty = user.bva_long_only_qty ? Number(user.bva_long_only_qty) : 0.0015
+      form.bva_qty = user.bva_qty ? Number(user.bva_qty) : 0.0015
     })
 
     const api_url = import.meta.env.VITE_API_URL
@@ -320,6 +363,11 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
   margin: 0; 
+}
+
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #48bb78;
 }
 </style>
 
