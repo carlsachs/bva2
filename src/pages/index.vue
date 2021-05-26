@@ -62,7 +62,7 @@ export default defineComponent({
             {
                 id: 466,
                 name: "BVA Strategy",
-                series: [{ name: "BVA", data: [] },{ name: "Trades", data: [] }],
+                series: [{ name: "BVA", data: [] }],
                 total_pnl: 0,
                 total_signals: 0,
                 avg_pnl: 0,
@@ -72,7 +72,7 @@ export default defineComponent({
             {
                 id: 595,
                 name: "BVA Long Only Strategy",
-                series: [{ name: "BVA Long Only", data: [] },{ name: "Trades", data: [] }],
+                series: [{ name: "BVA Long Only", data: [] }],
                 total_pnl: 0,
                 total_signals: 0,
                 avg_pnl: 0,
