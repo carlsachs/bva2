@@ -99,7 +99,7 @@ export default defineComponent({
             chart: {
                 width: "100%",
                 type: 'area',
-                stacked: false,
+                //stacked: false,
             },
             colors: ['#0080FB', '#00E396'],
             dataLabels: {
@@ -173,8 +173,8 @@ export default defineComponent({
 
                 state.strategies[i].series[0].data = tpnl_bva
 
-                console.log("TPNL:", (pnl_bva / 15).toFixed(2))
-                state.strategies[i].total_pnl = (pnl_bva / 15).toFixed(2)
+                console.log("TPNL:", pnl_bva.toFixed(2) )
+                state.strategies[i].total_pnl = pnl_bva.toFixed(2)
                 state.strategies[i].total_signals = rows.data.length
                 console.log("TOTAL:", rows.data.length)
                 console.log("TRADE MEAN:", _.meanBy(rows.data, o => {return Number(o.pnl)}).toFixed(2))
