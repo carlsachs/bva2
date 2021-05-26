@@ -1,10 +1,6 @@
 <template>
   <div>
 
-    <!--div class="mx-4 my-14 p-4 border-2 border-blue-900 rounded-lg">
-        <p class="text-white">Welcome to Bitcoin vs. Alts, ...</p>
-    </div-->
-
     <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
         <apexchart type="candlestick" height="400" :options="chartOptions" :series="series"></apexchart>
@@ -138,12 +134,6 @@ export default defineComponent({
       })
       ////// ////// ////// ////// //////
     })
-
-    /*
-    onBeforeMount( () => {
-        fetchResults();
-    })
-    */ 
     
     return {
       ...toRefs(state),

@@ -13,25 +13,25 @@
             
             <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
 
-                <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <router-link to="/strat/466" class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto">Period PnL</div>
                     <div class="flex-auto text-justify text-blue-300 block">{{ total_pnl }}%</div>
-                </div>
+                </router-link>
 
-                <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <router-link to="/strat/466" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto">Avg. Profit per Trade</div>
                     <div class="flex-auto text-justify text-blue-300 block">{{ avg_pnl }}%</div>
-                </div>
+                </router-link>
 
-                <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <router-link to="/strat/466" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto">Win Rate</div>
                     <div class="flex-auto text-justify text-blue-300 block">{{ win_rate }}%</div>
-                </div>
+                </router-link>
 
-                <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <router-link to="/strat/466" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto">Verif. Trade History</div>
                     <div class="flex-auto text-justify text-blue-300 block">1 year</div>
-                </div>
+                </router-link>
 
                 <router-link to="/profile#apikey" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto">Subscribe</div>
@@ -41,81 +41,6 @@
                     <div class="flex-auto">Follow</div>
                 </div>
 
-            </div>
-
-
-            <div class="mt-4 p-4">
-                <div class="flex flex-col">
-                    <div class="-my-2 overflow-x-auto">
-                        <div class="py-2 align-middle inline-block min-w-full">
-                            <div class=" overflow-hidden border-1 border-blue-900 rounded-lg">
-                                <table class="min-w-full divide-y divide-gray-200">
-                                    <thead>
-                                        <tr>
-                                            <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                <div class="text-center">TIME</div>
-                                            </th>
-                                            <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                <div class="text-center">PAIR</div>
-                                            </th>
-                                            <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                <div class="text-center">PNL</div>
-                                            </th>
-                                            <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                <div class="text-center">TYPE</div>
-                                            </th>
-                                            <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                <div class="text-center">BUY PRICE</div>
-                                            </th>
-                                            <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                <div class="text-center">SELL PRICE</div>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-gray-200 cursor-pointer" v-for="(row, i) in rows" :key="row.id" v-on:click="openSignal(row)">
-                                        <tr>
-                                            <td v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                                {{ row.pnl ? moment(Number(row.sell_time)).fromNow() : moment(Number(row.updated_time)).fromNow() }}
-                                            </td>
-                                            <td v-else :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                                {{ row.pnl ? moment(Number(row.buy_time)).fromNow() : moment(Number(row.updated_time)).fromNow() }}
-                                            </td>
-                                            <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
-                                                {{ row.pair }}
-                                            </td>
-                                            <td v-if="row.pnl" :class="{ 'text-green-500': Number(row.pnl)>0, 'text-red-500': Number(row.pnl)<0 }" class="px-6 py-4 font-bold whitespace-no-wrap text-sm leading-5">
-                                                {{ Number(row.pnl).toFixed(2) }}%
-                                            </td>
-                                            <td v-else class="italic px-6 py-4 text-gray-400 whitespace-no-wrap text-sm leading-5">
-                                                {{ getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
-                                            </td>
-                                            <!--
-                                            <td v-if="Number(row.pnl)>0" :class="{ 'font-bold': row.pnl }" class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                                {{ row.pnl ? Number(row.pnl).toFixed(2) : getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
-                                            </td>
-                                            <td v-else :class="{ 'font-bold': row.pnl }" class="text-red-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                                {{ row.pnl ? Number(row.pnl).toFixed(2) : getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
-                                            </td>
-                                            -->
-                                            <td v-if="row.type==='SHORT'" class="text-orange-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                                {{ row.type }}
-                                            </td>
-                                            <td v-else class="text-blue-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                                {{ row.type }}
-                                            </td>
-                                            <td class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                                {{ row.buy_price ? row.buy_price : '---' }}
-                                            </td>
-                                            <td class="text-red-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                                {{ row.sell_price ? row.sell_price : '---' }}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
         </div>
@@ -136,10 +61,6 @@ export default defineComponent({
 
     const router = useRouter()
 
-    const openSignal = (row) => {
-        router.push("/signal/"+ row.id)
-    }
-
     const state = reactive({
         total_pnl: 0,
         avg_pnl: 0,
@@ -147,7 +68,6 @@ export default defineComponent({
         win_rate: 0,
         user: null,
         rows: [],
-        prices: [],
         ///////// ///////// ///////// /////////
         series: [
             {
@@ -222,32 +142,7 @@ export default defineComponent({
         ///////// ///////// ///////// /////////
     })
 
-    const getCurrentPnL = (symbol, sell_price, buy_price) => {
-        let pnl = 0
-        if (state.prices.length) {
-            const currentPrice = state.prices.find( (r) => { return r.symbol === symbol }).price
-            if (currentPrice) {
-                if (sell_price > 0) {
-                    pnl = 100 * (sell_price - currentPrice) / currentPrice
-                }
-                else if (buy_price > 0) {
-                    pnl = 100 * (currentPrice - buy_price) / buy_price
-                }
-            }
-        }
-        //console.log(symbol, pnl)
-        return pnl.toFixed(2)
-    }
-
     onMounted(() => {
-        ////// ////// ////// ////// //////
-        axios.get('https://api.binance.com/api/v3/ticker/price')
-        .then( prices => {
-          state.prices = prices.data
-        })
-        .catch((err) => {
-          console.log(err)
-        })
         ////// ////// ////// ////// //////
         axios.get('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=350')
         .then( btcs => {
@@ -259,7 +154,7 @@ export default defineComponent({
                 let pnl_btc = 0
                 let pnl_bva = 0
                 
-                state.rows = bvas.data.slice(0, 300)
+                //state.rows = bvas.data.slice(0, 30)
 
                 for ( var btc of btcs.data ) {
                     pnl_btc = 100 * (Number(btc[4]) - Number(btc[1])) / Number(btc[1]) + pnl_btc
@@ -294,18 +189,10 @@ export default defineComponent({
         })
         ////// ////// ////// ////// //////
     })
-
-    /*
-    onBeforeMount( () => {
-        fetchResults();
-    })
-    */ 
     
     return {
       ...toRefs(state),
       moment,
-      openSignal,
-      getCurrentPnL
     }
   },
 })
