@@ -5,7 +5,7 @@
       <feather-skip-back class="" />
     </button>
     <router-link v-if="!isHomePage" to="/">
-      <button class="orange_button" type="button">
+      <button class="blue_button" type="button">
         Home
       </button>
     </router-link>
