@@ -174,7 +174,7 @@ export default defineComponent({
                 show: true,
                 offsetY: 20,
                 itemMargin: {
-                    horizontal: 0,
+                    horizontal: 10,
                     vertical: 20
                 },
                 labels: {
@@ -259,7 +259,7 @@ export default defineComponent({
                 let pnl_btc = 0
                 let pnl_bva = 0
                 
-                state.rows = bvas.data.slice(0, 30)
+                state.rows = bvas.data.slice(0, 300)
 
                 for ( var btc of btcs.data ) {
                     pnl_btc = 100 * (Number(btc[4]) - Number(btc[1])) / Number(btc[1]) + pnl_btc

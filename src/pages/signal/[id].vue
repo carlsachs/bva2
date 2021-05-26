@@ -26,6 +26,16 @@
                 <div class="flex-auto text-justify text-blue-300 block">{{ pnl }}%</div>
             </div>
 
+            <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <div class="flex-auto">Buy Price</div>
+                <div class="flex-auto text-justify text-blue-300 block">{{ buy_price }}</div>
+            </div>
+
+            <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <div class="flex-auto">Sell Price</div>
+                <div class="flex-auto text-justify text-blue-300 block">{{ sell_price }}</div>
+            </div>
+
         </div>
     </div>
   </div>
@@ -81,12 +91,11 @@ export default defineComponent({
           state.sell_price = signal.data[0].sell_price
           state.pnl = Number(signal.data[0].pnl).toFixed(2)
 
-          const startTime = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time) - 60000000 : Number(signal.data[0].sell_time) - 60000000
-          //console.log( "startTime", moment(startTime).format('MMM DD HH:mm') )
+          const startTime = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time) - 160000000 : Number(signal.data[0].sell_time) - 160000000
+          const endTime = signal.data[0].pnl ? Number(signal.data[0].sell_time) + 160000000 : Date.now()
 
-          axios.get('https://api.binance.com/api/v3/klines?interval=15m&symbol='+signal.data[0].pair+'&startTime='+startTime+'&endTime='+Date.now())
+          axios.get('https://api.binance.com/api/v3/klines?interval=15m&symbol='+signal.data[0].pair+'&startTime='+startTime+'&endTime=' + endTime)
           .then( prices => {
-            //console.log(prices.data.slice(0, 1))
             let data = []
             
             for ( var price of prices.data ) {
