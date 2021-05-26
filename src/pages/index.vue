@@ -7,10 +7,14 @@
             <apexchart type="area" height="400" :options="chartOptions" :series="strategy.series"></apexchart>
             
             <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
-
                 <router-link :to="'/strat/'+strategy.id" class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Period PnL</div>
+                    <div class="flex-auto">Period PnL *</div>
                     <div class="flex-auto text-justify text-blue-300 block">{{ strategy.total_pnl }}%</div>
+                </router-link>
+
+                <router-link :to="'/strat/'+strategy.id" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                    <div class="flex-auto">Trades Count</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ strategy.total_signals }}</div>
                 </router-link>
 
                 <router-link :to="'/strat/'+strategy.id" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
@@ -28,16 +32,12 @@
                     <div class="flex-auto text-justify text-blue-300 block">{{ strategy.strat_lifetime }} days</div>
                 </router-link>
 
-                <router-link :to="'/strat/'+strategy.id" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Trades Count</div>
-                    <div class="flex-auto text-justify text-blue-300 block">{{ strategy.total_signals }}</div>
-                </router-link>
-
                 <router-link to="/profile#apikey" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto text-green-500 font-semibold">Subscribe</div>
                 </router-link>
-
             </div>
+
+            <div class="mt-5 italic">* PNL calculated using 1/15 of the whole BTC amount for each trade.</div>
         </div>
 
     </div>

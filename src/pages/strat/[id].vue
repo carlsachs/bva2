@@ -8,8 +8,13 @@
             
             <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
                 <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Period PnL</div>
+                    <div class="flex-auto">Period PnL *</div>
                     <div class="flex-auto text-justify text-blue-300 block">{{ total_pnl }}%</div>
+                </div>
+
+                <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                    <div class="flex-auto">Trades Count</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ total_signals }}</div>
                 </div>
 
                 <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
@@ -30,11 +35,9 @@
                 <router-link to="/profile#apikey" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto">Subscribe</div>
                 </router-link>
-
-                <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Follow</div>
-                </div>
             </div>
+            
+            <div class="mt-5 italic">* PNL calculated using 1/15 of the whole BTC amount for each trade.</div>
 
             <div v-if="true" class="mt-4 p-4">
                 <div class="flex flex-col">
@@ -140,6 +143,7 @@ export default defineComponent({
         total_pnl: 0,
         avg_pnl: 0,
         strat_lifetime: 0,
+        total_signals: 0,
         win_rate: 0,
         user: null,
         rows: [],
@@ -257,6 +261,7 @@ export default defineComponent({
             state.series[1].name = rows.data[0].stratname
             state.strat_lifetime = parseInt((rows.data[0].updated_time - rows.data[rows.data.length-1].updated_time)/86400000)
             const days = 10 + state.strat_lifetime
+            state.total_signals = rows.data.length
             
             state.rows = rows.data.slice(0, 100)
 
