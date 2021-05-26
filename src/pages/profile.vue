@@ -34,25 +34,46 @@
 
       <h1 class="text-xl mb-2">Your subscriptions</h1>
 
-        <div v-if="form.bva_subs">
-          <button class="dark_button" @click="cancelSubs('bva_subs')">Cancel your BVA subscription</button>
+        <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
+          <div class="text-xl">BVA Strategy</div>
+            <div class="mt-3 text-gray-400 text-center">BTC amount to trade: &nbsp;</div>
+            &nbsp;
+            <input
+              id="amount"
+              size="50"
+              v-model="form.amount"
+              placeholder=""
+              aria-label="btc qty"
+              type="number"
+              autocomplete="false"
+              class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
+            >&nbsp;
+            <button class="dark_button" :disabled="!form.secret&&!form.key" @click="saveUserKey">Save</button>
+            &nbsp;
+            <span>{{ form.key_result }}</span>
+          <div v-if="form.bva_subs">
+            <button class="dark_button" @click="cancelSubs('bva_subs')">Cancel your BVA subscription</button>
+          </div>
+          <Stripe v-else
+              :customerEmail="auth0.state.user.email" 
+              :lineItems="[{ 'price': 'price_1IqheJ4v5ia3fxwPKEJMLptX', 'quantity': 1 }]" 
+              description="BVA"
+              price="4.90"
+          />
         </div>
-        <Stripe v-else
-            :customerEmail="auth0.state.user.email" 
-            :lineItems="[{ 'price': 'price_1IqheJ4v5ia3fxwPKEJMLptX', 'quantity': 1 }]" 
-            description="BVA"
-            price="4.90"
-        />
 
-        <div v-if="form.bva_long_only_subs">
-          <button class="dark_button" @click="cancelSubs('bva_long_only_subs')">Cancel your BVA LONG ONLY subscription</button>
+        <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
+          <div class="text-xl">BVA Long Only Strategy</div>
+          <div v-if="form.bva_long_only_subs">
+            <button class="dark_button" @click="cancelSubs('bva_long_only_subs')">Cancel your BVA LONG ONLY subscription</button>
+          </div>
+          <Stripe v-else
+              :customerEmail="auth0.state.user.email" 
+              :lineItems="[{ 'price': 'price_1IsYQc4v5ia3fxwPD4j8g01f', 'quantity': 1 }]"
+              description="BVA LONG ONLY"
+              price="5.90"
+          />
         </div>
-        <Stripe v-else
-            :customerEmail="auth0.state.user.email" 
-            :lineItems="[{ 'price': 'price_1IsYQc4v5ia3fxwPD4j8g01f', 'quantity': 1 }]"
-            description="BVA LONG ONLY"
-            price="5.90"
-        />
 
         <span>{{ form.cancel_sub_result }}</span>
 
@@ -96,12 +117,12 @@
       <span>{{ form.pwd_result }}</span>
     </div>
 
-    <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
+    <!--div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
       <span>{{ auth0.state.user.user_data }}</span>
       <br/><br/>
       <button @click="showModal = true">Open Modal</button><br/>
       <a href="#apikey">TOTOOOOO</a>
-    </div>
+    </div-->
 
   </div>
 </template>
@@ -293,6 +314,12 @@ export default {
   background-color: #fff;
   font-size: 20px;
   text-align: center;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
 }
 </style>
 
