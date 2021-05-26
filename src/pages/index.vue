@@ -28,13 +28,14 @@
                     <div class="flex-auto text-justify text-blue-300 block">1 year</div>
                 </router-link>
 
-                <router-link to="/profile#apikey" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Subscribe</div>
+                <router-link to="/strat/466" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                    <div class="flex-auto">Trades Count</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ total_signals }}</div>
                 </router-link>
 
-                <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Follow</div>
-                </div>
+                <router-link to="/profile#apikey" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                    <div class="flex-auto text-green-500 font-semibold">Subscribe</div>
+                </router-link>
 
             </div>
         </div>
@@ -66,13 +67,14 @@
                     <div class="flex-auto text-justify text-blue-300 block">1 year</div>
                 </router-link>
 
+                <router-link to="/strat/466" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                    <div class="flex-auto">Trades Count</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ total_signals }}</div>
+                </router-link>
+
                 <router-link to="/profile#apikey" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto">Subscribe</div>
                 </router-link>
-
-                <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Follow</div>
-                </div>
 
             </div>
         </div>
@@ -104,13 +106,14 @@
                     <div class="flex-auto text-justify text-blue-300 block">1 year</div>
                 </router-link>
 
+                <router-link to="/strat/466" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                    <div class="flex-auto">Trades Count</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ total_signals }}</div>
+                </router-link>
+
                 <router-link to="/profile#apikey" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto">Subscribe</div>
                 </router-link>
-
-                <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Follow</div>
-                </div>
 
             </div>
         </div>
@@ -134,6 +137,7 @@ export default defineComponent({
 
     const state = reactive({
         total_pnl: 0,
+        total_signals: 0,
         avg_pnl: 0,
         strat_lifetime: 0,
         win_rate: 0,
@@ -223,15 +227,16 @@ export default defineComponent({
 
             state.series[0].data = tpnl_bva
 
-            //console.log("TPNL:", tpnl_bva[tpnl_bva.length-1][1])
-            //state.total_pnl = tpnl_bva[tpnl_bva.length-1][1]
-            //console.log("TOTAL:", bvas.data.length)
-            //console.log("TRADE MEAN:", _.meanBy(bvas.data, o => {return Number(o.pnl)}).toFixed(2))
-            //state.avg_pnl = _.meanBy(bvas.data, o => {return Number(o.pnl)}).toFixed(2)
-            //const positifs = bvas.data.filter( bva => { return Number(bva.pnl) > 0 })
-            //console.log("POS COUNT:", positifs.length)
-            //console.log("WIN RATE:", (100 * positifs.length / bvas.data.length).toFixed(2) )
-            //state.win_rate = (100 * positifs.length / bvas.data.length).toFixed(2)
+            console.log("TPNL:", (pnl_bva / 15).toFixed(2))
+            state.total_pnl = (pnl_bva / 15).toFixed(2)
+            state.total_signals = rows.data.length
+            console.log("TOTAL:", rows.data.length)
+            console.log("TRADE MEAN:", _.meanBy(rows.data, o => {return Number(o.pnl)}).toFixed(2))
+            state.avg_pnl = _.meanBy(rows.data, o => {return Number(o.pnl)}).toFixed(2)
+            const positifs = rows.data.filter( bva => { return Number(bva.pnl) > 0 })
+            console.log("POS COUNT:", positifs.length)
+            console.log("WIN RATE:", (100 * positifs.length / rows.data.length).toFixed(2) )
+            state.win_rate = (100 * positifs.length / rows.data.length).toFixed(2)
 
         })
         .catch((err) => {

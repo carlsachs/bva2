@@ -167,7 +167,7 @@ export default defineComponent({
                 type: 'area',
                 stacked: true,
             },
-            colors: ['#0080FB', '#00E396'],
+            colors: ['#00E396','#0080FB'],
             dataLabels: {
                 enabled: false,
                 enabledOnSeries: false,
