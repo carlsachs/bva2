@@ -2,7 +2,7 @@
   <div class="flex flex-row items-center justify-center p-2 space-x-5 mb-5">
     <!--DarkModeToggle /-->
     <button v-if="router.options.history.state.back" class="dark_button p-2" type="button" @click="$router.go(-1)">
-      Back <feather-skip-back class="ml-2" />
+      <feather-skip-back class="ml-2" />
     </button>
     <router-link v-if="!isHomePage" to="/">
       <button class="orange_button" type="button">
