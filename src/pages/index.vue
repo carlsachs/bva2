@@ -173,15 +173,15 @@ export default defineComponent({
 
                 state.strategies[i].series[0].data = tpnl_bva
 
-                console.log("TPNL:", pnl_bva.toFixed(2) )
+                //console.log("TPNL:", pnl_bva.toFixed(2) )
                 state.strategies[i].total_pnl = pnl_bva.toFixed(2)
                 state.strategies[i].total_signals = rows.data.length
-                console.log("TOTAL:", rows.data.length)
-                console.log("TRADE MEAN:", _.meanBy(rows.data, o => {return Number(o.pnl)}).toFixed(2))
+                //console.log("TOTAL:", rows.data.length)
+                //console.log("TRADE MEAN:", _.meanBy(rows.data, o => {return Number(o.pnl)}).toFixed(2))
                 state.strategies[i].avg_pnl = _.meanBy(rows.data, o => {return Number(o.pnl)}).toFixed(2)
                 const positifs = rows.data.filter( bva => { return Number(bva.pnl) > 0 })
-                console.log("POS COUNT:", positifs.length)
-                console.log("WIN RATE:", (100 * positifs.length / rows.data.length).toFixed(2) )
+                //console.log("POS COUNT:", positifs.length)
+                //console.log("WIN RATE:", (100 * positifs.length / rows.data.length).toFixed(2) )
                 state.strategies[i].win_rate = (100 * positifs.length / rows.data.length).toFixed(2)
 
             })
