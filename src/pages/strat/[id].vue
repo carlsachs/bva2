@@ -1,18 +1,12 @@
 <template>
     <div>
-
-        <!--div class="mx-4 my-14 p-4 border-2 border-blue-900 rounded-lg">
-            <p class="text-white">Welcome to Bitcoin vs. Alts, ...</p>
-        </div-->
-
         <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
-            <h1 class="mb-7 text-uppercase font-semibold">The BVA Strategy</h1>
+            <h1 class="mb-7 text-uppercase font-semibold">{{ stratname }}</h1>
 
             <apexchart type="area" height="400" :options="chartOptions" :series="series"></apexchart>
             
             <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
-
                 <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto">Period PnL</div>
                     <div class="flex-auto text-justify text-blue-300 block">{{ total_pnl }}%</div>
@@ -40,7 +34,6 @@
                 <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto">Follow</div>
                 </div>
-
             </div>
 
             <div v-if="true" class="mt-4 p-4">
@@ -130,7 +123,7 @@ import { useRouter } from "vue-router"
 import _ from "lodash"
 
 export default defineComponent({
-  name: "strategy",
+  name: "signal",
   props: {
     id: String,
   },
@@ -143,6 +136,7 @@ export default defineComponent({
     }
 
     const state = reactive({
+        stratname: '',
         total_pnl: 0,
         avg_pnl: 0,
         strat_lifetime: 0,
@@ -157,7 +151,7 @@ export default defineComponent({
                 data: [],
             },
             {
-                name: "BVA",
+                name: "",
                 data: [],
             }
         ],
@@ -251,17 +245,23 @@ export default defineComponent({
           console.log(err)
         })
         ////// ////// ////// ////// //////
-        axios.get('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=350')
-        .then( btcs => {
-            axios.get('/api/strategy?id=466')
-            .then( bvas => {
+        axios.get('/api/strategy?id='+props.id)
+        .then( bvas => {
 
-                let tpnl_btc = []
-                let tpnl_bva = []
-                let pnl_btc = 0
-                let pnl_bva = 0
-                
-                state.rows = bvas.data.slice(0, 100)
+            const days = 10 + parseInt((bvas.data[0].updated_time - bvas.data[bvas.data.length-1].updated_time)/86400000)
+
+            let tpnl_btc = []
+            let tpnl_bva = []
+            let pnl_btc = 0
+            let pnl_bva = 0
+
+            state.stratname = bvas.data[0].stratname
+            state.series[1].name = bvas.data[0].stratname
+            
+            state.rows = bvas.data.slice(0, 100)
+
+            axios.get('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit='+days)
+            .then( btcs => {
 
                 for ( var btc of btcs.data ) {
                     pnl_btc = 100 * (Number(btc[4]) - Number(btc[1])) / Number(btc[1]) + pnl_btc

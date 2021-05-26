@@ -1,118 +1,40 @@
 <template>
     <div>
 
-        <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
-            <h1 class="mb-7 text-uppercase font-semibold">The BVA Strategy</h1>
+        <div v-for="(strategy, i) in strategies" :key="strategy.name" class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
+            <h1 class="mb-7 text-uppercase font-semibold">{{ strategy.name }}</h1>
 
-            <apexchart type="area" height="400" :options="chartOptions" :series="series"></apexchart>
+            <apexchart type="area" height="400" :options="chartOptions" :series="strategy.series"></apexchart>
             
             <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
 
-                <router-link to="/strat/466" class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <router-link :to="'/strat/'+strategy.id" class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto">Period PnL</div>
-                    <div class="flex-auto text-justify text-blue-300 block">{{ total_pnl }}%</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ strategy.total_pnl }}%</div>
                 </router-link>
 
-                <router-link to="/strat/466" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <router-link :to="'/strat/'+strategy.id" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto">Avg. Profit per Trade</div>
-                    <div class="flex-auto text-justify text-blue-300 block">{{ avg_pnl }}%</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ strategy.avg_pnl }}%</div>
                 </router-link>
 
-                <router-link to="/strat/466" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <router-link :to="'/strat/'+strategy.id" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto">Win Rate</div>
-                    <div class="flex-auto text-justify text-blue-300 block">{{ win_rate }}%</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ strategy.win_rate }}%</div>
                 </router-link>
 
-                <router-link to="/strat/466" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <router-link :to="'/strat/'+strategy.id" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto">Verif. Trade History</div>
                     <div class="flex-auto text-justify text-blue-300 block">1 year</div>
                 </router-link>
 
-                <router-link to="/strat/466" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <router-link :to="'/strat/'+strategy.id" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto">Trades Count</div>
-                    <div class="flex-auto text-justify text-blue-300 block">{{ total_signals }}</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ strategy.total_signals }}</div>
                 </router-link>
 
                 <router-link to="/profile#apikey" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto text-green-500 font-semibold">Subscribe</div>
-                </router-link>
-
-            </div>
-        </div>
-
-        <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
-            <h1 class="mb-7 text-uppercase font-semibold">The BVA LONG ONLY Strategy</h1>
-
-            <apexchart type="area" height="400" :options="chartOptions" :series="series"></apexchart>
-            
-            <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
-
-                <router-link to="/strat/466" class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Period PnL</div>
-                    <div class="flex-auto text-justify text-blue-300 block">{{ total_pnl }}%</div>
-                </router-link>
-
-                <router-link to="/strat/466" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Avg. Profit per Trade</div>
-                    <div class="flex-auto text-justify text-blue-300 block">{{ avg_pnl }}%</div>
-                </router-link>
-
-                <router-link to="/strat/466" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Win Rate</div>
-                    <div class="flex-auto text-justify text-blue-300 block">{{ win_rate }}%</div>
-                </router-link>
-
-                <router-link to="/strat/466" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Verif. Trade History</div>
-                    <div class="flex-auto text-justify text-blue-300 block">1 year</div>
-                </router-link>
-
-                <router-link to="/strat/466" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Trades Count</div>
-                    <div class="flex-auto text-justify text-blue-300 block">{{ total_signals }}</div>
-                </router-link>
-
-                <router-link to="/profile#apikey" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Subscribe</div>
-                </router-link>
-
-            </div>
-        </div>
-
-        <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
-            <h1 class="mb-7 text-uppercase font-semibold">The VILDERDAMN Strategy</h1>
-
-            <apexchart type="area" height="400" :options="chartOptions" :series="series"></apexchart>
-            
-            <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
-
-                <router-link to="/strat/466" class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Period PnL</div>
-                    <div class="flex-auto text-justify text-blue-300 block">{{ total_pnl }}%</div>
-                </router-link>
-
-                <router-link to="/strat/466" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Avg. Profit per Trade</div>
-                    <div class="flex-auto text-justify text-blue-300 block">{{ avg_pnl }}%</div>
-                </router-link>
-
-                <router-link to="/strat/466" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Win Rate</div>
-                    <div class="flex-auto text-justify text-blue-300 block">{{ win_rate }}%</div>
-                </router-link>
-
-                <router-link to="/strat/466" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Verif. Trade History</div>
-                    <div class="flex-auto text-justify text-blue-300 block">1 year</div>
-                </router-link>
-
-                <router-link to="/strat/466" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Trades Count</div>
-                    <div class="flex-auto text-justify text-blue-300 block">{{ total_signals }}</div>
-                </router-link>
-
-                <router-link to="/profile#apikey" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Subscribe</div>
                 </router-link>
 
             </div>
@@ -136,24 +58,48 @@ export default defineComponent({
     const router = useRouter()
 
     const state = reactive({
-        total_pnl: 0,
-        total_signals: 0,
-        avg_pnl: 0,
-        strat_lifetime: 0,
-        win_rate: 0,
-        user: null,
-        rows: [],
-        ///////// ///////// ///////// /////////
-        series: [
+        strategies: [
             {
-                name: "BVA",
-                data: [],
+                id: 466,
+                name: "BVA Strategy",
+                series: [{ name: "BVA", data: [] },{ name: "Trades", data: [] }],
+                total_pnl: 0,
+                total_signals: 0,
+                avg_pnl: 0,
+                strat_lifetime: 0,
+                win_rate: 0,
+            },
+            {
+                id: 595,
+                name: "BVA Long Only Strategy",
+                series: [{ name: "BVA Long Only", data: [] },{ name: "Trades", data: [] }],
+                total_pnl: 0,
+                total_signals: 0,
+                avg_pnl: 0,
+                strat_lifetime: 0,
+                win_rate: 0,
+            },
+            /*
+            {
+                id: 670,
+                name: "Woltiks Strategy",
+                series: [{ name: "Woltiks", data: [] }],
+                total_pnl: 0,
+                total_signals: 0,
+                avg_pnl: 0,
+                strat_lifetime: 0,
+                win_rate: 0,
             }
+            */
         ],
+        user: null,
+        //rows: [],
+        ///////// ///////// ///////// /////////
         chartOptions: {
             chart: {
                 width: "100%",
                 type: 'area',
+                stacked: false,
             },
             colors: ['#0080FB', '#00E396'],
             dataLabels: {
@@ -213,36 +159,36 @@ export default defineComponent({
     })
 
     onMounted(() => {
-        ////// ////// ////// ////// //////
-        axios.get('/api/strategy?id=466')
-        .then( rows => {
+        for ( const i in state.strategies ) {
+            axios.get('/api/strategy?id=' + state.strategies[i].id)
+            .then( rows => {
 
-            let tpnl_bva = []
-            let pnl_bva = 0
-            
-            for ( var row of rows.data.reverse() ) {
-                pnl_bva = pnl_bva + Number(row.pnl)
-                tpnl_bva.push([ Number(row.updated_time), Number(pnl_bva).toFixed(2) ])
-            }
+                let tpnl_bva = []
+                let pnl_bva = 0
+                
+                for ( var row of rows.data.reverse() ) {
+                    pnl_bva = pnl_bva + Number(row.pnl) / 15
+                    tpnl_bva.push([ Number(row.updated_time), Number(pnl_bva).toFixed(2) ])
+                }
 
-            state.series[0].data = tpnl_bva
+                state.strategies[i].series[0].data = tpnl_bva
 
-            console.log("TPNL:", (pnl_bva / 15).toFixed(2))
-            state.total_pnl = (pnl_bva / 15).toFixed(2)
-            state.total_signals = rows.data.length
-            console.log("TOTAL:", rows.data.length)
-            console.log("TRADE MEAN:", _.meanBy(rows.data, o => {return Number(o.pnl)}).toFixed(2))
-            state.avg_pnl = _.meanBy(rows.data, o => {return Number(o.pnl)}).toFixed(2)
-            const positifs = rows.data.filter( bva => { return Number(bva.pnl) > 0 })
-            console.log("POS COUNT:", positifs.length)
-            console.log("WIN RATE:", (100 * positifs.length / rows.data.length).toFixed(2) )
-            state.win_rate = (100 * positifs.length / rows.data.length).toFixed(2)
+                console.log("TPNL:", (pnl_bva / 15).toFixed(2))
+                state.strategies[i].total_pnl = (pnl_bva / 15).toFixed(2)
+                state.strategies[i].total_signals = rows.data.length
+                console.log("TOTAL:", rows.data.length)
+                console.log("TRADE MEAN:", _.meanBy(rows.data, o => {return Number(o.pnl)}).toFixed(2))
+                state.strategies[i].avg_pnl = _.meanBy(rows.data, o => {return Number(o.pnl)}).toFixed(2)
+                const positifs = rows.data.filter( bva => { return Number(bva.pnl) > 0 })
+                console.log("POS COUNT:", positifs.length)
+                console.log("WIN RATE:", (100 * positifs.length / rows.data.length).toFixed(2) )
+                state.strategies[i].win_rate = (100 * positifs.length / rows.data.length).toFixed(2)
 
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-        ////// ////// ////// ////// //////
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }
     })
     
     return {
