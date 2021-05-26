@@ -24,7 +24,7 @@
 
                 <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto">Verif. Trade History</div>
-                    <div class="flex-auto text-justify text-blue-300 block">1 year</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ strat_lifetime }} days</div>
                 </div>
 
                 <router-link to="/profile#apikey" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
@@ -246,19 +246,19 @@ export default defineComponent({
         })
         ////// ////// ////// ////// //////
         axios.get('/api/strategy?id='+props.id)
-        .then( bvas => {
-
-            const days = 10 + parseInt((bvas.data[0].updated_time - bvas.data[bvas.data.length-1].updated_time)/86400000)
+        .then( rows => {
 
             let tpnl_btc = []
             let tpnl_bva = []
             let pnl_btc = 0
             let pnl_bva = 0
 
-            state.stratname = bvas.data[0].stratname
-            state.series[1].name = bvas.data[0].stratname
+            state.stratname = rows.data[0].stratname
+            state.series[1].name = rows.data[0].stratname
+            state.strat_lifetime = parseInt((rows.data[0].updated_time - rows.data[rows.data.length-1].updated_time)/86400000)
+            const days = 10 + state.strat_lifetime
             
-            state.rows = bvas.data.slice(0, 100)
+            state.rows = rows.data.slice(0, 100)
 
             axios.get('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit='+days)
             .then( btcs => {
@@ -266,7 +266,7 @@ export default defineComponent({
                 for ( var btc of btcs.data ) {
                     pnl_btc = 100 * (Number(btc[4]) - Number(btc[1])) / Number(btc[1]) + pnl_btc
                     tpnl_btc.push([ btc[0], pnl_btc.toFixed(2) ])
-                    const sum = bvas.data.filter( bva => { 
+                    const sum = rows.data.filter( bva => { 
                         return Number(bva.updated_time) > btc[0] && Number(bva.updated_time) <= btc[6] 
                     })
                     pnl_bva = _.sumBy(sum, o => { return Number(o.pnl) }) / 15 + pnl_bva
@@ -278,13 +278,13 @@ export default defineComponent({
 
                 //console.log("TPNL:", tpnl_bva[tpnl_bva.length-1][1])
                 state.total_pnl = tpnl_bva[tpnl_bva.length-1][1]
-                //console.log("TOTAL:", bvas.data.length)
-                //console.log("TRADE MEAN:", _.meanBy(bvas.data, o => {return Number(o.pnl)}).toFixed(2))
-                state.avg_pnl = _.meanBy(bvas.data, o => {return Number(o.pnl)}).toFixed(2)
-                const positifs = bvas.data.filter( bva => { return Number(bva.pnl) > 0 })
+                //console.log("TOTAL:", rows.data.length)
+                //console.log("TRADE MEAN:", _.meanBy(rows.data, o => {return Number(o.pnl)}).toFixed(2))
+                state.avg_pnl = _.meanBy(rows.data, o => {return Number(o.pnl)}).toFixed(2)
+                const positifs = rows.data.filter( bva => { return Number(bva.pnl) > 0 })
                 //console.log("POS COUNT:", positifs.length)
-                //console.log("WIN RATE:", (100 * positifs.length / bvas.data.length).toFixed(2) )
-                state.win_rate = (100 * positifs.length / bvas.data.length).toFixed(2)
+                //console.log("WIN RATE:", (100 * positifs.length / rows.data.length).toFixed(2) )
+                state.win_rate = (100 * positifs.length / rows.data.length).toFixed(2)
 
             })
             .catch((err) => {

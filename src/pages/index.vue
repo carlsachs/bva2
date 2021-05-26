@@ -25,7 +25,7 @@
 
                 <router-link :to="'/strat/'+strategy.id" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto">Verif. Trade History</div>
-                    <div class="flex-auto text-justify text-blue-300 block">1 year</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ strategy.strat_lifetime }} days</div>
                 </router-link>
 
                 <router-link :to="'/strat/'+strategy.id" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
@@ -171,6 +171,8 @@ export default defineComponent({
                     tpnl_bva.push([ Number(row.updated_time), Number(pnl_bva).toFixed(2) ])
                 }
 
+                state.strategies[i].strat_lifetime = parseInt((rows.data[rows.data.length-1].updated_time - rows.data[0].updated_time)/86400000)
+
                 state.strategies[i].series[0].data = tpnl_bva
 
                 //console.log("TPNL:", pnl_bva.toFixed(2) )
@@ -193,7 +195,7 @@ export default defineComponent({
     
     return {
       ...toRefs(state),
-      moment,
+      //moment,
     }
   },
 })
