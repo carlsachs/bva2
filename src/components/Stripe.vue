@@ -10,7 +10,7 @@
       :customerEmail="customerEmail"
       @loading="v => loading = v"
     />
-    <button class="green_button" @click="subscribe">Subscribe to {{ description }} for {{ price }} USD per month</button>
+    <button class="green_button font-bold" @click="subscribe">Subscribe to {{ description }} for {{ price }} USD per month</button>
   </div>
 </template>
 
