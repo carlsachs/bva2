@@ -4,7 +4,7 @@
       ref="checkoutRef"
       mode="subscription"
       :pk="publishableKey"
-      :line-items="lineItems"
+      :line-items="[{ 'price': stripeId, 'quantity': 1 }]"
       :success-url="successURL"
       :cancel-url="cancelURL"
       :customerEmail="customerEmail"
@@ -19,7 +19,7 @@ import { StripeCheckout } from '@vue-stripe/vue-stripe'
 export default {
   props: {
     customerEmail: { type: String, required: true },
-    lineItems: { type: Array, required: true },
+    stripeId: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: Number, required: true },
   },

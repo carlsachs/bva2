@@ -21,11 +21,9 @@ export const $auth0 = reactive({
   }
 } as $Auth0Defaults)
 
-
+/*
 export const authGuard = (to, from, next) => {
-
   console.log("authGuard")
-
   const verify = () => {
     if ($auth0.state.isAuthenticated) {
       console.log("isAuthenticated!!")
@@ -41,19 +39,19 @@ export const authGuard = (to, from, next) => {
       return next()
     }
   }
-
   if (!$auth0.state.loading) {
+    console.log("Verify...")
     return verify()
   }
-
   watchEffect( () => {
     console.log("watchEffect...")
     if (!$auth0.state.loading) {
-      console.log("watchEffect verify")
+      console.log("watchEffect verify...")
       return verify()
     }
   })
 }
+*/
 
 export async function setupAuth0(router) {
   $auth0.client = await setupClient()
@@ -95,6 +93,18 @@ export async function setupAuth0(router) {
       else {
         $auth0.state.user['user_data'] = user_data
         console.log("WELCOME USER", $auth0.state.user['user_data'].id )
+        ////// ///// ///// ////// //////
+        console.log("GET USER SUBS")
+        axios.get(api_url + '/api/getusersubs?email=' + $auth0.state.user.email, { headers: {Authorization:`Bearer ${$auth0.state.user.token}`} })
+        .then( (response) => {
+          //console.log("getusersubs ::: ", response.data)
+          $auth0.state.user['user_subs'] = response.data
+        })
+        .catch( (e) => {
+          console.log("getusersubs ERROR", e)
+          $auth0.state.user['user_subs'] = []
+        })
+        ////// ///// ///// ////// //////
       }
     }
   }
