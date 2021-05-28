@@ -583,6 +583,7 @@ export default {
         hash: '#sampleHash',
         duration: 1000,
         offset: -30, 
+        updateHistory: false,
       })
     }
 

@@ -141,6 +141,7 @@ export default defineComponent({
               hash: '#sampleHash',
               duration: 1000,
               offset: -30, 
+              updateHistory: false,
           })
         }, 1000);
     })
