@@ -573,7 +573,7 @@ export default {
               scrollTo: myEl.value,
               hash: '#sampleHash',
               duration: 1000,
-              offset: -30, 
+              offset: -10, 
               updateHistory: false,
           })
         }, 1000)
