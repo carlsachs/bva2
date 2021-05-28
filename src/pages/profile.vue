@@ -3,40 +3,47 @@
 
     <div v-for="(subscription, i) in subscriptions" :class="{ 'bg-indigo-900': subscribed.includes(subscription.code) }" :key="subscription.code" class="mx-4 my-4 p-4 bg-opacity-90 border-2 border-blue-900 rounded-lg text-white relative">
       <div class="text-xl">{{ subscription.name }} Strategy</div>
-      <div class="mt-9" v-if="subscribed.includes(subscription.code)">
-        <div class="flex items-center justify-center">
-          <label for="toogleA" class="flex items-center cursor-pointer">
-            <div class="relative">
-              <input id="toogleA" type="checkbox" class="sr-only" />
-              <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
-              <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
-            </div>
-            <div class="ml-3 text-gray-500 font-medium">
-              Paused
-            </div>
-          </label>
-        </div>
-        <div class="mt-10 text-gray-400 text-center">BTC amount to trade: &nbsp;</div>
-        <div>
-          <input
-            id="amount" size="50" v-model="subscription.qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
-            class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-blue-900"
-          >&nbsp;
-          <button class="dark_button" :disabled="!subscription.qty">Save</button>
-        </div>
-        <button class="mt-7 dark_button" @click="cancelSubs(subscription.code)">Cancel your {{ subscription.name }} subscription</button>
-      </div>
+      <hr class="w-5 mx-auto border-blue-400 my-8">
+      <button v-if="isLoading" class="blue_button" type="button">
+        Loading <feather-loader class="ml-2" />
+      </button>
       <div v-else>
-        <Stripe
-          :customerEmail="auth0.state.user.email" 
-          :stripeId="subscription.stripe_id"
-          :description="subscription.name"
-          :price="subscription.price"
-        />
+        <div class="mt-9" v-if="subscribed.includes(subscription.code)">
+          <div class="flex items-center justify-center">
+            <label for="toogleA" class="flex items-center cursor-pointer">
+              <div class="relative">
+                <input id="toogleA" type="checkbox" class="sr-only" />
+                <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+                <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
+              </div>
+              <div class="ml-3 text-gray-500 font-medium">
+                Paused
+              </div>
+            </label>
+          </div>
+          <div class="mt-10 text-gray-400 text-center">BTC amount to trade: &nbsp;</div>
+          <div>
+            <input
+              id="amount" size="50" v-model="subscription.qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
+              class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-blue-900"
+            >&nbsp;
+            <button class="dark_button" :disabled="!subscription.qty">Save</button>
+          </div>
+          <hr class="w-5 mx-auto border-blue-400 my-8">
+          <button class="dark_button" @click="cancelSubs(subscription.code)">Cancel your {{ subscription.name }} subscription</button>
+        </div>
+        <div v-else>
+          <Stripe
+            :customerEmail="auth0.state.user.email" 
+            :stripeId="subscription.stripe_id"
+            :description="subscription.name"
+            :price="subscription.price"
+          />
+        </div>
       </div>
       <div v-if="cancel_sub_result">{{ cancel_sub_result }}</div>
     </div>
-    
+
 
     <section id="apikey" ref="apikey">
       <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
@@ -147,6 +154,7 @@ export default {
 
     const state = reactive({ 
       auth0, 
+      isLoading: true,
       subscriptions,
       subscribed: [],
       key: auth0.state.user?.user_data?.cle,
@@ -169,6 +177,7 @@ export default {
 
     watch( () =>  auth0.state.user?.user_subs, (subs) => {
       state.subscribed = subs
+      state.isLoading = false
     })
 
     const api_url = import.meta.env.VITE_API_URL
