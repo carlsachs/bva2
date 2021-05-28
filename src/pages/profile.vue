@@ -3,9 +3,11 @@
 
     <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
-      <h1 class="mb-7 text-uppercase font-semibold">{{ stratname }}</h1>
+      <h1 class="mb-7 text-uppercase font-semibold">Your Trades</h1>
 
-      <apexchart type="area" height="400" :options="chartOptions" :series="series"></apexchart>
+      <button class="dark_button" @click="myTest()">MY TEST</button>
+
+      <apexchart ref="mychart" type="area" height="400" :options="chartOptions" :series="series"></apexchart>
       
       <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
           <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
@@ -293,7 +295,7 @@ export default {
       showModal: false,
       ///////// ///////// ///////// /////////
       strat_id: 466,
-      stratname: '',
+      stratname: 'Your Trades',
       total_pnl: 0,
       avg_pnl: 0,
       strat_lifetime: 0,
@@ -309,11 +311,14 @@ export default {
               data: [],
           },
           {
-              name: "",
+              name: "You",
               data: [],
           }
       ],
       chartOptions: {
+          chart: {
+            id: "vuechart-example",
+          },
           chart: {
               width: "100%",
               type: 'area',
@@ -326,6 +331,7 @@ export default {
           },
           legend: {
               show: true,
+              showForSingleSeries: true,
               offsetY: 20,
               itemMargin: {
                   horizontal: 10,
@@ -520,8 +526,8 @@ export default {
             let pnl_btc = 0
             let pnl_bva = 0
 
-            state.stratname = rows.data[0].stratname
-            state.series[1].name = rows.data[0].stratname
+            //state.stratname = rows.data[0].stratname
+            //state.series[1].name = rows.data[0].stratname
             state.strat_lifetime = parseInt((rows.data[0].updated_time - rows.data[rows.data.length-1].updated_time)/86400000)
             const days = 10 + state.strat_lifetime
             state.total_signals = rows.data.length
@@ -563,6 +569,18 @@ export default {
             console.log(err)
         })
         ////// ////// ////// ////// //////
+        if (mychart.value) myTest()
+    })
+
+    const mychart = ref(0)
+
+    const myTest = () => {
+      console.log("MMMMYYY TESSSTT")
+      mychart.value.toggleSeries('Bitcoin')
+    }
+
+    watch( () => mychart.value, (value) => {
+      setTimeout(function(){ value.toggleSeries('Bitcoin') }, 1000);
     })
     
     return {
@@ -574,6 +592,8 @@ export default {
       saveUser,
       saveUserKey,
       cancelSubs,
+      myTest,
+      mychart
     }
 
   },
