@@ -568,7 +568,15 @@ export default {
             console.log(err)
         })
         ////// ////// ////// ////// //////
-        if (mychart.value) myTest()
+        setTimeout(function(){ 
+          smoothScroll({
+              scrollTo: myEl.value,
+              hash: '#sampleHash',
+              duration: 1000,
+              offset: -30, 
+              updateHistory: false,
+          })
+        }, 1000)
     })
 
     const mychart = ref(0)
