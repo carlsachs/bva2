@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
+    <div ref="myEl" class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
         <apexchart type="candlestick" height="400" :options="chartOptions" :series="series"></apexchart>
         
@@ -39,7 +39,7 @@
 
 <script lang="ts">
 
-import { onMounted, reactive, ref, toRefs, defineComponent, watch } from "vue"
+import { onMounted, reactive, ref, toRefs, defineComponent, watch, inject } from "vue"
 import axios from "~/utils/axios"
 import moment from "moment"
 import _ from "lodash"
@@ -50,6 +50,8 @@ export default defineComponent({
     id: String,
   },
   setup: (props) => {
+
+    const smoothScroll = inject('smoothScroll')
 
     const state = reactive({
       signal_type: null,
@@ -133,11 +135,22 @@ export default defineComponent({
         console.log(err)
       })
       ////// ////// ////// ////// //////
+      setTimeout(function(){ 
+          smoothScroll({
+              scrollTo: myEl.value,
+              hash: '#sampleHash',
+              duration: 1000,
+              offset: -30, 
+          })
+        }, 1000);
     })
+
+    const myEl = ref(null)
     
     return {
       ...toRefs(state),
-      moment
+      moment,
+      myEl
     }
   },
 })
