@@ -2,7 +2,7 @@
   <div v-if="auth0.state.isAuthenticated && auth0.state.user" class="text-center text-gray-300">
 
     <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
-      <div v-for="(subscription, i) in subscriptions" :class="{ 'bg-indigo-900': !subscribed.includes(subscription.code), 'bg-green-900': subscribed.includes(subscription.code) }" :key="subscription.code" class="mx-4 my-4 p-4 bg-opacity-90 border-2 border-blue-900 rounded-lg text-white relative">
+      <div v-for="(subscription, i) in subscriptions" :class="{ 'bg-indigo-900': subscribed.includes(subscription.code) }" :key="subscription.code" class="mx-4 my-4 p-4 bg-opacity-90 border-2 border-blue-900 rounded-lg text-white relative">
         <div class="text-xl">{{ subscription.name }} Strategy</div>
         <div class="mt-9" v-if="subscribed.includes(subscription.code)">
           <div class="flex items-center justify-center">
@@ -12,8 +12,8 @@
                 <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
                 <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
               </div>
-              <div class="ml-3 text-gray-700 font-medium">
-                Active
+              <div class="ml-3 text-gray-500 font-medium">
+                Paused
               </div>
             </label>
           </div>
@@ -25,7 +25,7 @@
             >&nbsp;
             <button class="dark_button" :disabled="!subscription.qty">Save</button>
           </div>
-          <button class="mt-7 bg-gray-600 dark_button" @click="cancelSubs(subscription.code)">Cancel your {{ subscription.name }} subscription</button>
+          <button class="mt-7 dark_button" @click="cancelSubs(subscription.code)">Cancel your {{ subscription.name }} subscription</button>
         </div>
         <div v-else>
           <Stripe
