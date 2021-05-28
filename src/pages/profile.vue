@@ -35,7 +35,7 @@
               <div class="flex-auto text-justify text-blue-300 block">{{ strat_lifetime }} days</div>
           </div>
 
-          <router-link to="/profile#apikey" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+          <router-link to="/profile" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
               <div class="flex-auto text-green-500 font-semibold">Subscribe</div>
           </router-link>
       </div>
@@ -162,8 +162,8 @@
     </div>
 
 
-    <section id="apikey" ref="apikey">
-      <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
+    <section ref="myEl">
+      <div :class="{ 'bg-indigo-900 bg-opacity-20': true }" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
         <div class="my-3">Your Binance API Key Information: &nbsp;</div>
         <input
           id="key"
@@ -236,7 +236,6 @@
       </vue-final-modal>
       <button @click="showModal = true">Open Modal</button><br/>
       <br/>
-      <a href="#apikey">GOTOTO</a>
     </div>
 
 
@@ -573,10 +572,18 @@ export default {
     })
 
     const mychart = ref(0)
+    const myEl = ref(null)
+
+    const smoothScroll = inject('smoothScroll')
 
     const myTest = () => {
       console.log("MMMMYYY TESSSTT")
-      mychart.value.toggleSeries('Bitcoin')
+      smoothScroll({
+      scrollTo: myEl.value,
+      hash: '#sampleHash',
+      duration: 1000,
+      offset: -30, 
+    })
     }
 
     watch( () => mychart.value, (value) => {
@@ -593,7 +600,8 @@ export default {
       saveUserKey,
       cancelSubs,
       myTest,
-      mychart
+      mychart,
+      myEl
     }
 
   },
