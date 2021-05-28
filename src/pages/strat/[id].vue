@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
+        <div ref="myEl" class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
             <h1 class="mb-7 text-uppercase font-semibold">{{ stratname }}</h1>
 
@@ -119,7 +119,7 @@
 
 <script lang="ts">
 
-import { onMounted, reactive, ref, toRefs, defineComponent, watch } from "vue"
+import { onMounted, reactive, ref, toRefs, defineComponent, watch, inject } from "vue"
 import axios from "~/utils/axios"
 import moment from "moment"
 import { useRouter } from "vue-router"
@@ -131,6 +131,8 @@ export default defineComponent({
     id: String,
   },
   setup: (props) => {
+
+    const smoothScroll = inject('smoothScroll')
 
     const router = useRouter()
 
@@ -300,13 +302,24 @@ export default defineComponent({
             console.log(err)
         })
         ////// ////// ////// ////// //////
-    })
+        setTimeout(function(){ 
+            smoothScroll({
+                scrollTo: myEl.value,
+                hash: '#sampleHash',
+                duration: 1000,
+                offset: -30, 
+            })
+         }, 1000);
+    })      
+
+    const myEl = ref(null)
     
     return {
       ...toRefs(state),
       moment,
       openSignal,
-      getCurrentPnL
+      getCurrentPnL,
+      myEl
     }
   },
 })

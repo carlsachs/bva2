@@ -579,11 +579,11 @@ export default {
     const myTest = () => {
       console.log("MMMMYYY TESSSTT")
       smoothScroll({
-      scrollTo: myEl.value,
-      hash: '#sampleHash',
-      duration: 1000,
-      offset: -30, 
-    })
+        scrollTo: myEl.value,
+        hash: '#sampleHash',
+        duration: 1000,
+        offset: -30, 
+      })
     }
 
     watch( () => mychart.value, (value) => {
