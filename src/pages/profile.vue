@@ -2,7 +2,7 @@
   <div v-if="auth0.state.isAuthenticated && auth0.state.user" class="text-center text-gray-300">
 
     <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
-      <div v-for="(subscription, i) in subscriptions" :key="subscription.code" class="mx-4 my-4 p-4 bg-indigo-900 bg-opacity-40 border-2 border-blue-900 rounded-lg text-white relative">
+      <div v-for="(subscription, i) in subscriptions" :class="{ 'bg-indigo-900': !subscribed.includes(subscription.code), 'bg-green-900': subscribed.includes(subscription.code) }" :key="subscription.code" class="mx-4 my-4 p-4 bg-opacity-90 border-2 border-blue-900 rounded-lg text-white relative">
         <div class="text-xl">{{ subscription.name }} Strategy</div>
         <div class="mt-9" v-if="subscribed.includes(subscription.code)">
           <div class="flex items-center justify-center">
@@ -21,7 +21,7 @@
           <div>
             <input
               id="amount" size="50" v-model="subscription.qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
-              class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
+              class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-blue-900"
             >&nbsp;
             <button class="dark_button" :disabled="!subscription.qty">Save</button>
           </div>
@@ -286,7 +286,7 @@ export default {
 <style scoped>
 
 .dark_button {
-  @apply border-2 px-3 py-2 border-gray-800 rounded-lg text-gray-400 cursor-pointer hover:bg-gray-800 hover:text-gray-200;
+  @apply border-2 px-3 py-2 border-blue-900 rounded-lg text-gray-400 cursor-pointer hover:bg-gray-800 hover:text-gray-200;
 }
 
 ::v-deep .modal-container {
