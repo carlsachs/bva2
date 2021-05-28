@@ -302,6 +302,7 @@ export default defineComponent({
             console.log(err)
         })
         ////// ////// ////// ////// //////
+        /*
         setTimeout(function(){ 
             smoothScroll({
                 scrollTo: myEl.value,
@@ -310,11 +311,12 @@ export default defineComponent({
                 offset: -30, 
                 updateHistory: false,
             })
-         }, 1000);
+         }, 1000)
+        */
     })      
 
     const myEl = ref(null)
-    
+
     return {
       ...toRefs(state),
       moment,
