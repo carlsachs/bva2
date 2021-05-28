@@ -258,6 +258,8 @@ export default {
         console.log("cancelSubs result:", response.data)
         if (response.data.msg == 'success') {
           state.cancel_sub_result = response.data.msg
+          const index = state.subscribed.indexOf(code);
+          if (index > -1) state.subscribed.splice(index, 1)
         }
         else {
           state.cancel_sub_result = "error"
@@ -267,8 +269,6 @@ export default {
         console.log("ERROR cancelSubs:", error)
         state.cancel_sub_result = "error"
       })
-      const index = state.subscribed.indexOf(code);
-      if (index > -1) state.subscribed.splice(index, 1)
     }
     
     return {
