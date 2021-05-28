@@ -172,7 +172,7 @@
           aria-label="key"
           type="text"
           autocomplete="false"
-          class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
+          class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-gray-700"
         >&nbsp;
         <input
           id="secret"
@@ -181,7 +181,7 @@
           aria-label="secret"
           type="text"
           autocomplete="false"
-          class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
+          class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-gray-700"
         >&nbsp;
         <button class="dark_button" :disabled="!secret&&!key" @click="saveUserKey">Save</button>
         &nbsp;
