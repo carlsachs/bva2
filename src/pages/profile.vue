@@ -477,8 +477,10 @@ export default {
         console.log("cancelSubs result:", response.data)
         if (response.data.msg == 'success') {
           state.cancel_sub_result = response.data.msg
+          console.log("remove subs code", code)
           const index = state.subscribed.indexOf(code);
           if (index > -1) state.subscribed.splice(index, 1)
+          console.log(JSON.stringify(state.subscribed))
         }
         else {
           state.cancel_sub_result = "error"
