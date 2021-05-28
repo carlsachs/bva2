@@ -254,6 +254,11 @@ import moment from "moment"
 export default {
   setup() {
 
+    const mychart = ref(null)
+    const myEl = ref(null)
+
+    const smoothScroll = inject('smoothScroll')
+
     const router = useRouter()
 
     const openSignal = (row) => {
@@ -477,10 +482,10 @@ export default {
         console.log("cancelSubs result:", response.data)
         if (response.data.msg == 'success') {
           state.cancel_sub_result = response.data.msg
-          console.log("remove subs code", code)
+          //console.log("remove subs code", code)
           const index = state.subscribed.indexOf(code);
           if (index > -1) state.subscribed.splice(index, 1)
-          console.log(JSON.stringify(state.subscribed))
+          //console.log(JSON.stringify(state.subscribed))
         }
         else {
           state.cancel_sub_result = "error"
@@ -570,24 +575,11 @@ export default {
             console.log(err)
         })
         ////// ////// ////// ////// //////
-        setTimeout(function(){ 
-          smoothScroll({
-              scrollTo: myEl.value,
-              hash: '#sampleHash',
-              duration: 1000,
-              offset: -10, 
-              updateHistory: false,
-          })
-        }, 1000)
     })
-
-    const mychart = ref(0)
-    const myEl = ref(null)
-
-    const smoothScroll = inject('smoothScroll')
 
     const myTest = () => {
       console.log("MMMMYYY TESSSTT")
+      /*
       smoothScroll({
         scrollTo: myEl.value,
         hash: '#sampleHash',
@@ -595,10 +587,23 @@ export default {
         offset: -30, 
         updateHistory: false,
       })
+      */
     }
 
     watch( () => mychart.value, (value) => {
-      setTimeout(function(){ value.toggleSeries('Bitcoin') }, 1000);
+      setTimeout(function(){ value.toggleSeries('Bitcoin') }, 1000)
+    })
+
+    watch( () => myEl.value, (value) => {
+      setTimeout(function(){ 
+        smoothScroll({
+          scrollTo: myEl.value,
+          hash: '#sampleHash',
+          duration: 1000,
+          offset: -10, 
+          updateHistory: false,
+        })
+      }, 1000)
     })
     
     return {
