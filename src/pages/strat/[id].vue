@@ -126,7 +126,7 @@ import { useRouter } from "vue-router"
 import _ from "lodash"
 
 export default defineComponent({
-  name: "signal",
+  name: "strategy",
   props: {
     id: String,
   },

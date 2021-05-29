@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import generatedRoutes from 'pages-generated'
 import { setupLayouts } from 'layouts-generated'
-import { authGuard } from '~/modules/auth0'
+//import { authGuard } from '~/modules/auth0'
 
 /*
 generatedRoutes.map( route => {
