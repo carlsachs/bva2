@@ -3,6 +3,8 @@
 
     <div ref="myEl" class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
+        <h1 class="mb-7 text-uppercase font-semibold">{{ pair }}</h1>
+
         <apexchart type="candlestick" height="400" :options="chartOptions" :series="series"></apexchart>
         
         <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
@@ -135,6 +137,7 @@ export default defineComponent({
         console.log(err)
       })
       ////// ////// ////// ////// //////
+      /*
       setTimeout(function(){ 
           smoothScroll({
               scrollTo: myEl.value,
@@ -144,6 +147,8 @@ export default defineComponent({
               updateHistory: false,
           })
         }, 1000);
+      */
+      ////// ////// ////// ////// //////
     })
 
     const myEl = ref(null)

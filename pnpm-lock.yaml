@@ -29,6 +29,7 @@ specifiers:
   vue: 3.0.11
   vue-final-modal: ^3.3.0
   vue-native-websocket-vue3: 3.1.0
+  vue-request: ^1.2.0
   vue-router: 4.0.6
   vue3-apexcharts: ^1.4.0
   vue3-smooth-scroll: ^0.8.0
@@ -50,6 +51,7 @@ dependencies:
   vue: 3.0.11
   vue-final-modal: 3.3.0
   vue-native-websocket-vue3: 3.1.0_vue@3.0.11
+  vue-request: 1.2.0_vue@3.0.11
   vue-router: 4.0.6_vue@3.0.11
   vue3-apexcharts: 1.4.0_apexcharts@3.26.2+vue@3.0.11
   vue3-smooth-scroll: 0.8.0
@@ -1372,7 +1374,7 @@ packages:
     resolution: {integrity: sha512-d6SX9YSWC8svdCEZvlKH3zmstPqNS1h1RHgZUbkxAC/zoNIYP88Ivl1pF3SYm0Iksl6D4Zu/oImKXWCBW21r6g==}
     dependencies:
       '@vueuse/shared': 4.8.2_vue@3.0.11
-      vue-demi: 0.9.0_vue@3.0.11
+      vue-demi: 0.9.1_vue@3.0.11
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
@@ -1389,7 +1391,7 @@ packages:
   /@vueuse/shared/4.8.2_vue@3.0.11:
     resolution: {integrity: sha512-Bjy15IHyqUpRbg9cRE9afFwD0gLtGI0tJW7fITWGCwYmSWpBoD+EnGBBGvnoP9pOtxkri9Wte/uKwcVnDos7QA==}
     dependencies:
-      vue-demi: 0.9.0_vue@3.0.11
+      vue-demi: 0.9.1_vue@3.0.11
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
@@ -3205,8 +3207,8 @@ packages:
     resolution: {integrity: sha512-4fdRMXO6FHzmE7H4soAph6QmPg3sL/RiGdd+axuxuU07f02LNMns0jMM88fmt1bvSbN+2Wyd8raho6p6nXUzag==}
     dev: false
 
-  /vue-demi/0.9.0_vue@3.0.11:
-    resolution: {integrity: sha512-f8vVUpC726YXv99fF/3zHaw5CUYbP5H/DVWBN+pncXM8P2Uz88kkffwj9yD7MukuVzPICDHNrgS3VC2ursaP7g==}
+  /vue-demi/0.9.1_vue@3.0.11:
+    resolution: {integrity: sha512-7s1lufRD2l369eFWPjgLvhqCRk0XzGWJsQc7K4q+0mZtixyGIvsK1Cg88P4NcaRIEiBuuN4q1NN4SZKFKwQswA==}
     hasBin: true
     requiresBuild: true
     peerDependencies:
@@ -3227,6 +3229,14 @@ packages:
     resolution: {integrity: sha512-pa53/81O7V+rm3asVDx402ruCUgPBE1CKAp+TEachvhN8geUqsIclj8N56+EoUFu/hpsbEI7eIVvVvGRNTn33A==}
     peerDependencies:
       core-js: ^3.6.5
+      vue: ^3.0.0
+    dependencies:
+      vue: 3.0.11
+    dev: false
+
+  /vue-request/1.2.0_vue@3.0.11:
+    resolution: {integrity: sha512-T8Q+ohkKeJJVd3VtO1uhjQiE2DBzlklCZtl5ErMFzgmoLbgRT4vDzUoAvUUsy2UQHFgIYDcKlCQ6BTpssE/XbQ==}
+    peerDependencies:
       vue: ^3.0.0
     dependencies:
       vue: 3.0.11

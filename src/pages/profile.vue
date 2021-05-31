@@ -595,6 +595,7 @@ export default {
     })
 
     watch( () => myEl.value, (value) => {
+      /*
       setTimeout(function(){ 
         smoothScroll({
           scrollTo: myEl.value,
@@ -604,6 +605,7 @@ export default {
           updateHistory: false,
         })
       }, 1000)
+      */
     })
     
     return {

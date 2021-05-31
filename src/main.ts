@@ -21,4 +21,6 @@ Object.values(import.meta.globEager('./modules/*.ts')).map(i =>
   i.install?.({ app, isClient: true, router }),
 )
 
+//app.config.globalProperties.$store = store
+
 app.mount('#app')
