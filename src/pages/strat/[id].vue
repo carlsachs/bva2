@@ -133,7 +133,7 @@ export default defineComponent({
   },
   setup: (props) => {
 
-    const smoothScroll = inject('smoothScroll')
+    //const smoothScroll = inject('smoothScroll')
 
     const router = useRouter()
 
@@ -232,7 +232,6 @@ export default defineComponent({
     }
 
     const getStratData = (params) => {
-        //console.log("getStratData", params)
         return axios.get('/api/strategy?id='+props.id)
     }
 
@@ -245,11 +244,10 @@ export default defineComponent({
         }
     })
 
-    const { data: stratData, run} = useRequest( params =>  getStratData(params), {
+    const { data: stratData, run } = useRequest( params =>  getStratData(params), {
         cacheKey: 'stratdata',
         cacheTime: 300000,
         formatResult: res => {
-            //return res.data.slice(0, 100)
             return res.data
         },
         manual: true,
