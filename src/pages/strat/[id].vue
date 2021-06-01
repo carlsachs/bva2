@@ -67,7 +67,7 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in signalsel" :key="row.id" v-on:click="openSignal(row)">
+                                    <tbody class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in signals" :key="row.id" v-on:click="openSignal(row)">
                                         <tr>
                                             <td v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                 {{ row.pnl ? moment(Number(row.sell_time)).fromNow() : moment(Number(row.updated_time)).fromNow() }}
@@ -127,11 +127,11 @@ import _ from "lodash"
 import { useRequest } from 'vue-request'
 
 export default defineComponent({
-    name: "strategy",
-    props: {
-        id: String,
-    },
-    setup: (props) => {
+  name: "strategy",
+  props: {
+    id: String,
+  },
+  setup: (props) => {
 
     //const smoothScroll = inject('smoothScroll')
 
@@ -149,7 +149,7 @@ export default defineComponent({
         total_signals: 0,
         win_rate: 0,
         //user: null,
-        signalsel: [],
+        //rows: [],
         //prices: [],
         ///////// ///////// ///////// /////////
         series: [
@@ -222,7 +222,6 @@ export default defineComponent({
     watch(signals, (signals) => {
 
         console.log("signals...", signals.length)
-        state.signalsel = signals.slice(0, 10)
     
         let tpnl_btc = []
         let tpnl_bva = []
@@ -279,13 +278,16 @@ export default defineComponent({
         return pnl.toFixed(2)
     }
 
+    //const signalsel = computed( () => signals.length && signals.slice(0, 30))
+
     return {
       ...toRefs(state),
       moment,
       openSignal,
       getCurrentPnL,
       myEl,
-      signals
+      signals,
+      //signalsel
     }
   },
 })
