@@ -92,7 +92,7 @@ export default defineComponent({
           state.pnl = Number(signal.data[0].pnl).toFixed(2)
 
           const startTime = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time) - 16000000 : Number(signal.data[0].sell_time) - 16000000
-          const endTime = signal.data[0].pnl ? Number(signal.data[0].sell_time) + 16000000 : Date.now()
+          const endTime = signal.data[0].pnl ? (signal.data[0].type === "SHORT" ? Number(signal.data[0].buy_time) + 16000000 : Number(signal.data[0].sell_time) + 16000000) : Date.now()
 
           axios.get('https://api.binance.com/api/v3/klines?interval=15m&symbol='+signal.data[0].pair+'&startTime='+startTime+'&endTime=' + endTime)
           .then( prices => {
