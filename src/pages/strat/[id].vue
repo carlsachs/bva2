@@ -67,7 +67,7 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in stratData" :key="row.id" v-on:click="openSignal(row)">
+                                    <tbody class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in signals" :key="row.id" v-on:click="openSignal(row)">
                                         <tr>
                                             <td v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                 {{ row.pnl ? moment(Number(row.sell_time)).fromNow() : moment(Number(row.updated_time)).fromNow() }}
@@ -119,7 +119,7 @@
 
 <script lang="ts">
 
-import { onMounted, reactive, ref, toRefs, defineComponent, watch, inject } from "vue"
+import { onMounted, reactive, ref, toRefs, defineComponent, watch, inject, computed } from "vue"
 import axios from "~/utils/axios"
 import moment from "moment"
 import { useRouter } from "vue-router"
@@ -153,71 +153,26 @@ export default defineComponent({
         //prices: [],
         ///////// ///////// ///////// /////////
         series: [
-            {
-                name: "Bitcoin",
-                data: [],
-            },
-            {
-                name: "",
-                data: [],
-            }
+            { name: "Bitcoin", data: [] },
+            { name: "", data: [] }
         ],
         chartOptions: {
-            chart: {
-                width: "100%",
-                type: 'area',
-                stacked: true,
-            },
+            chart: { width: "100%", type: 'area', stacked: true },
             colors: ['#00E396','#0080FB'],
-            dataLabels: {
-                enabled: false,
-                enabledOnSeries: false,
-            },
+            dataLabels: { enabled: false, enabledOnSeries: false },
             legend: {
                 show: true,
-                offsetY: 20,
-                itemMargin: {
-                    horizontal: 10,
-                    vertical: 20
-                },
-                labels: {
-                    colors: '#ffffff',
-                },
+                offsetY: 20, itemMargin: { horizontal: 10, vertical: 20 },
+                labels: { colors: '#ffffff', },
             },
-            fill: {
-                type: 'gradient',
-                gradient: {
-                    opacityFrom: 0.6,
-                    opacityTo: 0.8,
-                }
-            },
-            stroke: { 
-                curve: 'smooth',
-                width: 2,
-            },
-            tooltip: {
-                enabled: true,
-                theme: 'dark',
-            },
+            fill: { type: 'gradient', gradient: { opacityFrom: 0.6, opacityTo: 0.8 } },
+            stroke: { curve: 'smooth', width: 2, },
+            tooltip: { enabled: true, theme: 'dark', },
             xaxis: {
                 type: "datetime",
-                labels: {
-                    show: true,
-                    style: {
-                        colors: '#FFFFFF',
-                        fontSize: '12px',
-                    },
-                }
+                labels: { show: true, style: { colors: '#FFFFFF', fontSize: '12px' }, }
             },
-            yaxis: {
-                min: 0,
-                forceNiceScale: true,
-                labels: {
-                    show: true,
-                    style: {
-                        colors: '#FFFFFF',
-                        fontSize: '10px',
-                    },
+            yaxis: { min: 0, forceNiceScale: true, labels: { show: true, style: { colors: '#FFFFFF', fontSize: '10px' },
                     formatter: (value) => { return value+'%' },
                 },
             }
@@ -231,7 +186,7 @@ export default defineComponent({
       return axios.get('https://api.binance.com/api/v3/ticker/price')
     }
 
-    const getStratData = (params) => {
+    const getStratData = () => {
         return axios.get('/api/strategy?id='+props.id)
     }
 
@@ -241,45 +196,52 @@ export default defineComponent({
         pollingInterval: 10000,
         formatResult: res => {
             return res.data
+        },
+        onSuccess: (res) => {
+            console.log("00000--0-0>", res.length)
         }
     })
 
-    const { data: stratData, run } = useRequest( params =>  getStratData(params), {
-        cacheKey: 'stratdata',
+    const { data: signals } = useRequest( () =>  getStratData(), {
+        cacheKey: 'signals',
         cacheTime: 300000,
         formatResult: res => {
             return res.data
         },
-        manual: true,
+        onSuccess: (res) => {
+            console.log("11111--1-1>", res.length)
+        }
     })
 
+    /*
     watch( prices, () => {
-        run(prices)
+        console.log("run...", prices.value.length)
     })
+    */
 
-    watch(stratData, (rows) => {
-        console.log("========>", Date.now() )
+    watch(signals, (signals) => {
 
+        console.log("signals...", signals.length)
+    
         let tpnl_btc = []
         let tpnl_bva = []
         let pnl_btc = 0
         let pnl_bva = 0
 
-        state.stratname = rows[0].stratname
-        state.series[1].name = rows[0].stratname
-        state.strat_lifetime = parseInt((rows[0].updated_time - rows[rows.length-1].updated_time)/86400000)
+        state.stratname = signals[0].stratname
+        state.series[1].name = signals[0].stratname
+        state.strat_lifetime = parseInt((signals[0].updated_time - signals[signals.length-1].updated_time)/86400000)
         const days = 10 + state.strat_lifetime
-        state.total_signals = rows.length
+        state.total_signals = signals.length
         
-        //state.rows = rows.slice(0, 100)
-
+        console.log("========>", Date.now() )
         axios.get('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit='+days)
         .then( btcs => {
 
             for ( var btc of btcs.data ) {
                 pnl_btc = 100 * (Number(btc[4]) - Number(btc[1])) / Number(btc[1]) + pnl_btc
                 tpnl_btc.push([ btc[0], pnl_btc.toFixed(2) ])
-                const sum = rows.filter( bva => { 
+                const sum = signals.filter( bva => { 
                     return Number(bva.updated_time) > btc[0] && Number(bva.updated_time) <= btc[6] 
                 })
                 pnl_bva = _.sumBy(sum, o => { return Number(o.pnl) }) / 15 + pnl_bva
@@ -289,16 +251,10 @@ export default defineComponent({
             state.series[0].data = tpnl_btc
             state.series[1].data = tpnl_bva
 
-            //console.log("TPNL:", tpnl_bva[tpnl_bva.length-1][1])
             state.total_pnl = tpnl_bva[tpnl_bva.length-1][1]
-            //console.log("TOTAL:", rows.data.length)
-            //console.log("TRADE MEAN:", _.meanBy(rows.data, o => {return Number(o.pnl)}).toFixed(2))
-            state.avg_pnl = _.meanBy(rows, o => {return Number(o.pnl)}).toFixed(2)
-            const positifs = rows.filter( bva => { return Number(bva.pnl) > 0 })
-            //console.log("POS COUNT:", positifs.length)
-            //console.log("WIN RATE:", (100 * positifs.length / rows.data.length).toFixed(2) )
-            state.win_rate = (100 * positifs.length / rows.length).toFixed(2)
-
+            state.avg_pnl = _.meanBy(signals, o => {return Number(o.pnl)}).toFixed(2)
+            const positifs = signals.filter( bva => { return Number(bva.pnl) > 0 })
+            state.win_rate = (100 * positifs.length / signals.length).toFixed(2)
         })
         .catch((err) => {
             console.log(err)
@@ -308,7 +264,6 @@ export default defineComponent({
 
     const getCurrentPnL = (symbol, sell_price, buy_price) => {
         let pnl = 0
-        console.log("prices", prices._rawValue.length)
         if (prices._rawValue.length) {
             const currentPrice = prices._rawValue.find( (r) => { return r.symbol === symbol }).price
             if (currentPrice) {
@@ -320,9 +275,10 @@ export default defineComponent({
                 }
             }
         }
-        //console.log(symbol, pnl)
         return pnl.toFixed(2)
     }
+
+    //const signalsel = computed( () => signals.length && signals.slice(0, 30))
 
     return {
       ...toRefs(state),
@@ -330,8 +286,8 @@ export default defineComponent({
       openSignal,
       getCurrentPnL,
       myEl,
-      //prices,
-      stratData
+      signals,
+      //signalsel
     }
   },
 })
