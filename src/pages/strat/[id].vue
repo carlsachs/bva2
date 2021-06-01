@@ -232,13 +232,14 @@ export default defineComponent({
     }
 
     const getStratData = (params) => {
-        console.log("getStratData", params)
+        //console.log("getStratData", params)
         return axios.get('/api/strategy?id='+props.id)
     }
 
     const { data: prices } = useRequest( getPrices, {
         cacheKey: 'prices',
-        cacheTime: 300000, // 5 min
+        cacheTime: 300000,
+        pollingInterval: 10000,
         formatResult: res => {
             return res.data
         }
@@ -259,7 +260,7 @@ export default defineComponent({
     })
 
     watch(stratData, (rows) => {
-        console.log("========>", rows[0] )
+        console.log("========>", Date.now() )
 
         let tpnl_btc = []
         let tpnl_bva = []
