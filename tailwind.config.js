@@ -7,6 +7,7 @@ module.exports = {
   plugins: [typography],
   theme: {
     extend: {
+      textColor: ['visited'],
       colors: {
         teal: colors.teal,
       },

@@ -4,8 +4,6 @@
 
             <h1 class="mb-7 text-uppercase font-semibold">{{ stratname }}</h1>
 
-            <div>.{{ prices && prices.length }}.</div>
-
             <apexchart type="area" height="400" :options="chartOptions" :series="series"></apexchart>
             
             <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
@@ -69,7 +67,7 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody class="divide-y divide-gray-200 cursor-pointer" v-for="(row, i) in stratData" :key="row.id" v-on:click="openSignal(row)">
+                                    <tbody class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in stratData" :key="row.id" v-on:click="openSignal(row)">
                                         <tr>
                                             <td v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                 {{ row.pnl ? moment(Number(row.sell_time)).fromNow() : moment(Number(row.updated_time)).fromNow() }}
@@ -150,8 +148,8 @@ export default defineComponent({
         strat_lifetime: 0,
         total_signals: 0,
         win_rate: 0,
-        user: null,
-        rows: [],
+        //user: null,
+        //rows: [],
         //prices: [],
         ///////// ///////// ///////// /////////
         series: [
@@ -227,82 +225,6 @@ export default defineComponent({
         ///////// ///////// ///////// /////////
     })
 
-    onMounted(() => {
-        ////// ////// ////// ////// //////
-        /*
-        axios.get('https://api.binance.com/api/v3/ticker/price')
-        .then( prices => {
-          state.prices = prices.data
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-        
-        ////// ////// ////// ////// //////
-        axios.get('/api/strategy?id='+props.id)
-        .then( rows => {
-
-            let tpnl_btc = []
-            let tpnl_bva = []
-            let pnl_btc = 0
-            let pnl_bva = 0
-
-            state.stratname = rows.data[0].stratname
-            state.series[1].name = rows.data[0].stratname
-            state.strat_lifetime = parseInt((rows.data[0].updated_time - rows.data[rows.data.length-1].updated_time)/86400000)
-            const days = 10 + state.strat_lifetime
-            state.total_signals = rows.data.length
-            
-            state.rows = rows.data.slice(0, 100)
-
-            axios.get('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit='+days)
-            .then( btcs => {
-
-                for ( var btc of btcs.data ) {
-                    pnl_btc = 100 * (Number(btc[4]) - Number(btc[1])) / Number(btc[1]) + pnl_btc
-                    tpnl_btc.push([ btc[0], pnl_btc.toFixed(2) ])
-                    const sum = rows.data.filter( bva => { 
-                        return Number(bva.updated_time) > btc[0] && Number(bva.updated_time) <= btc[6] 
-                    })
-                    pnl_bva = _.sumBy(sum, o => { return Number(o.pnl) }) / 15 + pnl_bva
-                    tpnl_bva.push([ btc[0], pnl_bva.toFixed(2) ])
-                }
-
-                state.series[0].data = tpnl_btc
-                state.series[1].data = tpnl_bva
-
-                //console.log("TPNL:", tpnl_bva[tpnl_bva.length-1][1])
-                state.total_pnl = tpnl_bva[tpnl_bva.length-1][1]
-                //console.log("TOTAL:", rows.data.length)
-                //console.log("TRADE MEAN:", _.meanBy(rows.data, o => {return Number(o.pnl)}).toFixed(2))
-                state.avg_pnl = _.meanBy(rows.data, o => {return Number(o.pnl)}).toFixed(2)
-                const positifs = rows.data.filter( bva => { return Number(bva.pnl) > 0 })
-                //console.log("POS COUNT:", positifs.length)
-                //console.log("WIN RATE:", (100 * positifs.length / rows.data.length).toFixed(2) )
-                state.win_rate = (100 * positifs.length / rows.data.length).toFixed(2)
-
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-        ////// ////// ////// ////// //////
-        
-        setTimeout(function(){ 
-            smoothScroll({
-                scrollTo: myEl.value,
-                hash: '#sampleHash',
-                duration: 1000,
-                offset: -30, 
-                updateHistory: false,
-            })
-         }, 1000)
-        */
-    })
-
     const myEl = ref(null)
 
     const getPrices = () => {
@@ -316,7 +238,7 @@ export default defineComponent({
 
     const { data: prices } = useRequest( getPrices, {
         cacheKey: 'prices',
-        cacheTime: 300000,
+        cacheTime: 300000, // 5 min
         formatResult: res => {
             return res.data
         }
@@ -409,7 +331,7 @@ export default defineComponent({
       openSignal,
       getCurrentPnL,
       myEl,
-      prices,
+      //prices,
       stratData
     }
   },
