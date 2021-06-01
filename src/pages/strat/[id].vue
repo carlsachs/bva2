@@ -113,7 +113,7 @@
                 </div>
             </div>
 
-            <button v-if="signal_shown<signals.length-1" class="mx-auto dark_button" type="button" @click="loadMore()">Load More</button>
+            <button v-if="signals && signal_shown<signals.length-1" class="mx-auto dark_button" type="button" @click="loadMore()">Load More</button>
 
         </div>
     </div>
@@ -152,7 +152,7 @@ export default defineComponent({
         win_rate: 0,
         //user: null,
         signalsel: [],
-        signal_shown: 30,
+        signal_shown: 10,
         //prices: [],
         ///////// ///////// ///////// /////////
         series: [
@@ -217,7 +217,7 @@ export default defineComponent({
     })
 
     const loadMore = () => {
-        state.signal_shown = state.signal_shown + 30
+        state.signal_shown = state.signal_shown + 10
         state.signalsel = signals.value.slice(0, state.signal_shown)
     }
 
@@ -273,6 +273,7 @@ export default defineComponent({
 
     const getCurrentPnL = (symbol, sell_price, buy_price) => {
         let pnl = 0
+        console.log("getCurrentPnL...")
         if (prices._rawValue.length) {
             const currentPrice = prices._rawValue.find( (r) => { return r.symbol === symbol }).price
             if (currentPrice) {
