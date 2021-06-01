@@ -113,8 +113,6 @@
                 </div>
             </div>
 
-            <button v-if="signal_shown<signals.length-1" class="mx-auto dark_button" type="button" @click="loadMore()">Load More</button>
-
         </div>
     </div>
 </template>
@@ -152,7 +150,6 @@ export default defineComponent({
         win_rate: 0,
         //user: null,
         signalsel: [],
-        signal_shown: 30,
         //prices: [],
         ///////// ///////// ///////// /////////
         series: [
@@ -216,11 +213,6 @@ export default defineComponent({
         }
     })
 
-    const loadMore = () => {
-        state.signal_shown = state.signal_shown + 30
-        state.signalsel = signals.value.slice(0, state.signal_shown)
-    }
-
     /*
     watch( prices, () => {
         console.log("run...", prices.value.length)
@@ -230,7 +222,7 @@ export default defineComponent({
     watch(signals, (signals) => {
 
         console.log("signals...", signals.length)
-        state.signalsel = signals.slice(0, state.signal_shown)
+        state.signalsel = signals.slice(0, 10)
     
         let tpnl_btc = []
         let tpnl_bva = []
@@ -293,15 +285,11 @@ export default defineComponent({
       openSignal,
       getCurrentPnL,
       myEl,
-      signals,
-      loadMore
+      signals
     }
   },
 })
 </script>
 
-<style lang="postcss" scoped>
-.dark_button {
-  @apply border-2 px-3 py-2 border-blue-900 rounded-lg text-gray-400 cursor-pointer hover:bg-gray-800 hover:text-gray-200;
-}
+<style>
 </style>
