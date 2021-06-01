@@ -67,7 +67,7 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in signals" :key="row.id" v-on:click="openSignal(row)">
+                                    <tbody v-if="signals" class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in signals.slice(0, signalshown)" :key="row.id" v-on:click="openSignal(row)">
                                         <tr>
                                             <td v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                 {{ row.pnl ? moment(Number(row.sell_time)).fromNow() : moment(Number(row.updated_time)).fromNow() }}
@@ -113,6 +113,8 @@
                 </div>
             </div>
 
+            <button v-if="signals && signalshown<signals.length-1" class="mx-auto dark_button" type="button" @click="loadMore()">Load More</button>
+
         </div>
     </div>
 </template>
@@ -151,6 +153,7 @@ export default defineComponent({
         //user: null,
         //rows: [],
         //prices: [],
+        signalshown: 10,
         ///////// ///////// ///////// /////////
         series: [
             { name: "Bitcoin", data: [] },
@@ -278,7 +281,9 @@ export default defineComponent({
         return pnl.toFixed(2)
     }
 
-    //const signalsel = computed( () => signals.length && signals.slice(0, 30))
+    const loadMore = () => {
+        state.signalshown = state.signalshown + 10
+    }
 
     return {
       ...toRefs(state),
@@ -287,11 +292,14 @@ export default defineComponent({
       getCurrentPnL,
       myEl,
       signals,
-      //signalsel
+      loadMore
     }
   },
 })
 </script>
 
-<style>
+<style lang="postcss" scoped>
+.dark_button {
+  @apply border-2 px-3 py-2 border-blue-900 rounded-lg text-gray-400 cursor-pointer hover:bg-gray-800 hover:text-gray-200;
+}
 </style>
