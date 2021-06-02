@@ -82,7 +82,7 @@
                                                 {{ Number(row.pnl).toFixed(2) }}%
                                             </td>
                                             <td v-else class="italic px-6 py-4 text-gray-400 whitespace-no-wrap text-sm leading-5">
-                                                {{ getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
+                                                {{ prices && getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
                                             </td>
                                             <!--
                                             <td v-if="Number(row.pnl)>0" :class="{ 'font-bold': row.pnl }" class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
@@ -127,6 +127,7 @@ import moment from "moment"
 import { useRouter } from "vue-router"
 import _ from "lodash"
 import { useRequest } from 'vue-request'
+import { usePriceStore } from '../../stores/prices'
 
 export default defineComponent({
   name: "strategy",
@@ -136,6 +137,8 @@ export default defineComponent({
   setup: (props) => {
 
     //const smoothScroll = inject('smoothScroll')
+
+    const prices = usePriceStore()
 
     const router = useRouter()
 
@@ -241,8 +244,8 @@ export default defineComponent({
 
     const getCurrentPnL = (symbol, sell_price, buy_price) => {
         let pnl = 0
-        if (prices._rawValue.length) {
-            const currentPrice = prices._rawValue.find( (r) => { return r.symbol === symbol }).price
+        if (prices.items.length) {
+            const currentPrice = prices.items.find( (r) => { return r.symbol === symbol }).price
             if (currentPrice) {
                 if (sell_price > 0) {
                     pnl = 100 * (sell_price - currentPrice) / currentPrice
@@ -266,7 +269,8 @@ export default defineComponent({
       getCurrentPnL,
       myEl,
       signals,
-      loadMore
+      loadMore,
+      prices
     }
   },
 })
