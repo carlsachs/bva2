@@ -22,13 +22,15 @@
 <script lang="ts">
 
 import { useUserStore } from './stores/user'
-import { useCartStore } from './stores/cart'
+import { usePriceStore } from './stores/prices'
 
 export default {
   name: "App",
   setup() {
 
-    const user = useUserStore()
+    //const user = useUserStore()
+    const prices = usePriceStore()
+    prices.getItems()
     
     /*
     const cart = useCartStore()
@@ -43,7 +45,7 @@ export default {
 
     return {
       //cart,
-      user,
+      //user,
     }
   },
 };
