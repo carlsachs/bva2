@@ -93,64 +93,25 @@ export default defineComponent({
             */
         ],
         user: null,
-        //rows: [],
         ///////// ///////// ///////// /////////
         chartOptions: {
-            chart: {
-                width: "100%",
-                type: 'area',
-                //stacked: false,
-            },
+            chart: { width: "100%", type: 'area' },
             colors: ['#0080FB', '#00E396'],
-            dataLabels: {
-                enabled: false,
-                enabledOnSeries: false,
-            },
+            dataLabels: { enabled: false, enabledOnSeries: false },
             legend: {
                 show: true,
                 offsetY: 20,
-                itemMargin: {
-                    horizontal: 10,
-                    vertical: 20
-                },
-                labels: {
-                    colors: '#ffffff',
-                },
+                itemMargin: { horizontal: 10, vertical: 20 },
+                labels: { colors: '#ffffff' },
             },
             fill: {
                 type: 'gradient',
-                gradient: {
-                    opacityFrom: 0.6,
-                    opacityTo: 0.8,
-                }
+                gradient: { opacityFrom: 0.6, opacityTo: 0.8 }
             },
-            stroke: { 
-                curve: 'smooth',
-                width: 2,
-            },
-            tooltip: {
-                enabled: true,
-                theme: 'dark',
-            },
-            xaxis: {
-                type: "datetime",
-                labels: {
-                    show: true,
-                    style: {
-                        colors: '#FFFFFF',
-                        fontSize: '12px',
-                    },
-                }
-            },
-            yaxis: {
-                min: 0,
-                forceNiceScale: true,
-                labels: {
-                    show: true,
-                    style: {
-                        colors: '#FFFFFF',
-                        fontSize: '10px',
-                    },
+            stroke: {  curve: 'smooth', width: 2 },
+            tooltip: { enabled: true, theme: 'dark' },
+            xaxis: { type: "datetime", labels: { show: true, style: { colors: '#FFFFFF', fontSize: '12px' }, } },
+            yaxis: { min: 0, forceNiceScale: true, labels: { show: true, style: { colors: '#FFFFFF', fontSize: '10px' },
                     formatter: (value) => { return value+'%' },
                 },
             }
