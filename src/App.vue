@@ -27,24 +27,22 @@ import { useCartStore } from './stores/cart'
 export default {
   name: "App",
   setup() {
+
     const user = useUserStore()
+    
+    /*
     const cart = useCartStore()
-
-    //window.stores = { user, cart }
-
     async function buy() {
       const n = await cart.purchaseItems()
-
       console.log(`Bought ${n} items`)
-
       cart.rawItems = []
     }
-
     console.log("cart:", JSON.stringify(cart.rawItems))
     cart.getItems()
+    */
 
     return {
-      cart,
+      //cart,
       user,
     }
   },
