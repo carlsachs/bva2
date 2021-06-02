@@ -17,6 +17,7 @@ specifiers:
   markdown-it-prism: 2.1.6
   moment: ^2.29.1
   nprogress: 0.2.0
+  pinia: ^2.0.0-alpha.19
   prism-theme-vars: 0.2.2
   vite: 2.2.1
   vite-plugin-components: 0.8.4
@@ -46,6 +47,7 @@ dependencies:
   lodash: 4.17.21
   moment: 2.29.1
   nprogress: 0.2.0
+  pinia: 2.0.0-alpha.19
   prism-theme-vars: 0.2.2
   vite-plugin-windicss: 0.7.2_vite@2.2.1
   vue: 3.0.11
@@ -1349,6 +1351,10 @@ packages:
       '@vue/shared': 3.0.11
     dev: true
 
+  /@vue/devtools-api/6.0.0-beta.12:
+    resolution: {integrity: sha512-PtHmAxFmCyCElV7uTWMrXj+fefwn4lCfTtPo9fPw0SK8/7e3UaFl8IL7lnugJmNFfeKQyuTkSoGvTq1uDaRF6Q==}
+    dev: false
+
   /@vue/reactivity/3.0.11:
     resolution: {integrity: sha512-SKM3YKxtXHBPMf7yufXeBhCZ4XZDKP9/iXeQSC8bBO3ivBuzAi4aZi0bNoeE2IF2iGfP/AHEt1OU4ARj4ao/Xw==}
     dependencies:
@@ -2554,6 +2560,12 @@ packages:
   /picomatch/2.2.3:
     resolution: {integrity: sha512-KpELjfwcCDUb9PeigTs2mBJzXUPzAuP2oPcA989He8Rte0+YUAjw1JVedDhuTKPkHjSYzMN3npC9luThGYEKdg==}
     engines: {node: '>=8.6'}
+
+  /pinia/2.0.0-alpha.19:
+    resolution: {integrity: sha512-U/FvKm2tVUdqEuPorkYvD3oCgIj/u5EnF9TbX5dEpkNkoWKQM1i23e97QKtQFGuTxMSfzmBFFINv4A9VeVZ1wQ==}
+    dependencies:
+      '@vue/devtools-api': 6.0.0-beta.12
+    dev: false
 
   /postcss-modules-extract-imports/3.0.0_postcss@8.2.10:
     resolution: {integrity: sha512-bdHleFnP3kZ4NYDhuGlVK+CMrQ/pqUm8bx/oGL93K6gVwiclvX5x0n76fYMKuIGKzlABOy13zsvqjb0f92TEXw==}

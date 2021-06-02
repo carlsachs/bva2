@@ -15,22 +15,26 @@
     <a href="https://discordapp.com/invite/4EQrEgj" target="_new" class="text-purple-500">Discord Server</a>
   </div>
   <div class="text-center text-gray-300 p-5 m-6 flex flex-row items-center justify-center p-2 space-x-5 mb-5">
-    Bitcoin vs. Alts © 2019–2021 
+    Bitcoin vs. Alts © 2019–2021  {{ user.name }}
   </div>
 </template>
 
 <script lang="ts">
 
-import { computed } from "vue";
-//import { useStore } from "vuex";
+//import { computed } from "vue";
+import { useUserStore } from './stores/user'
+import { useCartStore } from './stores/cart'
 
 export default {
   name: "App",
   setup() {
-    //const { state } = useStore();
-    //const authState = computed(() => state.auth);
-    //return { authState };
-    return;
+    const user = useUserStore()
+    const cart = useCartStore()
+    window.stores = { user, cart }
+    return {
+      cart,
+      user,
+    }
   },
 };
 </script>

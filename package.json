@@ -17,6 +17,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "nprogress": "0.2.0",
+    "pinia": "^2.0.0-alpha.19",
     "prism-theme-vars": "0.2.2",
     "vite-plugin-windicss": "0.7.2",
     "vue": "3.0.11",
