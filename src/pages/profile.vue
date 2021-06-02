@@ -486,7 +486,7 @@ export default {
       */
     })
 
-     const getPrices = () => {
+    const getPrices = () => {
       return axios.get('https://api.binance.com/api/v3/ticker/price')
     }
 
@@ -502,7 +502,7 @@ export default {
             return res.data
         },
         onSuccess: (res) => {
-            console.log("00000--0-0>", res.length)
+            console.log("01101--0-1>", res.length)
         }
     })
 
