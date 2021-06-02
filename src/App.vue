@@ -25,21 +25,24 @@ import { computed } from "vue"
 
 import { usePriceStore } from './stores/prices'
 import { useStratStore } from './stores/strategy'
+//import { useSerieStore } from './stores/series'
 
 export default {
   name: "App",
   setup() {
 
     const prices = usePriceStore()
-    const strategies = useStratStore()
+    const strat = useStratStore()
+    //const series = useSerieStore()
 
     prices.getItems()
-    strategies.getItems()
+    strat.getItems()
+    //series.getItems()
   
     const btc = computed( () => prices.items.find(e => e.symbol === 'BTCUSDT') )
 
     return {
-      //strategies,
+      strat,
       prices,
       btc
     }
