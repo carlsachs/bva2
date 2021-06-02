@@ -15,38 +15,38 @@
     <a href="https://discordapp.com/invite/4EQrEgj" target="_new" class="text-purple-500">Discord Server</a>
   </div>
   <div class="text-center text-gray-300 p-5 m-6 flex flex-row items-center justify-center p-2 space-x-5 mb-5">
-    <b class="text-green-500">{{ btc && Number(btc.price).toFixed(2) }}</b> &nbsp; Bitcoin vs. Alts © 2019–2021
+    Bitcoin vs. Alts © 2019–2021  {{ cart.rawItems.length }}
   </div>
 </template>
 
 <script lang="ts">
 
-import { computed } from "vue"
-
-import { usePriceStore } from './stores/prices'
-import { useStratStore } from './stores/strategy'
-//import { useSerieStore } from './stores/series'
+import { useUserStore } from './stores/user'
+import { useCartStore } from './stores/cart'
 
 export default {
   name: "App",
   setup() {
+    const user = useUserStore()
+    const cart = useCartStore()
 
-    const prices = usePriceStore()
-    const strat = useStratStore()
-    //const series = useSerieStore()
+    //window.stores = { user, cart }
 
-    prices.getItems()
-    strat.getItems()
-    //series.getItems()
-  
-    const btc = computed( () => prices.items.find(e => e.symbol === 'BTCUSDT') )
+    async function buy() {
+      const n = await cart.purchaseItems()
 
-    return {
-      strat,
-      prices,
-      btc
+      console.log(`Bought ${n} items`)
+
+      cart.rawItems = []
     }
 
+    console.log("cart:", JSON.stringify(cart.rawItems))
+    cart.getItems()
+
+    return {
+      cart,
+      user,
+    }
   },
 };
 </script>

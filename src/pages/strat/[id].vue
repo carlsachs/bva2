@@ -2,9 +2,9 @@
     <div>
         <div ref="myEl" class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
-            <h1 class="mb-7 text-uppercase font-semibold">{{ signals.name }}</h1>
+            <h1 class="mb-7 text-uppercase font-semibold">{{ stratname }}</h1>
 
-            <apexchart type="area" height="400" :options="chartOptions" :series="signals.series"></apexchart>
+            <apexchart type="area" height="400" :options="chartOptions" :series="series"></apexchart>
             
             <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
                 <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
@@ -67,7 +67,7 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody v-if="signals" class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in signals.items" :key="row.id" v-on:click="openSignal(row)">
+                                    <tbody v-if="signals" class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in signals" :key="row.id" v-on:click="openSignal(row)">
                                         <tr>
                                             <td v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                 {{ row.pnl ? moment(Number(row.sell_time)).fromNow() : moment(Number(row.updated_time)).fromNow() }}
@@ -82,7 +82,7 @@
                                                 {{ Number(row.pnl).toFixed(2) }}%
                                             </td>
                                             <td v-else class="italic px-6 py-4 text-gray-400 whitespace-no-wrap text-sm leading-5">
-                                                {{ prices && getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
+                                                {{ getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
                                             </td>
                                             <!--
                                             <td v-if="Number(row.pnl)>0" :class="{ 'font-bold': row.pnl }" class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
@@ -113,8 +113,6 @@
                 </div>
             </div>
 
-            <div>...{{ signals.items }}...</div>
-
             <!--button v-if="signals" class="mx-auto dark_button" type="button" @click="loadMore()">Load More</button-->
 
         </div>
@@ -130,11 +128,6 @@ import { useRouter } from "vue-router"
 import _ from "lodash"
 import { useRequest } from 'vue-request'
 
-import { usePriceStore } from '../../stores/prices'
-import { useStratStore } from '../../stores/strategy'
-//import { useSerieStore } from '../../stores/series'
-
-
 export default defineComponent({
   name: "strategy",
   props: {
@@ -144,14 +137,85 @@ export default defineComponent({
 
     //const smoothScroll = inject('smoothScroll')
 
-    const prices = usePriceStore()
-    const signals = useStratStore()
+    const router = useRouter()
 
-    /*
-    watch( () => signals.items, (signals) => {
+    const openSignal = (row) => {
+        router.push("/signal/"+ row.id)
+    }
+
+    const state = reactive({
+        stratname: '',
+        total_pnl: 0,
+        avg_pnl: 0,
+        strat_lifetime: 0,
+        total_signals: 0,
+        win_rate: 0,
+        ///////// ///////// ///////// /////////
+        series: [
+            { name: "Bitcoin", data: [] },
+            { name: "", data: [] }
+        ],
+        chartOptions: {
+            chart: { width: "100%", type: 'area', stacked: true },
+            colors: ['#00E396','#0080FB'],
+            dataLabels: { enabled: false, enabledOnSeries: false },
+            legend: {
+                show: true,
+                offsetY: 20, itemMargin: { horizontal: 10, vertical: 20 },
+                labels: { colors: '#ffffff', },
+            },
+            fill: { type: 'gradient', gradient: { opacityFrom: 0.6, opacityTo: 0.8 } },
+            stroke: { curve: 'smooth', width: 2, },
+            tooltip: { enabled: true, theme: 'dark', },
+            xaxis: {
+                type: "datetime",
+                labels: { show: true, style: { colors: '#FFFFFF', fontSize: '12px' }, }
+            },
+            yaxis: { min: 0, forceNiceScale: true, labels: { show: true, style: { colors: '#FFFFFF', fontSize: '10px' },
+                    formatter: (value) => { return value+'%' },
+                },
+            }
+        },
+        ///////// ///////// ///////// /////////
+    })
+
+    const myEl = ref(null)
+
+    const getPrices = () => {
+      return axios.get('https://api.binance.com/api/v3/ticker/price')
+    }
+
+    const getStratData = () => {
+        return axios.get('/api/strategy?id='+props.id)
+    }
+
+    const { data: prices } = useRequest( getPrices, {
+        cacheKey: 'prices',
+        cacheTime: 300000,
+        pollingInterval: 10000,
+        formatResult: res => {
+            return res.data
+        },
+        onSuccess: (res) => {
+            console.log("00000--0-0>", res.length)
+        }
+    })
+
+    const { data: signals } = useRequest( () =>  getStratData(), {
+        cacheKey: 'signals',
+        cacheTime: 300000,
+        formatResult: res => {
+            return res.data
+        },
+        onSuccess: (res) => {
+            console.log("11111--1-1>", res.length)
+        }
+    })
+    
+    watch(signals, (signals) => {
 
         console.log("signals...", signals.length)
-
+    
         let tpnl_btc = []
         let tpnl_bva = []
         let pnl_btc = 0
@@ -188,65 +252,19 @@ export default defineComponent({
         .catch((err) => {
             console.log(err)
         })
-    })
-    */
-
-    const router = useRouter()
-
-    const openSignal = (row) => {
-        router.push("/signal/"+ row.id)
-    }
-
-    const state = reactive({
-        //stratname: '',
-        total_pnl: 0,
-        avg_pnl: 0,
-        strat_lifetime: 0,
-        total_signals: 0,
-        win_rate: 0,
-        ///////// ///////// ///////// /////////
-        /*
-        series: [
-            { name: "Bitcoin", data: [] },
-            { name: "", data: [] }
-        ],
-        */
-        chartOptions: {
-            chart: { width: "100%", type: 'area', stacked: true },
-            colors: ['#00E396','#0080FB'],
-            dataLabels: { enabled: false, enabledOnSeries: false },
-            legend: {
-                show: true,
-                offsetY: 20, itemMargin: { horizontal: 10, vertical: 20 },
-                labels: { colors: '#ffffff', },
-            },
-            fill: { type: 'gradient', gradient: { opacityFrom: 0.6, opacityTo: 0.8 } },
-            stroke: { curve: 'smooth', width: 2, },
-            tooltip: { enabled: true, theme: 'dark', },
-            xaxis: {
-                type: "datetime",
-                labels: { show: true, style: { colors: '#FFFFFF', fontSize: '12px' }, }
-            },
-            yaxis: { min: 0, forceNiceScale: true, labels: { show: true, style: { colors: '#FFFFFF', fontSize: '10px' },
-                    formatter: (value) => { return value+'%' },
-                },
-            }
-        },
-        ///////// ///////// ///////// /////////
+        
     })
 
-    const myEl = ref(null)
-    
     const getCurrentPnL = (symbol, sell_price, buy_price) => {
         let pnl = 0
-        if (prices.items.length) {
-            const currentPrice = computed( () => prices.items.find(e => e.symbol === symbol) )
+        if (prices._rawValue.length) {
+            const currentPrice = prices._rawValue.find( (r) => { return r.symbol === symbol }).price
             if (currentPrice) {
                 if (sell_price > 0) {
-                    pnl = 100 * (sell_price - currentPrice.value.price) / currentPrice.value.price
+                    pnl = 100 * (sell_price - currentPrice) / currentPrice
                 }
                 else if (buy_price > 0) {
-                    pnl = 100 * (currentPrice.value.price - buy_price) / buy_price
+                    pnl = 100 * (currentPrice - buy_price) / buy_price
                 }
             }
         }
@@ -259,14 +277,12 @@ export default defineComponent({
 
     return {
       ...toRefs(state),
-      //stratname,
       moment,
       openSignal,
       getCurrentPnL,
       myEl,
       signals,
-      loadMore,
-      prices
+      loadMore
     }
   },
 })
