@@ -15,38 +15,28 @@
     <a href="https://discordapp.com/invite/4EQrEgj" target="_new" class="text-purple-500">Discord Server</a>
   </div>
   <div class="text-center text-gray-300 p-5 m-6 flex flex-row items-center justify-center p-2 space-x-5 mb-5">
-    Bitcoin vs. Alts © 2019–2021  {{ cart.rawItems.length }}
+    <b class="text-green-500">{{ btc && Number(btc.price).toFixed(2) }}</b> &nbsp; Bitcoin vs. Alts © 2019–2021
   </div>
 </template>
 
 <script lang="ts">
 
-import { useUserStore } from './stores/user'
+import { computed } from "vue"
+
 import { usePriceStore } from './stores/prices'
 
 export default {
   name: "App",
   setup() {
 
-    //const user = useUserStore()
     const prices = usePriceStore()
     prices.getItems()
-    
-    /*
-    const cart = useCartStore()
-    async function buy() {
-      const n = await cart.purchaseItems()
-      console.log(`Bought ${n} items`)
-      cart.rawItems = []
-    }
-    console.log("cart:", JSON.stringify(cart.rawItems))
-    cart.getItems()
-    */
+    const btc = computed( () => prices.items.find(e => e.symbol === 'BTCUSDT') )
 
     return {
-      //cart,
-      //user,
+      btc
     }
+
   },
 };
 </script>

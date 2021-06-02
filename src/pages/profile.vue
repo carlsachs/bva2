@@ -118,14 +118,14 @@
 
     </div>
 
-    <div v-for="(subscription, i) in subscriptions" :class="{ 'bg-indigo-900 bg-opacity-20': subscribed.includes(subscription.code) }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
+    <div v-for="(subscription, i) in subscriptions" :class="{ 'bg-indigo-900 bg-opacity-20': auth0.state.user?.user_subs?.includes(subscription.code) }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
       <div class="text-xl">{{ subscription.name }} Strategy</div>
       <hr class="w-5 mx-auto border-blue-400 my-8">
-      <button v-if="isLoading" class="blue_button" type="button">
+      <button v-if="!auth0.state.user?.user_subs" class="blue_button" type="button">
         Loading <feather-loader class="ml-2" />
       </button>
       <div v-else>
-        <div class="mt-9" v-if="subscribed.includes(subscription.code)">
+        <div class="mt-9" v-if="auth0.state.user?.user_subs?.includes(subscription.code)">
           <div class="flex items-center justify-center">
             <label for="toogleA" class="flex items-center cursor-pointer">
               <div class="relative">
@@ -227,9 +227,9 @@
 
 
     <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
-      <span>{{ auth0.state.user.user_data }}</span>
+      <span>{{ auth0.state.user?.user_data }}</span>
       <br/><br/>
-      <span>{{ subscribed }}</span>
+      <span>{{ auth0.state.user?.user_subs }}</span>
       <br/><br/>
       <vue-final-modal v-model="showModal" classes="modal-container" content-class="modal-content">
         <span class="modal__title">Hello, vue-final-modal</span>
@@ -285,9 +285,8 @@ export default {
 
     const state = reactive({ 
       auth0, 
-      isLoading: true,
+      //isLoading: true,
       subscriptions,
-      subscribed: [],
       key: auth0.state.user?.user_data?.cle,
       secret: auth0.state.user?.user_data?.cles,
       cancel_sub_result: '',
@@ -351,8 +350,8 @@ export default {
     })
 
     watch( () =>  auth0.state.user?.user_subs, (subs) => {
-      state.subscribed = subs
-      state.isLoading = false
+      //state.subscribed = subs
+      //state.isLoading = false
     })
 
     const api_url = import.meta.env.VITE_API_URL
@@ -441,8 +440,8 @@ export default {
         if (response.data.msg == 'success') {
           state.cancel_sub_result = response.data.msg
           //console.log("remove subs code", code)
-          const index = state.subscribed.indexOf(code);
-          if (index > -1) state.subscribed.splice(index, 1)
+          const index = auth0.state.user?.user_subs?.indexOf(code);
+          if (index > -1) auth0.state.user?.user_subs?.splice(index, 1)
           //console.log(JSON.stringify(state.subscribed))
         }
         else {
