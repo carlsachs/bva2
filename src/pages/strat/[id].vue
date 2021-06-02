@@ -181,25 +181,9 @@ export default defineComponent({
 
     const myEl = ref(null)
 
-    const getPrices = () => {
-      return axios.get('https://api.binance.com/api/v3/ticker/price')
-    }
-
     const getStratData = () => {
         return axios.get('/api/strategy?id='+props.id)
     }
-
-    const { data: prices } = useRequest( getPrices, {
-        cacheKey: 'prices',
-        cacheTime: 300000,
-        pollingInterval: 10000,
-        formatResult: res => {
-            return res.data
-        },
-        onSuccess: (res) => {
-            console.log("00000--0-0>", res.length)
-        }
-    })
 
     const { data: signals } = useRequest( () =>  getStratData(), {
         cacheKey: 'signals',
