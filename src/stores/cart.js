@@ -1,6 +1,7 @@
 // @ts-check
 import { defineStore } from 'pinia'
 import { useUserStore } from './user'
+import axios from 'axios'
 
 export const useCartStore = defineStore({
   id: 'cart',
@@ -53,5 +54,19 @@ export const useCartStore = defineStore({
 
       return n
     },
+
+    getItems() {
+      console.log("getItems...")
+      return axios
+        .get("https://bitcoinvsaltcoins.com/api/signals")
+        .then( (response) => {
+          this.rawItems = response.data.rows
+          console.log("GET_ITEMS LENGTH", this.rawItems.length)
+        })
+        .catch((err) => {
+          console.log("ERRR)R)R)R")
+        })
+    },
+
   },
 })
