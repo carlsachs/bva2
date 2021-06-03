@@ -47,12 +47,18 @@ import { onMounted, reactive, ref, toRefs, defineComponent } from "vue"
 import axios from "~/utils/axios"
 import _ from "lodash"
 import { useRouter } from "vue-router"
+import { useLoadMoreStore } from '../stores/loadmore'
+
 
 export default defineComponent({
   name: "Dashboard",
   setup: () => {
 
     const router = useRouter()
+
+    const loadMoreStore = useLoadMoreStore()
+    loadMoreStore.resetProfile()
+    loadMoreStore.resetStrat()
 
     const state = reactive({
         strategies: [

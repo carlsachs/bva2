@@ -70,7 +70,7 @@
                                       </th>
                                   </tr>
                               </thead>
-                              <tbody v-if="signals" class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in signals.slice(0, 10)" :key="row.id" v-on:click="openSignal(row)">
+                              <tbody v-if="signals" class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in signals.slice(0, 10 * loadMoreStore.profile)" :key="row.id" v-on:click="openSignal(row)">
                                   <tr>
                                       <td v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                           {{ row.pnl ? moment(Number(row.sell_time)).fromNow() : moment(Number(row.updated_time)).fromNow() }}
@@ -110,6 +110,7 @@
                                   </tr>
                               </tbody>
                           </table>
+                          <button class="my-3 mx-auto dark_button" type="button" @click="loadMore">Load More</button>
                       </div>
                   </div>
               </div>
@@ -262,7 +263,7 @@ import _ from "lodash"
 import moment from "moment"
 import { useRequest } from 'vue-request'
 import { usePriceStore } from '../stores/prices'
-
+import { useLoadMoreStore } from '../stores/loadmore'
 
 export default {
   methods: {    
@@ -272,8 +273,11 @@ export default {
   },
   setup() {
 
-    const text = ref('Hello World')
-    provide('text',text)
+    //const text = ref('Hello World')
+    //provide('text',text)
+
+    const loadMoreStore = useLoadMoreStore()
+    loadMoreStore.resetStrat()
 
     const mychart = ref(null)
     const myEl = ref(null)
@@ -586,6 +590,12 @@ export default {
         }
         return pnl.toFixed(2)
     }
+
+    const loadMore = () => {
+      console.log("loadMore........")
+        loadMoreStore.moreProfile()
+        console.log("loadMore...", loadMoreStore.profile)
+    }
     
     return {
       ...toRefs(state),
@@ -601,7 +611,9 @@ export default {
       mychart,
       myEl,
       signals,
-      text,
+      loadMoreStore,
+      loadMore
+      //text,
     }
 
   },

@@ -3,14 +3,21 @@ import { defineStore } from 'pinia'
 export const useLoadMoreStore = defineStore({
   id: 'current',
   state: () => ({
-    current: 1,
+    strat: 1,
+    profile: 1,
   }),
   actions: {
-    more() {
-      this.current++
+    moreStrat() {
+      this.strat++
     },
-    reset() {
-      this.current = 1
+    resetStrat() {
+      this.strat = 1
+    },
+    moreProfile() {
+      this.profile++
+    },
+    resetProfile() {
+      this.profile = 1
     },
   },
 })

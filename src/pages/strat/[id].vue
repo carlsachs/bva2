@@ -67,7 +67,7 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody v-if="signals" class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in signals.slice(0, 10 * loadMoreStore.current)" :key="row.id" v-on:click="openSignal(row)">
+                                    <tbody v-if="signals" class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in signals.slice(0, 10 * loadMoreStore.strat)" :key="row.id" v-on:click="openSignal(row)">
                                         <tr>
                                             <td v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                 {{ row.pnl ? moment(Number(row.sell_time)).fromNow() : moment(Number(row.updated_time)).fromNow() }}
@@ -113,7 +113,7 @@
                 </div>
             </div>
 
-            <button v-if="(10*loadMoreStore.current)<=signals.length" class="mx-auto dark_button" type="button" @click="loadMore">Load More</button>
+            <button class="mx-auto dark_button" type="button" @click="loadMore">Load More</button>
 
         </div>
     </div>
@@ -140,8 +140,9 @@ export default defineComponent({
     //const smoothScroll = inject('smoothScroll')
 
     const prices = usePriceStore()
+
     const loadMoreStore = useLoadMoreStore()
-    loadMoreStore.reset()
+    loadMoreStore.resetProfile()
 
     const router = useRouter()
 
@@ -262,8 +263,8 @@ export default defineComponent({
     }
 
     const loadMore = () => {
-        loadMoreStore.more()
-        console.log("loadMore...", loadMoreStore.current)
+        loadMoreStore.moreStrat()
+        console.log("loadMore...", loadMoreStore.strat)
     }
 
     return {
