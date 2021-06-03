@@ -113,7 +113,7 @@
                 </div>
             </div>
 
-            <button v-if="signals" class="mx-auto dark_button" type="button" @click="loadMore">Load More</button>
+            <button v-if="(10*loadMoreStore.current)<=signals.length" class="mx-auto dark_button" type="button" @click="loadMore">Load More</button>
 
         </div>
     </div>
