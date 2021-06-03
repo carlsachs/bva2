@@ -110,11 +110,11 @@
                                   </tr>
                               </tbody>
                           </table>
-                          <button class="my-3 mx-auto dark_button" type="button" @click="loadMore">Load More</button>
                       </div>
                   </div>
               </div>
           </div>
+          <button class="mx-auto my-3 dark_button" type="button" @click="loadMore">Load More</button>
       </div>
 
     </div>
