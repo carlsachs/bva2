@@ -251,12 +251,15 @@ import { useRouter } from "vue-router"
 import _ from "lodash"
 import moment from "moment"
 import { useRequest } from 'vue-request'
+import { usePriceStore } from '../stores/prices'
 
 export default {
   setup() {
 
     const mychart = ref(null)
     const myEl = ref(null)
+
+    const prices = usePriceStore()
 
     //const smoothScroll = inject('smoothScroll')
 
@@ -284,14 +287,15 @@ export default {
     ]
 
     const state = reactive({ 
+      ///////// ///////// ///////// /////////
       auth0, 
-      subscribed: auth0.state.user?.user_subs,
       subscriptions,
+      username: auth0.state.user?.user_data?.nickname,
+      subscribed: auth0.state.user?.user_subs,
       key: auth0.state.user?.user_data?.cle,
       secret: auth0.state.user?.user_data?.cles,
       cancel_sub_result: '',
       key_result: '',
-      username: auth0.state.user?.user_data?.nickname,
       user_result: '',
       password: '',
       pwd_result: '',
@@ -305,9 +309,6 @@ export default {
       strat_lifetime: 0,
       total_signals: 0,
       win_rate: 0,
-      //user: null,
-      //rows: [],
-      //prices: [],
       ///////// ///////// ///////// /////////
       series: [
           {
@@ -484,25 +485,9 @@ export default {
       */
     })
 
-     const getPrices = () => {
-      return axios.get('https://api.binance.com/api/v3/ticker/price')
-    }
-
     const getStratData = () => {
         return axios.get(api_url + '/api/strategy?id='+state.strat_id)
     }
-
-    const { data: prices } = useRequest( getPrices, {
-        cacheKey: 'prices',
-        cacheTime: 300000,
-        pollingInterval: 10000,
-        formatResult: res => {
-            return res.data
-        },
-        onSuccess: (res) => {
-            console.log("00000--0-0>", res.length)
-        }
-    })
 
     const { data: signals } = useRequest( () =>  getStratData(), {
         cacheKey: 'signals',
@@ -560,8 +545,8 @@ export default {
 
     const getCurrentPnL = (symbol, sell_price, buy_price) => {
         let pnl = 0
-        if (prices._rawValue.length) {
-            const currentPrice = prices._rawValue.find( (r) => { return r.symbol === symbol }).price
+        if (prices.items.length) {
+            const currentPrice = prices.items.find( (r) => { return r.symbol === symbol }).price
             if (currentPrice) {
                 if (sell_price > 0) {
                     pnl = 100 * (sell_price - currentPrice) / currentPrice
