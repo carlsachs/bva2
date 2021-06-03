@@ -30,10 +30,10 @@ export default defineComponent({
       const handleResult = await stripe.value.redirectToCheckout({
         //sessionId: data.sessionId,
         customerEmail: props.customerEmail,
-        //successURL: 'https://bva2.netlify.app/profile',
-        //cancelURL: 'https://bva2.netlify.app/profile',
-        successUrl: 'http://localhost:3000/profile',
-        cancelUrl: 'http://localhost:3000/profile',
+        successUrl: 'https://bva2.netlify.app/profile',
+        cancelUrl: 'https://bva2.netlify.app/profile',
+        //successUrl: 'http://localhost:3000/profile',
+        //cancelUrl: 'http://localhost:3000/profile',
         mode: "subscription",
         lineItems: [{ 'price': props.stripeId, 'quantity': 1 }]
       })
