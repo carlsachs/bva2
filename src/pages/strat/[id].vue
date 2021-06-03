@@ -258,9 +258,7 @@ export default defineComponent({
         return pnl.toFixed(2)
     }
 
-    const loadMore = () => {
-        //state.signalshown = state.signalshown + 10
-    }
+    //const loadMore = () => {}
 
     return {
       ...toRefs(state),
@@ -269,7 +267,7 @@ export default defineComponent({
       getCurrentPnL,
       myEl,
       signals,
-      loadMore,
+      //loadMore,
       prices
     }
   },

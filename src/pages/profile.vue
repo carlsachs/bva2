@@ -121,11 +121,11 @@
     <div v-for="(subscription, i) in subscriptions" :class="{ 'bg-indigo-900 bg-opacity-20': auth0.state.user?.user_subs?.includes(subscription.code) }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
       <div class="text-xl">{{ subscription.name }} Strategy</div>
       <hr class="w-5 mx-auto border-blue-400 my-8">
-      <button v-if="!auth0.state.user?.user_subs" class="blue_button" type="button">
+      <button v-if="!subscribed" class="blue_button" type="button">
         Loading <feather-loader class="ml-2" />
       </button>
       <div v-else>
-        <div class="mt-9" v-if="auth0.state.user?.user_subs?.includes(subscription.code)">
+        <div class="mt-9" v-if="subscribed?.includes(subscription.code)">
           <div class="flex items-center justify-center">
             <label for="toogleA" class="flex items-center cursor-pointer">
               <div class="relative">
@@ -285,7 +285,7 @@ export default {
 
     const state = reactive({ 
       auth0, 
-      //isLoading: true,
+      subscribed: auth0.state.user?.user_subs,
       subscriptions,
       key: auth0.state.user?.user_data?.cle,
       secret: auth0.state.user?.user_data?.cles,
@@ -348,10 +348,9 @@ export default {
       state.key = user.cle
       state.secret = user.cles
     })
-
+  
     watch( () =>  auth0.state.user?.user_subs, (subs) => {
-      //state.subscribed = subs
-      //state.isLoading = false
+      state.subscribed = subs
     })
 
     const api_url = import.meta.env.VITE_API_URL
@@ -587,7 +586,7 @@ export default {
       myTest,
       mychart,
       myEl,
-      signals
+      signals,
     }
 
   },
