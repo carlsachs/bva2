@@ -4,6 +4,8 @@
 
             <h1 class="mb-7 text-uppercase font-semibold">{{ stratname }}</h1>
 
+            <div>{{ currents.current }}</div>
+
             <apexchart type="area" height="400" :options="chartOptions" :series="series"></apexchart>
             
             <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
@@ -67,7 +69,7 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody v-if="signals" class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in signals" :key="row.id" v-on:click="openSignal(row)">
+                                    <tbody v-if="signals" class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in signals.slice(0, 10 * currents.current)" :key="row.id" v-on:click="openSignal(row)">
                                         <tr>
                                             <td v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                 {{ row.pnl ? moment(Number(row.sell_time)).fromNow() : moment(Number(row.updated_time)).fromNow() }}
@@ -113,7 +115,7 @@
                 </div>
             </div>
 
-            <!--button v-if="signals" class="mx-auto dark_button" type="button" @click="loadMore()">Load More</button-->
+            <button v-if="signals" class="mx-auto dark_button" type="button" @click="loadMore">Load More</button>
 
         </div>
     </div>
@@ -128,6 +130,7 @@ import { useRouter } from "vue-router"
 import _ from "lodash"
 import { useRequest } from 'vue-request'
 import { usePriceStore } from '../../stores/prices'
+import { useCurrentStore } from '../../stores/current'
 
 export default defineComponent({
   name: "strategy",
@@ -139,6 +142,7 @@ export default defineComponent({
     //const smoothScroll = inject('smoothScroll')
 
     const prices = usePriceStore()
+    const currents = useCurrentStore()
 
     const router = useRouter()
 
@@ -258,7 +262,10 @@ export default defineComponent({
         return pnl.toFixed(2)
     }
 
-    //const loadMore = () => {}
+    const loadMore = () => {
+        currents.setCurrent(2)
+        console.log("loadMore...", currents.current)
+    }
 
     return {
       ...toRefs(state),
@@ -267,7 +274,8 @@ export default defineComponent({
       getCurrentPnL,
       myEl,
       signals,
-      //loadMore,
+      loadMore,
+      currents,
       prices
     }
   },
