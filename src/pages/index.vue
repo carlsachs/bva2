@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <div v-for="(strategy, i) in strategies" :key="strategy.name" class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
             <h1 class="mb-7 text-uppercase font-semibold">{{ strategy.name }}</h1>
 
@@ -39,7 +38,6 @@
 
             <div class="mt-5 italic">* PNL calculated using 1/15 of the whole BTC amount for each trade.</div>
         </div>
-
     </div>
 </template>
 
@@ -47,7 +45,6 @@
 
 import { onMounted, reactive, ref, toRefs, defineComponent } from "vue"
 import axios from "~/utils/axios"
-import moment from "moment"
 import _ from "lodash"
 import { useRouter } from "vue-router"
 
@@ -96,61 +93,15 @@ export default defineComponent({
         //rows: [],
         ///////// ///////// ///////// /////////
         chartOptions: {
-            chart: {
-                width: "100%",
-                type: 'area',
-                //stacked: false,
-            },
+            chart: { width: "100%", type: 'area' },
             colors: ['#0080FB', '#00E396'],
-            dataLabels: {
-                enabled: false,
-                enabledOnSeries: false,
-            },
-            legend: {
-                show: true,
-                offsetY: 20,
-                itemMargin: {
-                    horizontal: 10,
-                    vertical: 20
-                },
-                labels: {
-                    colors: '#ffffff',
-                },
-            },
-            fill: {
-                type: 'gradient',
-                gradient: {
-                    opacityFrom: 0.6,
-                    opacityTo: 0.8,
-                }
-            },
-            stroke: { 
-                curve: 'smooth',
-                width: 2,
-            },
-            tooltip: {
-                enabled: true,
-                theme: 'dark',
-            },
-            xaxis: {
-                type: "datetime",
-                labels: {
-                    show: true,
-                    style: {
-                        colors: '#FFFFFF',
-                        fontSize: '12px',
-                    },
-                }
-            },
-            yaxis: {
-                min: 0,
-                forceNiceScale: true,
-                labels: {
-                    show: true,
-                    style: {
-                        colors: '#FFFFFF',
-                        fontSize: '10px',
-                    },
+            dataLabels: { enabled: false, enabledOnSeries: false, },
+            legend: { show: true, offsetY: 20, itemMargin: { horizontal: 10, vertical: 20 }, labels: { colors: '#ffffff' }, },
+            fill: { type: 'gradient', gradient: { opacityFrom: 0.6, opacityTo: 0.8, } },
+            stroke: {  curve: 'smooth', width: 2, },
+            tooltip: { enabled: true, theme: 'dark', },
+            xaxis: { type: "datetime", labels: { show: true, style: { colors: '#FFFFFF', fontSize: '12px' }} },
+            yaxis: { min: 0, forceNiceScale: true, labels: { show: true, style: { colors: '#FFFFFF', fontSize: '10px'},
                     formatter: (value) => { return value+'%' },
                 },
             }
@@ -162,30 +113,19 @@ export default defineComponent({
         for ( const i in state.strategies ) {
             axios.get('/api/strategy?id=' + state.strategies[i].id)
             .then( rows => {
-
                 let tpnl_bva = []
                 let pnl_bva = 0
-                
                 for ( var row of rows.data.reverse() ) {
                     pnl_bva = pnl_bva + Number(row.pnl) / 15
                     tpnl_bva.push([ Number(row.updated_time), Number(pnl_bva).toFixed(2) ])
                 }
-
                 state.strategies[i].strat_lifetime = parseInt((rows.data[rows.data.length-1].updated_time - rows.data[0].updated_time)/86400000)
-
                 state.strategies[i].series[0].data = tpnl_bva
-
-                //console.log("TPNL:", pnl_bva.toFixed(2) )
                 state.strategies[i].total_pnl = pnl_bva.toFixed(2)
                 state.strategies[i].total_signals = rows.data.length
-                //console.log("TOTAL:", rows.data.length)
-                //console.log("TRADE MEAN:", _.meanBy(rows.data, o => {return Number(o.pnl)}).toFixed(2))
                 state.strategies[i].avg_pnl = _.meanBy(rows.data, o => {return Number(o.pnl)}).toFixed(2)
                 const positifs = rows.data.filter( bva => { return Number(bva.pnl) > 0 })
-                //console.log("POS COUNT:", positifs.length)
-                //console.log("WIN RATE:", (100 * positifs.length / rows.data.length).toFixed(2) )
                 state.strategies[i].win_rate = (100 * positifs.length / rows.data.length).toFixed(2)
-
             })
             .catch((err) => {
                 console.log(err)
@@ -195,7 +135,6 @@ export default defineComponent({
     
     return {
       ...toRefs(state),
-      //moment,
     }
   },
 })

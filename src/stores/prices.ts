@@ -1,4 +1,3 @@
-// @ts-check
 import { defineStore } from 'pinia'
 //import { useUserStore } from './user'
 import axios from "../utils/axios"
