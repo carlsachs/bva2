@@ -1,47 +1,50 @@
 <template>
   <div class="m-5">
-    <stripe-checkout
-      ref="checkoutRef"
-      mode="subscription"
-      :pk="publishableKey"
-      :line-items="[{ 'price': stripeId, 'quantity': 1 }]"
-      :success-url="successURL"
-      :cancel-url="cancelURL"
-      :customerEmail="customerEmail"
-      @loading="v => loading = v"
-    />
     <button class="green_button font-bold" @click="subscribe">Subscribe to {{ description }} for {{ price }} USD per month</button>
   </div>
 </template>
 
-<script>
-import { StripeCheckout } from '@vue-stripe/vue-stripe'
-export default {
+<script lang="ts">
+
+import { defineComponent, ref, inject, reactive, toRefs } from 'vue' 
+import {useStripe} from 'vue-use-stripe'
+
+export default defineComponent({
+  name: "stripe",
   props: {
     customerEmail: { type: String, required: true },
     stripeId: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: Number, required: true },
   },
-  components: {
-    StripeCheckout,
-  },
-  data () {
-    this.publishableKey = import.meta.env.VITE_APP_STRIPE_PUBLIC_KEY
-    return {
-      loading: false,
-      successURL: 'https://bva2.netlify.app/profile',
-      cancelURL: 'https://bva2.netlify.app/profile',
-      //successURL: 'http://localhost:3000/profile',
-      //cancelURL: 'http://localhost:3000/profile',
+  setup(props) {
+
+    const { stripe } = useStripe({
+      key: import.meta.env.VITE_APP_STRIPE_PUBLIC_KEY,
+    })
+
+    console.log("STRIPPPPPPPPE")
+
+    const subscribe = async () => {
+      console.log("subscribe")
+      const handleResult = await stripe.value.redirectToCheckout({
+        //sessionId: data.sessionId,
+        customerEmail: props.customerEmail,
+        //successURL: 'https://bva2.netlify.app/profile',
+        //cancelURL: 'https://bva2.netlify.app/profile',
+        successUrl: 'http://localhost:3000/profile',
+        cancelUrl: 'http://localhost:3000/profile',
+        mode: "subscription",
+        lineItems: [{ 'price': props.stripeId, 'quantity': 1 }]
+      })
     }
-  },
-  methods: {
-    subscribe () {
-      this.$refs.checkoutRef.redirectToCheckout();
-    },
-  },
-}
+
+    return {
+      subscribe,
+    }
+
+  }
+})
 </script>
 
 

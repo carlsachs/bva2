@@ -118,7 +118,7 @@
 
     </div>
 
-    <div v-for="(subscription, i) in subscriptions" :class="{ 'bg-indigo-900 bg-opacity-20': auth0.state.user?.user_subs?.includes(subscription.code) }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
+    <div v-for="(subscription, i) in Object.values(subscriptions)" :class="{ 'bg-indigo-900 bg-opacity-20': auth0.state.user?.user_subs?.includes(subscription.code) }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
       <div class="text-xl">{{ subscription.name }} Strategy</div>
       <hr class="w-5 mx-auto border-blue-400 my-8">
       <button v-if="!subscribed" class="blue_button" type="button">
@@ -147,7 +147,16 @@
             <button class="dark_button" :disabled="!subscription.qty">Save</button>
           </div>
           <hr class="w-5 mx-auto border-blue-400 my-8">
-          <button class="dark_button" @click="cancelSubs(subscription.code)">Cancel your {{ subscription.name }} subscription</button>
+          <div v-if="!subscription.confirm">
+            <button class="dark_button" @click="confirmCancelSubs(subscription.code)">
+              Cancel your {{ subscription.name }} subscription
+            </button>
+          </div>
+          <div v-if="subscription.confirm">
+            <button class="red_button" type="button" @click="cancelSubs(subscription.code)">
+              Confirm the cancelation of your subscription <feather-check class="ml-2" />
+            </button>
+          </div>
         </div>
         <div v-else>
           <Stripe
@@ -231,20 +240,21 @@
       <br/><br/>
       <span>{{ auth0.state.user?.user_subs }}</span>
       <br/><br/>
-      <vue-final-modal v-model="showModal" classes="modal-container" content-class="modal-content">
-        <span class="modal__title">Hello, vue-final-modal</span>
-      </vue-final-modal>
-      <button @click="showModal = true">Open Modal</button><br/>
+      <button @click="showModal = true">Open Modal</button>
+      <br/>
       <br/>
     </div>
 
+    <vue-final-modal v-model="showModal" classes="modal-container" content-class="modal-content">
+      <div class="modal__title m-20">Hello, vue-final-modal</div>
+    </vue-final-modal>
 
   </div>
 </template>
 
 <script lang="ts">
 
-import { onMounted, reactive, ref, toRefs, defineComponent, watch, inject } from 'vue'
+import { provide, reactive, ref, toRefs, defineComponent, watch, inject } from 'vue'
 import axios from 'axios'
 import { updateUsername } from '~/modules/auth0'
 import { useRouter } from "vue-router"
@@ -253,8 +263,17 @@ import moment from "moment"
 import { useRequest } from 'vue-request'
 import { usePriceStore } from '../stores/prices'
 
+
 export default {
+  methods: {    
+    setDetailsForComponent(email, password) {    
+      console.log("Calling from child component", email, password)
+    }
+  },
   setup() {
+
+    const text = ref('Hello World')
+    provide('text',text)
 
     const mychart = ref(null)
     const myEl = ref(null)
@@ -271,20 +290,22 @@ export default {
 
     const auth0: any = inject("auth0")
 
-    const subscriptions = [
-      { 
+    const subscriptions = {
+      bva_subs : { 
         name: 'BVA',
         code: 'bva_subs',
         stripe_id: 'price_1IqheJ4v5ia3fxwPKEJMLptX',
         price: 4.90,
+        confirm: false,
       },
-      { 
+      bva_long_only_subs: { 
         name: 'BVA Long Only',
         code: 'bva_long_only_subs',
         stripe_id: 'price_1IsYQc4v5ia3fxwPD4j8g01f',
         price: 5.55,
+        confirm: false,
       }
-    ]
+    }
 
     const state = reactive({ 
       ///////// ///////// ///////// /////////
@@ -343,6 +364,39 @@ export default {
       },
       ///////// ///////// ///////// /////////
     })
+
+    const confirmCancelSubs = async (code) => {
+      console.log("confirmCancelSubs")
+      state.subscriptions[code].confirm = true
+    }
+
+    const cancelSubs = async (code) => {
+      console.log("cancelSubs", code )
+      await axios.put(
+        api_url + '/api/cancelsub?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
+        { code: code },
+        { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
+      )
+      .then( (response) => {
+        console.log("cancelSubs result:", response.data)
+        state.subscriptions[code].confirm = false
+        if (response.data.msg == 'success') {
+          state.cancel_sub_result = response.data.msg
+          //console.log("remove subs code", code)
+          const index = auth0.state.user?.user_subs?.indexOf(code);
+          if (index > -1) auth0.state.user?.user_subs?.splice(index, 1)
+          //console.log(JSON.stringify(state.subscribed))
+        }
+        else {
+          state.cancel_sub_result = "error"
+        }
+      })
+      .catch( (error) => {
+        state.subscriptions[code].confirm = false
+        console.log("ERROR cancelSubs:", error)
+        state.cancel_sub_result = "error"
+      })
+    }
 
     watch( () =>  auth0.state.user?.user_data, (user) => {
       state.username = user.nickname
@@ -425,32 +479,6 @@ export default {
       .catch( (error) => {
         console.log("ERROR pwduser", error)
         state.key_result = "error"
-      })
-    }
-
-    const cancelSubs = async (code) => {
-      console.log("cancelSubs", code )
-      await axios.put(
-        api_url + '/api/cancelsub?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
-        { code: code },
-        { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
-      )
-      .then( (response) => {
-        console.log("cancelSubs result:", response.data)
-        if (response.data.msg == 'success') {
-          state.cancel_sub_result = response.data.msg
-          //console.log("remove subs code", code)
-          const index = auth0.state.user?.user_subs?.indexOf(code);
-          if (index > -1) auth0.state.user?.user_subs?.splice(index, 1)
-          //console.log(JSON.stringify(state.subscribed))
-        }
-        else {
-          state.cancel_sub_result = "error"
-        }
-      })
-      .catch( (error) => {
-        console.log("ERROR cancelSubs:", error)
-        state.cancel_sub_result = "error"
       })
     }
 
@@ -567,11 +595,13 @@ export default {
       savePass,
       saveUser,
       saveUserKey,
+      confirmCancelSubs,
       cancelSubs,
       myTest,
       mychart,
       myEl,
       signals,
+      text,
     }
 
   },
@@ -582,6 +612,9 @@ export default {
 
 .dark_button {
   @apply border-2 px-3 py-2 border-blue-900 rounded-lg text-gray-400 cursor-pointer hover:bg-gray-800 hover:text-gray-200;
+}
+.red_button {
+  @apply border-2 px-3 py-2 border-red-600 rounded-lg px-3 py-2 text-red-400 cursor-pointer hover:bg-red-600 hover:text-red-200;
 }
 
 ::v-deep .modal-container {
