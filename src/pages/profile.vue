@@ -114,7 +114,7 @@
     </div>
 
     <div v-for="(subscription, i) in Object.values(subscriptions)" :class="{ 'bg-indigo-900 bg-opacity-20': auth0.state.user?.user_subs?.includes(subscription.code) }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
-      <div class="text-xl">{{ subscription.name }} Strategy</div>
+      <div class="text-xl text-blue-600"><b>{{ subscription.name }}</b> strategy</div>
       <hr class="w-5 mx-auto border-blue-400 my-8">
       <button v-if="!subscribed" class="blue_button" type="button">
         Loading <feather-loader class="ml-2" />
@@ -170,7 +170,7 @@
 
     <section ref="myEl">
       <div :class="{ 'bg-indigo-900 bg-opacity-20': true }" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
-        <div class="my-3">Your Binance API Key Information: &nbsp;</div>
+        <div class="my-3 text-indigo-200">Your Binance API Key Information: &nbsp;</div>
         <input
           id="key"
           v-model="key"
@@ -197,7 +197,7 @@
 
 
     <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
-      <div class="my-3">Change your username: &nbsp;</div>
+      <div class="my-3 text-indigo-200">Change your username: &nbsp;</div>
       <input
         id="username"
         v-model="username"
@@ -215,7 +215,7 @@
 
 
     <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
-      <div class="my-3">Change your password: &nbsp;</div>
+      <div class="my-3 text-indigo-200">Change your password: &nbsp;</div>
       <input
         id="password"
         v-model="password"
@@ -232,7 +232,7 @@
     </div>
 
 
-    <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
+    <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-gray-200 relative">
       <span>{{ auth0.state.user?.user_data }}</span>
       <br/><br/>
       <span>{{ auth0.state.user?.user_subs }}</span>
