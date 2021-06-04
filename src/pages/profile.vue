@@ -133,7 +133,7 @@
               </div>
             </label>
           </div>
-          <div class="mt-10 text-gray-200 text-center">BTC amount to trade: &nbsp;</div>
+          <div class="mt-10 text-blue-200 text-center">BTC amount to trade: &nbsp;</div>
           <div>
             <input
               id="amount" size="50" v-model="subscription.qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
@@ -154,7 +154,7 @@
           </div>
         </div>
         <div v-else>
-          <div class="my-5 font-bold font-3xl text-blue-300">98 subscriptions left</div>
+          <div class="my-5 font-bold font-3xl text-blue-300">{{ subscription.count }} subscriptions left</div>
           <div class="my-5 font-bold text-green-500 text-xl">{{ subscription.price }} USD per month</div>
           <Stripe
             :customerEmail="auth0.state.user.email" 
@@ -237,6 +237,8 @@
       <br/><br/>
       <span>{{ auth0.state.user?.user_subs }}</span>
       <br/><br/>
+      <span>{{ subscriptions }}</span>
+      <br/><br/>
       <button @click="showModal = true">Open Modal</button>
       <br/>
       <br/>
@@ -252,7 +254,7 @@
 <script lang="ts">
 
 import { provide, reactive, ref, toRefs, defineComponent, watch, inject } from 'vue'
-import axios from 'axios'
+import axios from "~/utils/axios"
 import { updateUsername } from '~/modules/auth0'
 import { useRouter } from "vue-router"
 import _ from "lodash"
@@ -268,6 +270,8 @@ export default {
     }
   },
   setup() {
+
+    const api_url = import.meta.env.VITE_API_URL
 
     //const text = ref('Hello World')
     //provide('text',text)
@@ -290,27 +294,10 @@ export default {
 
     const auth0: any = inject("auth0")
 
-    const subscriptions = {
-      bva_subs : { 
-        name: 'BVA',
-        code: 'bva_subs',
-        stripe_id: 'price_1IqheJ4v5ia3fxwPKEJMLptX',
-        price: 4.90,
-        confirm: false,
-      },
-      bva_long_only_subs: { 
-        name: 'BVA Long Only',
-        code: 'bva_long_only_subs',
-        stripe_id: 'price_1IsYQc4v5ia3fxwPD4j8g01f',
-        price: 5.55,
-        confirm: false,
-      }
-    }
-
     const state = reactive({ 
       ///////// ///////// ///////// /////////
       auth0, 
-      subscriptions,
+      subscriptions: [],
       username: auth0.state.user?.user_data?.nickname,
       subscribed: auth0.state.user?.user_subs,
       key: auth0.state.user?.user_data?.cle,
@@ -365,6 +352,25 @@ export default {
       ///////// ///////// ///////// /////////
     })
 
+  
+    const getProducts = async () => {
+      const res = await axios.get('/api/products')
+      let result = {}
+      for (const yo of res.data) {
+        result[yo.code] = {
+          name: yo.name,
+          code: yo.code,
+          price: Number(yo.price),
+          count: Number(yo.count),
+          stripe_id: yo.stripe_id
+        }
+      }
+      state.subscriptions = result
+      console.log("state.subscriptions", state.subscriptions)
+    }
+
+    getProducts()
+
     const confirmCancelSubs = async (code) => {
       console.log("confirmCancelSubs")
       state.subscriptions[code].confirm = true
@@ -372,8 +378,7 @@ export default {
 
     const cancelSubs = async (code) => {
       console.log("cancelSubs", code )
-      await axios.put(
-        api_url + '/api/cancelsub?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
+      await axios.put('/api/cancelsub?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
         { code: code },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
@@ -408,16 +413,13 @@ export default {
       state.subscribed = subs
     })
 
-    const api_url = import.meta.env.VITE_API_URL
-
     const savePass = async () => {
       console.log("PASSWORD", state.password)
       console.log(JSON.stringify(auth0.state.user) )
       //console.log("USERID!!!!!!", JSON.stringify(auth0.state.user.userid) )
       console.log("Authorization!!!!!!", JSON.stringify(auth0.state.user.token) )
       console.log("api_url", api_url)
-      await axios.put(
-        api_url + '/api/pwduser?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
+      await axios.put('/api/pwduser?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
         { password: state.password },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
@@ -439,8 +441,7 @@ export default {
 
     const saveUser = async () => {
       console.log("USERNAME", state.username)
-      await axios.put(
-        api_url + '/api/setusername?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
+      await axios.put('/api/setusername?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
         { username: state.username },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
@@ -462,8 +463,7 @@ export default {
 
     const saveUserKey = async () => {
       console.log("saveUserKey", state.key, state.secret )
-      await axios.put(
-        api_url + '/api/setuserkey?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
+      await axios.put('/api/setuserkey?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
         { key: state.key, secret: state.secret },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
@@ -501,7 +501,7 @@ export default {
     })
 
     const getStratData = () => {
-        return axios.get(api_url + '/api/strategy?id='+state.strat_id)
+        return axios.get('/api/strategy?id='+state.strat_id)
     }
 
     const { data: signals } = useRequest( () =>  getStratData(), {
