@@ -3,9 +3,7 @@
 
     <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
-      <h1 class="mb-7 text-uppercase font-semibold">Your Trades</h1>
-
-      <button class="dark_button" @click="myTest()">MY TEST</button>
+      <h1 class="mb-7 text-uppercase font-semibold">Your PNL</h1>
 
       <apexchart ref="mychart" type="area" height="400" :options="chartOptions" :series="series"></apexchart>
       
@@ -34,10 +32,6 @@
               <div class="flex-auto">Verif. Trade History</div>
               <div class="flex-auto text-justify text-blue-300 block">{{ strat_lifetime }} days</div>
           </div>
-
-          <router-link to="/profile" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-              <div class="flex-auto text-green-500 font-semibold">Subscribe</div>
-          </router-link>
       </div>
       
       <div class="mt-5 italic">* PNL calculated using 1/15 of the whole BTC amount for each trade.</div>
@@ -160,6 +154,8 @@
           </div>
         </div>
         <div v-else>
+          <div class="my-5 font-bold font-3xl text-blue-300">98 subscriptions left</div>
+          <div class="my-5 font-bold text-green-500 text-xl">{{ subscription.price }} USD per month</div>
           <Stripe
             :customerEmail="auth0.state.user.email" 
             :stripeId="subscription.stripe_id"
@@ -328,7 +324,7 @@ export default {
       showModal: false,
       ///////// ///////// ///////// /////////
       strat_id: 466,
-      stratname: 'Your Trades',
+      stratname: 'Your PNL',
       total_pnl: 0,
       avg_pnl: 0,
       strat_lifetime: 0,
@@ -486,19 +482,6 @@ export default {
       })
     }
 
-    const myTest = () => {
-      console.log("MMMMYYY TESSSTT")
-      /*
-      smoothScroll({
-        scrollTo: myEl.value,
-        hash: '#sampleHash',
-        duration: 1000,
-        offset: -30, 
-        updateHistory: false,
-      })
-      */
-    }
-
     watch( () => mychart.value, (value) => {
       setTimeout(function(){ value.toggleSeries('Bitcoin') }, 1000)
     })
@@ -607,13 +590,11 @@ export default {
       saveUserKey,
       confirmCancelSubs,
       cancelSubs,
-      myTest,
       mychart,
       myEl,
       signals,
       loadMoreStore,
       loadMore
-      //text,
     }
 
   },
