@@ -74,8 +74,8 @@ export default defineComponent({
             },
             {
                 id: 595,
-                name: "BVA Long Only Strategy",
-                series: [{ name: "BVA Long Only", data: [] }],
+                name: "BVA LONG ONLY Strategy",
+                series: [{ name: "BVA LONG ONLY", data: [] }],
                 total_pnl: 0,
                 total_signals: 0,
                 avg_pnl: 0,

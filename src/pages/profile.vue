@@ -113,33 +113,40 @@
 
     </div>
 
-    <div v-for="(subscription, i) in Object.values(subscriptions)" :class="{ 'bg-indigo-900 bg-opacity-20': auth0.state.user?.user_subs?.includes(subscription.code) }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
+    <div v-for="(subscription, i) in Object.values(subscriptions)" :class="{ 'bg-indigo-900 bg-opacity-20': auth0.state.user?.user_subs?.findIndex( sub => (sub.code == subscription.code) ) }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
       <div class="text-3xl font-extrabold text-blue-600"><b>{{ subscription.name }}</b></div>
       <hr class="w-5 mx-auto border-blue-400 my-8">
       <button v-if="!subscribed" class="blue_button" type="button">
         Loading <feather-loader class="ml-2" />
       </button>
       <div v-else>
-        <div class="mt-9" v-if="subscribed?.includes(subscription.code)">
+        <div class="mt-9" v-if="subscribed?.findIndex(sub => (sub.code == subscription.code) ) > -1">
           <div class="flex items-center justify-center">
             <label for="toogleA" class="flex items-center cursor-pointer">
               <div class="relative">
-                <input id="toogleA" type="checkbox" class="sr-only" />
+                <input id="toogleA" type="checkbox" class="sr-only" v-model="subscribed[subscribed?.findIndex(sub => (sub.code == subscription.code))].status" true-value="ACTIVE" false-value="PAUSED" 
+                  @change="changeStatus(subscription.code, subscribed[subscribed?.findIndex(sub => (sub.code == subscription.code))].status)"/>
                 <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
                 <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
               </div>
               <div class="ml-3 text-gray-500 font-medium">
-                Paused
+                {{ subscribed[subscribed?.findIndex(sub => (sub.code == subscription.code))].status }}
               </div>
             </label>
           </div>
           <div class="mt-10 text-blue-200 text-center">BTC amount to trade: &nbsp;</div>
           <div>
             <input
-              id="amount" size="50" v-model="subscription.qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
+              id="amount" size="50" v-model="subscribed[subscribed?.findIndex(sub => (sub.code == subscription.code))].qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
               class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-blue-900"
-            >&nbsp;
-            <button class="dark_button" :disabled="!subscription.qty">Save</button>
+              @input="resetInput"
+            >
+            <div>
+              <button type="number" class="dark_button" 
+                :disabled="!subscribed[subscribed?.findIndex(sub => (sub.code == subscription.code))].qty" 
+                @click="saveQty(subscription.code, subscribed[subscribed?.findIndex(sub => (sub.code == subscription.code))].qty)">Save</button>
+            </div>
+            <span :class="{'text-red-500' : qty_result!=='success', 'text-indigo-500':qty_result==='success'}">{{ qty_result }}</span>
           </div>
           <hr class="w-5 mx-auto border-blue-400 my-8">
           <div v-if="!subscription.confirm">
@@ -164,13 +171,13 @@
           />
         </div>
       </div>
-      <div v-if="cancel_sub_result">{{ cancel_sub_result }}</div>
+      <div v-if="cancel_sub_result" :class="{'text-red-500' : cancel_sub_result!=='success', 'text-indigo-500':cancel_sub_result==='success'}">{{ cancel_sub_result }}</div>
     </div>
 
 
     <section ref="myEl">
-      <div :class="{ 'bg-indigo-900 bg-opacity-20': true }" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
-        <div class="my-3 text-indigo-200">Your Binance API Key Information: &nbsp;</div>
+      <div :class="{ 'bg-indigo-900 bg-opacity-20': !key || !secret }" class="text-indigo-200 mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg relative flex-auto">
+        <div class="my-3" :class="{ 'text-red-500': !key || !secret }">Your Binance API Key Information: &nbsp;</div>
         <input
           id="key"
           v-model="key"
@@ -179,6 +186,7 @@
           type="text"
           autocomplete="false"
           class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-gray-700"
+          @input="resetInput"
         >&nbsp;
         <input
           id="secret"
@@ -188,10 +196,13 @@
           type="text"
           autocomplete="false"
           class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-gray-700"
-        >&nbsp;
-        <button class="dark_button" :disabled="!secret&&!key" @click="saveUserKey">Save</button>
-        &nbsp;
-        <span>{{ key_result }}</span>
+          @input="resetInput"
+        >
+        <div>
+          <button class="dark_button" :disabled="!secret&&!key" @click="saveUserKey">Save</button>
+        </div>
+        <span :class="{'text-red-500' : key_result!=='success', 'text-indigo-500':key_result==='success'}">{{ key_result }}</span>
+        <div v-if="!key || !secret" class="text-red-500 mt-4">Please enter your Binance API key information.</div>
       </div>
     </section>
 
@@ -206,16 +217,21 @@
         type="text"
         autocomplete="false"
         class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
-        @keydown.enter="saveUser"
-      >&nbsp;
-      <button class="dark_button" :disabled="!username" @click="saveUser">Save</button>
-      &nbsp;
-      <span>{{ user_result }}</span>
+        @keydown.enter="confirmUsername"
+        @input="resetInput"
+      >
+      <div v-if="!confirmUser">
+        <button class="dark_button" :disabled="!username" @click="confirmUsername">Save</button>
+      </div>
+      <div v-if="confirmUser">
+        <button class="red_button" :disabled="!username" @click="saveUser">Confirm</button>
+      </div>
+      <span :class="{'text-red-500' : user_result!=='success', 'text-indigo-500':user_result==='success'}">{{ user_result }}</span>
     </div>
 
 
     <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
-      <div class="my-3 text-indigo-200">Change your password: &nbsp;</div>
+      <div class="my-3 text-indigo-200">Change your password:: &nbsp;</div>
       <input
         id="password"
         v-model="password"
@@ -224,11 +240,16 @@
         type="text"
         autocomplete="false"
         class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
-        @keydown.enter="savePass"
-      >&nbsp;
-      <button class="dark_button" :disabled="!password" @click="savePass">Save</button>
-      &nbsp;
-      <span>{{ pwd_result }}</span>
+        @keydown.enter="confirmPasswd"
+        @input="resetInput"
+      >
+      <div v-if="!confirmPass">
+        <button class="dark_button" :disabled="!password" @click="confirmPasswd">Save</button>
+      </div>
+      <div v-if="confirmPass">
+        <button class="red_button" :disabled="!password" @click="savePass">Confirm</button>
+      </div>
+      <span :class="{'text-red-500' : pwd_result!=='success', 'text-indigo-500':pwd_result==='success'}">{{ pwd_result }}</span>
     </div>
 
 
@@ -271,7 +292,7 @@ export default {
   },
   setup() {
 
-    const api_url = import.meta.env.VITE_API_URL
+    const smoothScroll = inject('smoothScroll')
 
     //const text = ref('Hello World')
     //provide('text',text)
@@ -309,6 +330,9 @@ export default {
       pwd_result: '',
       searchEnabled: true,
       showModal: false,
+      confirmPass: false,
+      confirmUser: false,
+      qty_result: '',
       ///////// ///////// ///////// /////////
       strat_id: 466,
       stratname: 'Your PNL',
@@ -366,7 +390,7 @@ export default {
         }
       }
       state.subscriptions = result
-      console.log("state.subscriptions", state.subscriptions)
+      //console.log("state.subscriptions", state.subscriptions)
     }
 
     getProducts()
@@ -388,7 +412,7 @@ export default {
         if (response.data.msg == 'success') {
           state.cancel_sub_result = response.data.msg
           //console.log("remove subs code", code)
-          const index = auth0.state.user?.user_subs?.indexOf(code);
+          const index = auth0.state.user?.user_subs?.findIndex( sub => (sub.code == code) )
           if (index > -1) auth0.state.user?.user_subs?.splice(index, 1)
           //console.log(JSON.stringify(state.subscribed))
         }
@@ -413,12 +437,67 @@ export default {
       state.subscribed = subs
     })
 
+    const confirmPasswd = async () => {
+      state.confirmPass = true
+    }
+
+    const changeStatus = async (code, status) => {
+      console.log("changeStatus", code, status)
+      await axios.put('/api/setsubstatus?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
+        { status:status, code:code, email:auth0.state.user.email },
+        { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
+      )
+      .then( (response) => {
+        console.log("changeStatus.response.data:", response.data)
+        if (response.data.msg == 'success') {
+          state.qty_result = response.data.msg
+        }
+        else {
+          console.log("---->", response.data.err)
+          state.qty_result = response.data.err
+        }
+      })
+      .catch( (error) => {
+        console.log("ERROR changeStatus", error)
+        state.qty_result = "error"
+      })
+    }
+
+    const resetInput = () => {
+      console.log("resetInput")
+      state.confirmPass = false
+      state.confirmUser = false
+      state.pwd_result = null
+      state.user_result = null
+      state.key_result = null
+      state.qty_result = null
+      state.cancel_sub_result = null
+    }
+
+    const saveQty = async (code, qty) => {
+      console.log("saveQty", qty)
+      await axios.put('/api/setsubsqty?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
+        { qty: qty, code: code, email: auth0.state.user.email },
+        { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
+      )
+      .then( (response) => {
+        console.log("saveQty.response.data:", response.data)
+        if (response.data.msg == 'success') {
+          state.qty_result = response.data.msg
+        }
+        else {
+          console.log("---->", response.data.err)
+          state.qty_result = response.data.err
+        }
+      })
+      .catch( (error) => {
+        console.log("ERROR saveQty", error)
+        state.qty_result = "error"
+      })
+    }
+
     const savePass = async () => {
-      console.log("PASSWORD", state.password)
-      console.log(JSON.stringify(auth0.state.user) )
-      //console.log("USERID!!!!!!", JSON.stringify(auth0.state.user.userid) )
-      console.log("Authorization!!!!!!", JSON.stringify(auth0.state.user.token) )
-      console.log("api_url", api_url)
+      state.confirmPass = false
       await axios.put('/api/pwduser?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
         { password: state.password },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
@@ -439,8 +518,12 @@ export default {
       })
     }
 
+    const confirmUsername = async (code) => {
+      state.confirmUser = true
+    }
+
     const saveUser = async () => {
-      console.log("USERNAME", state.username)
+      state.confirmUser = false
       await axios.put('/api/setusername?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
         { username: state.username },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
@@ -452,11 +535,12 @@ export default {
           updateUsername(state.username)
         }
         else {
-          state.user_result = "error"
+          console.log("---->", response.data.err)
+          state.user_result = response.data.err
         }
       })
       .catch( (error) => {
-        console.log("ERROR pwduser", error)
+        console.log("ERROR saveUser", error)
         state.user_result = "error"
       })
     }
@@ -487,17 +571,20 @@ export default {
     })
 
     watch( () => myEl.value, (value) => {
-      /*
-      setTimeout(function(){ 
-        smoothScroll({
-          scrollTo: myEl.value,
-          hash: '#sampleHash',
-          duration: 1000,
-          offset: -10, 
-          updateHistory: false,
-        })
-      }, 1000)
-      */
+      const myInterval = setInterval( function() { 
+        if ( state?.subscribed?.length > 0 && (!state.key || !state.secret) ) {
+          smoothScroll({
+            scrollTo: myEl.value,
+            hash: '#sampleHash',
+            duration: 1000,
+            //offset: -10, 
+            updateHistory: false,
+          })
+        }
+        else {
+          clearInterval(myInterval)
+        }
+      }, 4000)
     })
 
     const getStratData = () => {
@@ -594,7 +681,12 @@ export default {
       myEl,
       signals,
       loadMoreStore,
-      loadMore
+      loadMore,
+      confirmPasswd,
+      confirmUsername,
+      resetInput,
+      saveQty,
+      changeStatus
     }
 
   },
@@ -606,6 +698,7 @@ export default {
 .dark_button {
   @apply border-2 px-3 py-2 border-blue-900 rounded-lg text-gray-400 cursor-pointer hover:bg-gray-800 hover:text-gray-200;
 }
+
 .red_button {
   @apply border-2 px-3 py-2 border-red-600 rounded-lg px-3 py-2 text-red-400 cursor-pointer hover:bg-red-600 hover:text-red-200;
 }
