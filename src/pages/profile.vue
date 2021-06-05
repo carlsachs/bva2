@@ -114,7 +114,7 @@
     </div>
 
     <div v-for="(subscription, i) in Object.values(subscriptions)" :class="{ 'bg-indigo-900 bg-opacity-20': auth0.state.user?.user_subs?.includes(subscription.code) }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
-      <div class="text-xl text-blue-600"><b>{{ subscription.name }} strategy</b></div>
+      <div class="text-3xl font-extrabold text-blue-600"><b>{{ subscription.name }}</b></div>
       <hr class="w-5 mx-auto border-blue-400 my-8">
       <button v-if="!subscribed" class="blue_button" type="button">
         Loading <feather-loader class="ml-2" />
