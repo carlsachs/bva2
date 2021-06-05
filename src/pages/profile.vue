@@ -113,7 +113,7 @@
 
     </div>
 
-    <div v-for="(subscription, i) in Object.values(subscriptions)" :class="{ 'bg-indigo-900 bg-opacity-20': auth0.state.user?.user_subs?.findIndex( sub => (sub.code == subscription.code) ) }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
+    <div v-for="(subscription, i) in Object.values(subscriptions)" :class="{ 'bg-indigo-900 bg-opacity-20': subscribed?.findIndex(sub => (sub.code === subscription.code)) >= 0 }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
       <div class="text-3xl font-extrabold text-blue-600"><b>{{ subscription.name }}</b></div>
       <hr class="w-5 mx-auto border-blue-400 my-8">
       <button v-if="!subscribed" class="blue_button" type="button">
@@ -122,9 +122,9 @@
       <div v-else>
         <div class="mt-9" v-if="subscribed?.findIndex(sub => (sub.code == subscription.code) ) > -1">
           <div class="flex items-center justify-center">
-            <label for="toogleA" class="flex items-center cursor-pointer">
+            <label :for="'toogle'+subscription.code" class="flex items-center cursor-pointer">
               <div class="relative">
-                <input id="toogleA" type="checkbox" class="sr-only" v-model="subscribed[subscribed?.findIndex(sub => (sub.code == subscription.code))].status" true-value="ACTIVE" false-value="PAUSED" 
+                <input :id="'toogle'+subscription.code" type="checkbox" class="sr-only" v-model="subscribed[subscribed?.findIndex(sub => (sub.code == subscription.code))].status" true-value="ACTIVE" false-value="PAUSED" 
                   @change="changeStatus(subscription.code, subscribed[subscribed?.findIndex(sub => (sub.code == subscription.code))].status)"/>
                 <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
                 <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
