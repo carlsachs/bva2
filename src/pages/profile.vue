@@ -620,7 +620,7 @@ export default {
     }
 
     watch( () => mychart.value, (value) => {
-      setTimeout(function(){ if (value) value?.toggleSeries('Bitcoin') }, 6000)
+      //setTimeout(function(){ value?.toggleSeries('Bitcoin') }, 6000)
     })
 
     watch( () => myEl.value, (value) => {
