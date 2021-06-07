@@ -22,21 +22,20 @@
 <script lang="ts">
 
 import { computed } from "vue"
-
 import { usePriceStore } from './stores/prices'
+import { useKlineStore } from './stores/klines'
 
 export default {
   name: "App",
   setup() {
-
     const prices = usePriceStore()
+    const klines = useKlineStore()
     prices.getItems()
+    klines.getItems()
     const btc = computed( () => prices.items.find(e => e.symbol === 'BTCUSDT') )
-
     return {
       btc
     }
-
   },
 };
 </script>

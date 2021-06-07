@@ -64,7 +64,7 @@
                                       </th>
                                   </tr>
                               </thead>
-                              <tbody v-if="signals" class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in signals.slice(0, 10 * loadMoreStore.profile)" :key="row.id" v-on:click="openSignal(row)">
+                              <tbody v-if="trades" v-for="(row, i) in trades.slice(0, 10 * loadMoreStore.profile)" :key="row.id" v-on:click="openTradedSignal(row)" class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40">
                                   <tr>
                                       <td v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                           {{ row.pnl ? moment(Number(row.sell_time)).fromNow() : moment(Number(row.updated_time)).fromNow() }}
@@ -110,10 +110,11 @@
           </div>
           <button class="mx-auto my-3 dark_button" type="button" @click="loadMore">Load More</button>
       </div>
-
     </div>
 
-    <div v-for="(subscription, i) in Object.values(subscriptions)" :class="{ 'bg-indigo-900 bg-opacity-20': subscribed?.findIndex(sub => (sub.code === subscription.code)) >= 0 }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
+
+
+    <div v-for="(subscription, i) in Object.values(subscriptions)" :class="{ 'bg-indigo-900 bg-opacity-20': subscribed?.findIndex(sub => (sub.code === subscription.code)) >= 0 }" :key="subscription.code" class="mx-4 my-23 p-4 border-2 border-blue-900 rounded-lg text-white relative">
       <div class="text-3xl font-extrabold text-blue-600"><b>{{ subscription.name }}</b></div>
       <hr class="w-5 mx-auto border-blue-400 my-8">
       <button v-if="!subscribed" class="blue_button" type="button">
@@ -164,7 +165,7 @@
           <div class="my-5 font-bold font-3xl text-blue-300">{{ subscription.count }} subscriptions left</div>
           <div class="my-5 font-bold text-green-500 text-xl">{{ subscription.price }} USD per month</div>
           <Stripe
-            :customerEmail="auth0.state.user.email" 
+            :customerEmail="auth0.state.user?.email" 
             :stripeId="subscription.stripe_id"
             :description="subscription.name"
             :price="subscription.price"
@@ -256,14 +257,19 @@
     <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-gray-200 relative">
       <span>{{ auth0.state.user?.user_data }}</span>
       <br/><br/>
-      <span>{{ auth0.state.user?.user_subs }}</span>
+      <span>{{ subscribed }}</span>
       <br/><br/>
       <span>{{ subscriptions }}</span>
+      <br/><br/>
+      <span>{{ trades?.length }}</span>
+      <br/><br/>
+      <span>{{ series[1]?.data?.length }}</span>
       <br/><br/>
       <button @click="showModal = true">Open Modal</button>
       <br/>
       <br/>
     </div>
+
 
     <vue-final-modal v-model="showModal" classes="modal-container" content-class="modal-content">
       <div class="modal__title m-20">Hello, vue-final-modal</div>
@@ -274,7 +280,7 @@
 
 <script lang="ts">
 
-import { provide, reactive, ref, toRefs, defineComponent, watch, inject } from 'vue'
+import { provide, reactive, ref, toRefs, watch, watchEffect, inject, computed} from 'vue'
 import axios from "~/utils/axios"
 import { updateUsername } from '~/modules/auth0'
 import { useRouter } from "vue-router"
@@ -282,7 +288,9 @@ import _ from "lodash"
 import moment from "moment"
 import { useRequest } from 'vue-request'
 import { usePriceStore } from '../stores/prices'
+import { useKlineStore } from '../stores/klines'
 import { useLoadMoreStore } from '../stores/loadmore'
+import { useTradedStore } from '../stores/traded'
 
 export default {
   methods: {    
@@ -304,13 +312,12 @@ export default {
     const myEl = ref(null)
 
     const prices = usePriceStore()
-
-    //const smoothScroll = inject('smoothScroll')
+    const klines = useKlineStore()
 
     const router = useRouter()
 
-    const openSignal = (row) => {
-        router.push("/signal/"+ row.id)
+    const openTradedSignal = (row) => {
+      router.push("/trade/"+ row.id)
     }
 
     const auth0: any = inject("auth0")
@@ -319,10 +326,12 @@ export default {
       ///////// ///////// ///////// /////////
       auth0, 
       subscriptions: [],
+      id: auth0.state.user?.user_data?.id,
       username: auth0.state.user?.user_data?.nickname,
-      subscribed: auth0.state.user?.user_subs,
       key: auth0.state.user?.user_data?.cle,
       secret: auth0.state.user?.user_data?.cles,
+      subscribed: auth0.state.user?.user_subs,
+      trades: auth0.state.user?.trades,
       cancel_sub_result: '',
       key_result: '',
       user_result: '',
@@ -368,7 +377,7 @@ export default {
             type: "datetime",
             labels: { show: true, style: { colors: '#FFFFFF', fontSize: '12px' }, }
         },
-        yaxis: { min: 0, forceNiceScale: true, labels: { show: true, style: { colors: '#FFFFFF', fontSize: '10px' },
+        yaxis: { forceNiceScale: true, labels: { show: true, style: { colors: '#FFFFFF', fontSize: '10px' },
                 formatter: (value) => { return value+'%' },
             },
         }
@@ -390,7 +399,6 @@ export default {
         }
       }
       state.subscriptions = result
-      //console.log("state.subscriptions", state.subscriptions)
     }
 
     getProducts()
@@ -402,9 +410,9 @@ export default {
 
     const cancelSubs = async (code) => {
       console.log("cancelSubs", code )
-      await axios.put('/api/cancelsub?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
+      await axios.put('/api/cancelsub?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.user_data?.id,
         { code: code },
-        { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
+        { headers: {Authorization:`Bearer ${auth0.state.user?.token}`} }
       )
       .then( (response) => {
         console.log("cancelSubs result:", response.data)
@@ -429,12 +437,57 @@ export default {
 
     watch( () =>  auth0.state.user?.user_data, (user) => {
       state.username = user.nickname
+      state.id = user.id
       state.key = user.cle
       state.secret = user.cles
     })
   
-    watch( () =>  auth0.state.user?.user_subs, (subs) => {
+    watch( () => auth0.state.user?.user_subs, (subs) => {
       state.subscribed = subs
+    })
+
+    watch( () => auth0.state.user?.trades, (trades) => {
+      console.log("TRADES", trades.length)
+      state.trades = trades
+      state.strat_lifetime = parseInt((trades[0].updated_time - trades[trades.length-1].updated_time)/86400000)
+      const days = 10 + state.strat_lifetime
+      state.total_signals = trades.length
+    })
+
+    const lifetime = computed( () => {
+      console.log("0000000000000")
+      return 0
+    })
+
+    watchEffect( () => {
+      console.log("======>", auth0.state.user?.trades?.length, klines?.items?.length, state.strat_lifetime )
+      if (auth0.state.user?.trades?.length && klines?.items?.length) {
+        state.trades = auth0.state.user?.trades
+        console.log("TRADES", state.trades.length)
+        console.log("KLINES", klines?.items.length)
+        state.strat_lifetime = parseInt((state.trades[0].updated_time - state.trades[state.trades.length-1].updated_time)/86400000)
+        const days = 10 + state.strat_lifetime
+        state.total_signals = state.trades.length
+        let tpnl_btc = []
+        let tpnl_bva = []
+        let pnl_btc = 0
+        let pnl_bva = 0
+        for ( var btc of klines.items.slice(klines.items.length-1-state.strat_lifetime, klines.items.length-1) ) {
+          pnl_btc = 100 * (Number(btc[4]) - Number(btc[1])) / Number(btc[1]) + pnl_btc
+          tpnl_btc.push([ btc[0], pnl_btc.toFixed(2) ])
+          const sum = state.trades.filter( bva => { 
+              return Number(bva.updated_time) > btc[0] && Number(bva.updated_time) <= btc[6] 
+          })
+          pnl_bva = _.sumBy(sum, o => { return Number(o.pnl) }) / 15 + pnl_bva
+          tpnl_bva.push([ btc[0], pnl_bva.toFixed(2) ])
+        }
+        state.series[0].data = tpnl_btc
+        state.series[1].data = tpnl_bva
+        state.total_pnl = tpnl_bva[tpnl_bva.length-1][1]
+        state.avg_pnl = _.meanBy(state.trades, o => {return Number(o.pnl)}).toFixed(2)
+        const positifs = state.trades.filter( bva => { return Number(bva.pnl) > 0 })
+        state.win_rate = (100 * positifs.length / state.trades.length).toFixed(2)
+      }
     })
 
     const confirmPasswd = async () => {
@@ -567,7 +620,7 @@ export default {
     }
 
     watch( () => mychart.value, (value) => {
-      setTimeout(function(){ value.toggleSeries('Bitcoin') }, 1000)
+      setTimeout(function(){ if (value) value?.toggleSeries('Bitcoin') }, 6000)
     })
 
     watch( () => myEl.value, (value) => {
@@ -587,90 +640,32 @@ export default {
       }, 4000)
     })
 
-    const getStratData = () => {
-        return axios.get('/api/strategy?id='+state.strat_id)
-    }
-
-    const { data: signals } = useRequest( () =>  getStratData(), {
-        cacheKey: 'signals',
-        cacheTime: 300000,
-        formatResult: res => {
-            return res.data
-        },
-        onSuccess: (res) => {
-            console.log("11111--1-1>", res.length)
-        }
-    })
-    
-    watch(signals, (signals) => {
-
-        console.log("signals...", signals.length)
-    
-        let tpnl_btc = []
-        let tpnl_bva = []
-        let pnl_btc = 0
-        let pnl_bva = 0
-
-        state.stratname = signals[0].stratname
-        state.series[1].name = signals[0].stratname
-        state.strat_lifetime = parseInt((signals[0].updated_time - signals[signals.length-1].updated_time)/86400000)
-        const days = 10 + state.strat_lifetime
-        state.total_signals = signals.length
-        
-        console.log("========>", Date.now() )
-        axios.get('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit='+days)
-        .then( btcs => {
-
-            for ( var btc of btcs.data ) {
-                pnl_btc = 100 * (Number(btc[4]) - Number(btc[1])) / Number(btc[1]) + pnl_btc
-                tpnl_btc.push([ btc[0], pnl_btc.toFixed(2) ])
-                const sum = signals.filter( bva => { 
-                    return Number(bva.updated_time) > btc[0] && Number(bva.updated_time) <= btc[6] 
-                })
-                pnl_bva = _.sumBy(sum, o => { return Number(o.pnl) }) / 15 + pnl_bva
-                tpnl_bva.push([ btc[0], pnl_bva.toFixed(2) ])
-            }
-
-            state.series[0].data = tpnl_btc
-            state.series[1].data = tpnl_bva
-
-            state.total_pnl = tpnl_bva[tpnl_bva.length-1][1]
-            state.avg_pnl = _.meanBy(signals, o => {return Number(o.pnl)}).toFixed(2)
-            const positifs = signals.filter( bva => { return Number(bva.pnl) > 0 })
-            state.win_rate = (100 * positifs.length / signals.length).toFixed(2)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-        
-    })
-
     const getCurrentPnL = (symbol, sell_price, buy_price) => {
-        let pnl = 0
-        if (prices.items.length) {
-            const currentPrice = prices.items.find( (r) => { return r.symbol === symbol }).price
-            if (currentPrice) {
-                if (sell_price > 0) {
-                    pnl = 100 * (sell_price - currentPrice) / currentPrice
-                }
-                else if (buy_price > 0) {
-                    pnl = 100 * (currentPrice - buy_price) / buy_price
-                }
-            }
+      let pnl = 0
+      if (prices.items.length) {
+        const currentPrice = prices.items.find( (r) => { return r.symbol === symbol }).price
+        if (currentPrice) {
+          if (sell_price > 0) {
+            pnl = 100 * (sell_price - currentPrice) / currentPrice
+          }
+          else if (buy_price > 0) {
+            pnl = 100 * (currentPrice - buy_price) / buy_price
+          }
         }
-        return pnl.toFixed(2)
+      }
+      return pnl.toFixed(2)
     }
 
     const loadMore = () => {
       console.log("loadMore........")
-        loadMoreStore.moreProfile()
-        console.log("loadMore...", loadMoreStore.profile)
+      loadMoreStore.moreProfile()
+      console.log("loadMore...", loadMoreStore.profile)
     }
     
     return {
       ...toRefs(state),
       moment,
-      openSignal,
+      openTradedSignal,
       getCurrentPnL,
       savePass,
       saveUser,
@@ -679,7 +674,6 @@ export default {
       cancelSubs,
       mychart,
       myEl,
-      signals,
       loadMoreStore,
       loadMore,
       confirmPasswd,

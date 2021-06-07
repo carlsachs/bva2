@@ -57,7 +57,7 @@ import moment from "moment"
 import _ from "lodash"
 
 export default defineComponent({
-  name: "signal",
+  name: "trade",
   props: {
     id: String,
   },
@@ -93,9 +93,8 @@ export default defineComponent({
     onMounted(() => {
       ////// ////// ////// ////// //////
       console.log("ID", props.id)
-      axios.get('/api/signal?id='+props.id)
+      axios.get('/api/trade?id='+props.id)
         .then( signal => {
-          //console.log(signal.data[0])
 
           state.pair = signal.data[0].pair
           state.signal_type = signal.data[0].type

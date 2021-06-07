@@ -1,10 +1,11 @@
 import { reactive, App, watchEffect } from 'vue'
 import createAuth0Client, { Auth0Client } from '@auth0/auth0-spa-js'
-import axios from "axios"
+import { useTradedStore } from '../stores/traded'
+import axios from "../utils/axios"
 
 const domain = import.meta.env.VITE_AUTH0_DOMAIN as string
 const client_id = import.meta.env.VITE_AUTH0_CLIENT_ID as string
-const api_url = import.meta.env.VITE_API_URL as String
+//const api_url = import.meta.env.VITE_API_URL as String
 
 console.log("client_id", client_id)
 console.log("domain", domain)
@@ -95,10 +96,20 @@ export async function setupAuth0(router) {
         console.log("WELCOME USER", $auth0.state.user['user_data'].id )
         ////// ///// ///// ////// //////
         console.log("GET USER SUBS")
-        axios.get(api_url + '/api/getusersubs?email=' + $auth0.state.user.email, { headers: {Authorization:`Bearer ${$auth0.state.user.token}`} })
+        axios.get('/api/getusersubs?email=' + $auth0.state.user.email, { headers: {Authorization:`Bearer ${$auth0.state.user.token}`} })
         .then( (response) => {
-          //console.log("getusersubs ::: ", response.data)
           $auth0.state.user['user_subs'] = response.data
+          //============================================//
+          console.log("GET USER TRADES")
+          axios.get('/api/traded?id='+$auth0.state.user['user_data'].id)
+          .then( (response) => {
+            $auth0.state.user['trades'] = response.data
+          })
+          .catch( (e) => {
+            console.log("Get User Trades ERROR", e)
+            $auth0.state.user['trades'] = []
+          })
+          //============================================//
         })
         .catch( (e) => {
           console.log("getusersubs ERROR", e)
@@ -158,7 +169,7 @@ interface $Auth0Defaults {
 async function signInUser(token: String, email: String) {
   //console.log("signInUser", token, email)
   return axios
-    .get(api_url + '/api/getusersignin?email=' + email, { headers: {Authorization:`Bearer ${token}`} })
+    .get('/api/getusersignin?email=' + email, { headers: {Authorization:`Bearer ${token}`} })
     .then( (response) => {
       //console.log("signInUser ID result ::: ", response.data.id)
       return response.data
