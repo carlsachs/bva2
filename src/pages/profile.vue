@@ -446,14 +446,6 @@ export default {
       state.subscribed = subs
     })
 
-    watch( () => auth0.state.user?.trades, (trades) => {
-      console.log("TRADES", trades.length)
-      state.trades = trades
-      state.strat_lifetime = parseInt((trades[0].updated_time - trades[trades.length-1].updated_time)/86400000)
-      const days = 10 + state.strat_lifetime
-      state.total_signals = trades.length
-    })
-
     const lifetime = computed( () => {
       console.log("0000000000000")
       return 0
