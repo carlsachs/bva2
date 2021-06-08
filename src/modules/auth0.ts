@@ -41,11 +41,10 @@ export const install = ({ app }: { app: App }) => {
 ///////// ///////// ///////// ///////// ///////// /////////
 
 export async function setupAuth0(router: any) {
-  console.log("SETUP AUTH")
   $auth0.client = await setupClient()
   const search = window.location.search
   const comingFromRedirect = search.includes('code=') && search.includes('state=')
-  console.log("LOGGED IN")
+  console.log("Logged In")
   try {
     if (comingFromRedirect) {
       const { appState } = await $auth0.client.handleRedirectCallback()
@@ -55,7 +54,6 @@ export async function setupAuth0(router: any) {
     $auth0.state.error = e
     router.replace("/")
   } finally {
-    console.log("AUTHENTICATION")
     $auth0.state.isAuthenticated = await $auth0.client.isAuthenticated()
     $auth0.state.user = await $auth0.client.getUser()
     $auth0.state.isLoading = false
