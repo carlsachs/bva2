@@ -11,7 +11,7 @@ export const $stats = reactive({
 export async function startStats(startTS: number) {
   $stats.startTS = startTS
   $stats.loading = true
-  console.log("Stats starts...", moment(startTS).format() )
+  console.log(">>>", moment(startTS).format() )
 }
 
 export async function endStats(endTS: number) {
@@ -19,7 +19,7 @@ export async function endStats(endTS: number) {
     $stats.loading = false
     $stats.endTS = endTS
     $stats.timing = (endTS - $stats.startTS)/1000
-    console.log("End starts...", moment(endTS).format() )
+    console.log(">>>", moment(endTS).format() )
   }
 }
 
