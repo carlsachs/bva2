@@ -291,6 +291,8 @@ import { usePriceStore } from '../stores/prices'
 import { useKlineStore } from '../stores/klines'
 import { useLoadMoreStore } from '../stores/loadmore'
 import { useTradedStore } from '../stores/traded'
+import { startStats, endStats } from '~/modules/stats'
+
 
 export default {
   methods: {    
@@ -299,6 +301,8 @@ export default {
     }
   },
   setup() {
+    startStats(Date.now())
+    console.log("PROFILE")
 
     const smoothScroll = inject('smoothScroll')
 
@@ -321,6 +325,7 @@ export default {
     }
 
     const auth0: any = inject("auth0")
+    const stats: any = inject("stats")
 
     const state = reactive({ 
       ///////// ///////// ///////// /////////
@@ -479,6 +484,7 @@ export default {
         state.avg_pnl = _.meanBy(state.trades, o => {return Number(o.pnl)}).toFixed(2)
         const positifs = state.trades.filter( bva => { return Number(bva.pnl) > 0 })
         state.win_rate = (100 * positifs.length / state.trades.length).toFixed(2)
+        endStats(Date.now())
       }
     })
 

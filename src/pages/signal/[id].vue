@@ -55,6 +55,8 @@ import { onMounted, reactive, ref, toRefs, defineComponent, watch, inject } from
 import axios from "~/utils/axios"
 import moment from "moment"
 import _ from "lodash"
+import { startStats, endStats } from '~/modules/stats'
+
 
 export default defineComponent({
   name: "signal",
@@ -62,6 +64,7 @@ export default defineComponent({
     id: String,
   },
   setup: (props) => {
+    startStats(Date.now())
 
     const smoothScroll = inject('smoothScroll')
 
@@ -142,6 +145,7 @@ export default defineComponent({
               state.pnl = state.pnl.toFixed(2)
             }
 
+            endStats(Date.now())
           })
           .catch((err) => {
             console.log(err)

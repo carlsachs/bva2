@@ -48,11 +48,14 @@ import axios from "~/utils/axios"
 import _ from "lodash"
 import { useRouter } from "vue-router"
 import { useLoadMoreStore } from '../stores/loadmore'
+import { startStats, endStats } from '~/modules/stats'
 
 
 export default defineComponent({
   name: "Dashboard",
   setup: () => {
+    startStats(Date.now())
+    console.log("INDEX")
 
     const router = useRouter()
 
@@ -137,6 +140,7 @@ export default defineComponent({
                 console.log(err)
             })
         }
+        endStats(Date.now())
     })
     
     return {

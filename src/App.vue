@@ -17,24 +17,33 @@
   <div class="text-center text-gray-300 p-5 m-6 flex flex-row items-center justify-center p-2 space-x-5 mb-5">
     <b class="text-green-500">{{ btc && Number(btc.price).toFixed(2) }}</b> &nbsp; Bitcoin vs. Alts © <div class="text-blue-200">2019–2021</div>
   </div>
+  <div class="text-center text-xs text-indigo-300 p-5 m-2 flex flex-row items-center justify-center p-2 space-x-5 mb-5">
+    {{ stats.timing }} secs
+  </div>
 </template>
 
 <script lang="ts">
 
-import { computed } from "vue"
+import { computed, inject } from "vue"
 import { usePriceStore } from './stores/prices'
 import { useKlineStore } from './stores/klines'
+
 
 export default {
   name: "App",
   setup() {
+    console.log("APP")
+
+    const stats: any = inject("stats")
+    console.log("---=-=--=-")
     const prices = usePriceStore()
     const klines = useKlineStore()
     prices.getItems()
     klines.getItems()
     const btc = computed( () => prices.items.find(e => e.symbol === 'BTCUSDT') )
     return {
-      btc
+      btc,
+      stats
     }
   },
 };

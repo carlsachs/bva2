@@ -1,14 +1,9 @@
 import { reactive, App, watchEffect } from 'vue'
 import createAuth0Client, { Auth0Client } from '@auth0/auth0-spa-js'
-import { useTradedStore } from '../stores/traded'
 import axios from "../utils/axios"
 
 const domain = import.meta.env.VITE_AUTH0_DOMAIN as string
 const client_id = import.meta.env.VITE_AUTH0_CLIENT_ID as string
-//const api_url = import.meta.env.VITE_API_URL as String
-
-console.log("client_id", client_id)
-console.log("domain", domain)
 
 let clientInit: null|Promise<Auth0Client> = null
 
@@ -21,38 +16,6 @@ export const $auth0 = reactive({
     user: null
   }
 } as $Auth0Defaults)
-
-/*
-export const authGuard = (to, from, next) => {
-  console.log("authGuard")
-  const verify = () => {
-    if ($auth0.state.isAuthenticated) {
-      console.log("isAuthenticated!!")
-      return next()
-    }
-    console.log("...")
-    if ($auth0.client) {
-      console.log("loginWithRedirect")
-      $auth0.client.loginWithRedirect({ appState: { targetUrl: to.fullPath } })
-    }
-    else {
-      console.log("auth0.client not set")
-      return next()
-    }
-  }
-  if (!$auth0.state.loading) {
-    console.log("Verify...")
-    return verify()
-  }
-  watchEffect( () => {
-    console.log("watchEffect...")
-    if (!$auth0.state.loading) {
-      console.log("watchEffect verify...")
-      return verify()
-    }
-  })
-}
-*/
 
 export async function setupAuth0(router) {
   $auth0.client = await setupClient()
@@ -141,10 +104,6 @@ function setupClient(): Promise<Auth0Client> {
   return clientInit
 }
 
-/**
- * Vue 3.0 plugin to expose the wrapper object throughout the application.
- * The Auth0 client is available as $auth0.client.
- */
 export const install = ({ app }: { app: App }) => {
   app.use({
     install(app: App, options: any) {
@@ -188,3 +147,34 @@ export function updateUsername(nickname: String) {
 }
 
 ///////// ///////// ///////// ///////// ///////// /////////
+/*
+export const authGuard = (to, from, next) => {
+  console.log("authGuard")
+  const verify = () => {
+    if ($auth0.state.isAuthenticated) {
+      console.log("isAuthenticated!!")
+      return next()
+    }
+    console.log("...")
+    if ($auth0.client) {
+      console.log("loginWithRedirect")
+      $auth0.client.loginWithRedirect({ appState: { targetUrl: to.fullPath } })
+    }
+    else {
+      console.log("auth0.client not set")
+      return next()
+    }
+  }
+  if (!$auth0.state.loading) {
+    console.log("Verify...")
+    return verify()
+  }
+  watchEffect( () => {
+    console.log("watchEffect...")
+    if (!$auth0.state.loading) {
+      console.log("watchEffect verify...")
+      return verify()
+    }
+  })
+}
+*/

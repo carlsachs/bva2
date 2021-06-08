@@ -129,6 +129,8 @@ import _ from "lodash"
 import { useRequest } from 'vue-request'
 import { usePriceStore } from '../../stores/prices'
 import { useLoadMoreStore } from '../../stores/loadmore'
+import { startStats, endStats } from '~/modules/stats'
+
 
 export default defineComponent({
   name: "strategy",
@@ -136,6 +138,7 @@ export default defineComponent({
     id: String,
   },
   setup: (props) => {
+    startStats(Date.now())
     
     const prices = usePriceStore()
 
@@ -245,7 +248,7 @@ export default defineComponent({
         .catch((err) => {
             console.log(err)
         })
-        
+        endStats(Date.now())
     })
 
     const getCurrentPnL = (symbol, sell_price, buy_price) => {
