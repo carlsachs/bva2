@@ -285,8 +285,8 @@ import { useRouter } from "vue-router"
 import _ from "lodash"
 import moment from "moment"
 import { useRequest } from 'vue-request'
-//import { usePriceStore } from '../stores/prices'
-//import { useKlineStore } from '../stores/klines'
+import { usePriceStore } from '../stores/prices'
+import { useKlineStore } from '../stores/klines'
 import { useLoadMoreStore } from '../stores/loadmore'
 import { useTradedStore } from '../stores/traded'
 import { startStats, endStats } from '~/modules/stats'
@@ -312,12 +312,11 @@ export default {
     const mychart = ref(null)
     const myEl = ref(null)
 
-    //const prices = usePriceStore()
-    //const klines = useKlineStore()
+    const prices = usePriceStore()
+    const klines = useKlineStore()
 
-    const prices: any = inject("prices")
-    console.log("00000000")
-    const klines: any = inject("klines")
+    //const prices: any = inject("prices")
+    //const klines: any = inject("klines")
     const auth0: any = inject("auth0")
     const stats: any = inject("stats")
 
@@ -618,7 +617,7 @@ export default {
     }
 
     watch( () => mychart.value, (value) => {
-      //setTimeout(function(){ value?.toggleSeries('Bitcoin') }, 6000)
+      setTimeout(function(){ value?.toggleSeries('Bitcoin') }, 6000)
     })
 
     watch( () => myEl.value, (value) => {
