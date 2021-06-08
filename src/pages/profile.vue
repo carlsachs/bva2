@@ -442,6 +442,7 @@ export default {
       state.trades = user.trades
     })
 
+    /*
     watchEffect( () => {
       console.log("======>", state.trades?.length, klines?.items?.length )
       if (state.trades?.length && klines?.items?.length) {
@@ -470,6 +471,7 @@ export default {
         endStats(Date.now())
       }
     })
+    */
 
     const confirmPasswd = async () => {
       state.confirmPass = true
