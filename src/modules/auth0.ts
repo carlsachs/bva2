@@ -66,28 +66,9 @@ export async function setupAuth0(router: any) {
       }
       else {
         $auth0.state.user['user_data'] = user_data
-        console.log("WELCOME USER", $auth0.state.user['user_data'].id )
-        ////// ///// ///// ////// //////
-        console.log("GET USER SUBS")
-        axios.get('/api/getusersubs?email=' + $auth0.state.user.email, { headers: {Authorization:`Bearer ${$auth0.state.user.token}`} })
-        .then( (response) => {
-          $auth0.state.user['user_subs'] = response.data
-        })
-        .catch( (e) => {
-          console.log("getusersubs ERROR", e)
-          $auth0.state.user['user_subs'] = []
-        })
-        ////// ///// ///// ////// //////
-        console.log("GET USER TRADES")
-        axios.get('/api/trades?email=' + $auth0.state.user.email + '&id='+$auth0.state.user['user_data'].id, { headers: {Authorization:`Bearer ${$auth0.state.user.token}`} })
-        .then( (response) => {
-          $auth0.state.user['trades'] = response.data
-        })
-        .catch( (e) => {
-          console.log("Get User Trades ERROR", e)
-          $auth0.state.user['trades'] = []
-        })
-        ////// ///// ///// ////// //////
+        console.log("WELCOME USER", $auth0.state.user['user_data'].info.id, 
+          $auth0.state.user['user_data'].trades.length, 
+          $auth0.state.user['user_data'].subs.length )
       }
     }
   }

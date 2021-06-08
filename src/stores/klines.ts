@@ -9,14 +9,14 @@ export const useKlineStore = defineStore({
   }),
   actions: {
     getItems() {
-      console.log("get BTC Kline Candles...")
+      console.log("getBTCKlines...")
       const getBTCKlineData = () => {
         return axios.get('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=1000')
       }
       const { data: klines } = useRequest( () =>  getBTCKlineData(), {
         cacheKey: 'klines',
         cacheTime: 300000,
-        pollingInterval: 8000,
+        //pollingInterval: 8000,
         formatResult: res => {
           return res.data
         },

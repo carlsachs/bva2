@@ -114,38 +114,38 @@
 
 
 
-    <div v-for="(subscription, i) in Object.values(subscriptions)" :class="{ 'bg-indigo-900 bg-opacity-20': subscribed?.findIndex(sub => (sub.code === subscription.code)) >= 0 }" :key="subscription.code" class="mx-4 my-23 p-4 border-2 border-blue-900 rounded-lg text-white relative">
+    <div v-for="(subscription, i) in Object.values(subscriptions)" :class="{ 'bg-indigo-900 bg-opacity-20': subs?.findIndex(sub => (sub.code === subscription.code)) >= 0 }" :key="subscription.code" class="mx-4 my-23 p-4 border-2 border-blue-900 rounded-lg text-white relative">
       <div class="text-3xl font-extrabold text-blue-600"><b>{{ subscription.name }}</b></div>
       <hr class="w-5 mx-auto border-blue-400 my-8">
-      <button v-if="!subscribed" class="blue_button" type="button">
+      <button v-if="!subs" class="blue_button" type="button">
         Loading <feather-loader class="ml-2" />
       </button>
       <div v-else>
-        <div class="mt-9" v-if="subscribed?.findIndex(sub => (sub.code == subscription.code) ) > -1">
+        <div class="mt-9" v-if="subs?.findIndex(sub => (sub.code == subscription.code) ) > -1">
           <div class="flex items-center justify-center">
             <label :for="'toogle'+subscription.code" class="flex items-center cursor-pointer">
               <div class="relative">
-                <input :id="'toogle'+subscription.code" type="checkbox" class="sr-only" v-model="subscribed[subscribed?.findIndex(sub => (sub.code == subscription.code))].status" true-value="ACTIVE" false-value="PAUSED" 
-                  @change="changeStatus(subscription.code, subscribed[subscribed?.findIndex(sub => (sub.code == subscription.code))].status)"/>
+                <input :id="'toogle'+subscription.code" type="checkbox" class="sr-only" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].status" true-value="ACTIVE" false-value="PAUSED" 
+                  @change="changeStatus(subscription.code, subs[subs?.findIndex(sub => (sub.code == subscription.code))].status)"/>
                 <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
                 <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
               </div>
               <div class="ml-3 text-gray-500 font-medium">
-                {{ subscribed[subscribed?.findIndex(sub => (sub.code == subscription.code))].status }}
+                {{ subs[subs?.findIndex(sub => (sub.code == subscription.code))].status }}
               </div>
             </label>
           </div>
           <div class="mt-10 text-blue-200 text-center">BTC amount to trade: &nbsp;</div>
           <div>
             <input
-              id="amount" size="50" v-model="subscribed[subscribed?.findIndex(sub => (sub.code == subscription.code))].qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
+              id="amount" size="50" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
               class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-blue-900"
               @input="resetInput"
             >
             <div>
               <button type="number" class="dark_button" 
-                :disabled="!subscribed[subscribed?.findIndex(sub => (sub.code == subscription.code))].qty" 
-                @click="saveQty(subscription.code, subscribed[subscribed?.findIndex(sub => (sub.code == subscription.code))].qty)">Save</button>
+                :disabled="!subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty" 
+                @click="saveQty(subscription.code, subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)">Save</button>
             </div>
             <span :class="{'text-red-500' : qty_result!=='success', 'text-indigo-500':qty_result==='success'}">{{ qty_result }}</span>
           </div>
@@ -165,7 +165,7 @@
           <div class="my-5 font-bold font-3xl text-blue-300">{{ subscription.count }} subscriptions left</div>
           <div class="my-5 font-bold text-green-500 text-xl">{{ subscription.price }} USD per month</div>
           <Stripe
-            :customerEmail="auth0.state.user?.email" 
+            :customerEmail="auth0.state.user?.user_data?.info?.email" 
             :stripeId="subscription.stripe_id"
             :description="subscription.name"
             :price="subscription.price"
@@ -255,13 +255,11 @@
 
 
     <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-gray-200 relative">
-      <span>{{ auth0.state.user?.user_data }}</span>
+      <span>{{ auth0.state.user?.user_data?.info }}</span>
       <br/><br/>
-      <span>{{ subscribed }}</span>
+      <span>{{ auth0.state.user?.user_data?.trades?.length }}</span>
       <br/><br/>
-      <span>{{ subscriptions }}</span>
-      <br/><br/>
-      <span>{{ trades?.length }}</span>
+      <span>{{ auth0.state.user?.user_data?.subs?.length }}</span>
       <br/><br/>
       <span>{{ series[1]?.data?.length }}</span>
       <br/><br/>
@@ -315,8 +313,6 @@ export default {
     const prices = usePriceStore()
     const klines = useKlineStore()
 
-    //const prices: any = inject("prices")
-    //const klines: any = inject("klines")
     const auth0: any = inject("auth0")
     const stats: any = inject("stats")
 
@@ -330,12 +326,12 @@ export default {
       ///////// ///////// ///////// /////////
       auth0, 
       subscriptions: [],
-      id: auth0.state.user?.user_data?.id,
-      username: auth0.state.user?.user_data?.nickname,
-      key: auth0.state.user?.user_data?.cle,
-      secret: auth0.state.user?.user_data?.cles,
-      subscribed: auth0.state.user?.user_subs,
-      trades: auth0.state.user?.trades,
+      id: auth0.state.user?.user_data?.info?.id,
+      username: auth0.state.user?.user_data?.info?.nickname,
+      key: auth0.state.user?.user_data?.info?.cle,
+      secret: auth0.state.user?.user_data?.info?.cles,
+      subs: auth0.state.user?.user_data?.subs,
+      trades: auth0.state.user?.user_data?.trades,
       cancel_sub_result: '',
       key_result: '',
       user_result: '',
@@ -414,7 +410,7 @@ export default {
 
     const cancelSubs = async (code) => {
       console.log("cancelSubs", code )
-      await axios.put('/api/cancelsub?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.user_data?.id,
+      await axios.put('/api/cancelsub?sub=' + auth0.state.user?.user_data?.info?.sub + '&cid=' + auth0.state.user?.user_data?.info?.id,
         { code: code },
         { headers: {Authorization:`Bearer ${auth0.state.user?.token}`} }
       )
@@ -423,10 +419,8 @@ export default {
         state.subscriptions[code].confirm = false
         if (response.data.msg == 'success') {
           state.cancel_sub_result = response.data.msg
-          //console.log("remove subs code", code)
-          const index = auth0.state.user?.user_subs?.findIndex( sub => (sub.code == code) )
-          if (index > -1) auth0.state.user?.user_subs?.splice(index, 1)
-          //console.log(JSON.stringify(state.subscribed))
+          const index = auth0.state.user?.subs?.findIndex( sub => (sub.code == code) )
+          if (index > -1) auth0.state.user?.subs?.splice(index, 1)
         }
         else {
           state.cancel_sub_result = "error"
@@ -439,26 +433,24 @@ export default {
       })
     }
 
-    watch( () =>  auth0.state.user?.user_data, (user) => {
+    watch( () =>  auth0.state.user?.user_data?.info, (user) => {
       state.username = user.nickname
       state.id = user.id
       state.key = user.cle
       state.secret = user.cles
     })
   
-    watch( () => auth0.state.user?.user_subs, (subs) => {
-      state.subscribed = subs
+    watch( () => auth0.state.user?.user_data?.subs, (subs) => {
+      state.subs = subs
     })
 
-    const lifetime = computed( () => {
-      console.log("0000000000000")
-      return 0
+    watch( () => auth0.state.user?.user_data?.trades, (trades) => {
+      state.trades = trades
     })
 
     watchEffect( () => {
-      console.log("======>", auth0.state.user?.trades?.length, klines?.items?.length, state.strat_lifetime )
-      if (auth0.state.user?.trades?.length && klines?.items?.length) {
-        state.trades = auth0.state.user?.trades
+      console.log("======>", state.trades?.length, klines?.items?.length )
+      if (state.trades?.length && klines?.items?.length) {
         state.strat_lifetime = parseInt((state.trades[0].updated_time - state.trades[state.trades.length-1].updated_time)/86400000)
         const days = 10 + state.strat_lifetime
         state.total_signals = state.trades.length
@@ -491,8 +483,8 @@ export default {
 
     const changeStatus = async (code, status) => {
       console.log("changeStatus", code, status)
-      await axios.put('/api/setsubstatus?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
-        { status:status, code:code, email:auth0.state.user.email },
+      await axios.put('/api/setsubstatus?sub=' + auth0.state.user.user_data.info.sub + '&cid=' + auth0.state.user.user_data.info.id,
+        { status:status, code:code, email:auth0.state.user.user_data.info.email },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
       .then( (response) => {
@@ -524,8 +516,8 @@ export default {
 
     const saveQty = async (code, qty) => {
       console.log("saveQty", qty)
-      await axios.put('/api/setsubsqty?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
-        { qty: qty, code: code, email: auth0.state.user.email },
+      await axios.put('/api/setsubsqty?sub=' + auth0.state.user.user_data.info.sub + '&cid=' + auth0.state.user.user_data.info.id,
+        { qty: qty, code: code, email: auth0.state.user.user_data.info.email },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
       .then( (response) => {
@@ -546,7 +538,7 @@ export default {
 
     const savePass = async () => {
       state.confirmPass = false
-      await axios.put('/api/pwduser?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
+      await axios.put('/api/pwduser?sub=' + auth0.state.user.user_data.info.sub + '&cid=' + auth0.state.user.user_data.info.id,
         { password: state.password },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
@@ -572,7 +564,7 @@ export default {
 
     const saveUser = async () => {
       state.confirmUser = false
-      await axios.put('/api/setusername?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
+      await axios.put('/api/setusername?sub=' + auth0.state.user.user_data.info.sub + '&cid=' + auth0.state.user.user_data.info.id,
         { username: state.username },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
@@ -595,7 +587,7 @@ export default {
 
     const saveUserKey = async () => {
       console.log("saveUserKey", state.key, state.secret )
-      await axios.put('/api/setuserkey?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
+      await axios.put('/api/setuserkey?sub=' + auth0.state.user.user_data.info.sub + '&cid=' + auth0.state.user.user_data.info.id,
         { key: state.key, secret: state.secret },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
@@ -620,7 +612,7 @@ export default {
 
     watch( () => myEl.value, (value) => {
       const myInterval = setInterval( function() { 
-        if ( state?.subscribed?.length > 0 && (!state.key || !state.secret) ) {
+        if ( state?.subs?.length > 0 && (!state.key || !state.secret) ) {
           smoothScroll({
             scrollTo: myEl.value,
             hash: '#sampleHash',
