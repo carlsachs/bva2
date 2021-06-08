@@ -64,8 +64,8 @@ export default defineComponent({
     id: String,
   },
   setup: (props) => {
-    startStats(Date.now())
 
+    startStats(Date.now())
     const smoothScroll = inject('smoothScroll')
 
     const state = reactive({

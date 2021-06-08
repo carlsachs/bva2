@@ -281,17 +281,17 @@
 <script lang="ts">
 
 import { provide, reactive, ref, toRefs, watch, watchEffect, inject, computed} from 'vue'
-import axios from "~/utils/axios"
-import { updateUsername } from '~/modules/auth0'
 import { useRouter } from "vue-router"
 import _ from "lodash"
 import moment from "moment"
 import { useRequest } from 'vue-request'
-import { usePriceStore } from '../stores/prices'
-import { useKlineStore } from '../stores/klines'
+//import { usePriceStore } from '../stores/prices'
+//import { useKlineStore } from '../stores/klines'
 import { useLoadMoreStore } from '../stores/loadmore'
 import { useTradedStore } from '../stores/traded'
 import { startStats, endStats } from '~/modules/stats'
+import { updateUsername } from '~/modules/auth0'
+import axios from "~/utils/axios"
 
 
 export default {
@@ -301,31 +301,31 @@ export default {
     }
   },
   setup() {
+
     startStats(Date.now())
     console.log("PROFILE")
 
     const smoothScroll = inject('smoothScroll')
-
-    //const text = ref('Hello World')
-    //provide('text',text)
-
     const loadMoreStore = useLoadMoreStore()
     loadMoreStore.resetStrat()
 
     const mychart = ref(null)
     const myEl = ref(null)
 
-    const prices = usePriceStore()
-    const klines = useKlineStore()
+    //const prices = usePriceStore()
+    //const klines = useKlineStore()
+
+    const prices: any = inject("prices")
+    console.log("00000000")
+    const klines: any = inject("klines")
+    const auth0: any = inject("auth0")
+    const stats: any = inject("stats")
 
     const router = useRouter()
 
     const openTradedSignal = (row) => {
       router.push("/trade/"+ row.id)
     }
-
-    const auth0: any = inject("auth0")
-    const stats: any = inject("stats")
 
     const state = reactive({ 
       ///////// ///////// ///////// /////////

@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import axios from "../utils/axios"
 import { useRequest } from 'vue-request'
 
+
 export const usePriceStore = defineStore({
   id: 'prices',
   state: () => ({
