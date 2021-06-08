@@ -433,19 +433,13 @@ export default {
       })
     }
 
-    watch( () =>  auth0.state.user?.user_data?.info, (user) => {
-      state.username = user.nickname
-      state.id = user.id
-      state.key = user.cle
-      state.secret = user.cles
-    })
-  
-    watch( () => auth0.state.user?.user_data?.subs, (subs) => {
-      state.subs = subs
-    })
-
-    watch( () => auth0.state.user?.user_data?.trades, (trades) => {
-      state.trades = trades
+    watch( () =>  auth0.state.user?.user_data, (user) => {
+      state.username = user.info.nickname
+      state.id = user.info.id
+      state.key = user.info.cle
+      state.secret = user.info.cles
+      state.subs = user.subs
+      state.trades = user.trades
     })
 
     watchEffect( () => {
