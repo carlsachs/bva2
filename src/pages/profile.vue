@@ -411,6 +411,13 @@ export default {
       run()
     })
 
+    /*
+    watch( () => auth0.state.user?.subs, (subs) => {
+      console.log("WATCH USER SUBS")
+      state.subs = subs
+    })
+    */
+
     watch( () =>  auth0.state.user?.token, (token) => {
       console.log("WATCH USER TOKEN")
       state.token = token
@@ -443,7 +450,7 @@ export default {
         state.key = auth0.state.user?.data?.cle
         state.secret = auth0.state.user?.data?.cles
         state.email = auth0.state.user?.data?.email
-        state.subs = auth0.state.user?.subs
+        state.subs = auth0.state.user?.data?.subs
         run()
       }
     })
