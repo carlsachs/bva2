@@ -261,7 +261,7 @@
       <br/><br/>
       <span>{{ auth0.state.user?.user_data?.subs?.length }}</span>
       <br/><br/>
-      <span>{{ series }}</span>
+      <span>{{ series[1]?.data?.length }}</span>
       <br/><br/>
       <button @click="showModal = true">Open Modal</button>
       <br/>
@@ -284,7 +284,7 @@ import _ from "lodash"
 import moment from "moment"
 import { useRequest } from 'vue-request'
 import { usePriceStore } from '../stores/prices'
-//import { useKlineStore } from '../stores/klines'
+import { useKlineStore } from '../stores/klines'
 import { useLoadMoreStore } from '../stores/loadmore'
 import { useTradedStore } from '../stores/traded'
 import { startStats, endStats } from '~/modules/stats'
@@ -311,7 +311,7 @@ export default {
     const myEl = ref(null)
 
     const prices = usePriceStore()
-    //const klines = useKlineStore()
+    const klines = useKlineStore()
 
     const auth0: any = inject("auth0")
     const stats: any = inject("stats")
@@ -332,7 +332,6 @@ export default {
       secret: auth0.state.user?.user_data?.info?.cles,
       subs: auth0.state.user?.user_data?.subs,
       trades: auth0.state.user?.user_data?.trades,
-      series: auth0.state.series,
       cancel_sub_result: '',
       key_result: '',
       user_result: '',
@@ -350,8 +349,18 @@ export default {
       avg_pnl: 0,
       strat_lifetime: 0,
       total_signals: 0,
-      win_rate: 0,      
+      win_rate: 0,
       ///////// ///////// ///////// /////////
+      series: [
+          {
+              name: "Bitcoin",
+              data: [],
+          },
+          {
+              name: "You",
+              data: [],
+          }
+      ],
       chartOptions: {
         chart: { width: "100%", type: 'area', stacked: true },
         colors: ['#00E396','#0080FB'],
@@ -433,29 +442,25 @@ export default {
       state.trades = user.trades
     })
 
-    watch( () =>  auth0.state.series, (series) => {
-      state.series = series
-    })
     
-    /*
     watchEffect( () => {
       console.log("======>", state.trades?.length, klines?.items?.length )
       if (state.trades?.length && klines?.items?.length) {
         state.strat_lifetime = parseInt((state.trades[0].updated_time - state.trades[state.trades.length-1].updated_time)/86400000)
+        const days = 10 + state.strat_lifetime
         state.total_signals = state.trades.length
         let tpnl_btc = []
         let tpnl_bva = []
         let pnl_btc = 0
         let pnl_bva = 0
-        for ( var kline of klines.items.slice(klines.items.length-1-state.strat_lifetime, klines.items.length-1) ) {
-          pnl_btc = 100 * (Number(kline[4]) - Number(kline[1])) / Number(kline[1]) + pnl_btc
-          tpnl_btc.push([ kline[0], pnl_btc.toFixed(2) ])
+        for ( var btc of klines.items.slice(klines.items.length-1-state.strat_lifetime, klines.items.length-1) ) {
+          pnl_btc = 100 * (Number(btc[4]) - Number(btc[1])) / Number(btc[1]) + pnl_btc
+          tpnl_btc.push([ btc[0], pnl_btc.toFixed(2) ])
           const sum = state.trades.filter( bva => { 
-            return Number(bva.updated_time) > kline[0] && Number(bva.updated_time) <= kline[6] 
+              return Number(bva.updated_time) > btc[0] && Number(bva.updated_time) <= btc[6] 
           })
           pnl_bva = _.sumBy(sum, o => { return Number(o.pnl) }) / 15 + pnl_bva
-          console.log( kline[0], pnl_bva.toFixed(2) )
-          tpnl_bva.push([ kline[0], pnl_bva.toFixed(2) ])
+          tpnl_bva.push([ btc[0], pnl_bva.toFixed(2) ])
         }
         state.series[0].data = tpnl_btc
         state.series[1].data = tpnl_bva
@@ -466,7 +471,6 @@ export default {
         endStats(Date.now())
       }
     })
-    */
 
     const confirmPasswd = async () => {
       state.confirmPass = true

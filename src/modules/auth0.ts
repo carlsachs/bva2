@@ -1,8 +1,6 @@
-import _ from "lodash"
 import { reactive, App, watchEffect } from 'vue'
 import createAuth0Client, { Auth0Client } from '@auth0/auth0-spa-js'
 import axios from "../utils/axios"
-import { useKlineStore } from '../stores/klines'
 
 const domain = import.meta.env.VITE_AUTH0_DOMAIN as string
 const client_id = import.meta.env.VITE_AUTH0_CLIENT_ID as string
@@ -18,7 +16,6 @@ interface $Auth0Defaults {
     isAuthenticated: boolean
     error: Error | null
     user: any | null
-    series: any
   }
 }
 
@@ -28,8 +25,7 @@ export const $auth0 = reactive({
     isLoading: true,
     isAuthenticated: false,
     error: null,
-    user: null,
-    series: [{ name: "Bitcoin", data: [] }, { name: "You", data: [] }]
+    user: null
   }
 } as $Auth0Defaults)
 
@@ -72,26 +68,9 @@ export async function setupAuth0(router: any) {
       }
       else {
         $auth0.state.user['user_data'] = user_data
-        console.log("WELCOME USER", $auth0.state.user['user_data'].info.id, $auth0.state.user['user_data'].trades.length, $auth0.state.user['user_data'].subs.length )
-        const klines = useKlineStore()
-        console.log("KLINES :::", klines)
-        if (user_data.trades?.length && klines?.items?.length) {
-          let tpnl_btc = []
-          let tpnl_bva = []
-          let pnl_btc = 0
-          let pnl_bva = 0
-          const lifetime = parseInt((user_data.trades[0].updated_time - user_data.trades[user_data.trades.length-1].updated_time)/86400000)
-          for ( var kline of klines.items.slice(klines.items.length-1-lifetime, klines.items.length-1) ) {
-            pnl_btc = 100 * (Number(kline[4]) - Number(kline[1])) / Number(kline[1]) + pnl_btc
-            tpnl_btc.push([ kline[0], pnl_btc.toFixed(2) ])
-            const sum = user_data.trades.filter( trade => { 
-              return Number(trade.updated_time) > kline[0] && Number(trade.updated_time) <= kline[6] 
-            })
-            pnl_bva = _.sumBy(sum, o => { return Number(o.pnl) }) / 15 + pnl_bva
-            tpnl_bva.push([ kline[0], pnl_bva.toFixed(2) ])
-          }
-          $auth0.state.series = [{ name: "Bitcoin", data: tpnl_btc }, { name: "You", data: tpnl_bva }]
-        }
+        console.log("WELCOME USER", $auth0.state.user['user_data'].info.id, 
+          $auth0.state.user['user_data'].trades.length, 
+          $auth0.state.user['user_data'].subs.length )
       }
     }
   }
