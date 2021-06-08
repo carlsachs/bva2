@@ -121,7 +121,7 @@
 
 <script lang="ts">
 
-import { onMounted, reactive, ref, toRefs, defineComponent, watch, inject, computed } from "vue"
+import { onMounted, reactive, ref, toRefs, defineComponent, watch, inject } from "vue"
 import axios from "~/utils/axios"
 import moment from "moment"
 import { useRouter } from "vue-router"
@@ -194,6 +194,7 @@ export default defineComponent({
     const myEl = ref(null)
 
     const getStratData = () => {
+        console.log("getStratData...")
         return axios.get('/api/strategy?id='+props.id)
     }
 

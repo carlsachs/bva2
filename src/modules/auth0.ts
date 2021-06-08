@@ -44,7 +44,7 @@ export async function setupAuth0(router: any) {
   $auth0.client = await setupClient()
   const search = window.location.search
   const comingFromRedirect = search.includes('code=') && search.includes('state=')
-  console.log("Logged In")
+  console.log("LOGGED IN")
   try {
     if (comingFromRedirect) {
       const { appState } = await $auth0.client.handleRedirectCallback()
@@ -65,19 +65,8 @@ export async function setupAuth0(router: any) {
         console.log("USER UNKNOWN")
       }
       else {
-        $auth0.state.user['user_data'] = user_data
-        console.log("WELCOME USER", $auth0.state.user['user_data'].info.id )
-        ////// ///// ///// ////// //////
-        console.log("GET USER TRADES", $auth0.state.user.email, $auth0.state.user['user_data'].info.id)
-        axios.get('/api/trades?email=' + $auth0.state.user.email + '&id='+$auth0.state.user['user_data'].info.id, { headers: {Authorization:`Bearer ${$auth0.state.user.token}`} })
-        .then( (response) => {
-          $auth0.state.user['trades'] = response.data
-        })
-        .catch( (e) => {
-          console.log("Get User Trades ERROR", e)
-          $auth0.state.user['trades'] = []
-        })
-        ////// ///// ///// ////// //////
+        $auth0.state.user.data = user_data
+        console.log("WELCOME USER", $auth0.state.user.data.id )
       }
     }
   }
@@ -105,7 +94,7 @@ function setupClient(): Promise<Auth0Client> {
 
 async function signInUser(token: String, email: String) {
   return axios
-    .get('/api/getusersignin?email=' + email, { headers: {Authorization:`Bearer ${token}`} })
+    .get('/api/getusersignin?email='+email, { headers: {Authorization:`Bearer ${token}`} })
     .then( (response) => {
       return response.data
     })
