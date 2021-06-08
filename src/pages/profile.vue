@@ -440,35 +440,9 @@ export default {
       state.secret = user.info.cles
       state.subs = user.subs
       state.trades = user.trades
-
-      if (state.trades?.length && klines?.items?.length) {
-        state.strat_lifetime = parseInt((state.trades[0].updated_time - state.trades[state.trades.length-1].updated_time)/86400000)
-        const days = 10 + state.strat_lifetime
-        state.total_signals = state.trades.length
-        let tpnl_btc = []
-        let tpnl_bva = []
-        let pnl_btc = 0
-        let pnl_bva = 0
-        for ( var btc of klines.items.slice(klines.items.length-1-state.strat_lifetime, klines.items.length-1) ) {
-          pnl_btc = 100 * (Number(btc[4]) - Number(btc[1])) / Number(btc[1]) + pnl_btc
-          tpnl_btc.push([ btc[0], pnl_btc.toFixed(2) ])
-          const sum = state.trades.filter( bva => { 
-              return Number(bva.updated_time) > btc[0] && Number(bva.updated_time) <= btc[6] 
-          })
-          pnl_bva = _.sumBy(sum, o => { return Number(o.pnl) }) / 15 + pnl_bva
-          tpnl_bva.push([ btc[0], pnl_bva.toFixed(2) ])
-        }
-        state.series[0].data = tpnl_btc
-        state.series[1].data = tpnl_bva
-        state.total_pnl = tpnl_bva[tpnl_bva.length-1][1]
-        state.avg_pnl = _.meanBy(state.trades, o => {return Number(o.pnl)}).toFixed(2)
-        const positifs = state.trades.filter( bva => { return Number(bva.pnl) > 0 })
-        state.win_rate = (100 * positifs.length / state.trades.length).toFixed(2)
-        endStats(Date.now())
-      }
     })
 
-    /*
+    
     watchEffect( () => {
       console.log("======>", state.trades?.length, klines?.items?.length )
       if (state.trades?.length && klines?.items?.length) {
@@ -497,7 +471,6 @@ export default {
         endStats(Date.now())
       }
     })
-    */
 
     const confirmPasswd = async () => {
       state.confirmPass = true
