@@ -459,8 +459,6 @@ export default {
       console.log("======>", auth0.state.user?.trades?.length, klines?.items?.length, state.strat_lifetime )
       if (auth0.state.user?.trades?.length && klines?.items?.length) {
         state.trades = auth0.state.user?.trades
-        console.log("TRADES", state.trades.length)
-        console.log("KLINES", klines?.items.length)
         state.strat_lifetime = parseInt((state.trades[0].updated_time - state.trades[state.trades.length-1].updated_time)/86400000)
         const days = 10 + state.strat_lifetime
         state.total_signals = state.trades.length

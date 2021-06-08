@@ -5,17 +5,22 @@ export const $stats = reactive({
   startTS: 0,
   endTS: 0,
   timing: 0,
+  loading: false,
 } as $StatsDefaults)
 
 export async function startStats(startTS: number) {
   $stats.startTS = startTS
+  $stats.loading = true
   console.log("Stats starts...", moment(startTS).format() )
 }
 
 export async function endStats(endTS: number) {
-  $stats.endTS = endTS
-  $stats.timing = (endTS - $stats.startTS)/1000
-  console.log("End starts...", moment(endTS).format() )
+  if ($stats.loading) {
+    $stats.loading = false
+    $stats.endTS = endTS
+    $stats.timing = (endTS - $stats.startTS)/1000
+    console.log("End starts...", moment(endTS).format() )
+  }
 }
 
 export const install = ({ app }: { app: App }) => {
@@ -31,4 +36,5 @@ interface $StatsDefaults {
   startTS: number,
   endTS: number,
   timing: number,
+  loading: boolean,
 }
