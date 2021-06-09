@@ -137,7 +137,7 @@
           <div class="mt-10 text-blue-200 text-center">BTC amount to trade: &nbsp;</div>
           <div>
             <input
-              id="amount" size="50" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
+              size="50" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
               class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-blue-900"
               @input="resetInput"
             >
@@ -147,6 +147,30 @@
                 @click="saveQty(subs[subs?.findIndex(sub => (sub.code == subscription.code))].sid, subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)">Save</button>
             </div>
             <span :class="{'text-red-500' : qty_result!=='success', 'text-indigo-500':qty_result==='success'}">{{ qty_result }}</span>
+          </div>
+          <div :class="{ 'bg-indigo-900 bg-opacity-20': !subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret }" class="text-indigo-200 mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg relative flex-auto">
+            <div class="my-3" :class="{ 'text-red-500': !subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret }">Binance API Key Information: &nbsp;</div>
+            <input
+              v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].key"
+              placeholder="your api key"
+              aria-label="key"
+              type="text"
+              autocomplete="false"
+              class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-gray-700"
+              @input="resetInput"
+            >&nbsp;
+            <input
+              v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret"
+              placeholder="your api secret"
+              aria-label="secret"
+              type="text"
+              autocomplete="false"
+              class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-gray-700"
+              @input="resetInput"
+            >
+            <div><button class="dark_button" @click="saveStratKey(subs[subs?.findIndex(sub => (sub.code == subscription.code))].sid, subs[subs?.findIndex(sub => (sub.code == subscription.code))].key, subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret)">Save</button></div>
+            <span :class="{'text-red-500' : key_result!=='success', 'text-indigo-500':key_result==='success'}">{{ key_result }}</span>
+            <div v-if="!subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret" class="text-red-500 mt-4">Please enter your Binance API key information.</div>
           </div>
           <hr class="w-5 mx-auto border-blue-400 my-8">
           <div v-if="!subscription.confirm">
@@ -173,38 +197,6 @@
       </div>
       <div v-if="cancel_sub_result" :class="{'text-red-500' : cancel_sub_result!=='success', 'text-indigo-500':cancel_sub_result==='success'}">{{ cancel_sub_result }}</div>
     </div>
-
-
-    <section ref="myEl">
-      <div :class="{ 'bg-indigo-900 bg-opacity-20': !key || !secret }" class="text-indigo-200 mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg relative flex-auto">
-        <div class="my-3" :class="{ 'text-red-500': !key || !secret }">Your Binance API Key Information: &nbsp;</div>
-        <input
-          id="key"
-          v-model="key"
-          placeholder="your api key"
-          aria-label="key"
-          type="text"
-          autocomplete="false"
-          class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-gray-700"
-          @input="resetInput"
-        >&nbsp;
-        <input
-          id="secret"
-          v-model="secret"
-          placeholder="your api secret"
-          aria-label="secret"
-          type="text"
-          autocomplete="false"
-          class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-gray-700"
-          @input="resetInput"
-        >
-        <div>
-          <button class="dark_button" :disabled="!secret&&!key" @click="saveUserKey">Save</button>
-        </div>
-        <span :class="{'text-red-500' : key_result!=='success', 'text-indigo-500':key_result==='success'}">{{ key_result }}</span>
-        <div v-if="!key || !secret" class="text-red-500 mt-4">Please enter your Binance API key information.</div>
-      </div>
-    </section>
 
 
     <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
@@ -311,7 +303,7 @@ export default {
     loadMoreStore.resetStrat()
 
     const mychart = ref(null)
-    const myEl = ref(null)
+    //const myEl = ref(null)
 
     const prices = usePriceStore()
     const klines = useKlineStore()
@@ -332,8 +324,6 @@ export default {
       ///////// ///////// ///////// /////////
       id: auth0.state.user?.data?.info?.id,
       username: auth0.state.user?.data?.info?.nickname,
-      key: auth0.state.user?.data?.info?.cle,
-      secret: auth0.state.user?.data?.info?.cles,
       token: auth0.state.user?.data?.info?.token,
       email: auth0.state.user?.data?.info?.email,
       subs: auth0.state.user?.subs,
@@ -404,8 +394,6 @@ export default {
       console.log("WATCH USER DATA")
       state.username = user.nickname
       state.id = user.id
-      state.key = user.cle
-      state.secret = user.cles
       state.email = user.email
       state.subs = user.subs
       run()
@@ -440,8 +428,6 @@ export default {
         state.token = auth0.state.user?.token
         state.username = auth0.state.user?.data?.nickname
         state.id = auth0.state.user?.data?.id
-        state.key = auth0.state.user?.data?.cle
-        state.secret = auth0.state.user?.data?.cles
         state.email = auth0.state.user?.data?.email
         state.subs = auth0.state.user?.data?.subs
         run()
@@ -546,6 +532,27 @@ export default {
       state.cancel_sub_result = null
     }
 
+    const saveStratKey = async (code, key, secret) => {
+      console.log("saveStratKey", code, key, secret )
+      await axios.put('/api/setsubkey?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
+        { key: key, secret: secret, code: code, email: auth0.state.user.email },
+        { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
+      )
+      .then( (response) => {
+        console.log("saveStratKey.response.data:", response.data)
+        if (response.data.msg == 'success') {
+          state.key_result = response.data.msg
+        }
+        else {
+          state.key_result = "error"
+        }
+      })
+      .catch( (error) => {
+        console.log("ERROR saveStratKey", error)
+        state.key_result = "error"
+      })
+    }
+
     const saveQty = async (code, qty) => {
       console.log("saveQty", code, qty)
       await axios.put('/api/setsubsqty?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
@@ -617,31 +624,11 @@ export default {
       })
     }
 
-    const saveUserKey = async () => {
-      console.log("saveUserKey", state.key, state.secret )
-      await axios.put('/api/setuserkey?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
-        { key: state.key, secret: state.secret },
-        { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
-      )
-      .then( (response) => {
-        console.log("saveUserKey.response.data:", response.data)
-        if (response.data.msg == 'success') {
-          state.key_result = response.data.msg
-        }
-        else {
-          state.key_result = "error"
-        }
-      })
-      .catch( (error) => {
-        console.log("ERROR pwduser", error)
-        state.key_result = "error"
-      })
-    }
-
     watch( () => mychart.value, (value) => {
       setTimeout(function(){ value?.toggleSeries('Bitcoin') }, 6000)
     })
 
+    /*
     watch( () => myEl.value, (value) => {
       const myInterval = setInterval( function() { 
         if ( state?.subs?.length > 0 && (!state.key || !state.secret) ) {
@@ -658,6 +645,7 @@ export default {
         }
       }, 4000)
     })
+    */
 
     const getCurrentPnL = (symbol, sell_price, buy_price) => {
       let pnl = 0
@@ -688,11 +676,11 @@ export default {
       getCurrentPnL,
       savePass,
       saveUser,
-      saveUserKey,
+      saveStratKey,
       confirmCancelSubs,
       cancelSubs,
       mychart,
-      myEl,
+      //myEl,
       loadMoreStore,
       loadMore,
       confirmPasswd,
