@@ -396,12 +396,8 @@ export default {
       state.id = user.id
       state.email = user.email
       state.subs = user.subs
+      state.token = auth0.state.user?.token
       run()
-    })
-
-    watch( () =>  auth0.state.user?.token, (token) => {
-      console.log("WATCH USER TOKEN")
-      state.token = token
     })
 
     const getTrades = () => {
@@ -422,7 +418,7 @@ export default {
     })
 
     onMounted(() => {
-      console.log("onMounted...", auth0.state.user?.data?.email)
+      console.log("onMounted...", auth0.state.user?.token, auth0.state.user?.data?.email)
       if (auth0.state.user?.data?.email && !state.email) {
         console.log("Reload...")
         state.token = auth0.state.user?.token
