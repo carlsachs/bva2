@@ -411,13 +411,6 @@ export default {
       run()
     })
 
-    /*
-    watch( () => auth0.state.user?.subs, (subs) => {
-      console.log("WATCH USER SUBS")
-      state.subs = subs
-    })
-    */
-
     watch( () =>  auth0.state.user?.token, (token) => {
       console.log("WATCH USER TOKEN")
       state.token = token
@@ -500,8 +493,8 @@ export default {
         state.subscriptions[code].confirm = false
         if (response.data.msg == 'success') {
           state.cancel_sub_result = response.data.msg
-          const index = auth0.state.user?.user_subs?.findIndex( sub => (sub.code == code) )
-          if (index > -1) auth0.state.user?.user_subs?.splice(index, 1)
+          const index = state.subs?.findIndex( sub => (sub.code == code) )
+          if (index > -1) state.subs?.splice(index, 1)
         }
         else {
           state.cancel_sub_result = "error"
