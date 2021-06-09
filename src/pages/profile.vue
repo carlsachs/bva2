@@ -13,7 +13,7 @@
       
       <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
         <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-          <div class="flex-auto">Period PnL *</div>
+          <div class="flex-auto">Portfolio PnL *</div>
           <div class="flex-auto text-justify text-blue-300 block">{{ total_pnl }}%</div>
         </div>
         <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
@@ -254,7 +254,7 @@
 
 
     <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-gray-200 relative">
-      <span>{{ auth0.state.user?.user_data }}</span>
+      <span>{{ auth0.state.user?.data }}</span>
       <br/><br/>
       <span>{{ subs }}</span>
       <br/><br/>
@@ -330,12 +330,12 @@ export default {
       auth0, 
       subscriptions: [],
       ///////// ///////// ///////// /////////
-      id: auth0.state.user?.user_data?.info?.id,
-      username: auth0.state.user?.user_data?.info?.nickname,
-      key: auth0.state.user?.user_data?.info?.cle,
-      secret: auth0.state.user?.user_data?.info?.cles,
-      token: auth0.state.user?.user_data?.info?.token,
-      email: auth0.state.user?.user_data?.info?.email,
+      id: auth0.state.user?.data?.info?.id,
+      username: auth0.state.user?.data?.info?.nickname,
+      key: auth0.state.user?.data?.info?.cle,
+      secret: auth0.state.user?.data?.info?.cles,
+      token: auth0.state.user?.data?.info?.token,
+      email: auth0.state.user?.data?.info?.email,
       subs: auth0.state.user?.subs,
       ///////// ///////// ///////// /////////
       cancel_sub_result: '',
@@ -491,7 +491,7 @@ export default {
 
     const cancelSubs = async (code) => {
       console.log("cancelSubs", code )
-      await axios.put('/api/cancelsub?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.user_data?.id,
+      await axios.put('/api/cancelsub?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
         { code: code },
         { headers: {Authorization:`Bearer ${auth0.state.user?.token}`} }
       )
@@ -520,7 +520,7 @@ export default {
 
     const changeStatus = async (code, status) => {
       console.log("changeStatus", code, status)
-      await axios.put('/api/setsubstatus?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
+      await axios.put('/api/setsubstatus?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
         { status:status, code:code, email:auth0.state.user.email },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
@@ -553,7 +553,7 @@ export default {
 
     const saveQty = async (code, qty) => {
       console.log("saveQty", qty)
-      await axios.put('/api/setsubsqty?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
+      await axios.put('/api/setsubsqty?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
         { qty: qty, code: code, email: auth0.state.user.email },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
@@ -575,7 +575,7 @@ export default {
 
     const savePass = async () => {
       state.confirmPass = false
-      await axios.put('/api/pwduser?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
+      await axios.put('/api/pwduser?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
         { password: state.password },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
@@ -601,7 +601,7 @@ export default {
 
     const saveUser = async () => {
       state.confirmUser = false
-      await axios.put('/api/setusername?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
+      await axios.put('/api/setusername?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
         { username: state.username },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
@@ -624,7 +624,7 @@ export default {
 
     const saveUserKey = async () => {
       console.log("saveUserKey", state.key, state.secret )
-      await axios.put('/api/setuserkey?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.user_data.id,
+      await axios.put('/api/setuserkey?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
         { key: state.key, secret: state.secret },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )

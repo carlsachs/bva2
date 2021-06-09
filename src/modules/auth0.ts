@@ -106,7 +106,7 @@ async function signInUser(token: String, email: String) {
 
 export function updateUsername(nickname: String) {
   console.log("updateUsername", nickname)
-  $auth0.state.user['user_data']['nickname'] = nickname
+  $auth0.state.user['data']['nickname'] = nickname
 }
 
 ///////// ///////// ///////// ///////// ///////// /////////

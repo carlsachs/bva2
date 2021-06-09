@@ -8,7 +8,7 @@
             
             <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
                 <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">Period PnL *</div>
+                    <div class="flex-auto">Portfolio PnL *</div>
                     <div class="flex-auto text-justify text-blue-300 block">{{ total_pnl }}%</div>
                 </div>
 
