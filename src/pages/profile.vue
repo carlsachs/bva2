@@ -134,8 +134,8 @@
               </div>
             </label>
           </div>
-          <div class="mt-10 text-blue-200 text-center">BTC amount to trade: &nbsp;</div>
-          <div>
+          <div :class="{ 'bg-indigo-900 bg-opacity-20': Number(subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)===0 }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
+          <div :class="{ 'text-red-500':  Number(subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)===0 }" class="mt-10 text-center">BTC amount to trade: &nbsp;</div>
             <input
               size="50" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
               class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-blue-900"
@@ -148,7 +148,7 @@
             </div>
             <span :class="{'text-red-500' : qty_result!=='success', 'text-indigo-500':qty_result==='success'}">{{ qty_result }}</span>
           </div>
-          <div :class="{ 'bg-indigo-900 bg-opacity-20': !subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret }" class="text-indigo-200 mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg relative flex-auto">
+          <div :class="{ 'bg-indigo-900 bg-opacity-20': !subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
             <div class="my-3" :class="{ 'text-red-500': !subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret }">Binance API Key Information: &nbsp;</div>
             <input
               v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].key"
