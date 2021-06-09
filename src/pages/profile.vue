@@ -125,7 +125,7 @@
             <label :for="'toogle'+subscription.code" class="flex items-center cursor-pointer">
               <div class="relative">
                 <input :id="'toogle'+subscription.code" type="checkbox" class="sr-only" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].status" true-value="ACTIVE" false-value="PAUSED" 
-                  @change="changeStatus(subscription.code, subs[subs?.findIndex(sub => (sub.code == subscription.code))].status)"/>
+                  @change="changeStatus(subs[subs?.findIndex(sub => (sub.code == subscription.code))].sid, subs[subs?.findIndex(sub => (sub.code == subscription.code))].status)"/>
                 <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
                 <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
               </div>
@@ -144,7 +144,7 @@
             <div>
               <button type="number" class="dark_button" 
                 :disabled="!subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty" 
-                @click="saveQty(subscription.code, subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)">Save</button>
+                @click="saveQty(subs[subs?.findIndex(sub => (sub.code == subscription.code))].sid, subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)">Save</button>
             </div>
             <span :class="{'text-red-500' : qty_result!=='success', 'text-indigo-500':qty_result==='success'}">{{ qty_result }}</span>
           </div>
@@ -155,7 +155,7 @@
             </button>
           </div>
           <div v-if="subscription.confirm">
-            <button class="red_button" type="button" @click="cancelSubs(subscription.code)">
+            <button class="red_button" type="button" @click="cancelSubs(subscription.code, subs[subs?.findIndex(sub => (sub.code == subscription.code))].sid)">
               Confirm the cancelation of your subscription <feather-check class="ml-2" />
             </button>
           </div>
@@ -449,7 +449,6 @@ export default {
     })
 
     watch( trades, (trades) => {
-
       console.log("trades...", trades.length)
 
       state.strat_lifetime = parseInt((trades[0].updated_time - trades[trades.length-1].updated_time)/86400000)
@@ -478,14 +477,15 @@ export default {
     })
 
     const confirmCancelSubs = async (code) => {
-      console.log("confirmCancelSubs")
+      console.log("confirmCancelSubs", code)
       state.subscriptions[code].confirm = true
     }
 
-    const cancelSubs = async (code) => {
-      console.log("cancelSubs", code )
+    const cancelSubs = async (code, sid) => {
+      console.log("cancelSubs", code, sid )
+
       await axios.put('/api/cancelsub?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
-        { code: code },
+        { code: sid },
         { headers: {Authorization:`Bearer ${auth0.state.user?.token}`} }
       )
       .then( (response) => {
@@ -493,17 +493,19 @@ export default {
         state.subscriptions[code].confirm = false
         if (response.data.msg == 'success') {
           state.cancel_sub_result = response.data.msg
-          const index = state.subs?.findIndex( sub => (sub.code == code) )
-          if (index > -1) state.subs?.splice(index, 1)
         }
         else {
           state.cancel_sub_result = "error"
         }
+        const index = state.subs?.findIndex( sub => (sub.code == code) )
+        if (index > -1) state.subs?.splice(index, 1)
       })
       .catch( (error) => {
         state.subscriptions[code].confirm = false
         console.log("ERROR cancelSubs:", error)
         state.cancel_sub_result = "error"
+        const index = state.subs?.findIndex( sub => (sub.code == code) )
+        if (index > -1) state.subs?.splice(index, 1)
       })
     }
 
@@ -545,7 +547,7 @@ export default {
     }
 
     const saveQty = async (code, qty) => {
-      console.log("saveQty", qty)
+      console.log("saveQty", code, qty)
       await axios.put('/api/setsubsqty?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
         { qty: qty, code: code, email: auth0.state.user.email },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
