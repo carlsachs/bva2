@@ -189,7 +189,7 @@
           <div class="my-5 font-bold text-green-500 text-xl">{{ subscription.price }} USD per month</div>
           <Stripe
             :customerEmail="auth0.state.user?.email" 
-            :clientReferenceId="auth0.state.user?.id" 
+            :clientReferenceId="auth0.state.user?.data?.id" 
             :stripeId="subscription.stripe_id"
             :description="subscription.name"
             :price="subscription.price"
