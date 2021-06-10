@@ -246,7 +246,7 @@
     </div>
 
 
-    <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-gray-200 relative">
+    <!--div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-gray-200 relative">
       <span>{{ auth0.state.user?.data }}</span>
       <br/><br/>
       <span>{{ subs }}</span>
@@ -262,7 +262,7 @@
       <button @click="showModal = true">Open Modal</button>
       <br/>
       <br/>
-    </div>
+    </div-->
 
 
     <vue-final-modal v-model="showModal" classes="modal-container" content-class="modal-content">
