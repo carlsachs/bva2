@@ -13,6 +13,7 @@ export default defineComponent({
   name: "stripe",
   props: {
     customerEmail: { type: String, required: true },
+    clientReferenceId: { type: Number, required: true },
     stripeId: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: Number, required: true },
@@ -30,6 +31,7 @@ export default defineComponent({
       const handleResult = await stripe.value.redirectToCheckout({
         //sessionId: data.sessionId,
         customerEmail: props.customerEmail,
+        clientReferenceId: props.clientReferenceId,
         successUrl: 'https://bva2.netlify.app/profile',
         cancelUrl: 'https://bva2.netlify.app/profile',
         //successUrl: 'http://localhost:3000/profile',
