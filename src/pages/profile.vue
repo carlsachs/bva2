@@ -125,7 +125,7 @@
             <label :for="'toogle'+subscription.code" class="flex items-center cursor-pointer">
               <div class="relative">
                 <input :id="'toogle'+subscription.code" type="checkbox" class="sr-only" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].status" true-value="ACTIVE" false-value="PAUSED" 
-                  @change="changeStatus(subs[subs?.findIndex(sub => (sub.code == subscription.code))].sid, subs[subs?.findIndex(sub => (sub.code == subscription.code))].status)"/>
+                  @change="changeStatus(subs[subs?.findIndex(sub => (sub.code == subscription.code))])"/>
                 <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
                 <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
               </div>
@@ -189,7 +189,7 @@
           <div class="my-5 font-bold text-green-500 text-xl">{{ subscription.price }} USD per month</div>
           <Stripe
             :customerEmail="auth0.state.user?.email" 
-            :clientReferenceId="Number(auth0.state.user?.data?.id)" 
+            :clientReferenceId="auth0.state.user?.data?.id" 
             :stripeId="subscription.stripe_id"
             :description="subscription.name"
             :price="subscription.price"
@@ -496,26 +496,33 @@ export default {
       state.confirmPass = true
     }
 
-    const changeStatus = async (code, status) => {
-      console.log("changeStatus", code, status)
-      await axios.put('/api/setsubstatus?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
-        { status:status, code:code, email:auth0.state.user.email },
-        { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
-      )
-      .then( (response) => {
-        console.log("changeStatus.response.data:", response.data)
-        if (response.data.msg == 'success') {
-          state.qty_result = response.data.msg
-        }
-        else {
-          console.log("---->", response.data.err)
-          state.qty_result = response.data.err
-        }
-      })
-      .catch( (error) => {
-        console.log("ERROR changeStatus", error)
-        state.qty_result = "error"
-      })
+    const changeStatus = async (sub) => {
+      console.log("changeStatus", Number(sub.qty), sub.key, sub.secret)
+      if (sub.status === 'ACTIVE' && Number(sub.qty)===0) {
+        console.log("Please set an amount to trade.")
+        state.qty_result = "Please set an amount to trade."
+        sub.status = 'PAUSED'
+      }
+      else if (sub.status === 'ACTIVE' && (!sub.key || !sub.secret) ) {
+        sub.status = 'PAUSED'
+      }
+      else {
+        await axios.put('/api/setsubstatus?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
+          { status:sub.status, code:sub.code, email:auth0.state.user.email },
+          { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
+        )
+        .then( (response) => {
+          console.log("changeStatus.response.data:", response.data)
+          if (response.data.msg == 'success') {
+          }
+          else {
+            console.log("---->", response.data.err)
+          }
+        })
+        .catch( (error) => {
+          console.log("ERROR changeStatus", error)
+        })
+      }
     }
 
     const resetInput = () => {
