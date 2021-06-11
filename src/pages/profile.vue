@@ -433,7 +433,6 @@ export default {
 
     watch( trades, (trades) => {
       console.log("trades...", trades.length)
-
       state.strat_lifetime = parseInt((trades[0].updated_time - trades[trades.length-1].updated_time)/86400000)
       const days = 10 + state.strat_lifetime
       state.total_signals = trades.length
