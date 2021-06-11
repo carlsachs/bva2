@@ -497,7 +497,7 @@ export default {
     }
 
     const changeStatus = async (sub) => {
-      console.log("changeStatus", Number(sub.qty), sub.key, sub.secret)
+      console.log("changeStatus", sub)
       if (sub.status === 'ACTIVE' && Number(sub.qty)===0) {
         console.log("Please set an amount to trade.")
         state.qty_result = "Please set an amount to trade."
@@ -508,7 +508,13 @@ export default {
       }
       else {
         await axios.put('/api/setsubstatus?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
-          { status:sub.status, code:sub.code, email:auth0.state.user.email },
+          { 
+            status:sub.status, 
+            sid:sub.sid, 
+            qty:sub.qty, 
+            key:sub.key, 
+            secret:sub.secret, 
+            email:auth0.state.user.email },
           { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
         )
         .then( (response) => {
