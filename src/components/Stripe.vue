@@ -31,7 +31,7 @@ export default defineComponent({
       const handleResult = await stripe.value.redirectToCheckout({
         //sessionId: data.sessionId,
         customerEmail: props.customerEmail,
-        clientReferenceId: props.clientReferenceId,
+        clientReferenceId: Number(props.clientReferenceId),
         successUrl: 'https://bva2.netlify.app/profile',
         cancelUrl: 'https://bva2.netlify.app/profile',
         //successUrl: 'http://localhost:3000/profile',
