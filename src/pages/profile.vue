@@ -135,7 +135,7 @@
             </label>
           </div>
           <div :class="{ 'bg-indigo-900 bg-opacity-20': Number(subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)===0 }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
-          <div :class="{ 'text-red-500':  Number(subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)===0 }" class="mt-10 text-center">BTC amount to trade: &nbsp;</div>
+            <div :class="{ 'text-red-500':  Number(subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)===0 }" class="mt-10 text-center">BTC amount to trade: &nbsp;</div>
             <input
               size="50" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
               class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-blue-900"
@@ -171,6 +171,20 @@
             <div><button class="dark_button" @click="saveStratKey(subs[subs?.findIndex(sub => (sub.code == subscription.code))].sid, subs[subs?.findIndex(sub => (sub.code == subscription.code))].key, subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret)">Save</button></div>
             <span :class="{'text-red-500' : key_result!=='success', 'text-indigo-500':key_result==='success'}">{{ key_result }}</span>
             <div v-if="!subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret" class="text-red-500 mt-4">Please enter your Binance API key information.</div>
+          </div>
+          <hr class="w-5 mx-auto border-blue-400 my-8">
+          <div class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto">
+            <div class="my-3">Email notification:</div>
+          </div>
+          <div class="flex items-center justify-center">
+            <label :for="'tooglen'+subscription.code" class="flex items-center cursor-pointer">
+              <div class="relative">
+                <input :id="'tooglen'+subscription.code" type="checkbox" class="sr-only" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].email_notif" true-value="true" false-value="false" 
+                  @change="changeNotif(subs[subs?.findIndex(sub => (sub.code == subscription.code))])"/>
+                <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+                <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
+              </div>
+            </label>
           </div>
           <hr class="w-5 mx-auto border-blue-400 my-8">
           <div v-if="!subscription.confirm">
@@ -383,7 +397,7 @@ export default {
           code: yo.code,
           price: Number(yo.price),
           count: Number(yo.count),
-          stripe_id: yo.stripe_id
+          stripe_id: yo.stripe_id,
         }
       }
       state.subscriptions = result
@@ -392,7 +406,7 @@ export default {
     getProducts()
 
     watch( () => auth0.state.user?.data, (user) => {
-      console.log("WATCH USER DATA")
+      console.log("WATCH USER DATA", JSON.stringify(user.subs))
       state.username = user.nickname
       state.id = user.id
       state.email = user.email
@@ -528,6 +542,29 @@ export default {
           console.log("ERROR changeStatus", error)
         })
       }
+    }
+
+
+    const changeNotif = async (sub) => {
+      console.log("changeNotif", sub.email_notif)
+      await axios.put('/api/setsubnotif?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
+        { 
+          email_notif:sub.email_notif, 
+          sid:sub.sid, 
+        },
+        { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
+      )
+      .then( (response) => {
+        console.log("changeNotif.response.data:", response.data)
+        if (response.data.msg == 'success') {
+        }
+        else {
+          console.log("---->", response.data.err)
+        }
+      })
+      .catch( (error) => {
+        console.log("ERROR changeNotif", error)
+      })
     }
 
     const resetInput = () => {
@@ -697,6 +734,7 @@ export default {
       resetInput,
       saveQty,
       changeStatus,
+      changeNotif,
       trades,
     }
 
