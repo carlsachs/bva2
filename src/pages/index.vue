@@ -3,6 +3,8 @@
         <div v-for="(strategy, i) in strategies" :key="strategy.name" class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
             <h1 class="mb-7 text-uppercase font-semibold">{{ strategy.name }}</h1>
 
+            <div class="mb-7">{{ strategy.description }}</div>
+
             <apexchart type="area" height="400" :options="chartOptions" :series="strategy.series"></apexchart>
             
             <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
@@ -69,6 +71,7 @@ export default defineComponent({
                 id: 466,
                 name: "BVA Strategy",
                 series: [{ name: "BVA", data: [] }],
+                description: "The BVA strategy uses a specific data set (made of crypto market data, social sentiments, TAs, traditional financial market data) to train a prediction model using the latest Machine Learning practices.",
                 total_pnl: 0,
                 total_signals: 0,
                 avg_pnl: 0,
@@ -79,6 +82,7 @@ export default defineComponent({
                 id: 595,
                 name: "BVA LONG ONLY Strategy",
                 series: [{ name: "BVA LONG ONLY", data: [] }],
+                description: "The BVA LONG ONLY strategy is the same than the BVA strategy but only trades LONG signals (no need of margin wallet)",
                 total_pnl: 0,
                 total_signals: 0,
                 avg_pnl: 0,
