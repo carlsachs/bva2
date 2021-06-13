@@ -149,7 +149,7 @@
             <span :class="{'text-red-500' : qty_result!=='success', 'text-indigo-500':qty_result==='success'}">{{ qty_result }}</span>
           </div>
           <div :class="{ 'bg-indigo-900 bg-opacity-20': !subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
-            <div class="my-3" :class="{ 'text-red-500': !subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret }">Binance API Key Information: &nbsp;</div>
+            <div class="my-3" :class="{ 'text-red-500': !subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret }"><a href="https://www.binance.com/en/my/settings/api-management?ref=W5BD94FW" target="_new"><u>Binance API Key Information</u></a>&nbsp;</div>
             <input
               v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].key"
               placeholder="your api key"
