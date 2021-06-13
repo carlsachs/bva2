@@ -406,7 +406,7 @@ export default {
     getProducts()
 
     watch( () => auth0.state.user?.data, (user) => {
-      console.log("WATCH USER DATA", JSON.stringify(user.subs))
+      console.log("WATCH USER DATA", JSON.stringify(user.subs.code))
       state.username = user.nickname
       state.id = user.id
       state.email = user.email
