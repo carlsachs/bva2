@@ -1,7 +1,7 @@
 <template>
   <div v-if="auth0.state.isAuthenticated && auth0.state.user" class="text-center text-gray-300">
 
-    <div class="p-4 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1 sm:gap-5">
+    <div class="p-4 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
       <div v-for="(subscription, i) in Object.values(subscriptions)" :class="{ 'bg-indigo-900 bg-opacity-20': subs?.findIndex(sub => (sub.code === subscription.code)) >= 0 }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
         <div class="text-5xl font-extrabold text-blue-600"><b>{{ subscription.name }}</b></div>
         <hr class="w-5 mx-auto border-blue-400 my-8">
