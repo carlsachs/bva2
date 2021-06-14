@@ -2,7 +2,7 @@
   <div v-if="auth0.state.isAuthenticated && auth0.state.user" class="text-center text-gray-300">
 
     <div v-for="(subscription, i) in Object.values(subscriptions)" :class="{ 'bg-indigo-900 bg-opacity-20': subs?.findIndex(sub => (sub.code === subscription.code)) >= 0 }" :key="subscription.code" class="mx-4 my-23 p-4 border-2 border-blue-900 rounded-lg text-white relative">
-      <div class="text-3xl font-extrabold text-blue-600"><b>{{ subscription.name }}</b></div>
+      <div class="text-5xl font-extrabold text-blue-600"><b>{{ subscription.name }}</b></div>
       <hr class="w-5 mx-auto border-blue-400 my-8">
       <button v-if="!subs" class="blue_button" type="button">
         Loading <feather-loader class="ml-2" />
@@ -17,7 +17,7 @@
                 <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
                 <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
               </div>
-              <div class="ml-3 text-gray-500 font-medium">
+              <div class="text-3xl ml-3 text-gray-500 font-medium">
                 {{ subs[subs?.findIndex(sub => (sub.code == subscription.code))].status }}
               </div>
             </label>
