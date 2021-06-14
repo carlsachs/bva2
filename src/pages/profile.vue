@@ -1,106 +1,109 @@
 <template>
   <div v-if="auth0.state.isAuthenticated && auth0.state.user" class="text-center text-gray-300">
 
-    <div v-for="(subscription, i) in Object.values(subscriptions)" :class="{ 'bg-indigo-900 bg-opacity-20': subs?.findIndex(sub => (sub.code === subscription.code)) >= 0 }" :key="subscription.code" class="mx-4 my-23 p-4 border-2 border-blue-900 rounded-lg text-white relative">
-      <div class="text-5xl font-extrabold text-blue-600"><b>{{ subscription.name }}</b></div>
-      <hr class="w-5 mx-auto border-blue-400 my-8">
-      <button v-if="!subs" class="blue_button" type="button">
-        Loading <feather-loader class="ml-2" />
-      </button>
-      <div v-else>
-        <div class="mt-9" v-if="subs?.findIndex(sub => (sub.code == subscription.code) ) > -1">
-          <div class="flex items-center justify-center">
-            <label :for="'toogle'+subscription.code" class="flex items-center cursor-pointer">
-              <div class="relative">
-                <input :id="'toogle'+subscription.code" type="checkbox" class="sr-only" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].status" true-value="ACTIVE" false-value="PAUSED" 
-                  @change="changeStatus(subs[subs?.findIndex(sub => (sub.code == subscription.code))])"/>
-                <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
-                <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
-              </div>
-              <div :class="{ 'text-green-200': subs[subs?.findIndex(sub => (sub.code == subscription.code))].status==='ACTIVE' }" class="text-3xl ml-3 text-gray-500 font-medium">
-                {{ subs[subs?.findIndex(sub => (sub.code == subscription.code))].status }}
-              </div>
-            </label>
-          </div>
-          <div :class="{ 'bg-indigo-900 bg-opacity-20': Number(subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)===0 }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
-            <div :class="{ 'text-red-500':  Number(subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)===0 }" class="mt-10 text-center font-bold text-xl">BTC amount to trade: &nbsp;</div>
-            <input
-              size="50" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
-              class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-blue-900"
-              @input="resetInput"
-            >
-            <div>
-              <button type="number" class="dark_button" 
-                :disabled="!subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty" 
-                @click="saveQty(subs[subs?.findIndex(sub => (sub.code == subscription.code))].sid, subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)">Save</button>
-            </div>
-            <span :class="{'text-red-500' : qty_result!=='success', 'text-indigo-500':qty_result==='success'}">{{ qty_result }}</span>
-          </div>
-          <div :class="{ 'bg-indigo-900 bg-opacity-20': !subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
-            <div class="my-3 text-xl font-bold" :class="{ 'text-red-500': !subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret }"><a href="https://www.binance.com/en/my/settings/api-management?ref=W5BD94FW" target="_new"><u>Binance API Key Information</u></a>&nbsp;</div>
-            <input
-              v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].key"
-              placeholder="your api key"
-              aria-label="key"
-              type="text"
-              autocomplete="false"
-              class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-gray-700"
-              @input="resetInput"
-            >&nbsp;
-            <input
-              v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret"
-              placeholder="your api secret"
-              aria-label="secret"
-              type="text"
-              autocomplete="false"
-              class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-gray-700"
-              @input="resetInput"
-            >
-            <div><button class="dark_button" @click="saveStratKey(subs[subs?.findIndex(sub => (sub.code == subscription.code))].sid, subs[subs?.findIndex(sub => (sub.code == subscription.code))].key, subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret)">Save</button></div>
-            <span :class="{'text-red-500' : key_result!=='success', 'text-indigo-500':key_result==='success'}">{{ key_result }}</span>
-            <div v-if="!subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret" class="text-red-500 mt-4 font-bold">Please enter your Binance API key information.</div>
-          </div>
-          <hr class="w-5 mx-auto border-blue-400 my-8">
-          <div class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto">
-            <div class="my-3">Email notification:</div>
-          </div>
-          <div class="flex items-center justify-center">
-            <label :for="'tooglen'+subscription.code" class="flex items-center cursor-pointer">
-              <div class="relative">
-                <input :id="'tooglen'+subscription.code" type="checkbox" class="sr-only" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].email_notif" true-value="true" false-value="false" 
-                  @change="changeNotif(subs[subs?.findIndex(sub => (sub.code == subscription.code))])"/>
-                <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
-                <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
-              </div>
-            </label>
-          </div>
-          <hr class="w-5 mx-auto border-blue-400 my-8">
-          <div v-if="!subscription.confirm">
-            <button class="dark_button" @click="confirmCancelSubs(subscription.code)">
-              Cancel your {{ subscription.name }} subscription
-            </button>
-          </div>
-          <div v-if="subscription.confirm">
-            <button class="red_button" type="button" @click="cancelSubs(subscription.code, subs[subs?.findIndex(sub => (sub.code == subscription.code))].sid)">
-              Confirm the cancelation of your subscription <feather-check class="ml-2" />
-            </button>
-          </div>
-        </div>
-        <div v-else>
-          <div class="my-5 font-bold text-3xl text-blue-300">{{ subscription.count }} subscriptions left</div>
-          <div class="my-5 font-bold text-green-500 text-3xl">{{ subscription.price }} USD per month</div>
-          <Stripe
-            :customerEmail="auth0.state.user?.email" 
-            :clientReferenceId="auth0.state.user?.data?.id" 
-            :stripeId="subscription.stripe_id"
-            :description="subscription.name"
-            :price="subscription.price"
-          />
-        </div>
-      </div>
-      <div v-if="cancel_sub_result" :class="{'text-red-500' : cancel_sub_result!=='success', 'text-indigo-500':cancel_sub_result==='success'}">{{ cancel_sub_result }}</div>
-    </div>
+    <div class="p-4 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1 sm:gap-5">
 
+      <div v-for="(subscription, i) in Object.values(subscriptions)" :class="{ 'bg-indigo-900 bg-opacity-20': subs?.findIndex(sub => (sub.code === subscription.code)) >= 0 }" :key="subscription.code" class="mx-4 my-23 p-4 border-2 border-blue-900 rounded-lg text-white relative">
+        <div class="text-5xl font-extrabold text-blue-600"><b>{{ subscription.name }}</b></div>
+        <hr class="w-5 mx-auto border-blue-400 my-8">
+        <button v-if="!subs" class="blue_button" type="button">
+          Loading <feather-loader class="ml-2" />
+        </button>
+        <div v-else>
+          <div class="mt-9" v-if="subs?.findIndex(sub => (sub.code == subscription.code) ) > -1">
+            <div class="flex items-center justify-center">
+              <label :for="'toogle'+subscription.code" class="flex items-center cursor-pointer">
+                <div class="relative">
+                  <input :id="'toogle'+subscription.code" type="checkbox" class="sr-only" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].status" true-value="ACTIVE" false-value="PAUSED" 
+                    @change="changeStatus(subs[subs?.findIndex(sub => (sub.code == subscription.code))])"/>
+                  <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+                  <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
+                </div>
+                <div :class="{ 'text-green-200': subs[subs?.findIndex(sub => (sub.code == subscription.code))].status==='ACTIVE' }" class="text-3xl ml-3 text-gray-500 font-medium">
+                  {{ subs[subs?.findIndex(sub => (sub.code == subscription.code))].status }}
+                </div>
+              </label>
+            </div>
+            <div :class="{ 'bg-indigo-900 bg-opacity-20': Number(subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)===0 }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
+              <div :class="{ 'text-red-500':  Number(subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)===0 }" class="mt-10 text-center font-bold text-xl">BTC amount to trade: &nbsp;</div>
+              <input
+                size="50" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
+                class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-blue-900"
+                @input="resetInput"
+              >
+              <div>
+                <button type="number" class="dark_button" 
+                  :disabled="!subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty" 
+                  @click="saveQty(subs[subs?.findIndex(sub => (sub.code == subscription.code))].sid, subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)">Save</button>
+              </div>
+              <span :class="{'text-red-500' : qty_result!=='success', 'text-indigo-500':qty_result==='success'}">{{ qty_result }}</span>
+            </div>
+            <div :class="{ 'bg-indigo-900 bg-opacity-20': !subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
+              <div class="my-3 text-xl font-bold" :class="{ 'text-red-500': !subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret }"><a href="https://www.binance.com/en/my/settings/api-management?ref=W5BD94FW" target="_new"><u>Binance API Key Information</u></a>&nbsp;</div>
+              <input
+                v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].key"
+                placeholder="your api key"
+                aria-label="key"
+                type="text"
+                autocomplete="false"
+                class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-gray-700"
+                @input="resetInput"
+              >&nbsp;
+              <input
+                v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret"
+                placeholder="your api secret"
+                aria-label="secret"
+                type="text"
+                autocomplete="false"
+                class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-gray-700"
+                @input="resetInput"
+              >
+              <div><button class="dark_button" @click="saveStratKey(subs[subs?.findIndex(sub => (sub.code == subscription.code))].sid, subs[subs?.findIndex(sub => (sub.code == subscription.code))].key, subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret)">Save</button></div>
+              <span :class="{'text-red-500' : key_result!=='success', 'text-indigo-500':key_result==='success'}">{{ key_result }}</span>
+              <div v-if="!subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret" class="text-red-500 mt-4 font-bold">Please enter your Binance API key information.</div>
+            </div>
+            <hr class="w-5 mx-auto border-blue-400 my-8">
+            <div class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto">
+              <div class="my-3">Email notification:</div>
+            </div>
+            <div class="flex items-center justify-center">
+              <label :for="'tooglen'+subscription.code" class="flex items-center cursor-pointer">
+                <div class="relative">
+                  <input :id="'tooglen'+subscription.code" type="checkbox" class="sr-only" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].email_notif" true-value="true" false-value="false" 
+                    @change="changeNotif(subs[subs?.findIndex(sub => (sub.code == subscription.code))])"/>
+                  <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+                  <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
+                </div>
+              </label>
+            </div>
+            <hr class="w-5 mx-auto border-blue-400 my-8">
+            <div v-if="!subscription.confirm">
+              <button class="dark_button" @click="confirmCancelSubs(subscription.code)">
+                Cancel your {{ subscription.name }} subscription
+              </button>
+            </div>
+            <div v-if="subscription.confirm">
+              <button class="red_button" type="button" @click="cancelSubs(subscription.code, subs[subs?.findIndex(sub => (sub.code == subscription.code))].sid)">
+                Confirm the cancelation of your subscription <feather-check class="ml-2" />
+              </button>
+            </div>
+          </div>
+          <div v-else>
+            <div class="my-5 font-bold text-3xl text-blue-300">{{ subscription.count }} subscriptions left</div>
+            <div class="my-5 font-bold text-green-500 text-3xl">{{ subscription.price }} USD per month</div>
+            <Stripe
+              :customerEmail="auth0.state.user?.email" 
+              :clientReferenceId="auth0.state.user?.data?.id" 
+              :stripeId="subscription.stripe_id"
+              :description="subscription.name"
+              :price="subscription.price"
+            />
+          </div>
+        </div>
+        <div v-if="cancel_sub_result" :class="{'text-red-500' : cancel_sub_result!=='success', 'text-indigo-500':cancel_sub_result==='success'}">{{ cancel_sub_result }}</div>
+      </div>
+    </div>
+    
 
     <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
