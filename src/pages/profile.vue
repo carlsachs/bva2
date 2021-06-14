@@ -24,7 +24,7 @@
               </label>
             </div>
             <div :class="{ 'bg-indigo-900 bg-opacity-20': Number(subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)===0 }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
-              <div :class="{ 'text-red-500':  Number(subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)===0 }" class="mt-10 text-center font-bold text-xl">BTC amount to trade: &nbsp;</div>
+              <div class="mt-10 text-center font-bold text-xl">BTC amount to trade: &nbsp;</div>
               <input
                 size="50" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
                 class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-blue-900"
@@ -38,7 +38,7 @@
               <span :class="{'text-red-500' : qty_result!=='success', 'text-indigo-500':qty_result==='success'}">{{ qty_result }}</span>
             </div>
             <div :class="{ 'bg-indigo-900 bg-opacity-20': !subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
-              <div class="my-3 text-xl font-bold" :class="{ 'text-red-500': !subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret }"><a href="https://www.binance.com/en/my/settings/api-management?ref=W5BD94FW" target="_new"><u>Binance API Key Information</u></a>&nbsp;</div>
+              <div class="my-3 text-xl font-bold"><a href="https://www.binance.com/en/my/settings/api-management?ref=W5BD94FW" target="_new"><u>Binance API Key Information</u></a>&nbsp;</div>
               <input
                 v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].key"
                 placeholder="your api key"
@@ -59,7 +59,7 @@
               >
               <div><button class="dark_button" @click="saveStratKey(subs[subs?.findIndex(sub => (sub.code == subscription.code))].sid, subs[subs?.findIndex(sub => (sub.code == subscription.code))].key, subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret)">Save</button></div>
               <span :class="{'text-red-500' : key_result!=='success', 'text-indigo-500':key_result==='success'}">{{ key_result }}</span>
-              <div v-if="!subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret" class="text-red-500 mt-4 font-bold">Please enter your Binance API key information.</div>
+              <div v-if="!subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret" class="mt-4 font-bold">Please enter your Binance API key information.</div>
             </div>
             <hr class="w-5 mx-auto border-blue-400 my-8">
             <div class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto">
