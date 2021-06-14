@@ -86,8 +86,8 @@ function setupClient(): Promise<Auth0Client> {
     clientInit = createAuth0Client({
       domain,
       client_id,
-      redirect_uri: window.location.origin
-      // audience: options.audience
+      redirect_uri: window.location.origin,
+      // audience: options.audience,
     })
   }
   return clientInit
