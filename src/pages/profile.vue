@@ -244,7 +244,7 @@
       </div>
 
       <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
-        <div class="my-3 text-indigo-200">Change your password:: &nbsp;</div>
+        <div class="my-3 text-indigo-200">Change your password: &nbsp;</div>
         <input
           id="password"
           v-model="password"
