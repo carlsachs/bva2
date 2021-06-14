@@ -13,8 +13,13 @@
             
             <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
                 <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5">
-                    <div class="flex-auto">Portfolio PnL *</div>
+                    <div class="flex-auto">Total PnL</div>
                     <div class="flex-auto text-justify text-blue-300 block">{{ strategy.total_pnl }}%</div>
+                </div>
+
+                <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5">
+                    <div class="flex-auto">Portfolio PnL *</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ (Number(strategy.total_pnl)/15).toFixed(2) }}%</div>
                 </div>
 
                 <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5">
@@ -37,11 +42,11 @@
                     <div class="flex-auto text-justify text-blue-300 block">{{ strategy.strat_lifetime }} days</div>
                 </div>
 
-                <router-link :to="'/strat/'+strategy.id" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                    <div class="flex-auto">See All Signals</div>
+                <router-link :to="'/strat/'+strategy.id" class="group flex items-center bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                    <div class="flex-auto font-bold">See All Signals</div>
                 </router-link>
 
-                <div v-if="!auth0.state.isAuthenticated" @click="login" class="text-green-500 font-bold group flex text-xl items-center bg-green-500 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <div v-if="!auth0.state.isAuthenticated" @click="login" class="text-green-500 font-bold group flex text-xl items-center bg-green-500 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-green-900 hover:bg-opacity-100 transition">
                     Limited Price <div class="flex-auto text-green-500 font-semibold">$19.80</div>
                 </div>
             </div>
@@ -137,7 +142,7 @@ export default defineComponent({
                 let tpnl_bva = []
                 let pnl_bva = 0
                 for ( var row of rows.data.reverse() ) {
-                    pnl_bva = pnl_bva + Number(row.pnl) / 15
+                    pnl_bva = pnl_bva + Number(row.pnl)
                     tpnl_bva.push([ Number(row.updated_time), Number(pnl_bva).toFixed(2) ])
                 }
                 state.strategies[i].strat_lifetime = parseInt((rows.data[rows.data.length-1].updated_time - rows.data[0].updated_time)/86400000)
