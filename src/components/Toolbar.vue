@@ -48,11 +48,11 @@ router.beforeEach( (to, from) => {
 
 async function login() {
   // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#loginwithredirect
-  console.log("-0-0-0-0-0-0-0-", window.location.href)
+  console.log("-0-0-0-screen_hint-0-0-0-", window.location.href)
   //auth0.client.loginWithRedirect({ appState: { targetUrl: window.location.href } })
-  await auth0.client.loginWithRedirect({ appState: { targetUrl: '/profile' } })
+  await auth0.client.loginWithRedirect({ appState: { targetUrl: '/profile' }, screen_hint: 'signup' })
   //await auth0.client.loginWithPopup()
-  console.log("-1-1-1-1-1-1-", await auth0.client.getUser() )
+  //console.log("-1-1-1-1-1-1-", await auth0.client.getUser() )
 }
 
 function logout() {
