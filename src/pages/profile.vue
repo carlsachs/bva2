@@ -117,11 +117,11 @@
       <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
         <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
           <div class="flex-auto">Total PnL</div>
-          <div class="flex-auto text-justify text-blue-300 block">{{ total_pnl }}%</div>
+          <div class="flex-auto text-justify text-blue-300 block">{{ total_pnl * 15 }}%</div>
         </div>
         <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
           <div class="flex-auto">Portfolio PnL *</div>
-          <div class="flex-auto text-justify text-blue-300 block">{{ (Number(total_pnl)/15).toFixed(2) }}%</div>
+          <div class="flex-auto text-justify text-blue-300 block">{{ total_pnl }}%</div>
         </div>
         <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
           <div class="flex-auto">Trades Count</div>
@@ -468,7 +468,7 @@ export default {
         const sum = trades.filter( bva => { 
           return Number(bva.updated_time) > btc[0] && Number(bva.updated_time) <= btc[6] 
         })
-        pnl_bva = _.sumBy(sum, o => { return Number(o.pnl) }) + pnl_bva
+        pnl_bva = _.sumBy(sum, o => { return Number(o.pnl) }) / 15 + pnl_bva
         tpnl_bva.push([ btc[0], pnl_bva.toFixed(2) ])
       }
       state.series[0].data = tpnl_btc

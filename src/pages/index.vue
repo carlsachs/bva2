@@ -14,12 +14,17 @@
             <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
                 <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5">
                     <div class="flex-auto">Total PnL</div>
-                    <div class="flex-auto text-justify text-blue-300 block">{{ strategy.total_pnl }}%</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ Number(strategy.total_pnl * 15).toFixed(2) }}%</div>
+                </div>
+
+                <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5">
+                    <div class="flex-auto">Max. Concurrent Trades</div>
+                    <div class="flex-auto text-justify text-blue-300 block">15</div>
                 </div>
 
                 <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5">
                     <div class="flex-auto">Portfolio PnL *</div>
-                    <div class="flex-auto text-justify text-blue-300 block">{{ (Number(strategy.total_pnl)/15).toFixed(2) }}%</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ strategy.total_pnl }}%</div>
                 </div>
 
                 <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5">
@@ -142,7 +147,7 @@ export default defineComponent({
                 let tpnl_bva = []
                 let pnl_bva = 0
                 for ( var row of rows.data.reverse() ) {
-                    pnl_bva = pnl_bva + Number(row.pnl)
+                    pnl_bva = pnl_bva + Number(row.pnl) / 15
                     tpnl_bva.push([ Number(row.updated_time), Number(pnl_bva).toFixed(2) ])
                 }
                 state.strategies[i].strat_lifetime = parseInt((rows.data[rows.data.length-1].updated_time - rows.data[0].updated_time)/86400000)
