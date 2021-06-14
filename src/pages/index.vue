@@ -51,7 +51,7 @@
                 </div>
             </div>
 
-            <div class="mt-5 italic">* PNL calculated using 1/15 of the whole BTC amount for each trade.</div>
+            <div class="mt-5 italic">* PNL calculated using 1/15 of the whole BTC amount for each trade as recommended.</div>
         </div>
     </div>
 </template>
@@ -84,7 +84,7 @@ export default defineComponent({
                 id: 466,
                 name: "BVA Strategy",
                 series: [{ name: "BVA", data: [] }],
-                description: "The BVA strategy uses a specific data set (made of crypto market data, social sentiments, TAs, traditional financial market data) to train a Machine Learning prediction model.",
+                description: "The BVA strategy is the result of a prediction model trained using the latest Machine Learning practices. We use specific data sets made of crypto market data, social sentiments, TAs, traditional financial market data and some secret sauce.",
                 total_pnl: 0,
                 total_signals: 0,
                 avg_pnl: 0,

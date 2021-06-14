@@ -137,7 +137,7 @@
         </div>
       </div>
       
-      <div class="mt-5 italic">* PNL calculated using 1/15 of the whole BTC amount for each trade.</div>
+      <div class="mt-5 italic">* PNL calculated using 1/15 of the whole BTC amount for each trade as recommended.</div>
 
       <div v-if="true" class="mt-4 p-4">
         <div class="flex flex-col">
