@@ -47,6 +47,7 @@ export async function setupAuth0(router: any) {
   console.log("LOGGED IN")
   try {
     if (comingFromRedirect) {
+      console.log("comingFromRedirect")
       const { appState } = await $auth0.client.handleRedirectCallback()
       onRedirectCallback(appState, router)
     }

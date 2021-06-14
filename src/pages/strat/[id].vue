@@ -32,9 +32,9 @@
                     <div class="flex-auto text-justify text-blue-300 block">{{ strat_lifetime }} days</div>
                 </div>
 
-                <router-link v-if="!auth0.state.isAuthenticated" to="/profile#apikey" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
+                <div v-if="!auth0.state.isAuthenticated" @click="login" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
                     <div class="flex-auto text-green-500 font-semibold">Subscribe</div>
-                </router-link>
+                </div>
             </div>
             
             <div class="mt-5 italic">* PNL calculated using 1/15 of the whole BTC amount for each trade.</div>
@@ -273,6 +273,15 @@ export default defineComponent({
         console.log("loadMore...", loadMoreStore.strat)
     }
 
+    async function login() {
+        // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#loginwithredirect
+        console.log("-0-0-0-0-0-0-0-", window.location.href)
+        //auth0.client.loginWithRedirect({ appState: { targetUrl: window.location.href } })
+        await auth0.client.loginWithRedirect({ appState: { targetUrl: '/profile' } })
+        //await auth0.client.loginWithPopup()
+        //console.log("-1-1-1-1-1-1-", await auth0.client.getUser() )
+    }
+
     return {
       ...toRefs(state),
       moment,
@@ -282,7 +291,8 @@ export default defineComponent({
       signals,
       loadMore,
       loadMoreStore,
-      prices
+      prices,
+      login
     }
   },
 })

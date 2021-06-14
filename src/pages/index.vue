@@ -37,9 +37,9 @@
                     <div class="flex-auto text-justify text-blue-300 block">{{ strategy.strat_lifetime }} days</div>
                 </router-link>
 
-                <router-link to="/profile" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <div v-if="!auth0.state.isAuthenticated" @click="login" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     Limited Price <div class="flex-auto text-green-500 font-semibold">$19.80</div>
-                </router-link>
+                </div>
             </div>
 
             <div class="mt-5 italic">* PNL calculated using 1/15 of the whole BTC amount for each trade.</div>
@@ -49,7 +49,7 @@
 
 <script lang="ts">
 
-import { onMounted, reactive, ref, toRefs, defineComponent } from "vue"
+import { onMounted, reactive, ref, toRefs, defineComponent, inject } from "vue"
 import axios from "~/utils/axios"
 import _ from "lodash"
 import { useRouter } from "vue-router"
@@ -150,9 +150,22 @@ export default defineComponent({
         }
         endStats(Date.now())
     })
+
+    const auth0: any = inject("auth0")
+
+    async function login() {
+        // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#loginwithredirect
+        console.log("-0-0-0-0-0-0-0-", window.location.href)
+        //auth0.client.loginWithRedirect({ appState: { targetUrl: window.location.href } })
+        await auth0.client.loginWithRedirect({ appState: { targetUrl: '/profile' } })
+        //await auth0.client.loginWithPopup()
+        //console.log("-1-1-1-1-1-1-", await auth0.client.getUser() )
+    }
     
     return {
       ...toRefs(state),
+      auth0,
+      login
     }
   },
 })
