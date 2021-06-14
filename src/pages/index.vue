@@ -75,7 +75,7 @@ export default defineComponent({
                 id: 466,
                 name: "BVA Strategy",
                 series: [{ name: "BVA", data: [] }],
-                description: "The BVA strategy uses a specific data set (made of crypto market data, social sentiments, TAs, traditional financial market data) to train a prediction model using the latest Machine Learning practices.",
+                description: "The BVA strategy uses a specific data set (made of crypto market data, social sentiments, TAs, traditional financial market data) to train a Machine Learning prediction model.",
                 total_pnl: 0,
                 total_signals: 0,
                 avg_pnl: 0,

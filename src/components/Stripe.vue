@@ -1,6 +1,6 @@
 <template>
   <div class="m-5">
-    <button class="green_button font-bold" @click="subscribe">Subscribe to {{ description }}</button>
+    <button class="green_button font-bold text-xl" @click="subscribe">Subscribe to {{ description }}</button>
   </div>
 </template>
 

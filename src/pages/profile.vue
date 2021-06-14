@@ -87,8 +87,8 @@
           </div>
         </div>
         <div v-else>
-          <div class="my-5 font-bold font-3xl text-blue-300">{{ subscription.count }} subscriptions left</div>
-          <div class="my-5 font-bold text-green-500 text-xl">{{ subscription.price }} USD per month</div>
+          <div class="my-5 font-bold text-3xl text-blue-300">{{ subscription.count }} subscriptions left</div>
+          <div class="my-5 font-bold text-green-500 text-3xl">{{ subscription.price }} USD per month</div>
           <Stripe
             :customerEmail="auth0.state.user?.email" 
             :clientReferenceId="auth0.state.user?.data?.id" 
