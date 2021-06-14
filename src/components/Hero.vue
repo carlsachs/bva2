@@ -1,20 +1,18 @@
 <template>
-  <section class="container flex flex-col items-center px-5 py-12 mx-auto text-gray-600 body-font md:flex-row">
-    <div class="w-5/6 mb-10 lg:max-w-lg lg:w-full md:w-1/2 md:mb-0">
-      <img class="object-cover object-center rounded" alt="BvA" src="/bva.png" />
+  <div class="p-4 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1 sm:gap-5">
+    <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
+      <a href="https://discordapp.com/invite/4EQrEgj" target="_new">
+        <img class="mx-auto mb-5" alt="BvA Discord" src="/discord.png" />
+        <div class="text-5xl text-white">+1250 Discord Members</div>
+      </a>
     </div>
-    <div class="flex flex-col items-center text-center lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 md:items-start md:text-left">
-      <Heading1> Vite ⚡ - Vue 2 starter template </Heading1>
-      <p class="mb-8 leading-relaxed text-gray-300">
-        {{ rows.slice(0,1)}}
-      </p>
-      <div class="flex justify-center">
-        <RouterLink :to="{ name: 'profile' }">
-          <ButtonPrimary> Get Started </ButtonPrimary>
-        </RouterLink>
-      </div>
+    <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
+      <a href="https://github.com/jsappme/node-binance-trader" target="_new">
+        <img class="mx-auto mt-5 mb-13" alt="BvA GitHub" src="/github.png" />
+        <div class="text-5xl text-white">+820 GitHub Stars</div>
+      </a>
     </div>
-  </section>
+  </div>
 </template>
 
 
