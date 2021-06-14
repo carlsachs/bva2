@@ -113,23 +113,23 @@
       <apexchart ref="mychart" type="area" height="400" :options="chartOptions" :series="series"></apexchart>
       
       <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
-        <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5transition">
+        <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
           <div class="flex-auto">Portfolio PnL *</div>
           <div class="flex-auto text-justify text-blue-300 block">{{ total_pnl }}%</div>
         </div>
-        <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5transition">
+        <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
           <div class="flex-auto">Trades Count</div>
           <div class="flex-auto text-justify text-blue-300 block">{{ total_signals }}</div>
         </div>
-        <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5transition">
+        <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
           <div class="flex-auto">Avg. Profit per Trade</div>
           <div class="flex-auto text-justify text-blue-300 block">{{ avg_pnl }}%</div>
         </div>
-        <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5transition">
+        <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
           <div class="flex-auto">Win Rate</div>
           <div class="flex-auto text-justify text-blue-300 block">{{ win_rate }}%</div>
         </div>
-        <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5transition">
+        <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
           <div class="flex-auto">Verif. Trade History</div>
           <div class="flex-auto text-justify text-blue-300 block">{{ strat_lifetime }} days</div>
         </div>
