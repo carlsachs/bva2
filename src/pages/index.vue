@@ -1,6 +1,9 @@
 <template>
     <div>
 
+        <div class="text-3xl text-cyan-200">BVA is the marketplace created to fund the #1 open forward testing ecosystem.</div>
+
+
         <Hero/>
 
         <div v-for="(strategy, i) in strategies" :key="strategy.name" class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
