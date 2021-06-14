@@ -2,7 +2,7 @@
     <div>
         <div ref="myEl" class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
-            <h1 class="mb-7 text-uppercase font-semibold">{{ stratname }}</h1>
+            <h1 class="text-5xl mb-7 text-uppercase font-semibold">{{ stratname }}</h1>
 
             <apexchart type="area" height="400" :options="chartOptions" :series="series"></apexchart>
             

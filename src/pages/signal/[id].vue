@@ -3,7 +3,7 @@
 
     <div ref="myEl" class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
-        <h1 class="mb-7 text-uppercase font-semibold">{{ pair }}</h1>
+        <h1 class="text-5xl mb-7 text-uppercase font-semibold">{{ pair }}</h1>
 
         <apexchart type="candlestick" height="400" :options="chartOptions" :series="series"></apexchart>
         

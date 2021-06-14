@@ -1,12 +1,15 @@
 <template>
     <div>
+
         <Hero/>
+
         <div v-for="(strategy, i) in strategies" :key="strategy.name" class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
-            <h1 class="mb-7 text-uppercase font-semibold">{{ strategy.name }}</h1>
+            
+            <h1 class="mb-7 text-5xl text-uppercase font-semibold">{{ strategy.name }}</h1>
 
             <apexchart type="area" height="400" :options="chartOptions" :series="strategy.series"></apexchart>
 
-            <div class="m-7">{{ strategy.description }}</div>
+            <div class="m-7 text-3xl">{{ strategy.description }}</div>
             
             <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
                 <router-link :to="'/strat/'+strategy.id" class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">

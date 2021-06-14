@@ -3,7 +3,7 @@
 
     <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
-      <h1 class="mb-7 text-uppercase font-semibold">Your PNL</h1>
+      <h1 class="mb-7 text-5xl text-uppercase font-semibold">Your PNL</h1>
 
       <!--div v-if="id && email && token">
         <TradedChart :uid="id" :email="email" :token="token" />

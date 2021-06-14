@@ -3,7 +3,7 @@
     <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
       <a href="https://discordapp.com/invite/4EQrEgj" target="_new">
         <img class="mx-auto mb-5" alt="BvA Discord" src="/discord.png" />
-        <div class="text-5xl text-white">+1250 Discord Members</div>
+        <div class="text-5xl text-white">+1200 Discord Members</div>
       </a>
     </div>
     <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
