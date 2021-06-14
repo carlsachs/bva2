@@ -17,7 +17,7 @@
                 <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
                 <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
               </div>
-              <div class="text-3xl ml-3 text-gray-500 font-medium">
+              <div :class="{ 'text-green-200': subs[subs?.findIndex(sub => (sub.code == subscription.code))].status==='ACTIVE' }" class="text-3xl ml-3 text-gray-500 font-medium">
                 {{ subs[subs?.findIndex(sub => (sub.code == subscription.code))].status }}
               </div>
             </label>
