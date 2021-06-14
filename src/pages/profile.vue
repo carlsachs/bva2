@@ -2,8 +2,7 @@
   <div v-if="auth0.state.isAuthenticated && auth0.state.user" class="text-center text-gray-300">
 
     <div class="p-4 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1 sm:gap-5">
-
-      <div v-for="(subscription, i) in Object.values(subscriptions)" :class="{ 'bg-indigo-900 bg-opacity-20': subs?.findIndex(sub => (sub.code === subscription.code)) >= 0 }" :key="subscription.code" class="mx-4 my-23 p-4 border-2 border-blue-900 rounded-lg text-white relative">
+      <div v-for="(subscription, i) in Object.values(subscriptions)" :class="{ 'bg-indigo-900 bg-opacity-20': subs?.findIndex(sub => (sub.code === subscription.code)) >= 0 }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
         <div class="text-5xl font-extrabold text-blue-600"><b>{{ subscription.name }}</b></div>
         <hr class="w-5 mx-auto border-blue-400 my-8">
         <button v-if="!subs" class="blue_button" type="button">
@@ -103,7 +102,7 @@
         <div v-if="cancel_sub_result" :class="{'text-red-500' : cancel_sub_result!=='success', 'text-indigo-500':cancel_sub_result==='success'}">{{ cancel_sub_result }}</div>
       </div>
     </div>
-    
+
 
     <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
@@ -216,50 +215,52 @@
       </div>
     </div>
 
+    <div class="p-4 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1 sm:gap-5">
 
-    <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
-      <div class="my-3 text-indigo-200">Change your username: &nbsp;</div>
-      <input
-        id="username"
-        v-model="username"
-        placeholder="your username"
-        aria-label="username"
-        type="text"
-        autocomplete="false"
-        class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
-        @keydown.enter="confirmUsername"
-        @input="resetInput"
-      >
-      <div v-if="!confirmUser">
-        <button class="dark_button" :disabled="!username" @click="confirmUsername">Save</button>
+      <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
+        <div class="my-3 text-indigo-200">Change your username: &nbsp;</div>
+        <input
+          id="username"
+          v-model="username"
+          placeholder="your username"
+          aria-label="username"
+          type="text"
+          autocomplete="false"
+          class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
+          @keydown.enter="confirmUsername"
+          @input="resetInput"
+        >
+        <div v-if="!confirmUser">
+          <button class="dark_button" :disabled="!username" @click="confirmUsername">Save</button>
+        </div>
+        <div v-if="confirmUser">
+          <button class="red_button" :disabled="!username" @click="saveUser">Confirm</button>
+        </div>
+        <span :class="{'text-red-500' : user_result!=='success', 'text-indigo-500':user_result==='success'}">{{ user_result }}</span>
       </div>
-      <div v-if="confirmUser">
-        <button class="red_button" :disabled="!username" @click="saveUser">Confirm</button>
-      </div>
-      <span :class="{'text-red-500' : user_result!=='success', 'text-indigo-500':user_result==='success'}">{{ user_result }}</span>
-    </div>
 
+      <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
+        <div class="my-3 text-indigo-200">Change your password:: &nbsp;</div>
+        <input
+          id="password"
+          v-model="password"
+          placeholder="your new password"
+          aria-label="password"
+          type="text"
+          autocomplete="false"
+          class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
+          @keydown.enter="confirmPasswd"
+          @input="resetInput"
+        >
+        <div v-if="!confirmPass">
+          <button class="dark_button" :disabled="!password" @click="confirmPasswd">Save</button>
+        </div>
+        <div v-if="confirmPass">
+          <button class="red_button" :disabled="!password" @click="savePass">Confirm</button>
+        </div>
+        <span :class="{'text-red-500' : pwd_result!=='success', 'text-indigo-500':pwd_result==='success'}">{{ pwd_result }}</span>
+      </div>
 
-    <div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative flex-auto">
-      <div class="my-3 text-indigo-200">Change your password:: &nbsp;</div>
-      <input
-        id="password"
-        v-model="password"
-        placeholder="your new password"
-        aria-label="password"
-        type="text"
-        autocomplete="false"
-        class="my-3 px-4 py-2 text-sm text-center bg-transparent border rounded outline-none active:outline-none border-gray-700"
-        @keydown.enter="confirmPasswd"
-        @input="resetInput"
-      >
-      <div v-if="!confirmPass">
-        <button class="dark_button" :disabled="!password" @click="confirmPasswd">Save</button>
-      </div>
-      <div v-if="confirmPass">
-        <button class="red_button" :disabled="!password" @click="savePass">Confirm</button>
-      </div>
-      <span :class="{'text-red-500' : pwd_result!=='success', 'text-indigo-500':pwd_result==='success'}">{{ pwd_result }}</span>
     </div>
 
 
