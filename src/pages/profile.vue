@@ -155,6 +155,9 @@
                         <div class="text-center">TIME</div>
                       </th>
                       <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        <div class="text-center">NAME</div>
+                      </th>
+                      <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                         <div class="text-center">PAIR</div>
                       </th>
                       <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
@@ -178,6 +181,9 @@
                       </td>
                       <td v-else :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                           {{ row.pnl ? moment(Number(row.buy_time)).fromNow() : moment(Number(row.updated_time)).fromNow() }}
+                      </td>
+                      <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
+                          {{ row.stratname }}
                       </td>
                       <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
                           {{ row.pair }}
