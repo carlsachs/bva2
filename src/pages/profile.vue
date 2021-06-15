@@ -44,7 +44,6 @@
                 placeholder="your api key"
                 aria-label="key"
                 type="text"
-                size=50
                 autocomplete="false"
                 class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-gray-700"
                 @input="resetInput"
@@ -56,7 +55,6 @@
                 aria-label="secret"
                 type="text"
                 autocomplete="false"
-                size=50
                 class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-gray-700"
                 @input="resetInput"
               >
