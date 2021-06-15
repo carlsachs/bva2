@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <div class="text-3xl text-cyan-200">BVA is the marketplace created to fund the #1 open <s>backtesting</s> <a href='https://www.investopedia.com/articles/trading/10/backtesting-walkforward-important-correlation.asp' target="_new">forward testing</a> <a href="https://bitcoinvsaltcoins.com" target="_new" class="underline">ecosystem</a>.</div>
+        <div class="text-3xl text-cyan-200">BVA is the marketplace created to fund the #1 open <a href='https://www.investopedia.com/terms/b/backtesting.asp' target="_new"><s>backtesting</s></a> <a href='https://www.investopedia.com/articles/trading/10/backtesting-walkforward-important-correlation.asp' target="_new">forward testing</a> <a href="https://bitcoinvsaltcoins.com" target="_new" class="underline">ecosystem</a>.</div>
 
         <Hero/>
 
