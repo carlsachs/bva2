@@ -155,7 +155,7 @@
                         <div class="text-center">TIME</div>
                       </th>
                       <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                        <div class="text-center">NAME</div>
+                        <div class="text-center">STRAT NAME</div>
                       </th>
                       <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                         <div class="text-center">PAIR</div>
