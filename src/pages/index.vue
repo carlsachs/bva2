@@ -3,12 +3,13 @@
 
         <div class="text-3xl text-cyan-200">BVA is the marketplace created to fund the #1 open forward testing ecosystem.</div>
 
-
         <Hero/>
 
-        <div v-for="(strategy, i) in strategies" :key="strategy.name" class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
+        <div class="text-xl text-cyan-200 mt-10">Our flagship strategies</div>
+
+        <div v-for="(strategy, i) in strategies" :key="strategy.name" class="mx-2 my-7 py-4 border-2 border-blue-900 rounded-lg text-white relative">
             
-            <h1 class="mb-7 text-5xl text-uppercase font-semibold">{{ strategy.name }}</h1>
+            <h1 class="mb-0 text-5xl text-uppercase font-semibold">{{ strategy.name }}</h1>
 
             <apexchart type="area" height="400" :options="chartOptions" :series="strategy.series"></apexchart>
 
