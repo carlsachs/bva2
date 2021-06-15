@@ -15,7 +15,7 @@
     <a href="https://discordapp.com/invite/4EQrEgj" target="_new" class="text-purple-500 font-bold">Discord Server</a>
   </div>
   <div class="text-center text-gray-300 p-5 m-6 flex flex-row items-center justify-center p-2 space-x-5 mb-5">
-    <b class="text-green-500">{{ btc && Number(btc.price).toFixed(2) }}</b> &nbsp; Bitcoin vs. Alts © <div class="text-blue-200">2019–2021</div>
+    <b class="text-green-500">{{ btc && Number(btc.price).toFixed(2) }}</b> &nbsp; <b>Bitcoin Vs. Alts ©</b> <div class="text-blue-200">2019–2021</div>
   </div>
   <div class="text-center text-xs text-indigo-300 p-5 m-2 flex flex-row items-center justify-center p-2 space-x-5 mb-5">
     {{ stats.timing }} secs
