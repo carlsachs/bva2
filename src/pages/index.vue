@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <div class="text-3xl text-cyan-200">BVA is the marketplace created to fund the #1 open forward testing ecosystem.</div>
+        <div class="text-3xl text-cyan-200">BVA is the marketplace created to fund the #1 open <s>back testing</s> forward testing ecosystem.</div>
 
         <Hero/>
 
