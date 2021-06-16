@@ -437,8 +437,8 @@ export default {
     })
 
     const getTrades = () => {
-      console.log("getTrades", auth0.state?.user?.data?.email, auth0.state?.user?.data.id)
-      return axios.get('/api/trades?email='+auth0.state?.user?.data?.email+'&id='+ auth0.state?.user?.data.id, { headers: {Authorization:`Bearer ${auth0.state?.user?.token}`} })
+      console.log("getTrades", auth0.state?.user?.data?.email, auth0.state?.user?.data?.id)
+      return axios.get('/api/trades?email='+auth0.state?.user?.data?.email+'&id='+ auth0.state?.user?.data?.id, { headers: {Authorization:`Bearer ${auth0.state?.user?.token}`} })
     }
 
     const { data: trades, run } = useRequest( () => getTrades(), {
@@ -456,7 +456,7 @@ export default {
 
     onMounted(() => {
       console.log("onMounted...", auth0.state.user?.token, auth0.state.user?.data?.email)
-      if (auth0.state.user?.token) {
+      if (auth0.state.user?.token && auth0.state.user?.data?.email) {
         console.log("re run =======>", auth0.state.user?.token)
         state.subs = auth0.state.user?.data?.subs
         state.username = auth0.state.user?.data?.nickname
@@ -479,7 +479,8 @@ export default {
 
     watch( trades, (trades) => {
       console.log("trades...", trades.length)
-      state.strat_lifetime = parseInt((trades[0].updated_time - trades[trades.length-1]?.updated_time)/86400000)
+      state.strat_lifetime = parseInt((trades[0]?.updated_time - trades[trades.length-1]?.updated_time)/86400000)
+      console.log("strat_lifetime", state.strat_lifetime)
       const days = 10 + state.strat_lifetime
       state.total_signals = trades.length
       let tpnl_btc = []
