@@ -542,12 +542,13 @@ export default {
     }
 
     const changeStatus = async (sub) => {
-      console.log("changeStatus", sub)
-      if (sub.status === 'ACTIVE' && Number(sub.qty)===0) {
-        state.qty_result = "Please set an amount to trade."
+      console.log("changeStatus", sub.status)
+      if (sub.status === 'ACTIVE' && Number(sub.qty)<0.0005) {
+        state.qty_result = "Please set an amount to trade >= 0.0005 BTC"
         sub.status = 'PAUSED'
       }
       else if (sub.status === 'ACTIVE' && (!sub.key || !sub.secret) ) {
+        state.key_result = "Please enter your Binance API key information."
         sub.status = 'PAUSED'
       }
       else {
@@ -632,24 +633,29 @@ export default {
 
     const saveQty = async (code, qty) => {
       console.log("saveQty", code, qty)
-      await axios.put('/api/setsubsqty?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
-        { qty: qty, code: code, email: auth0.state.user.email },
-        { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
-      )
-      .then( (response) => {
-        console.log("saveQty.response.data:", response.data)
-        if (response.data.msg == 'success') {
-          state.qty_result = response.data.msg
-        }
-        else {
-          console.log("---->", response.data.err)
-          state.qty_result = response.data.err
-        }
-      })
-      .catch( (error) => {
-        console.log("ERROR saveQty", error)
-        state.qty_result = "error"
-      })
+      if (Number(qty)<0.0005) {
+        await axios.put('/api/setsubsqty?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
+          { qty: qty, code: code, email: auth0.state.user.email },
+          { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
+        )
+        .then( (response) => {
+          console.log("saveQty.response.data:", response.data)
+          if (response.data.msg == 'success') {
+            state.qty_result = response.data.msg
+          }
+          else {
+            console.log("---->", response.data.err)
+            state.qty_result = response.data.err
+          }
+        })
+        .catch( (error) => {
+          console.log("ERROR saveQty", error)
+          state.qty_result = "error"
+        })
+      }
+      else {
+        state.qty_result = "Please set an amount to trade >= 0.0005 BTC"
+      }
     }
 
     const savePass = async () => {
