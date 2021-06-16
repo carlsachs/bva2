@@ -67,17 +67,20 @@
                         <div class="text-center">SIDE</div>
                       </th>
                       <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                        <div class="text-center">BUY PRICE</div>
+                        <div class="text-center">QTY</div>
                       </th>
                       <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                        <div class="text-center">SELL PRICE</div>
+                        <div class="text-center">PRICE</div>
+                      </th>
+                      <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        <div class="text-center">RESULT</div>
                       </th>
                     </tr>
                   </thead>
                   <tbody v-if="orders" class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in orders" :key="row.id">
                     <tr>
                       <td class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                          {{ moment(Number(row.updated_time)).format() }}
+                          {{ moment(Number(row.updated_time)).format('YYYY MMM DD HH:mm') }}
                       </td>
                       <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
                         {{ row.pair }}
@@ -88,8 +91,17 @@
                       <td v-else class="text-blue-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                           {{ row.type }}
                       </td>
+                      <td class="text-blue-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                          {{ row.qty }}
+                      </td>
                       <td class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                           {{ row.price }}
+                      </td>
+                      <td v-if="row.result" class="text-orange-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                          {{ row.result }}
+                      </td>
+                      <td v-else class="text-blue-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                          {{ row.error }}
                       </td>
                     </tr>
                   </tbody>
@@ -165,7 +177,7 @@ export default defineComponent({
     const { data: orders, run } = useRequest( () => getOrders(), {
       cacheKey: 'orders',
       manual: true,
-      cacheTime: 300000,
+      //cacheTime: 300000,
       pollingInterval: 6000,
       formatResult: res => {
         return res.data

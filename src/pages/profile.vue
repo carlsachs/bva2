@@ -438,7 +438,7 @@ export default {
     const { data: trades, run } = useRequest( () => getTrades(), {
       cacheKey: 'trades',
       manual: true,
-      cacheTime: 300000,
+      //cacheTime: 300000,
       pollingInterval: 5000,
       formatResult: res => {
         return res.data

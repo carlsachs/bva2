@@ -15,7 +15,7 @@ export const useKlineStore = defineStore({
       }
       const { data: klines } = useRequest( () =>  getBTCKlineData(), {
         cacheKey: 'klines',
-        cacheTime: 300000,
+        //cacheTime: 300000,
         pollingInterval: 8000,
         formatResult: res => {
           return res.data

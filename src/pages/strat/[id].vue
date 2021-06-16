@@ -210,7 +210,7 @@ export default defineComponent({
 
     const { data: signals } = useRequest( () =>  getStratData(), {
         cacheKey: 'signals',
-        cacheTime: 300000,
+        //cacheTime: 300000,
         pollingInterval: 10000,
         formatResult: res => {
             return res.data

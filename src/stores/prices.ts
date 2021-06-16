@@ -32,7 +32,7 @@ export const usePriceStore = defineStore({
       }
       const { data: prices } = useRequest( getPrices, {
           cacheKey: 'prices',
-          cacheTime: 300000,
+          //cacheTime: 300000,
           pollingInterval: 10000,
           formatResult: res => {
               return res.data
