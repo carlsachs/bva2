@@ -459,6 +459,9 @@ export default {
       if (auth0.state.user?.token) {
         console.log("re run =======>", auth0.state.user?.token)
         state.subs = auth0.state.user?.data?.subs
+        state.username = auth0.state.user?.data?.nickname
+        state.id = auth0.state.user?.data?.id
+        state.email = auth0.state.user?.data?.email
         run()
       }
       /*
