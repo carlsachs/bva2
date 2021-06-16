@@ -97,10 +97,10 @@
                       <td class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                           {{ row.price }}
                       </td>
-                      <td v-if="row.result" class="text-orange-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                      <td v-if="row.result" class="text-blue-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                           {{ row.result }}
                       </td>
-                      <td v-else class="text-blue-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                      <td v-else class="text-orange-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                           {{ row.error }}
                       </td>
                     </tr>

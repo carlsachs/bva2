@@ -37,7 +37,7 @@
                   :disabled="!subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty" 
                   @click="saveQty(subs[subs?.findIndex(sub => (sub.code == subscription.code))].sid, subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)">Save</button>
               </div>
-              <span :class="{'text-red-500' : qty_result!=='success', 'text-indigo-500':qty_result==='success'}">{{ qty_result }}</span>
+              <span :class="{'text-orange-500' : qty_result!=='success', 'text-indigo-500':qty_result==='success'}">{{ qty_result }}</span>
             </div>
             <hr class="w-5 mx-auto border-blue-400 my-8">
             <div :class="{ 'bg-indigo-900 bg-opacity-20': !subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
@@ -63,7 +63,7 @@
               >
               <div class="my-3"><a href="https://www.binance.com/en/my/settings/api-management?ref=W5BD94FW" target="_new"><u>You can find your API key here.</u></a>&nbsp;</div>
               <div><button class="dark_button" @click="saveStratKey(subs[subs?.findIndex(sub => (sub.code == subscription.code))].sid, subs[subs?.findIndex(sub => (sub.code == subscription.code))].key, subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret)">Save</button></div>
-              <span :class="{'text-red-500' : key_result!=='success', 'text-indigo-500':key_result==='success'}">{{ key_result }}</span>
+              <span :class="{'text-orange-500' : key_result!=='success', 'text-indigo-500':key_result==='success'}">{{ key_result }}</span>
               <div v-if="!subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret" class="mt-4 font-bold">Please enter your Binance API key information.</div>
             </div>
             <hr class="w-5 mx-auto border-blue-400 my-8">
