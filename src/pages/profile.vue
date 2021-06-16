@@ -458,6 +458,7 @@ export default {
       console.log("onMounted...", auth0.state.user?.token, auth0.state.user?.data?.email)
       if (auth0.state.user?.token) {
         console.log("re run =======>", auth0.state.user?.token)
+        state.subs = auth0.state.user?.data?.subs
         run()
       }
       /*
