@@ -552,7 +552,7 @@ export default {
         sub.status = 'PAUSED'
       }
       else {
-        await axios.put('/api/setsubstatus?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
+        await axios.put('/api/setsubstatus?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
           { 
             status:sub.status, 
             sid:sub.sid, 
@@ -579,7 +579,7 @@ export default {
 
     const changeNotif = async (sub) => {
       console.log("changeNotif", sub.email_notif)
-      await axios.put('/api/setsubnotif?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
+      await axios.put('/api/setsubnotif?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
         { 
           email_notif:sub.email_notif, 
           sid:sub.sid, 
@@ -612,7 +612,7 @@ export default {
 
     const saveStratKey = async (code, key, secret) => {
       console.log("saveStratKey", code, key, secret )
-      await axios.put('/api/setsubkey?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
+      await axios.put('/api/setsubkey?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
         { key: key, secret: secret, code: code, email: auth0.state?.user?.email },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
@@ -634,7 +634,7 @@ export default {
     const saveQty = async (code, qty) => {
       console.log("saveQty", code, qty)
       if (Number(qty) >= 0.0005) {
-        await axios.put('/api/setsubsqty?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
+        await axios.put('/api/setsubsqty?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
           { qty: qty, code: code, email: auth0.state?.user?.email },
           { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
         )
@@ -660,7 +660,7 @@ export default {
 
     const savePass = async () => {
       state.confirmPass = false
-      await axios.put('/api/pwduser?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
+      await axios.put('/api/pwduser?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
         { password: state.password },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
@@ -686,7 +686,7 @@ export default {
 
     const saveUser = async () => {
       state.confirmUser = false
-      await axios.put('/api/setusername?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
+      await axios.put('/api/setusername?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
         { username: state.username },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
