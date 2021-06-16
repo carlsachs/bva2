@@ -633,7 +633,7 @@ export default {
 
     const saveQty = async (code, qty) => {
       console.log("saveQty", code, qty)
-      if (Number(qty)<0.0005) {
+      if (Number(qty) >= 0.0005) {
         await axios.put('/api/setsubsqty?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
           { qty: qty, code: code, email: auth0.state.user.email },
           { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
