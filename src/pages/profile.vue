@@ -437,8 +437,8 @@ export default {
     })
 
     const getTrades = () => {
-      console.log("getTrades", auth0.state?.user?.data.email, auth0.state?.user?.data.id)
-      return axios.get('/api/trades?email='+auth0.state?.user?.data.email+'&id='+ auth0.state?.user?.data.id, { headers: {Authorization:`Bearer ${auth0.state?.user?.token}`} })
+      console.log("getTrades", auth0.state?.user?.data?.email, auth0.state?.user?.data.id)
+      return axios.get('/api/trades?email='+auth0.state?.user?.data?.email+'&id='+ auth0.state?.user?.data.id, { headers: {Authorization:`Bearer ${auth0.state?.user?.token}`} })
     }
 
     const { data: trades, run } = useRequest( () => getTrades(), {
@@ -559,7 +559,7 @@ export default {
             qty:sub.qty, 
             key:sub.key, 
             secret:sub.secret, 
-            email:auth0.state.user.email },
+            email:auth0.state?.user?.email },
           { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
         )
         .then( (response) => {
@@ -613,7 +613,7 @@ export default {
     const saveStratKey = async (code, key, secret) => {
       console.log("saveStratKey", code, key, secret )
       await axios.put('/api/setsubkey?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
-        { key: key, secret: secret, code: code, email: auth0.state.user.email },
+        { key: key, secret: secret, code: code, email: auth0.state?.user?.email },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
       .then( (response) => {
@@ -635,7 +635,7 @@ export default {
       console.log("saveQty", code, qty)
       if (Number(qty) >= 0.0005) {
         await axios.put('/api/setsubsqty?sub=' + auth0.state.user.sub + '&cid=' + auth0.state.user.data.id,
-          { qty: qty, code: code, email: auth0.state.user.email },
+          { qty: qty, code: code, email: auth0.state?.user?.email },
           { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
         )
         .then( (response) => {
