@@ -113,10 +113,6 @@
 
       <h1 class="mb-7 text-5xl text-uppercase font-semibold">Your PNL</h1>
 
-      <!--div v-if="id && email && token">
-        <TradedChart :uid="id" :email="email" :token="token" />
-      </div-->
-
       <apexchart ref="mychart" type="area" height="400" :options="chartOptions" :series="series"></apexchart>
       
       <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
@@ -182,10 +178,10 @@
                   <tbody v-if="trades" v-for="(row, i) in trades.slice(0, 10 * loadMoreStore.profile)" :key="row.id" v-on:click="openTradedSignal(row)" class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40">
                     <tr>
                       <td v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                          {{ row.pnl ? moment(Number(row.sell_time)).fromNow() : moment(Number(row.updated_time)).fromNow() }}
+                          {{ row.pnl ? moment(Number(row.sell_time)).fromNow() : moment(Number(row?.updated_time)).fromNow() }}
                       </td>
                       <td v-else :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                          {{ row.pnl ? moment(Number(row.buy_time)).fromNow() : moment(Number(row.updated_time)).fromNow() }}
+                          {{ row.pnl ? moment(Number(row.buy_time)).fromNow() : moment(Number(row?.updated_time)).fromNow() }}
                       </td>
                       <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
                           {{ row.stratname }}
@@ -443,11 +439,12 @@ export default {
       cacheKey: 'trades',
       manual: true,
       cacheTime: 300000,
+      pollingInterval: 5000,
       formatResult: res => {
         return res.data
       },
       onSuccess: (res) => {
-        console.log("TTTTT->", res.length)
+        console.log("TRADES->", res.length)
       }
     })
 
@@ -466,7 +463,7 @@ export default {
 
     watch( trades, (trades) => {
       console.log("trades...", trades.length)
-      state.strat_lifetime = parseInt((trades[0].updated_time - trades[trades.length-1].updated_time)/86400000)
+      state.strat_lifetime = parseInt((trades[0].updated_time - trades[trades.length-1]?.updated_time)/86400000)
       const days = 10 + state.strat_lifetime
       state.total_signals = trades.length
       let tpnl_btc = []

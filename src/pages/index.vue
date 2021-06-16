@@ -5,7 +5,7 @@
 
         <Hero/>
 
-        <div class="text-xl text-cyan-200 mt-10">Our flagship strategies</div>
+        <div class="text-xl text-cyan-200 mt-10">Our two flagship strategies</div>
 
         <div v-for="(strategy, i) in strategies" :key="strategy.name" class="mx-2 my-7 py-4 border-2 border-blue-900 rounded-lg text-white relative">
             
@@ -56,7 +56,7 @@
                 </router-link>
 
                 <div v-if="!auth0.state.isAuthenticated" @click="login" class="text-green-500 font-bold group flex text-xl items-center shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-green-900 hover:bg-opacity-100 transition">
-                    Limited Price <div class="flex-auto text-green-500 font-semibold">$19.80</div>
+                    Limited availability <div class="flex-auto text-green-500 font-semibold">$19.80</div>
                 </div>
             </div>
 
