@@ -118,7 +118,7 @@
       <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
         <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
           <div class="flex-auto">Total PnL</div>
-          <div class="flex-auto text-justify text-blue-300 block">{{ total_pnl * 15 }}%</div>
+          <div class="flex-auto text-justify text-blue-300 block">{{  Number(total_pnl * 15).toFixed(2) }}%</div>
         </div>
         <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
           <div class="flex-auto">Portfolio PnL *</div>
@@ -431,8 +431,8 @@ export default {
     })
 
     const getTrades = () => {
-      console.log("getTrades", state.email, state.id, state.token)
-      return axios.get('/api/trades?email='+state.email+'&id='+state.id, { headers: {Authorization:`Bearer ${state.token}`} })
+      console.log("getTrades", auth0.state?.user?.data.email, auth0.state?.user?.data.id)
+      return axios.get('/api/trades?email='+auth0.state?.user?.data.email+'&id='+ auth0.state?.user?.data.id, { headers: {Authorization:`Bearer ${auth0.state?.user?.token}`} })
     }
 
     const { data: trades, run } = useRequest( () => getTrades(), {
@@ -450,6 +450,11 @@ export default {
 
     onMounted(() => {
       console.log("onMounted...", auth0.state.user?.token, auth0.state.user?.data?.email)
+      if (auth0.state.user?.token) {
+        console.log("re run =======>", auth0.state.user?.token)
+        run()
+      }
+      /*
       if (auth0.state.user?.data?.email && !state.email) {
         console.log("Reload...")
         state.token = auth0.state.user?.token
@@ -459,6 +464,7 @@ export default {
         state.subs = auth0.state.user?.data?.subs
         run()
       }
+      */
     })
 
     watch( trades, (trades) => {
