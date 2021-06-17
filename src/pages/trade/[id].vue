@@ -53,6 +53,11 @@
             <div class="flex-auto text-justify text-blue-300 block">{{ status }}</div>
         </div>
 
+        <div v-if="market_type" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
+            <div class="flex-auto">Type</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ market_type }}</div>
+        </div>
+
         <div v-if="auth0.state.isAuthenticated && !delTradeconfirm && status!=='DELETED' " @click="confirmDelTrade" class="group flex items-center bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
             <div class="flex-auto font-bold">Delete</div>
         </div>
@@ -166,6 +171,7 @@ export default defineComponent({
       sell_time: null,
       qty: null,
       status: null,
+      market_type: null,
       ///////// ///////// ///////// /////////
       series: [{ name: 'candle', data: [] }],
       chartOptions: {
@@ -229,6 +235,7 @@ export default defineComponent({
           state.sell_time = signal.data[0].sell_time
           state.pnl = Number(signal.data[0].pnl).toFixed(2)
           state.qty = Number(signal.data[0].qty)
+          state.market_type = signal.data[0].market_type
           state.status = signal.data[0].status
           const startTime = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time) - 19000000 : Number(signal.data[0].sell_time) - 19000000
           const endTime = signal.data[0].pnl ? (signal.data[0].type === "SHORT" ? Number(signal.data[0].buy_time) + 19000000 : Number(signal.data[0].sell_time) + 19000000) : Date.now()
