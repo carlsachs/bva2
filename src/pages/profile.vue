@@ -121,7 +121,7 @@
           <div class="flex-auto text-justify text-blue-300 block">{{  Number(total_pnl * 15).toFixed(2) }}%</div>
         </div>
         <div class="flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
-          <div class="flex-auto">Portfolio PnL *</div>
+          <div class="flex-auto">Portfolio PnL*</div>
           <div class="flex-auto text-justify text-blue-300 block">{{ total_pnl }}%</div>
         </div>
         <div class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
