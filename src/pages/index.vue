@@ -1,11 +1,15 @@
 <template>
     <div>
 
-        <div class="text-3xl text-cyan-200">This marketplace was created to fund the #1 open <a href='https://www.investopedia.com/terms/b/backtesting.asp' target="_new"><s>back</s></a> <a href='https://www.investopedia.com/articles/trading/10/backtesting-walkforward-important-correlation.asp' target="_new">forward testing</a> <a href="https://bitcoinvsaltcoins.com" target="_new" class="underline">ecosystem</a>.</div>
-
+        <div class="text-3xl text-cyan-200 mt-10">
+            Bitcoin vs. Alts, BVA, is a marketplace offering subscriptions to the best crypto trading strategies. 
+        </div>
+        <div class="text-xl text-cyan-200 mt-10">
+            It was created to fund the #1 open <a href='https://www.investopedia.com/terms/b/backtesting.asp' target="_new"><s>back</s></a> <a href='https://www.investopedia.com/articles/trading/10/backtesting-walkforward-important-correlation.asp' target="_new">forward testing</a> <a href="https://bitcoinvsaltcoins.com" target="_new" class="underline">ecosystem</a>.
+        </div>
         <Hero/>
 
-        <div class="text-xl text-cyan-200 mt-10">Our two flagship strategies</div>
+        <div class="text-xl text-cyan-200 mt-10">The mission of our two flagship strategies is simply to accumulate more BTC.</div>
 
         <div v-for="(strategy, i) in strategies" :key="strategy.name" class="mx-2 my-7 py-4 border-2 border-blue-900 rounded-lg text-white relative">
             
