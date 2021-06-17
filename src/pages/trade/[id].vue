@@ -47,6 +47,19 @@
             <div class="flex-auto">Quantity</div>
             <div class="flex-auto text-justify text-blue-300 block">{{ qty }}</div>
         </div>
+
+        <div v-if="status" class="group flex items-center bg-indigo-900 bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
+            <div class="flex-auto">Status</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ status }}</div>
+        </div>
+
+        <div v-if="auth0.state.isAuthenticated && !delTradeconfirm && status!=='DELETED' " @click="confirmDelTrade" class="group flex items-center bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+            <div class="flex-auto font-bold">Delete</div>
+        </div>
+        <div v-if="auth0.state.isAuthenticated && delTradeconfirm && status!=='DELETED' " @click="delTrade" class="group flex items-center bg-red-900 bg-opacity-90 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-opacity-100 transition">
+            <div class="flex-auto font-bold">Confirm Deletion</div>
+        </div>
+
       </div>
 
       <div v-if="true" class="mt-4 p-4">
@@ -152,6 +165,7 @@ export default defineComponent({
       buy_time: null,
       sell_time: null,
       qty: null,
+      status: null,
       ///////// ///////// ///////// /////////
       series: [{ name: 'candle', data: [] }],
       chartOptions: {
@@ -165,8 +179,9 @@ export default defineComponent({
         },
         xaxis: { type: 'category', floating: true },
         yaxis: { show: false, tooltip: { enabled: false } }
-      }
+      },
       ///////// ///////// ///////// /////////
+      delTradeconfirm: false,
     })
 
     const getOrders = () => {
@@ -214,6 +229,7 @@ export default defineComponent({
           state.sell_time = signal.data[0].sell_time
           state.pnl = Number(signal.data[0].pnl).toFixed(2)
           state.qty = Number(signal.data[0].qty)
+          state.status = signal.data[0].status
           const startTime = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time) - 19000000 : Number(signal.data[0].sell_time) - 19000000
           const endTime = signal.data[0].pnl ? (signal.data[0].type === "SHORT" ? Number(signal.data[0].buy_time) + 19000000 : Number(signal.data[0].sell_time) + 19000000) : Date.now()
           let interv = '15m'
@@ -260,13 +276,39 @@ export default defineComponent({
       ////// ////// ////// ////// //////
     })
 
+    
+    const confirmDelTrade = async () => {
+      state.delTradeconfirm = true
+    }
+
+    const delTrade = async () => {
+      console.log("-del-", props.id)
+      await axios.post('/api/deltrade?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
+        { 
+          tid: props.id,
+          email:auth0.state?.user?.email, 
+        },
+        { headers: {Authorization:`Bearer ${auth0.state.user?.token}`} }
+      )
+      .then( (response) => {
+        console.log("delTrade result:", response.data)
+        state.status = 'DELETED'
+      })
+      .catch( (error) => {
+        console.log("delTrade ERROR", error)
+      })
+    }
+
     const myEl = ref(null)
     
     return {
       ...toRefs(state),
       moment,
       myEl,
-      orders
+      orders,
+      auth0,
+      delTrade,
+      confirmDelTrade,
     }
   },
 })
