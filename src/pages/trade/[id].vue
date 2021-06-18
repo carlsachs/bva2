@@ -62,7 +62,21 @@
             <div class="flex-auto font-bold">Delete</div>
         </div>
         <div v-if="auth0.state?.user?.data?.id===userid && delTradeconfirm && status!=='DELETED' " @click="delTrade" class="group flex items-center bg-red-900 bg-opacity-90 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-opacity-100 transition">
-            <div class="flex-auto font-bold">Confirm Deletion</div>
+            <div class="flex-auto font-bold">Confirm</div>
+        </div>
+
+        <div v-if="auth0.state?.user?.data?.id===userid && status==='TRADED' && !closeTradeconfirm && status!=='CLOSED' " @click="confirmCloseTrade" class="group flex items-center bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+            <div class="flex-auto font-bold">Close</div>
+        </div>
+        <div v-if="auth0.state?.user?.data?.id===userid && status==='TRADED' && closeTradeconfirm && status!=='CLOSED' " @click="closeTrade" class="group flex items-center bg-red-900 bg-opacity-90 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-opacity-100 transition">
+            <div class="flex-auto font-bold">Confirm</div>
+        </div>
+
+        <div v-if="auth0.state?.user?.data?.id===userid && status==='TRADED' && !stopTradeconfirm && status!=='STOPPED' " @click="confirmStopTrade" class="group flex items-center bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+            <div class="flex-auto font-bold">Stop</div>
+        </div>
+        <div v-if="auth0.state?.user?.data?.id===userid && status==='TRADED' && stopTradeconfirm && status!=='STOPPED' " @click="stopTrade" class="group flex items-center bg-red-900 bg-opacity-90 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-opacity-100 transition">
+            <div class="flex-auto font-bold">Confirm</div>
         </div>
 
       </div>
@@ -191,6 +205,8 @@ export default defineComponent({
       },
       ///////// ///////// ///////// /////////
       delTradeconfirm: false,
+      closeTradeconfirm: false,
+      stopTradeconfirm: false,
     })
 
     const getOrders = () => {
@@ -212,8 +228,8 @@ export default defineComponent({
     })
 
     watch( () => auth0.state?.user?.data, (user) => {
-      console.log("WATCH USER DATA ::::::::::::: ", JSON.stringify(user.nickname), state.userid)
-      if ( auth0.state.user?.data?.userid !== state.userid) {
+      console.log("WATCH USER DATA ::::::::::::: ", JSON.stringify(user.nickname),  user.id, state.userid)
+      if ( user.id !== state.userid) {
         router.replace("/profile")
       }
       else {
@@ -315,6 +331,50 @@ export default defineComponent({
       })
     }
 
+    const confirmStopTrade = async () => {
+      state.stopTradeconfirm = true
+    }
+
+    const stopTrade = async () => {
+      console.log("-stop-", props.id)
+      await axios.post('/api/stoptrade?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
+        { 
+          tid: props.id,
+          email:auth0.state?.user?.email, 
+        },
+        { headers: {Authorization:`Bearer ${auth0.state.user?.token}`} }
+      )
+      .then( (response) => {
+        console.log("stopTrade result:", response.data)
+        state.status = 'STOPPED'
+      })
+      .catch( (error) => {
+        console.log("stopTrade ERROR", error)
+      })
+    }
+
+    const confirmCloseTrade = async () => {
+      state.closeTradeconfirm = true
+    }
+
+    const closeTrade = async () => {
+      console.log("-close-", props.id)
+      await axios.post('/api/closetrade?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
+        { 
+          tid: props.id,
+          email:auth0.state?.user?.email, 
+        },
+        { headers: {Authorization:`Bearer ${auth0.state.user?.token}`} }
+      )
+      .then( (response) => {
+        console.log("closeTrade result:", response.data)
+        state.status = 'CLOSED'
+      })
+      .catch( (error) => {
+        console.log("closeTrade ERROR", error)
+      })
+    }
+
     const myEl = ref(null)
     
     return {
@@ -325,6 +385,10 @@ export default defineComponent({
       auth0,
       delTrade,
       confirmDelTrade,
+      stopTrade,
+      confirmStopTrade,
+      closeTrade,
+      confirmCloseTrade,
     }
   },
 })
