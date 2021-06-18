@@ -158,9 +158,6 @@
                         <div class="text-center">TIME</div>
                       </th>
                       <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                        <div class="text-center">STRAT NAME</div>
-                      </th>
-                      <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                         <div class="text-center">PAIR</div>
                       </th>
                       <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
@@ -168,6 +165,9 @@
                       </th>
                       <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                         <div class="text-center">TYPE</div>
+                      </th>
+                      <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        <div class="text-center">STRAT NAME</div>
                       </th>
                       <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                         <div class="text-center">BUY PRICE</div>
@@ -189,9 +189,6 @@
                           {{ row.pnl ? moment(Number(row.buy_time)).fromNow() : moment(Number(row?.updated_time)).fromNow() }}
                       </td>
                       <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
-                          {{ row.stratname }}
-                      </td>
-                      <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
                           {{ row.pair }}
                       </td>
                       <td v-if="row.pnl" :class="{ 'text-green-500': Number(row.pnl)>0, 'text-red-500': Number(row.pnl)<0 }" class="px-6 py-4 font-bold whitespace-no-wrap text-sm leading-5">
@@ -199,6 +196,15 @@
                       </td>
                       <td v-else class="italic px-6 py-4 text-gray-400 whitespace-no-wrap text-sm leading-5">
                           {{ getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
+                      </td>
+                      <td v-if="row.type==='SHORT'" class="text-orange-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                          {{ row.type }}
+                      </td>
+                      <td v-else class="text-blue-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                          {{ row.type }}
+                      </td>
+                      <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
+                          {{ row.stratname }}
                       </td>
                       <!--
                       <td v-if="Number(row.pnl)>0" :class="{ 'font-bold': row.pnl }" class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
@@ -208,12 +214,6 @@
                           {{ row.pnl ? Number(row.pnl).toFixed(2) : getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
                       </td>
                       -->
-                      <td v-if="row.type==='SHORT'" class="text-orange-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                          {{ row.type }}
-                      </td>
-                      <td v-else class="text-blue-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                          {{ row.type }}
-                      </td>
                       <td class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                           {{ row.buy_price ? row.buy_price : '---' }}
                       </td>
