@@ -58,10 +58,10 @@
             <div class="flex-auto text-justify text-blue-300 block">{{ market_type }}</div>
         </div>
 
-        <div v-if="auth0.state.isAuthenticated && !delTradeconfirm && status!=='DELETED' " @click="confirmDelTrade" class="group flex items-center bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+        <div v-if="auth0.state?.user?.data?.id===userid && !delTradeconfirm && status!=='DELETED' " @click="confirmDelTrade" class="group flex items-center bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
             <div class="flex-auto font-bold">Delete</div>
         </div>
-        <div v-if="auth0.state.isAuthenticated && delTradeconfirm && status!=='DELETED' " @click="delTrade" class="group flex items-center bg-red-900 bg-opacity-90 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-opacity-100 transition">
+        <div v-if="auth0.state?.user?.data?.id===userid && delTradeconfirm && status!=='DELETED' " @click="delTrade" class="group flex items-center bg-red-900 bg-opacity-90 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-opacity-100 transition">
             <div class="flex-auto font-bold">Confirm Deletion</div>
         </div>
 
@@ -142,6 +142,7 @@ import moment from "moment"
 import _ from "lodash"
 import { startStats, endStats } from '~/modules/stats'
 import { useRequest } from 'vue-request'
+import { useRouter } from "vue-router"
 
 
 export default defineComponent({
@@ -152,14 +153,15 @@ export default defineComponent({
   setup: (props) => {
     startStats(Date.now())
 
+    const router = useRouter()
     const auth0: any = inject("auth0")
 
     const state = reactive({
       ///////// ///////// ///////// /////////
-      id: auth0.state.user?.data?.info?.id,
-      username: auth0.state.user?.data?.info?.nickname,
-      token: auth0.state.user?.data?.info?.token,
-      email: auth0.state.user?.data?.info?.email,
+      id: auth0.state.user?.data?.id,
+      username: auth0.state.user?.data?.nickname,
+      token: auth0.state.user?.data?.token,
+      email: auth0.state.user?.data?.email,
       subs: auth0.state.user?.subs,
       ///////// ///////// ///////// /////////
       signal_type: null,
@@ -172,6 +174,7 @@ export default defineComponent({
       qty: null,
       status: null,
       market_type: null,
+      userid: null,
       ///////// ///////// ///////// /////////
       series: [{ name: 'candle', data: [] }],
       chartOptions: {
@@ -209,13 +212,18 @@ export default defineComponent({
     })
 
     watch( () => auth0.state?.user?.data, (user) => {
-      console.log("WATCH USER DATA ::::::::::::: ", JSON.stringify(user.nickname))
-      state.username = user.nickname
-      state.id = user.id
-      state.email = user.email
-      state.subs = user.subs
-      state.token = auth0.state.user?.token
-      run()
+      console.log("WATCH USER DATA ::::::::::::: ", JSON.stringify(user.nickname), state.userid)
+      if ( auth0.state.user?.data?.userid !== state.userid) {
+        router.replace("/profile")
+      }
+      else {
+        state.username = user.nickname
+        state.id = user.id
+        state.email = user.email
+        state.subs = user.subs
+        state.token = auth0.state.user?.token
+        run()
+      }
     })
 
     onMounted(() => {
@@ -227,6 +235,7 @@ export default defineComponent({
       }
       axios.get('/api/trade?id='+props.id)
         .then( signal => {
+          state.userid = signal.data[0].userid
           state.pair = signal.data[0].pair
           state.signal_type = signal.data[0].type
           state.buy_price = signal.data[0].buy_price

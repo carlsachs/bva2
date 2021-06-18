@@ -358,10 +358,10 @@ export default {
       auth0, 
       subscriptions: [],
       ///////// ///////// ///////// /////////
-      id: auth0.state.user?.data?.info?.id,
-      username: auth0.state.user?.data?.info?.nickname,
-      token: auth0.state.user?.data?.info?.token,
-      email: auth0.state.user?.data?.info?.email,
+      id: auth0.state.user?.data?.id,
+      username: auth0.state.user?.data?.nickname,
+      token: auth0.state.user?.data?.token,
+      email: auth0.state.user?.data?.email,
       subs: auth0.state.user?.subs,
       ///////// ///////// ///////// /////////
       cancel_sub_result: '',

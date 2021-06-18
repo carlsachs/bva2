@@ -4,11 +4,11 @@
     <button v-if="router.options.history.state.back" class="dark_button p-2" type="button" @click="$router.go(-1)">
       <feather-chevron-left class="" />
     </button>
-    <router-link v-if="!isHomePage" to="/">
+    <!--router-link v-if="!isHomePage" to="/">
       <button class="blue_button" type="button">
         Home
       </button>
-    </router-link>
+    </router-link-->
     <router-link v-if="auth0.state.isAuthenticated" to="/profile">
       <button class="green_button font-bold" type="button">
         Your Account
