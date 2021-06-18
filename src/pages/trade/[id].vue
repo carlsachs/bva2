@@ -315,6 +315,7 @@ export default defineComponent({
 
     const delTrade = async () => {
       console.log("-del-", props.id)
+      state.status = 'DELETED'
       await axios.post('/api/deltrade?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
         { 
           tid: props.id,
@@ -324,7 +325,6 @@ export default defineComponent({
       )
       .then( (response) => {
         console.log("delTrade result:", response.data)
-        state.status = 'DELETED'
       })
       .catch( (error) => {
         console.log("delTrade ERROR", error)
@@ -337,6 +337,7 @@ export default defineComponent({
 
     const stopTrade = async () => {
       console.log("-stop-", props.id)
+      state.status = 'STOPPED'
       await axios.post('/api/stoptrade?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
         { 
           tid: props.id,
@@ -346,7 +347,6 @@ export default defineComponent({
       )
       .then( (response) => {
         console.log("stopTrade result:", response.data)
-        state.status = 'STOPPED'
       })
       .catch( (error) => {
         console.log("stopTrade ERROR", error)
@@ -359,6 +359,7 @@ export default defineComponent({
 
     const closeTrade = async () => {
       console.log("-close-", props.id)
+      state.status = 'CLOSED'
       await axios.post('/api/closetrade?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
         { 
           tid: props.id,
@@ -368,7 +369,6 @@ export default defineComponent({
       )
       .then( (response) => {
         console.log("closeTrade result:", response.data)
-        state.status = 'CLOSED'
       })
       .catch( (error) => {
         console.log("closeTrade ERROR", error)
