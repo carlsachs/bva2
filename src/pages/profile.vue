@@ -102,6 +102,8 @@
               :description="subscription.name"
               :price="subscription.price"
             />
+            <div class="mt-9">If you want to pay with cryptos,</div>
+            <div class="">please contact us at <a href="mailto:support@bitcoinvsalts.com">support@bitcoinvsalts.com</a></div>
           </div>
         </div>
         <div v-if="cancel_sub_result" :class="{'text-red-500' : cancel_sub_result!=='success', 'text-indigo-500':cancel_sub_result==='success'}">{{ cancel_sub_result }}</div>
@@ -445,7 +447,7 @@ export default {
       cacheKey: 'trades',
       manual: true,
       //cacheTime: 300000,
-      pollingInterval: 5000,
+      pollingInterval: 8000,
       formatResult: res => {
         return res.data
       },

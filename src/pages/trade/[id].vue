@@ -202,7 +202,7 @@ export default defineComponent({
       cacheKey: 'orders',
       manual: true,
       //cacheTime: 300000,
-      pollingInterval: 6000,
+      pollingInterval: 9000,
       formatResult: res => {
         return res.data
       },
