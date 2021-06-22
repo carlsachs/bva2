@@ -19,7 +19,7 @@
 
             <div class="m-7 text-3xl">{{ strategy.description }}</div>
 
-            <div v-if="!auth0.state.isAuthenticated" @click="login" class="mx-20 p-4 text-green-500 font-bold group flex-auto text-xl items-center shadow-xl gap-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-green-900 hover:bg-opacity-100 transition">
+            <div v-if="!auth0.state.isAuthenticated" @click="login" class="mx-20 p-4 bg-indigo-900 text-green-500 font-bold group flex-auto text-xl items-center shadow-xl gap-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-green-900 hover:bg-opacity-100 transition">
                 Limited availability $19.80
             </div>
             
