@@ -21,9 +21,9 @@
       </a>
     </div>
     <div class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
-      <a href="https://bitcoinvsaltcoins.com" target="_new">
-        <img width=200 class="mx-auto mb-5" alt="BvA Discord" src="/creator.png" />
-        <div class="text-5xl text-white">For Strategy Creators</div>
+      <a href="https://bitcoinvsaltcoins.com/topstrats" target="_new">
+        <img width=200 class="mx-auto mb-5" alt="Strategy Incubator" src="/creator.png" />
+        <div class="text-5xl text-white">Our Strategy Incubator</div>
       </a>
     </div>
   </div>
