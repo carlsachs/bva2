@@ -42,7 +42,7 @@
                     <div class="flex-auto text-justify text-blue-300 block">{{ strat_lifetime }} days</div>
                 </div>
 
-                <div v-if="!auth0.state.isAuthenticated" @click="login" class="font-bold group flex text-xl items-center bg-green-500 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-green-900 hover:bg-opacity-100 transition">
+                <div v-if="!auth0.state.isAuthenticated" @click="login" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-green-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto text-green-500 text-xl font-semibold">Subscribe</div>
                 </div>
             </div>
