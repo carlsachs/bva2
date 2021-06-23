@@ -10,10 +10,10 @@
   </div>
   <router-view></router-view>
   <div class="text-center p-5 m-6 flex flex-row items-center justify-center p-2 space-x-5 mb-5">
+    <router-link to="/about" class="text-gray-300 font-bold">About us</router-link> &nbsp;
     <a href="https://twitter.com/BitcoinvsAlts" target="_new" class="text-blue-500 font-bold">Twitter</a> &nbsp;
     <a href="https://github.com/bitcoinvsalts/node-binance-trader" class="text-green-500 font-bold" target="_new">GitHub</a> &nbsp;
     <router-link to="/about" class="text-gray-300 font-bold">Contact us</router-link> &nbsp;
-    <router-link to="/about" class="text-gray-300 font-bold">About us</router-link> &nbsp;
     <a href="https://discordapp.com/invite/4EQrEgj" target="_new" class="text-purple-500 font-bold">Discord</a>
   </div>
   <div class="text-center text-gray-300 p-5 m-6 flex flex-row items-center justify-center p-2 space-x-5 mb-5">
