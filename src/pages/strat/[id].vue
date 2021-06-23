@@ -14,7 +14,7 @@
 
                 <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
                     <div class="flex-auto">Max. Concurrent Trades</div>
-                    <div class="flex-auto text-justify text-blue-300 block">15</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ max_concurrent }}</div>
                 </div>
 
                 <div class="flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
@@ -167,6 +167,7 @@ export default defineComponent({
         ///////// ///////// ///////// /////////
         auth0, 
         stratname: '',
+        max_concurrent: 15,
         total_pnl: 0,
         avg_pnl: 0,
         strat_lifetime: 0,
@@ -235,7 +236,7 @@ export default defineComponent({
         const days = 10 + state.strat_lifetime
         state.total_signals = signals.length
         
-        console.log("========>", Date.now() )
+        console.log("========>", Date.now(), days )
         axios.get('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit='+days)
         .then( btcs => {
 
@@ -245,6 +246,7 @@ export default defineComponent({
                 const sum = signals.filter( bva => { 
                     return Number(bva.updated_time) > btc[0] && Number(bva.updated_time) <= btc[6] 
                 })
+                //if (sum.length > state.max_concurrent) state.max_concurrent = sum.length
                 pnl_bva = _.sumBy(sum, o => { return Number(o.pnl) / 15 }) + pnl_bva
                 tpnl_bva.push([ btc[0], pnl_bva.toFixed(2) ])
             }
