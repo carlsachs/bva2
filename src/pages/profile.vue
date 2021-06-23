@@ -183,10 +183,10 @@
                   <tbody v-if="trades" v-for="(row, i) in trades.slice(0, 10 * loadMoreStore.profile)" :key="row.id" v-on:click="openTradedSignal(row)" class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40">
                     <tr>
                       <td v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                          {{ row.pnl ? moment(Number(row.sell_time)).fromNow() : moment(Number(row?.updated_time)).fromNow() }}
+                          {{ moment(Number(row.buy_time)).fromNow() }}
                       </td>
                       <td v-else :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                          {{ row.pnl ? moment(Number(row.buy_time)).fromNow() : moment(Number(row?.updated_time)).fromNow() }}
+                          {{ moment(Number(row.sell_time)).fromNow() }}
                       </td>
                       <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
                           {{ row.pair }}
