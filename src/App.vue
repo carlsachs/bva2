@@ -13,6 +13,7 @@
     <router-link to="/about" class="text-gray-300 font-bold">About us</router-link> &nbsp;
     <a href="https://twitter.com/BitcoinvsAlts" target="_new" class="text-blue-500 font-bold"><img class="mx-auto" width=30 alt="Twitter" src="/twitter.png"/></a> &nbsp;
     <a href="https://github.com/bitcoinvsalts/node-binance-trader" class="text-green-500 font-bold" target="_new"><img class="mx-auto" width=20 alt="GitHub" src="/github.png"/></a> &nbsp;
+    <a href="https://t.me/joinchat/lmQ_xPE0WBo5NzYx" class="text-green-500 font-bold" target="_new"><img class="mx-auto" width=20 alt="GitHub" src="/tg.png"/></a> &nbsp;
     <a href="https://discordapp.com/invite/4EQrEgj" target="_new" class="text-purple-500 font-bold"><img class="mx-auto" width=20 alt="Discord" src="/discord.png"/></a> &nbsp;
     <router-link to="/about" class="text-gray-300 font-bold">Contact us</router-link>
   </div>
