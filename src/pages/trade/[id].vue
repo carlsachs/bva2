@@ -211,7 +211,7 @@ export default defineComponent({
 
     const getOrders = () => {
       console.log("getOrders", auth0.state?.user?.data.email, props.id, auth0.state?.user?.token)
-      return axios.get('/api/orders?email='+auth0.state?.user?.data.email+'&id='+props.id, { headers: {Authorization:`Bearer ${auth0.state?.user?.token}`} })
+      return axios.get('/api/orders?sub='+auth0.state?.user?.data.sub+'&id='+props.id, { headers: {Authorization:`Bearer ${auth0.state?.user?.token}`} })
     }
 
     const { data: orders, run } = useRequest( () => getOrders(), {

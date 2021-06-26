@@ -60,7 +60,7 @@ export async function setupAuth0(router: any) {
     $auth0.state.isLoading = false
     if ($auth0.state.user) {
       $auth0.state.user.token = await $auth0.client.getTokenSilently()
-      const user_data = await signInUser($auth0.state.user.token, $auth0.state.user.email)
+      const user_data = await signInUser($auth0.state.user.token, $auth0.state.user.sub)
       if (!user_data) {
         $auth0.state.user = null
         console.log("USER UNKNOWN")
@@ -93,9 +93,11 @@ function setupClient(): Promise<Auth0Client> {
   return clientInit
 }
 
-async function signInUser(token: String, email: String) {
+async function signInUser(token: String, sub: String) {
+  //axios.defaults.timeout = 30000;
+  console.log("signInUser", token, sub)
   return axios
-    .get('/api/getusersignin?email='+email, { headers: {Authorization:`Bearer ${token}`} })
+    .get('/api/getusersignin?sub='+sub, { headers: {Authorization:`Bearer ${token}`} } )
     .then( (response) => {
       return response.data
     })
