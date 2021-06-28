@@ -1,7 +1,10 @@
 <template>
 
   <div v-if="!auth0.state.isAuthenticated || !auth0.state.user" class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
-    <img class="mx-auto mb-5" alt="BvA Account" src="/bva_account.png" />
+    <div class="mt-10">BVA Account preview</div>
+    <a href="/bva-account.png" target="_new">
+      <img class="mx-auto mb-5" alt="BvA Account" src="/bva-account.png" />
+    </a>
   </div>
   <div v-if="auth0.state.isAuthenticated && auth0.state.user" class="text-center text-gray-300">
 
