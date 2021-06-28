@@ -21,9 +21,14 @@
       <button v-if="auth0.state.isAuthenticated" class="dark_button" type="button" @click="logout">
         <feather-log-out class="" />
       </button>
-      <button v-else class="blue_button" type="button" @click="login">
-        Sign in <feather-log-in class="ml-2" />
-      </button>
+      <div v-else>
+        <a href="/bva-account.png" target="_new" class="blue_button mr-5">
+          Account Preview
+        </a>
+        <button class="blue_button" type="button" @click="login">
+          Sign in <feather-log-in class="ml-2" />
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -64,7 +69,7 @@ function logout() {
 
 <style lang="postcss" scoped>
 .blue_button {
-  @apply text-blue-400 cursor-pointer border-2 border-blue-600 hover:bg-blue-600 hover:text-blue-200 px-3 py-2 rounded-lg flex flex-row items-center;
+  @apply text-blue-400 cursor-pointer border-2 border-blue-600 hover:bg-blue-600 hover:text-blue-200 px-3 py-2 rounded-lg items-center;
 }
 .green_button {
   @apply border-2 border-green-600 rounded-lg px-3 py-2 text-green-400 cursor-pointer hover:bg-green-600 hover:text-green-200 flex flex-row items-center;
