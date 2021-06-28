@@ -251,8 +251,8 @@ export default defineComponent({
                 tpnl_bva.push([ btc[0], pnl_bva.toFixed(2) ])
             }
 
-            state.series[0].data = tpnl_btc
-            state.series[1].data = tpnl_bva
+            if (state.series[0].data.length===0) state.series[0].data = tpnl_btc
+            if (state.series[1].data.length===0) state.series[1].data = tpnl_bva
 
             state.total_pnl = tpnl_bva[tpnl_bva.length-1][1]
             state.avg_pnl = _.meanBy(signals, o => {return Number(o.pnl)}).toFixed(2)

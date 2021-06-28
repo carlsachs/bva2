@@ -510,8 +510,10 @@ export default {
         pnl_bva = _.sumBy(sum, o => { return Number(o.pnl) }) / 15 + pnl_bva
         tpnl_bva.push([ btc[0], pnl_bva.toFixed(2) ])
       }
+
       if (state.series[0].data.length===0) state.series[0].data = tpnl_btc
       if (state.series[1].data.length===0) state.series[1].data = tpnl_bva
+      
       state.total_pnl = tpnl_bva.length?tpnl_bva[tpnl_bva.length-1][1]:0
       state.avg_pnl = _.meanBy(trades, o => {return Number(o.pnl)}).toFixed(2)
       const positifs = trades.filter( bva => { return Number(bva.pnl) > 0 })
