@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row items-center justify-center p-2 space-x-5 mb-5">
     <!--DarkModeToggle /-->
-    <button class="dark_button p-2" type="button" @click="$router.go(-1)">
+    <button v-if="!isHomePage" class="dark_button p-2" type="button" @click="$router.go(-1)">
       <feather-chevron-left class="" />
     </button>
     <router-link v-if="isHomePage && !auth0.state.isAuthenticated" to="/profile">
