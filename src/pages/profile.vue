@@ -1,7 +1,7 @@
 <template>
 
   <div v-if="!auth0.state.isAuthenticated || !auth0.state.user" class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
-    <div class="mt-10">BVA Account preview</div>
+    <div class="mt-10 text-sm"><i>Account Preview</i></div>
     <a href="/bva-account.png" target="_new">
       <img class="mx-auto mb-5" alt="BvA Account" src="/bva-account.png" />
     </a>
@@ -111,6 +111,13 @@
             />
             <div class="mt-9">If you want to pay with cryptos,</div>
             <div class="">please contact us at <a href="mailto:support@bitcoinvsalts.com">support@bitcoinvsalts.com</a></div>
+              <div class="mt-10 text-sm"><i>{{ subscription.name }} Setup Preview</i></div>
+              <a v-if="subscription.name === 'BVA'" href="/bva_setup.png" target="_new">
+                <img class="mx-auto mb-5" alt="setup preview" src="/bva_setup.png" />
+              </a>
+              <a v-if="subscription.name === 'BVA LONG ONLY'" href="/bva_long_only_setup.png" target="_new">
+                <img class="mx-auto mb-5" alt="setup preview" src="/bva_long_only_setup.png" />
+              </a>
           </div>
         </div>
         <div v-if="cancel_sub_result" :class="{'text-red-500' : cancel_sub_result!=='success', 'text-indigo-500':cancel_sub_result==='success'}">{{ cancel_sub_result }}</div>
