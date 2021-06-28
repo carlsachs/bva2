@@ -22,7 +22,7 @@
         <feather-log-out class="" />
       </button>
       <div v-else>
-        <a href="/bva-account.png" target="_new" class="blue_button mr-5">
+        <a href="/profile" target="_new" class="blue_button mr-5">
           Account Preview
         </a>
         <button class="blue_button" type="button" @click="login">
