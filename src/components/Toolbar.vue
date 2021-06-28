@@ -4,11 +4,14 @@
     <button class="dark_button p-2" type="button" @click="$router.go(-1)">
       <feather-chevron-left class="" />
     </button>
-    <!--router-link v-if="!isHomePage" to="/">
+    <router-link v-if="isHomePage" to="/profile">
       <button class="blue_button" type="button">
-        Home
+        Account Preview
       </button>
-    </router-link-->
+    </router-link>
+    <!--a href="/profile" target="_new" class="blue_button mr-5">
+      Account Preview
+    </a-->
     <router-link v-if="auth0.state.isAuthenticated" to="/profile">
       <button class="green_button font-bold" type="button">
         Your Account
@@ -22,11 +25,8 @@
         <feather-log-out class="" />
       </button>
       <div v-else>
-        <a href="/profile" target="_new" class="blue_button mr-5">
-          Account Preview
-        </a>
         <button class="blue_button" type="button" @click="login">
-          Sign in <feather-log-in class="ml-2" />
+          Sign in<feather-log-in class="ml-1" />
         </button>
       </div>
     </div>
