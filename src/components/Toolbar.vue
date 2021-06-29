@@ -12,7 +12,7 @@
     <!--a href="/profile" target="_new" class="blue_button mr-5">
       Account Preview
     </a-->
-    <router-link v-if="auth0.state.isAuthenticated" to="/profile">
+    <router-link v-if="!isAccountPage && auth0.state.isAuthenticated" to="/profile">
       <button class="green_button font-bold" type="button">
         Your Account
       </button>
@@ -42,13 +42,20 @@ const auth0: any = inject("auth0")
 
 const router = useRouter()
 
-const state = reactive({ auth0, isHomePage:(router.currentRoute._rawValue.path==='/') })
+const state = reactive({ 
+  auth0, 
+  isHomePage:(router.currentRoute._rawValue.path==='/'),
+  isAccountPage:(router.currentRoute._rawValue.path==='/profile') 
+})
 
 const isHomePage = toRef(state, "isHomePage");
+const isAccountPage = toRef(state, "isAccountPage");
 
 router.beforeEach( (to, from) => {
   if (to.name == 'index') { isHomePage.value = true }
   else { isHomePage.value = false }
+  if (to.name == 'profile') { isAccountPage.value = true }
+  else { isAccountPage.value = false }
 })
 
 async function login() {
