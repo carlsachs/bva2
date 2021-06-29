@@ -8,7 +8,7 @@
             We use the latest Machine Learning practices to train our prediction models.
         </div>
         <div class="text-xl text-cyan-200 mt-10">
-            <a href="mailto:support@bitcoinvsalts.com" target="_new" class="underline">Contact us.</a>
+            Feel free to send us an email at <a href="mailto:support@bitcoinvsalts.com" target="_new">support@bitcoinvsalts.com</a>.
         </div>
 
     </div>
