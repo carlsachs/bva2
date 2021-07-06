@@ -29,8 +29,8 @@
               </label>
             </div>
             <div :class="{ 'bg-indigo-900 bg-opacity-20': Number(subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)===0 }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
-              <div v-if="subs[subs?.findIndex(sub => (sub.code == subscription.code))].code === 'bva_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> and <b>Margin</b> wallets. We recommend using 1/20th of your total BTC to cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
-              <div v-if="subs[subs?.findIndex(sub => (sub.code == subscription.code))].code === 'bva_long_only_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> wallet. We recommend using 1/20th of your total BTC to cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
+              <div v-if="subs[subs?.findIndex(sub => (sub.code == subscription.code))].code === 'bva_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> and <b>Margin</b> wallets. We recommend using 1/20th of your total BTC to safely cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
+              <div v-if="subs[subs?.findIndex(sub => (sub.code == subscription.code))].code === 'bva_long_only_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> wallet. We recommend using 1/20th of your total BTC to safely cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
               <div class="mt-10 text-center font-bold text-xl">BTC amount to trade for each signal: &nbsp;</div>
               <input
                 size="50" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
