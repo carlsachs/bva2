@@ -37,24 +37,24 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody v-if="signals" class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in signals" :key="row.id" v-on:click="openSignal(row)">
+                                    <tbody v-if="signals" class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in signals" :key="row.id">
                                         <tr>
-                                            <td v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                            <td @click="openSignal(row)" v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                 {{ moment(Number(row.buy_time)).fromNow() }}
                                             </td>
-                                            <td v-else :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                            <td @click="openSignal(row)" v-else :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                 {{ moment(Number(row.sell_time)).fromNow() }}
                                             </td>
-                                            <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
+                                            <td @click="openStrat(row.stratid)" class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
                                                 {{ row.stratname }}
                                             </td>
-                                            <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
+                                            <td @click="openSignal(row)" class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
                                                 {{ row.pair }}
                                             </td>
-                                            <td v-if="row.pnl" :class="{ 'text-green-500': Number(row.pnl)>0, 'text-red-500': Number(row.pnl)<0 }" class="px-6 py-4 font-bold whitespace-no-wrap text-sm leading-5">
+                                            <td @click="openSignal(row)" v-if="row.pnl" :class="{ 'text-green-500': Number(row.pnl)>0, 'text-red-500': Number(row.pnl)<0 }" class="px-6 py-4 font-bold whitespace-no-wrap text-sm leading-5">
                                                 {{ Number(row.pnl).toFixed(2) }}%
                                             </td>
-                                            <td v-else class="italic px-6 py-4 text-gray-400 whitespace-no-wrap text-sm leading-5">
+                                            <td @click="openSignal(row)" v-else class="italic px-6 py-4 text-gray-400 whitespace-no-wrap text-sm leading-5">
                                                 {{ prices && getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
                                             </td>
                                             <!--
@@ -65,16 +65,16 @@
                                                 {{ row.pnl ? Number(row.pnl).toFixed(2) : getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
                                             </td>
                                             -->
-                                            <td v-if="row.type==='SHORT'" class="text-orange-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                            <td @click="openSignal(row)" v-if="row.type==='SHORT'" class="text-orange-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                 {{ row.type }}
                                             </td>
-                                            <td v-else class="text-blue-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                            <td @click="openSignal(row)" v-else class="text-blue-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                 {{ row.type }}
                                             </td>
-                                            <td class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                            <td @click="openSignal(row)" class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                 {{ row.buy_price ? row.buy_price : '---' }}
                                             </td>
-                                            <td class="text-red-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                            <td @click="openSignal(row)" class="text-red-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                 {{ row.sell_price ? row.sell_price : '---' }}
                                             </td>
                                         </tr>
@@ -112,6 +112,11 @@ export default defineComponent({
 
     const openSignal = (row) => {
         router.push("/signal/"+ row.id)
+    }
+
+    const openStrat = (id) => {
+        console.log("openStrat")
+        router.push("/strat/"+ id)
     }
 
     const auth0: any = inject("auth0")
@@ -173,6 +178,7 @@ export default defineComponent({
       ...toRefs(state),
       moment,
       openSignal,
+      openStrat,
       getCurrentPnL,
       prices,
       login,
