@@ -7,7 +7,35 @@
         <div class="text-xl text-cyan-200 mt-10">
             It was created to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.
         </div>
-        <Hero/>
+
+        <div class="p-4 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1 sm:gap-5">
+            <div class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
+            <a href="https://www.binance.com/?ref=W5BD94FW" target="_new">
+                <img width=300 class="mx-auto mb-5" alt="BvA Discord" src="/binance.svg" />
+                <div class="text-5xl text-white">Official Binance Broker</div>
+            </a>
+            </div>
+            <div class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
+            <router-link to="/signals">
+                <img width=200 class="mx-auto mb-5" alt="Strategy Incubator" src="/creator.png" />
+                <div class="text-5xl text-white">Our Strategy Incubator</div>
+            </router-link>
+            </div>
+        </div>
+        <div class="p-4 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1 sm:gap-5">
+            <div class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
+            <a href="https://discordapp.com/invite/4EQrEgj" target="_new">
+                <img class="mx-auto mb-5" alt="BvA Discord" src="/discord.png" />
+                <div class="text-5xl text-white">1200+ Discord Members</div>
+            </a>
+            </div>
+            <div class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
+            <a href="https://github.com/bitcoinvsalts/node-binance-trader" target="_new">
+                <img class="mx-auto mt-5 mb-13" alt="BvA GitHub" src="/github.png" />
+                <div class="text-5xl text-white">840+ GitHub Stars</div>
+            </a>
+            </div>
+        </div>
 
         <div class="text-xl text-cyan-200 mt-10">The mission of our two flagship strategies is simply to accumulate more BTC.</div>
 
