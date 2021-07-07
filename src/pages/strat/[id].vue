@@ -5,6 +5,8 @@
             <h1 class="text-5xl mb-7 text-uppercase font-semibold">{{ stratname }}</h1>
 
             <apexchart type="area" height="400" :options="chartOptions" :series="series"></apexchart>
+
+            <div v-if="description" class="m-7 text-3xl">{{ description }}</div>
             
             <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
                 <div class="flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
@@ -12,7 +14,7 @@
                     <div class="flex-auto text-justify text-blue-300 block">{{ Number(total_pnl * 15).toFixed(2) }}%</div>
                 </div>
 
-                <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
+                <div v-if="max_concurrent" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
                     <div class="flex-auto">Max. Concurrent Trades</div>
                     <div class="flex-auto text-justify text-blue-300 block">{{ max_concurrent }}</div>
                 </div>
@@ -167,7 +169,8 @@ export default defineComponent({
         ///////// ///////// ///////// /////////
         auth0, 
         stratname: '',
-        max_concurrent: 15,
+        max_concurrent: 0,
+        description: '',
         total_pnl: 0,
         avg_pnl: 0,
         strat_lifetime: 0,
@@ -206,7 +209,7 @@ export default defineComponent({
 
     const getStratData = () => {
         console.log("getStratData...")
-        return axios.get('/api/strategy?id='+props.id)
+        return axios.get('/api/stratdata?id='+props.id)
     }
 
     const { data: signals } = useRequest( () =>  getStratData(), {
@@ -246,7 +249,6 @@ export default defineComponent({
                 const sum = signals.filter( bva => { 
                     return Number(bva.updated_time) > btc[0] && Number(bva.updated_time) <= btc[6] 
                 })
-                //if (sum.length > state.max_concurrent) state.max_concurrent = sum.length
                 pnl_bva = _.sumBy(sum, o => { return Number(o.pnl) / 15 }) + pnl_bva
                 tpnl_bva.push([ btc[0], pnl_bva.toFixed(2) ])
             }
@@ -294,6 +296,17 @@ export default defineComponent({
         //await auth0.client.loginWithPopup()
         //console.log("-1-1-1-1-1-1-", await auth0.client.getUser() )
     }
+
+    onMounted(() => {
+        axios.get('/api/strategy?id=' + props.id)
+        .then( s => {
+            state.max_concurrent = s.data.max_concurrent
+            state.description = s.data.description
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    })
 
     return {
       ...toRefs(state),

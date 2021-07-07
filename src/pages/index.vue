@@ -149,7 +149,7 @@ export default defineComponent({
 
     onMounted(() => {
         for ( const i in state.strategies ) {
-            axios.get('/api/strategy?id=' + state.strategies[i].id)
+            axios.get('/api/stratdata?id=' + state.strategies[i].id)
             .then( rows => {
                 let tpnl_bva = []
                 let pnl_bva = 0
