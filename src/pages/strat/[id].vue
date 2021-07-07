@@ -235,7 +235,7 @@ export default defineComponent({
 
         state.stratname = signals[0].stratname
         state.series[1].name = signals[0].stratname
-        state.strat_lifetime = parseInt((signals[0].updated_time - signals[signals.length-1].updated_time)/86400000)
+        state.strat_lifetime = parseInt((Date.now() - signals[signals.length-1].sell_time)/86400000)
         const days = 10 + state.strat_lifetime
         state.total_signals = signals.length
         
@@ -267,6 +267,11 @@ export default defineComponent({
         endStats(Date.now())
     })
 
+    const loadMore = () => {
+        loadMoreStore.moreStrat()
+        console.log("loadMore...", loadMoreStore.strat)
+    }
+
     const getCurrentPnL = (symbol, sell_price, buy_price) => {
         let pnl = 0
         if (prices.items.length) {
@@ -281,11 +286,6 @@ export default defineComponent({
             }
         }
         return pnl.toFixed(2)
-    }
-
-    const loadMore = () => {
-        loadMoreStore.moreStrat()
-        console.log("loadMore...", loadMoreStore.strat)
     }
 
     async function login() {
