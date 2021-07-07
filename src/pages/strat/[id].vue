@@ -4,7 +4,7 @@
 
             <h1 class="text-5xl mb-7 text-uppercase font-semibold">{{ stratname }}</h1>
 
-            <apexchart type="area" height="400" :options="chartOptions" :series="series"></apexchart>
+            <apexchart ref="stratchart" type="area" height="400" :options="chartOptions" :series="series"></apexchart>
 
             <div v-if="description" class="m-7 text-3xl">{{ description }}</div>
             
@@ -151,6 +151,8 @@ export default defineComponent({
   },
   setup: (props) => {
     startStats(Date.now())
+
+    const stratchart = ref(null)
     
     const prices = usePriceStore()
 
@@ -308,6 +310,10 @@ export default defineComponent({
         })
     })
 
+    watch( () => stratchart.value, (value) => {
+      setTimeout(function(){ value?.toggleSeries('Bitcoin') }, 4000)
+    })
+
     return {
       ...toRefs(state),
       moment,
@@ -318,7 +324,8 @@ export default defineComponent({
       loadMore,
       loadMoreStore,
       prices,
-      login
+      login,
+      stratchart
     }
   },
 })
