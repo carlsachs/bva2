@@ -192,30 +192,30 @@
                       </th>
                     </tr>
                   </thead>
-                  <tbody v-if="trades" v-for="(row, i) in trades.slice(0, 10 * loadMoreStore.profile)" :key="row.id" v-on:click="openTradedSignal(row)" class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40">
+                  <tbody v-if="trades" v-for="(row, i) in trades.slice(0, 10 * loadMoreStore.profile)" :key="row.id" class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40">
                     <tr>
-                      <td v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                      <td @click="openTradedSignal(row)" v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                           {{ moment(Number(row.buy_time)).fromNow() }}
                       </td>
-                      <td v-else :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                      <td @click="openTradedSignal(row)" v-else :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                           {{ moment(Number(row.sell_time)).fromNow() }}
                       </td>
-                      <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
+                      <td @click="openTradedSignal(row)" class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
                           {{ row.pair }}
                       </td>
-                      <td v-if="row.pnl" :class="{ 'text-green-500': Number(row.pnl)>0, 'text-red-500': Number(row.pnl)<0 }" class="px-6 py-4 font-bold whitespace-no-wrap text-sm leading-5">
+                      <td @click="openTradedSignal(row)" v-if="row.pnl" :class="{ 'text-green-500': Number(row.pnl)>0, 'text-red-500': Number(row.pnl)<0 }" class="px-6 py-4 font-bold whitespace-no-wrap text-sm leading-5">
                           {{ Number(row.pnl).toFixed(2) }}%
                       </td>
-                      <td v-else class="italic px-6 py-4 text-gray-400 whitespace-no-wrap text-sm leading-5">
+                      <td @click="openTradedSignal(row)" v-else class="italic px-6 py-4 text-gray-400 whitespace-no-wrap text-sm leading-5">
                           {{ getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
                       </td>
-                      <td v-if="row.type==='SHORT'" class="text-orange-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                      <td @click="openTradedSignal(row)" v-if="row.type==='SHORT'" class="text-orange-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                           {{ row.type }}
                       </td>
-                      <td v-else class="text-blue-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                      <td @click="openTradedSignal(row)" v-else class="text-blue-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                           {{ row.type }}
                       </td>
-                      <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
+                      <td @click="openStrat(row.stratid)" class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
                           {{ row.stratname }}
                       </td>
                       <!--
@@ -226,13 +226,13 @@
                           {{ row.pnl ? Number(row.pnl).toFixed(2) : getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
                       </td>
                       -->
-                      <td class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                      <td @click="openTradedSignal(row)" class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                           {{ row.buy_price ? row.buy_price : '---' }}
                       </td>
-                      <td class="text-red-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                      <td @click="openTradedSignal(row)" class="text-red-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                           {{ row.sell_price ? row.sell_price : '---' }}
                       </td>
-                      <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                      <td @click="openTradedSignal(row)" class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
                           {{ row.status }}
                       </td>
                     </tr>
@@ -365,6 +365,10 @@ export default {
 
     const openTradedSignal = (row) => {
       router.push("/trade/"+ row.id)
+    }
+
+    const openStrat = (id) => {
+        router.push("/strat/"+ id)
     }
 
     const state = reactive({ 
@@ -790,6 +794,7 @@ export default {
       changeStatus,
       changeNotif,
       trades,
+      openStrat
     }
 
   },

@@ -115,7 +115,6 @@ export default defineComponent({
     }
 
     const openStrat = (id) => {
-        console.log("openStrat")
         router.push("/strat/"+ id)
     }
 
