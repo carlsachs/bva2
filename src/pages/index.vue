@@ -8,7 +8,8 @@
             It was created to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>. We are currently tracking <a href='https://bitcoinvsaltcoins.com/topstrats' target="_new" class="underline">445 strategies</a>.
         </div>
 
-        <div class="text-xl text-cyan-200 mt-10">The mission of our two flagship strategies is simply to accumulate more BTC.</div>
+        <div class="text-xl text-cyan-200 mt-10">We are currently offering subscriptions to only two strategies but more are coming.</div>
+        <div class="text-xl text-cyan-200 mt-3">The mission of our two flagship strategies is simply to accumulate more BTC.</div>
 
         <div v-for="(strategy, i) in strategies" :key="strategy.name" class="mx-2 my-7 py-4 border-2 border-blue-900 rounded-lg text-white relative">
             
