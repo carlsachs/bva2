@@ -22,7 +22,7 @@
     Bitcoin Vs. Alts © 2019 – 2021
   </div>
   <div class="text-center text-xs text-indigo-300 p-5 m-2 flex flex-row items-center justify-center p-2 space-x-5 mb-5">
-    {{ stats.timing }} secs - 2.1.0
+    {{ stats.timing }} secs - 2.2.0
   </div>
 </template>
 
