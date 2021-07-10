@@ -3,7 +3,8 @@
 
     <div ref="myEl" class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
-        <h1 class="text-5xl mb-7 text-uppercase font-semibold">{{ pair }}</h1>
+      <h1 class="text-5xl mb-7 text-uppercase font-semibold">{{ pair }}</h1>
+      <a :href="'/strat/'+stratid" class="text-xl mb-7 text-uppercase font-semibold">From {{ stratname }}</a>
 
         <apexchart type="candlestick" height="400" :options="chartOptions" :series="series"></apexchart>
         
@@ -71,6 +72,8 @@ export default defineComponent({
     const state = reactive({
       signal_type: null,
       pair: null,
+      stratname: "",
+      stratid: null,
       pnl: 0,
       buy_price: null,
       sell_price: null,
@@ -101,6 +104,8 @@ export default defineComponent({
           //console.log(signal.data[0])
 
           state.pair = signal.data[0].pair
+          state.stratname = signal.data[0].stratname
+          state.stratid = signal.data[0].stratid
           state.signal_type = signal.data[0].type
           state.buy_price = signal.data[0].buy_price
           state.sell_price = signal.data[0].sell_price
