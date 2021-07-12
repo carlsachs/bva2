@@ -44,7 +44,7 @@
                     <div class="flex-auto text-justify text-blue-300 block">{{ strat_lifetime }} days</div>
                 </div>
 
-                <div v-if="!auth0.state.isAuthenticated" @click="login" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-green-900 hover:bg-opacity-100 transition">
+                <div v-if="false && !auth0.state.isAuthenticated" @click="login" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-green-900 hover:bg-opacity-100 transition">
                     <div class="flex-auto text-green-500 text-xl font-semibold">Subscribe</div>
                 </div>
             </div>
@@ -229,6 +229,7 @@ export default defineComponent({
     watch(signals, (signals) => {
 
         console.log("signals...", signals.length)
+        console.log("signals...", signals[signals.length-1].sell_time)
     
         let tpnl_btc = []
         let tpnl_bva = []
@@ -237,7 +238,7 @@ export default defineComponent({
 
         state.stratname = signals[0].stratname
         state.series[1].name = signals[0].stratname
-        state.strat_lifetime = parseInt((Date.now() - signals[signals.length-1].sell_time)/86400000)
+        state.strat_lifetime = signals[signals.length-1].sell_time ? parseInt((Date.now() - signals[signals.length-1].sell_time)/86400000) : 0
         const days = 10 + state.strat_lifetime
         state.total_signals = signals.length
         
