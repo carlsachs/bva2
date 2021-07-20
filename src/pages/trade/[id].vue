@@ -267,8 +267,8 @@ export default defineComponent({
           state.qty = Number(signal.data[0].qty)
           state.market_type = signal.data[0].market_type
           state.status = signal.data[0].status
-          const startTime = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time) - 19000000 : Number(signal.data[0].sell_time) - 19000000
-          const endTime = signal.data[0].pnl ? (signal.data[0].type === "SHORT" ? Number(signal.data[0].buy_time) + 19000000 : Number(signal.data[0].sell_time) + 19000000) : Date.now()
+          const startTime = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time) - 49000000 : Number(signal.data[0].sell_time) - 49000000
+          const endTime = signal.data[0].pnl ? (signal.data[0].type === "SHORT" ? Number(signal.data[0].buy_time) + 49000000 : Number(signal.data[0].sell_time) + 49000000) : Date.now()
           let interv = '15m'
           if ( ((endTime-startTime)/86400000) > 4) { interv = '1h' }
           else if ( ((endTime-startTime)/86400000) > 20) { interv = '1d' }
