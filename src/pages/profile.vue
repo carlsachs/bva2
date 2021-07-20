@@ -109,13 +109,6 @@
             />
             <div class="mt-9">If you want to pay with cryptos,</div>
             <div class="">please contact us at <a href="mailto:support@bitcoinvsalts.com">support@bitcoinvsalts.com</a></div>
-              <div class="mt-10 text-sm"><i>{{ subscription.name }} Setup Preview</i></div>
-              <div v-if="subscription.name === 'BVA'" href="/bva_setup.png" target="_new">
-                <img class="mx-auto mb-5" alt="setup preview" src="/bva_setup.png" />
-              </div>
-              <div v-if="subscription.name === 'BVA LONG ONLY'" href="/bva_long_only_setup.png" target="_new">
-                <img class="mx-auto mb-5" alt="setup preview" src="/bva_long_only_setup.png" />
-              </div>
           </div>
         </div>
         <div v-if="cancel_sub_result" :class="{'text-red-500' : cancel_sub_result!=='success', 'text-indigo-500':cancel_sub_result==='success'}">{{ cancel_sub_result }}</div>
