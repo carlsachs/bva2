@@ -80,6 +80,10 @@
             <div class="flex-auto font-bold">Confirm</div>
         </div>
 
+        <a target="_new" :href="'https://www.binance.com/en/trade/'+pair+'?theme=dark&type=cross&ref=W5BD94FW'" class="group bg-indigo-900 flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+            <div class="flex-auto font-bold" style="color:#F0B90B;">Binance</div>
+        </a>
+
       </div>
 
       <div v-if="true" class="mt-4 p-4">
