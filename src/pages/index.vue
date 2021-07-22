@@ -74,10 +74,10 @@
             </a>
             </div>
             <div class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
-            <router-link to="/signals">
+            <a href="https://bitcoinvsaltcoins.com" target="_new">
                 <img width=132 class="mx-auto mb-5" alt="Strategy Incubator" src="/creator.png" />
                 <div class="text-3xl text-white">Our Strategy Incubator</div>
-            </router-link>
+            </a>
             </div>
         </div>
         <div class="p-4 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1 sm:gap-5">

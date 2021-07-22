@@ -2,9 +2,7 @@
     <div>
         <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
-            <h1 class="text-5xl mb-7 text-uppercase font-semibold">Our Strategy Incubator</h1>
-
-            <div class="m-7 text-3xl">Latest signals tracked by our <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.</div>
+            <h1 class="text-5xl mb-7 text-uppercase font-semibold">Signal Firehose</h1>
 
             <div v-if="true" class="mt-4 p-4">
                 <div class="flex flex-col">
