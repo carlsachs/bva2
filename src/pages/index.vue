@@ -5,7 +5,7 @@
             Bitcoin Vs. Alts, BVA, is a marketplace offering subscriptions to the best crypto trading strategies. 
         </div>
         <div class="text-xl text-cyan-200 mt-10">
-            It was created to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>. We are currently tracking <a href='https://bitcoinvsaltcoins.com/topstrats' target="_new" class="underline">445 strategies</a>.
+            It was created to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>. We are currently tracking around <a href='https://bitcoinvsaltcoins.com/topstrats' target="_new" class="underline">600 strategies</a>.
         </div>
 
         <div class="text-xl text-cyan-200 mt-10">We are currently offering only two subscriptions but more are coming soon.</div>
