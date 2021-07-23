@@ -4,19 +4,16 @@
     <button v-if="!isHomePage" class="dark_button p-2" type="button" @click="$router.go(-1)">
       <feather-chevron-left class="" />
     </button>
-    <router-link v-if="isHomePage && !auth0.state.isAuthenticated" to="/profile">
+    <!--router-link v-if="isHomePage && !auth0.state.isAuthenticated" to="/profile">
       <button class="blue_button" type="button">
         Account Preview
       </button>
-    </router-link>
+    </router-link-->
     <router-link to="/signals">
       <button class="blue_button" type="button">
         Signal Firehose
       </button>
     </router-link>
-    <!--a href="/profile" target="_new" class="blue_button mr-5">
-      Account Preview
-    </a-->
     
     <router-link v-if="!isAccountPage && auth0.state.isAuthenticated" to="/profile">
       <button class="green_button font-bold" type="button">
