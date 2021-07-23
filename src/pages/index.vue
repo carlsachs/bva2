@@ -2,13 +2,18 @@
     <div>
 
         <div class="text-3xl text-cyan-200 mt-10">
-            Bitcoin Vs. Alts, BVA, is a marketplace offering subscriptions to the best crypto auto trading strategies. Our robot trader will manage your crypto portfolio for you.
+            Bitcoin Vs. Alts, BVA, is a marketplace offering subscriptions to the best crypto trading strategies.
+        </div>
+        <div class="text-3xl text-cyan-200 mt-10">
+            Just let our robot trader manage your crypto portfolio for you.
         </div>
         <div class="text-xl text-cyan-200 mt-10">
-            It was created to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>. We are currently tracking more than <a href='https://bitcoinvsaltcoins.com/topstrats' target="_new" class="underline">1000 strategies</a>.
+            We are currently tracking more than <router-link to="/signals" class="underline">1000 strategies</router-link>.
         </div>
-
-        <div class="text-xl text-cyan-200 mt-10">We are currently offering only two subscriptions but more are coming soon.</div>
+        <div class="text-xl text-cyan-200 mt-10">
+            It was created to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.
+        </div>
+        <div class="text-xl text-cyan-200 mt-10">We are currently offering two subscriptions but more are coming soon.</div>
         <div class="text-xl text-cyan-200 mt-3">The mission of our two flagship strategies is simply to accumulate more BTC.</div>
 
         <div v-for="(strategy, i) in strategies" :key="strategy.name" class="mx-2 my-7 py-4 border-2 border-blue-900 rounded-lg text-white relative">
