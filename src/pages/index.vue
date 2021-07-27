@@ -10,11 +10,9 @@
         <div class="text-xl text-cyan-200 mt-10">
             We are currently tracking more than <router-link to="/signals" class="underline">1000 strategies</router-link>.
         </div>
-        <div class="text-xl text-cyan-200 mt-10">
+        <div class="text-xl text-cyan-200 mt-3">
             It was created to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.
         </div>
-        <div class="text-xl text-cyan-200 mt-10">We are currently offering two subscriptions but more are coming soon.</div>
-        <div class="text-xl text-cyan-200 mt-3">The mission of our two flagship strategies is simply to accumulate more BTC.</div>
 
         <div v-for="(strategy, i) in strategies" :key="strategy.name" class="mx-2 my-7 py-4 border-2 border-blue-900 rounded-lg text-white relative">
             
@@ -25,7 +23,7 @@
             <div class="m-7 text-3xl">{{ strategy.description }}</div>
 
             <div v-if="!auth0.state.isAuthenticated" @click="login" class="uppercase mx-10 p-4 bg-indigo-900 text-orange-500 font-bold group flex-auto items-center shadow-xl gap-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
-                Limited Availability $19.80 
+                {{ strategy.price }} 
             </div>
             <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
                 <div class="flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5">
@@ -35,7 +33,7 @@
 
                 <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5">
                     <div class="flex-auto">Max. Concurrent Trades</div>
-                    <div class="flex-auto text-justify text-blue-300 block">15</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{strategy.max_concurrent}}</div>
                 </div>
 
                 <div class="flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5">
@@ -68,7 +66,7 @@
                 </router-link>
             </div>
 
-            <div class="mt-5 italic">* PNL calculated using 1/15 of the whole BTC amount for each trade as recommended.</div>
+            <div class="mt-5 italic">* PNL calculated using 1/{{strategy.max_concurrent}} of the whole BTC amount for each trade as recommended.</div>
         </div>
 
         <div class="p-4 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1 sm:gap-5">
@@ -131,12 +129,14 @@ export default defineComponent({
                 id: 466,
                 name: "BVA Strategy",
                 series: [{ name: "BVA", data: [] }],
-                description: "The BVA strategy is the result of a prediction model trained using the latest Machine Learning practices. We use specific data sets made of crypto market data, social sentiments, TAs, traditional financial market data and some secret sauce.",
+                description: "The mission of the BVA strategy is simply to accumulate more BTC. It is the result of a prediction model trained using the latest Machine Learning practices. We use specific data sets made of crypto market data, social sentiments, TAs, traditional financial market data and some secret sauce.",
                 total_pnl: 0,
                 total_signals: 0,
                 avg_pnl: 0,
                 strat_lifetime: 0,
                 win_rate: 0,
+                max_concurrent: 15,
+                price: "Limited Availability $19.80",
             },
             {
                 id: 595,
@@ -148,19 +148,22 @@ export default defineComponent({
                 avg_pnl: 0,
                 strat_lifetime: 0,
                 win_rate: 0,
+                max_concurrent: 15,
+                price: "Limited Availability $19.80",
             },
-            /*
             {
-                id: 670,
-                name: "Woltiks Strategy",
-                series: [{ name: "Woltiks", data: [] }],
+                id: 882,
+                name: "DS STRATEGY2 USDT",
+                series: [{ name: "DS2", data: [] }],
+                description: "If you don't want to hold BTC but want to trade USDT instead. Here is the best strategy for you.",
                 total_pnl: 0,
                 total_signals: 0,
                 avg_pnl: 0,
                 strat_lifetime: 0,
                 win_rate: 0,
+                max_concurrent: 20,
+                price: "Limited Availability 0.07 BNB",
             }
-            */
         ],
         user: null,
         //rows: [],
