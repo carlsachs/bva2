@@ -99,16 +99,17 @@
           </div>
           <div v-else>
             <div class="my-5 font-bold text-3xl text-blue-300">{{ subscription.count }} subscriptions left</div>
-            <div class="my-5 font-bold text-green-500 text-3xl">{{ subscription.price }} USD per month</div>
+            <div class="my-5 font-bold text-green-500 text-3xl">{{ subscription.price }} {{ subscription.currency }} per month</div>
             <Stripe
+              v-if="subscription.stripe_id" 
               :customerEmail="auth0.state.user?.email" 
               :clientReferenceId="auth0.state.user?.data?.id" 
               :stripeId="subscription.stripe_id"
               :description="subscription.name"
               :price="subscription.price"
             />
-            <div class="mt-9">If you want to pay with cryptos,</div>
-            <div class="">please contact us at <a href="mailto:support@bitcoinvsalts.com">support@bitcoinvsalts.com</a></div>
+            <div v-if="subscription.currency==='USD'" class="mt-9">If you want to pay with cryptos,</div>
+            <div v-if="subscription.currency==='USD'" class="">please contact us at <a href="mailto:support@bitcoinvsalts.com">support@bitcoinvsalts.com</a></div>
           </div>
         </div>
         <div v-if="cancel_sub_result" :class="{'text-red-500' : cancel_sub_result!=='success', 'text-indigo-500':cancel_sub_result==='success'}">{{ cancel_sub_result }}</div>
@@ -429,6 +430,7 @@ export default {
           code: yo.code,
           price: Number(yo.price),
           count: Number(yo.count),
+          currency: yo.currency,
           stripe_id: yo.stripe_id,
         }
       }
