@@ -31,7 +31,7 @@
             <div :class="{ 'bg-indigo-900 bg-opacity-20': Number(subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)===0 }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
               <div v-if="subs[subs?.findIndex(sub => (sub.code == subscription.code))].code === 'bva_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> and <b>Margin</b> wallets. We recommend using 1/20th of your total BTC to safely cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
               <div v-if="subs[subs?.findIndex(sub => (sub.code == subscription.code))].code === 'bva_long_only_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> wallet. We recommend using 1/20th of your total BTC to safely cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
-              <div class="mt-10 text-center font-bold text-xl">BTC amount to trade for each signal: &nbsp;</div>
+              <div class="mt-10 text-center font-bold text-xl">{{ subscription.base_asset }} amount to trade for each signal: &nbsp;</div>
               <input
                 size="50" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
                 class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-blue-900"
@@ -108,6 +108,9 @@
               :description="subscription.name"
               :price="subscription.price"
             />
+            <div v-if="!subscription.stripe_id"  class="m-5">
+              <button class="green_button font-bold text-xl" @click="subscribe(subscription.code, subscription.name)">Subscribe to {{ subscription.name }}</button>
+            </div>
             <div v-if="subscription.currency==='USD'" class="mt-9">If you want to pay with cryptos,</div>
             <div v-if="subscription.currency==='USD'" class="">please contact us at <a href="mailto:support@bitcoinvsalts.com">support@bitcoinvsalts.com</a></div>
           </div>
@@ -431,6 +434,7 @@ export default {
           price: Number(yo.price),
           count: Number(yo.count),
           currency: yo.currency,
+          base_asset: yo.base_asset,
           stripe_id: yo.stripe_id,
         }
       }
@@ -568,6 +572,7 @@ export default {
         sub.status = 'PAUSED'
       }
       else {
+        console.log("setsubstatus setsubstatus setsubstatus")
         await axios.put('/api/setsubstatus?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
           { 
             status:sub.status, 
@@ -767,6 +772,44 @@ export default {
       loadMoreStore.moreProfile()
       console.log("loadMore...", loadMoreStore.profile)
     }
+
+    async function signInUser(token: String, sub: String) {
+      //axios.defaults.timeout = 30000;
+      console.log("signInUser", token, sub)
+      return axios
+        .get('/api/getusersignin?sub='+sub, { headers: {Authorization:`Bearer ${token}`} } )
+        .then( (response) => {
+          return response.data
+        })
+        .catch( (e) => {
+          console.log("signInUser ERROR", e)
+          return 0
+        })
+    }
+
+    const subscribe = async (code, name) => {
+      console.log("subscribe", code)
+      await axios.put('/api/subscribe?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
+        { 
+          code: code,
+          name: name 
+        },
+        { headers: {Authorization:`Bearer ${auth0.state.user?.token}`} }
+      )
+      .then( async (response) => {
+        console.log("subscribe.response.data:", response.data)
+        if (response.data.msg == 'success') {
+          const user_data = await signInUser(auth0.state.user.token, auth0.state.user.sub)
+          auth0.state.user.data = user_data
+        }
+        else {
+          console.log("---->", response.data.err)
+        }
+      })
+      .catch( (error) => {
+        console.log("ERROR subscribe", error)
+      })
+    }
     
     return {
       ...toRefs(state),
@@ -789,7 +832,8 @@ export default {
       changeStatus,
       changeNotif,
       trades,
-      openStrat
+      openStrat,
+      subscribe
     }
 
   },
@@ -804,6 +848,10 @@ export default {
 
 .red_button {
   @apply border-2 px-3 py-2 border-red-600 rounded-lg px-3 py-2 text-red-400 cursor-pointer hover:bg-red-600 hover:text-red-200;
+}
+
+.green_button {
+  @apply border-2 px-3 py-2 border-green-600 rounded-lg text-green-400 cursor-pointer bg-green-600 text-green-200;
 }
 
 ::v-deep .modal-container {
