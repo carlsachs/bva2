@@ -20,7 +20,7 @@
                 <label :for="'toogle'+subscription.code" class="flex items-center cursor-pointer">
                   <div class="relative">
                     <input :id="'toogle'+subscription.code" type="checkbox" class="sr-only" v-model="subscription.status" true-value="ACTIVE" false-value="PAUSED" 
-                      @change="changeStatus(subscription.status)"/>
+                      @change="changeStatus(subscription)"/>
                     <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
                     <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
                   </div>
