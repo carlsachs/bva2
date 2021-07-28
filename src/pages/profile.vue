@@ -7,48 +7,46 @@
   <div v-if="auth0.state.isAuthenticated && auth0.state.user" class="text-center text-gray-300">
 
     <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
-      <div v-for="(subscription, i) in Object.values(subscriptions)" :class="{ 'bg-indigo-900 bg-opacity-20': subs?.findIndex(sub => (sub.code === subscription.code)) >= 0 }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
+      <div v-for="subscription in subscriptions" :class="{ 'bg-indigo-900 bg-opacity-20': subscription.status!=='DISABLED' }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
         <div class="text-5xl font-extrabold text-blue-600"><b>{{ subscription.name }}</b></div>
         <hr class="w-5 mx-auto border-blue-400 my-8">
         <button v-if="!subs" class="blue_button" type="button">
           Loading <feather-loader class="ml-2" />
         </button>
         <div v-else>
-          <div class="mt-9" v-if="subs?.findIndex(sub => (sub.code == subscription.code) ) > -1">
+          <div class="mt-9" v-if="subscription.status!=='DISABLED'">
             <div class="flex items-center justify-center">
               <label :for="'toogle'+subscription.code" class="flex items-center cursor-pointer">
                 <div class="relative">
-                  <input :id="'toogle'+subscription.code" type="checkbox" class="sr-only" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].status" true-value="ACTIVE" false-value="PAUSED" 
-                    @change="changeStatus(subs[subs?.findIndex(sub => (sub.code == subscription.code))])"/>
+                  <input :id="'toogle'+subscription.code" type="checkbox" class="sr-only" v-model="subscription.status" true-value="ACTIVE" false-value="PAUSED" 
+                    @change="changeStatus(subscription.status)"/>
                   <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
                   <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
                 </div>
-                <div :class="{ 'text-green-200': subs[subs?.findIndex(sub => (sub.code == subscription.code))].status==='ACTIVE' }" class="text-3xl ml-3 text-gray-500 font-medium">
-                  {{ subs[subs?.findIndex(sub => (sub.code == subscription.code))].status }}
+                <div :class="{ 'text-green-200': subscription.status==='ACTIVE' }" class="text-3xl ml-3 text-gray-500 font-medium">
+                  {{ subscription.status }}
                 </div>
               </label>
             </div>
-            <div :class="{ 'bg-indigo-900 bg-opacity-20': Number(subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)===0 }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
-              <div v-if="subs[subs?.findIndex(sub => (sub.code == subscription.code))].code === 'bva_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> and <b>Margin</b> wallets. We recommend using 1/20th of your total BTC to safely cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
-              <div v-if="subs[subs?.findIndex(sub => (sub.code == subscription.code))].code === 'bva_long_only_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> wallet. We recommend using 1/20th of your total BTC to safely cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
+            <div :class="{ 'bg-indigo-900 bg-opacity-20': subscription.qty===0 }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
+              <div v-if="subscription.code === 'bva_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> and <b>Margin</b> wallets. We recommend using 1/20th of your total BTC to safely cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
+              <div v-if="subscription.code === 'bva_long_only_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> wallet. We recommend using 1/20th of your total BTC to safely cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
               <div class="mt-10 text-center font-bold text-xl">{{ subscription.base_asset }} amount to trade for each signal: &nbsp;</div>
               <input
-                size="50" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
+                size="50" v-model="subscription.qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
                 class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-blue-900"
                 @input="resetInput"
               >
               <div>
-                <button type="number" class="dark_button" 
-                  :disabled="!subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty" 
-                  @click="saveQty(subs[subs?.findIndex(sub => (sub.code == subscription.code))].sid, subs[subs?.findIndex(sub => (sub.code == subscription.code))].qty)">Save</button>
+                <button class="dark_button" @click="saveQty(subscription)">Save</button>
               </div>
               <span :class="{'text-orange-500' : qty_result!=='success', 'text-indigo-500':qty_result==='success'}">{{ qty_result }}</span>
             </div>
             <hr class="w-5 mx-auto border-blue-400 my-8">
-            <div :class="{ 'bg-indigo-900 bg-opacity-20': !subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
+            <div :class="{ 'bg-indigo-900 bg-opacity-20': !subscription.key || !subscription.secret }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
               <div class="my-3 text-xl font-bold"><a href="https://www.binance.com/en/my/settings/api-management?ref=W5BD94FW" target="_new"><u>Binance API Key Information</u></a>&nbsp;</div>
               <input
-                v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].key"
+                v-model="subscription.key"
                 placeholder="your api key"
                 aria-label="key"
                 type="text"
@@ -58,7 +56,7 @@
               >
               <br>
               <input
-                v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret"
+                v-model="subscription.secret"
                 placeholder="your api secret"
                 aria-label="secret"
                 type="text"
@@ -67,9 +65,9 @@
                 @input="resetInput"
               >
               <div class="my-3"><a href="https://www.binance.com/en/my/settings/api-management?ref=W5BD94FW" target="_new"><u>You can find your API key here.</u></a>&nbsp;</div>
-              <div><button class="dark_button" @click="saveStratKey(subs[subs?.findIndex(sub => (sub.code == subscription.code))].sid, subs[subs?.findIndex(sub => (sub.code == subscription.code))].key, subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret)">Save</button></div>
+              <div><button class="dark_button" @click="saveStratKey(subscription)">Save</button></div>
               <span :class="{'text-orange-500' : key_result!=='success', 'text-indigo-500':key_result==='success'}">{{ key_result }}</span>
-              <div v-if="!subs[subs?.findIndex(sub => (sub.code == subscription.code))].key || !subs[subs?.findIndex(sub => (sub.code == subscription.code))].secret" class="mt-4 font-bold">Please enter your Binance API key information.</div>
+              <div v-if="!subscription.key || !subscription.secret" class="mt-4 font-bold">Please enter your Binance API key information.</div>
             </div>
             <hr class="w-5 mx-auto border-blue-400 my-8">
             <div class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto">
@@ -78,8 +76,8 @@
             <div class="flex items-center justify-center">
               <label :for="'tooglen'+subscription.code" class="flex items-center cursor-pointer">
                 <div class="relative">
-                  <input :id="'tooglen'+subscription.code" type="checkbox" class="sr-only" v-model="subs[subs?.findIndex(sub => (sub.code == subscription.code))].email_notif" true-value="true" false-value="false" 
-                    @change="changeNotif(subs[subs?.findIndex(sub => (sub.code == subscription.code))])"/>
+                  <input :id="'tooglen'+subscription.code" type="checkbox" class="sr-only" v-model="subscription.email_notif" true-value="true" false-value="false" 
+                    @change="changeNotif(subscription)"/>
                   <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
                   <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
                 </div>
@@ -87,12 +85,12 @@
             </div>
             <hr class="w-5 mx-auto border-blue-400 my-8">
             <div v-if="!subscription.confirm">
-              <button class="dark_button" @click="confirmCancelSubs(subscription.code)">
+              <button class="dark_button" @click="confirmCancelSubs(subscription)">
                 Cancel your {{ subscription.name }} subscription
               </button>
             </div>
             <div v-if="subscription.confirm">
-              <button class="red_button" type="button" @click="cancelSubs(subscription.code, subs[subs?.findIndex(sub => (sub.code == subscription.code))].sid)">
+              <button class="red_button" type="button" @click="cancelSubs(subscription)">
                 Confirm the cancelation of your subscription <feather-check class="ml-2" />
               </button>
             </div>
@@ -109,7 +107,7 @@
               :price="subscription.price"
             />
             <div v-if="!subscription.stripe_id"  class="m-5">
-              <button class="green_button font-bold text-xl" @click="subscribe(subscription.code, subscription.name)">Subscribe to {{ subscription.name }}</button>
+              <button class="green_button font-bold text-xl" @click="subscribe(subscription)">Subscribe to {{ subscription.name }}</button>
             </div>
             <div v-if="subscription.currency==='USD'" class="mt-9">If you want to pay with cryptos,</div>
             <div v-if="subscription.currency==='USD'" class="">please contact us at <a href="mailto:support@bitcoinvsalts.com">support@bitcoinvsalts.com</a></div>
@@ -428,7 +426,7 @@ export default {
       const res = await axios.get('/api/products')
       let result = {}
       for (const yo of res.data) {
-        result[yo.code] = {
+        state.subscriptions.push({
           name: yo.name,
           code: yo.code,
           price: Number(yo.price),
@@ -436,20 +434,37 @@ export default {
           currency: yo.currency,
           base_asset: yo.base_asset,
           stripe_id: yo.stripe_id,
-        }
+          confirm: false,
+          status: 'DISABLED',
+        })
       }
-      state.subscriptions = result
     }
 
     getProducts()
 
     watch( () => auth0.state.user?.data, (user) => {
-      console.log("WATCH USER DATA", JSON.stringify(user.subs.code))
+      //console.log("WATCH USER DATA", JSON.stringify(user.subs[0]))
       state.username = user.nickname
       state.id = user.id
       state.email = user.email
-      state.subs = user.subs
       state.token = auth0.state.user?.token
+      state.subs = user.subs
+      state.subscriptions.map( yo => {
+        if (state.subs?.findIndex(sub => (sub.code == yo.code)) > -1) {
+          yo.status = 'ACTIVE'
+          yo.sid = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].sid
+          yo.qty = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].qty
+          yo.key = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].key
+          yo.secret = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].secret
+        }
+        else {
+          yo.qty = 0.005
+          yo.sid = ""
+          yo.key = ""
+          yo.secret = ""
+        }
+      })
+      state.subscriptions = _.orderBy(state.subscriptions, 'status', 'ASC')
       run()
     })
 
@@ -481,17 +496,6 @@ export default {
         state.email = auth0.state.user?.data?.email
         run()
       }
-      /*
-      if (auth0.state.user?.data?.email && !state.email) {
-        console.log("Reload...")
-        state.token = auth0.state.user?.token
-        state.username = auth0.state.user?.data?.nickname
-        state.id = auth0.state.user?.data?.id
-        state.email = auth0.state.user?.data?.email
-        state.subs = auth0.state.user?.data?.subs
-        run()
-      }
-      */
     })
 
     watch( trades, (trades) => {
@@ -513,10 +517,8 @@ export default {
         pnl_bva = _.sumBy(sum, o => { return Number(o.pnl) }) / 15 + pnl_bva
         tpnl_bva.push([ btc[0], pnl_bva.toFixed(2) ])
       }
-
       if (state.series[0].data.length===0) state.series[0].data = tpnl_btc
       if (state.series[1].data.length===0) state.series[1].data = tpnl_bva
-      
       state.total_pnl = tpnl_bva.length?tpnl_bva[tpnl_bva.length-1][1]:0
       state.avg_pnl = _.meanBy(trades, o => {return Number(o.pnl)}).toFixed(2)
       const positifs = trades.filter( bva => { return Number(bva.pnl) > 0 })
@@ -524,35 +526,35 @@ export default {
       endStats(Date.now())
     })
 
-    const confirmCancelSubs = async (code) => {
-      console.log("confirmCancelSubs", code)
-      state.subscriptions[code].confirm = true
+    const confirmCancelSubs = async (subscription) => {
+      console.log("confirmCancelSubs", subscription)
+      subscription.confirm = true
     }
 
-    const cancelSubs = async (code, sid) => {
-      console.log("cancelSubs", code, sid )
+    const cancelSubs = async (subscription) => {
+      console.log("cancelSubs", subscription.code, subscription.sid )
 
       await axios.put('/api/cancelsub?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
-        { code: sid },
+        { code: subscription.sid },
         { headers: {Authorization:`Bearer ${auth0.state.user?.token}`} }
       )
       .then( (response) => {
         console.log("cancelSubs result:", response.data)
-        state.subscriptions[code].confirm = false
+        subscription.confirm = false
         if (response.data.msg == 'success') {
           state.cancel_sub_result = response.data.msg
         }
         else {
           state.cancel_sub_result = "error"
         }
-        const index = state.subs?.findIndex( sub => (sub.code == code) )
+        const index = state.subs?.findIndex( sub => (sub.code == subscription.code) )
         if (index > -1) state.subs?.splice(index, 1)
       })
       .catch( (error) => {
-        state.subscriptions[code].confirm = false
+        subscription.confirm = false
         console.log("ERROR cancelSubs:", error)
         state.cancel_sub_result = "error"
-        const index = state.subs?.findIndex( sub => (sub.code == code) )
+        const index = state.subs?.findIndex( sub => (sub.code == subscription.code) )
         if (index > -1) state.subs?.splice(index, 1)
       })
     }
@@ -631,10 +633,10 @@ export default {
       state.cancel_sub_result = null
     }
 
-    const saveStratKey = async (code, key, secret) => {
-      console.log("saveStratKey", code, key, secret )
+    const saveStratKey = async (subscription) => {
+      console.log("saveStratKey", subscription.code, subscription.key, subscription.secret )
       await axios.put('/api/setsubkey?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
-        { key: key, secret: secret, code: code, email: auth0.state?.user?.email },
+        { key: subscription.key, secret: subscription.secret, code: subscription.code, email: auth0.state?.user?.email },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
       .then( (response) => {
@@ -652,11 +654,11 @@ export default {
       })
     }
 
-    const saveQty = async (code, qty) => {
-      console.log("saveQty", code, qty)
-      if (Number(qty) >= 0.0005) {
+    const saveQty = async (subscription) => {
+      //console.log("saveQty", JSON.stringify(subscription))
+      if (Number(subscription.qty) >= 0.0005) {
         await axios.put('/api/setsubsqty?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
-          { qty: qty, code: code, email: auth0.state?.user?.email },
+          { qty: subscription.qty, code: subscription.code, email: auth0.state?.user?.email },
           { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
         )
         .then( (response) => {
@@ -787,12 +789,12 @@ export default {
         })
     }
 
-    const subscribe = async (code, name) => {
-      console.log("subscribe", code)
+    const subscribe = async (sub) => {
+      console.log("subscribe", sub.code)
       await axios.put('/api/subscribe?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
         { 
-          code: code,
-          name: name 
+          code: sub.code,
+          name: sub.name 
         },
         { headers: {Authorization:`Bearer ${auth0.state.user?.token}`} }
       )
