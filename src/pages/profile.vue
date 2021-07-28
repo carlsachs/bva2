@@ -452,16 +452,19 @@ export default {
       state.subscriptions.map( yo => {
         if (state.subs?.findIndex(sub => (sub.code == yo.code)) > -1) {
           yo.status = 'ACTIVE'
-          yo.sid = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].sid
           yo.qty = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].qty
           yo.key = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].key
           yo.secret = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].secret
+          yo.email_notif = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].email_notif
+          yo.sid = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].subs_id
         }
         else {
+          yo.status = 'DISABLED'
           yo.qty = 0.005
-          yo.sid = ""
           yo.key = ""
           yo.secret = ""
+          yo.email_notif = false
+          yo.sid = ""
         }
       })
       state.subscriptions = _.orderBy(state.subscriptions, 'status', 'ASC')
