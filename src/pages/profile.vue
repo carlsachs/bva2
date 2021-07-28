@@ -501,6 +501,27 @@ export default {
         state.username = auth0.state.user?.data?.nickname
         state.id = auth0.state.user?.data?.id
         state.email = auth0.state.user?.data?.email
+        state.subscriptions.map( yo => {
+          if (state.subs?.findIndex(sub => (sub.code == yo.code)) > -1) {
+            //console.log(JSON.stringify(state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))]))
+            yo.status = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].status
+            yo.qty = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].qty
+            yo.key = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].key
+            yo.secret = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].secret
+            yo.email_notif = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].email_notif
+            yo.sid = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].sid
+            //console.log(JSON.stringify(yo))
+          }
+          else {
+            yo.status = 'ZISABLED'
+            yo.qty = 0.005
+            yo.key = ""
+            yo.secret = ""
+            yo.email_notif = false
+            yo.sid = ""
+          }
+        })
+        state.subscriptions = _.orderBy(state.subscriptions, 'status', 'ASC')
         run()
       }
     })
