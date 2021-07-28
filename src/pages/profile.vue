@@ -7,113 +7,115 @@
   <div v-if="auth0.state.isAuthenticated && auth0.state.user" class="text-center text-gray-300">
 
     <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
-      <div v-for="subscription in subscriptions" :class="{ 'bg-indigo-900 bg-opacity-20': subscription.status!=='DISABLED' }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative">
-        <div class="text-5xl font-extrabold text-blue-600"><b>{{ subscription.name }}</b></div>
-        <hr class="w-5 mx-auto border-blue-400 my-8">
-        <button v-if="!subs" class="blue_button" type="button">
-          Loading <feather-loader class="ml-2" />
-        </button>
-        <div v-else>
-          <div class="mt-9" v-if="subscription.status!=='DISABLED'">
-            <div class="flex items-center justify-center">
-              <label :for="'toogle'+subscription.code" class="flex items-center cursor-pointer">
-                <div class="relative">
-                  <input :id="'toogle'+subscription.code" type="checkbox" class="sr-only" v-model="subscription.status" true-value="ACTIVE" false-value="PAUSED" 
-                    @change="changeStatus(subscription.status)"/>
-                  <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
-                  <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
-                </div>
-                <div :class="{ 'text-green-200': subscription.status==='ACTIVE' }" class="text-3xl ml-3 text-gray-500 font-medium">
-                  {{ subscription.status }}
-                </div>
-              </label>
-            </div>
-            <div :class="{ 'bg-indigo-900 bg-opacity-20': subscription.qty===0 }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
-              <div v-if="subscription.code === 'bva_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> and <b>Margin</b> wallets. We recommend using 1/20th of your total BTC to safely cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
-              <div v-if="subscription.code === 'bva_long_only_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> wallet. We recommend using 1/20th of your total BTC to safely cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
-              <div class="mt-10 text-center font-bold text-xl">{{ subscription.base_asset }} amount to trade for each signal: &nbsp;</div>
-              <input
-                size="50" v-model="subscription.qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
-                class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-blue-900"
-                @input="resetInput"
-              >
-              <div>
-                <button class="dark_button" @click="saveQty(subscription)">Save</button>
-              </div>
-              <span :class="{'text-orange-500' : qty_result!=='success', 'text-indigo-500':qty_result==='success'}">{{ qty_result }}</span>
-            </div>
-            <hr class="w-5 mx-auto border-blue-400 my-8">
-            <div :class="{ 'bg-indigo-900 bg-opacity-20': !subscription.key || !subscription.secret }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
-              <div class="my-3 text-xl font-bold"><a href="https://www.binance.com/en/my/settings/api-management?ref=W5BD94FW" target="_new"><u>Binance API Key Information</u></a>&nbsp;</div>
-              <input
-                v-model="subscription.key"
-                placeholder="your api key"
-                aria-label="key"
-                type="text"
-                autocomplete="false"
-                class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-gray-700"
-                @input="resetInput"
-              >
-              <br>
-              <input
-                v-model="subscription.secret"
-                placeholder="your api secret"
-                aria-label="secret"
-                type="text"
-                autocomplete="false"
-                class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-gray-700"
-                @input="resetInput"
-              >
-              <div class="my-3"><a href="https://www.binance.com/en/my/settings/api-management?ref=W5BD94FW" target="_new"><u>You can find your API key here.</u></a>&nbsp;</div>
-              <div><button class="dark_button" @click="saveStratKey(subscription)">Save</button></div>
-              <span :class="{'text-orange-500' : key_result!=='success', 'text-indigo-500':key_result==='success'}">{{ key_result }}</span>
-              <div v-if="!subscription.key || !subscription.secret" class="mt-4 font-bold">Please enter your Binance API key information.</div>
-            </div>
-            <hr class="w-5 mx-auto border-blue-400 my-8">
-            <div class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto">
-              <div class="my-3">Email notification:</div>
-            </div>
-            <div class="flex items-center justify-center">
-              <label :for="'tooglen'+subscription.code" class="flex items-center cursor-pointer">
-                <div class="relative">
-                  <input :id="'tooglen'+subscription.code" type="checkbox" class="sr-only" v-model="subscription.email_notif" true-value="true" false-value="false" 
-                    @change="changeNotif(subscription)"/>
-                  <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
-                  <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
-                </div>
-              </label>
-            </div>
-            <hr class="w-5 mx-auto border-blue-400 my-8">
-            <div v-if="!subscription.confirm">
-              <button class="dark_button" @click="confirmCancelSubs(subscription)">
-                Cancel your {{ subscription.name }} subscription
-              </button>
-            </div>
-            <div v-if="subscription.confirm">
-              <button class="red_button" type="button" @click="cancelSubs(subscription)">
-                Confirm the cancelation of your subscription <feather-check class="ml-2" />
-              </button>
-            </div>
-          </div>
+      <div v-for="subscription in subscriptions" >
+        <div v-if="subscription.count>0"  :class="{ 'bg-indigo-900 bg-opacity-20': subscription.status!=='ZISABLED' }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative"> 
+          <div class="text-5xl font-extrabold text-blue-600"><b>{{ subscription.name }}</b></div>
+          <hr class="w-5 mx-auto border-blue-400 my-8">
+          <button v-if="!subs" class="blue_button" type="button">
+            Loading <feather-loader class="ml-2" />
+          </button>
           <div v-else>
-            <div class="my-5 font-bold text-3xl text-blue-300">{{ subscription.count }} subscriptions left</div>
-            <div class="my-5 font-bold text-green-500 text-3xl">{{ subscription.price }} {{ subscription.currency }} per month</div>
-            <Stripe
-              v-if="subscription.stripe_id" 
-              :customerEmail="auth0.state.user?.email" 
-              :clientReferenceId="auth0.state.user?.data?.id" 
-              :stripeId="subscription.stripe_id"
-              :description="subscription.name"
-              :price="subscription.price"
-            />
-            <div v-if="!subscription.stripe_id"  class="m-5">
-              <button class="green_button font-bold text-xl" @click="subscribe(subscription)">Subscribe to {{ subscription.name }}</button>
+            <div class="mt-9" v-if="subscription.status!=='ZISABLED'">
+              <div class="flex items-center justify-center">
+                <label :for="'toogle'+subscription.code" class="flex items-center cursor-pointer">
+                  <div class="relative">
+                    <input :id="'toogle'+subscription.code" type="checkbox" class="sr-only" v-model="subscription.status" true-value="ACTIVE" false-value="PAUSED" 
+                      @change="changeStatus(subscription.status)"/>
+                    <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+                    <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
+                  </div>
+                  <div :class="{ 'text-green-200': subscription.status==='ACTIVE' }" class="text-3xl ml-3 text-gray-500 font-medium">
+                    {{ subscription.status }}
+                  </div>
+                </label>
+              </div>
+              <div :class="{ 'bg-indigo-900 bg-opacity-20': subscription.qty===0 }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
+                <div v-if="subscription.code === 'bva_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> and <b>Margin</b> wallets. We recommend using 1/20th of your total BTC to safely cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
+                <div v-if="subscription.code === 'bva_long_only_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> wallet. We recommend using 1/20th of your total BTC to safely cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
+                <div class="mt-10 text-center font-bold text-xl">{{ subscription.base_asset }} amount to trade for each signal: &nbsp;</div>
+                <input
+                  size="50" v-model="subscription.qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
+                  class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-blue-900"
+                  @input="resetInput"
+                >
+                <div>
+                  <button class="dark_button" @click="saveQty(subscription)">Save</button>
+                </div>
+                <span :class="{'text-orange-500' : qty_result!=='success', 'text-indigo-500':qty_result==='success'}">{{ qty_result }}</span>
+              </div>
+              <hr class="w-5 mx-auto border-blue-400 my-8">
+              <div :class="{ 'bg-indigo-900 bg-opacity-20': !subscription.key || !subscription.secret }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
+                <div class="my-3 text-xl font-bold"><a href="https://www.binance.com/en/my/settings/api-management?ref=W5BD94FW" target="_new"><u>Binance API Key Information</u></a>&nbsp;</div>
+                <input
+                  v-model="subscription.key"
+                  placeholder="your api key"
+                  aria-label="key"
+                  type="text"
+                  autocomplete="false"
+                  class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-gray-700"
+                  @input="resetInput"
+                >
+                <br>
+                <input
+                  v-model="subscription.secret"
+                  placeholder="your api secret"
+                  aria-label="secret"
+                  type="text"
+                  autocomplete="false"
+                  class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-gray-700"
+                  @input="resetInput"
+                >
+                <div class="my-3"><a href="https://www.binance.com/en/my/settings/api-management?ref=W5BD94FW" target="_new"><u>You can find your API key here.</u></a>&nbsp;</div>
+                <div><button class="dark_button" @click="saveStratKey(subscription)">Save</button></div>
+                <span :class="{'text-orange-500' : key_result!=='success', 'text-indigo-500':key_result==='success'}">{{ key_result }}</span>
+                <div v-if="!subscription.key || !subscription.secret" class="mt-4 font-bold">Please enter your Binance API key information.</div>
+              </div>
+              <hr class="w-5 mx-auto border-blue-400 my-8">
+              <div class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto">
+                <div class="my-3">Email notification:</div>
+              </div>
+              <div class="flex items-center justify-center">
+                <label :for="'tooglen'+subscription.code" class="flex items-center cursor-pointer">
+                  <div class="relative">
+                    <input :id="'tooglen'+subscription.code" type="checkbox" class="sr-only" v-model="subscription.email_notif" true-value="true" false-value="false" 
+                      @change="changeNotif(subscription)"/>
+                    <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+                    <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
+                  </div>
+                </label>
+              </div>
+              <hr class="w-5 mx-auto border-blue-400 my-8">
+              <div v-if="!subscription.confirm">
+                <button class="dark_button" @click="confirmCancelSubs(subscription)">
+                  Cancel your {{ subscription.name }} subscription
+                </button>
+              </div>
+              <div v-if="subscription.confirm">
+                <button class="red_button" type="button" @click="cancelSubs(subscription)">
+                  Confirm the cancelation of your subscription <feather-check class="ml-2" />
+                </button>
+              </div>
             </div>
-            <div v-if="subscription.currency==='USD'" class="mt-9">If you want to pay with cryptos,</div>
-            <div v-if="subscription.currency==='USD'" class="">please contact us at <a href="mailto:support@bitcoinvsalts.com">support@bitcoinvsalts.com</a></div>
+            <div v-else>
+              <div class="my-5 font-bold text-3xl text-blue-300">{{ subscription.count }} subscriptions left</div>
+              <div class="my-5 font-bold text-green-500 text-3xl">{{ subscription.price }} {{ subscription.currency }} per month</div>
+              <Stripe
+                v-if="subscription.stripe_id" 
+                :customerEmail="auth0.state.user?.email" 
+                :clientReferenceId="auth0.state.user?.data?.id" 
+                :stripeId="subscription.stripe_id"
+                :description="subscription.name"
+                :price="subscription.price"
+              />
+              <div v-if="!subscription.stripe_id"  class="m-5">
+                <button class="green_button font-bold text-xl" @click="subscribe(subscription)">Subscribe to {{ subscription.name }}</button>
+              </div>
+              <div v-if="subscription.currency==='USD'" class="mt-9">If you want to pay with cryptos,</div>
+              <div v-if="subscription.currency==='USD'" class="">please contact us at <a href="mailto:support@bitcoinvsalts.com">support@bitcoinvsalts.com</a></div>
+            </div>
           </div>
+          <div v-if="cancel_sub_result" :class="{'text-red-500' : cancel_sub_result!=='success', 'text-indigo-500':cancel_sub_result==='success'}">{{ cancel_sub_result }}</div>
         </div>
-        <div v-if="cancel_sub_result" :class="{'text-red-500' : cancel_sub_result!=='success', 'text-indigo-500':cancel_sub_result==='success'}">{{ cancel_sub_result }}</div>
       </div>
     </div>
 
@@ -435,7 +437,7 @@ export default {
           base_asset: yo.base_asset,
           stripe_id: yo.stripe_id,
           confirm: false,
-          status: 'DISABLED',
+          status: 'ZISABLED',
         })
       }
     }
@@ -451,15 +453,17 @@ export default {
       state.subs = user.subs
       state.subscriptions.map( yo => {
         if (state.subs?.findIndex(sub => (sub.code == yo.code)) > -1) {
-          yo.status = 'ACTIVE'
+          //console.log(JSON.stringify(state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))]))
+          yo.status = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].status
           yo.qty = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].qty
           yo.key = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].key
           yo.secret = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].secret
           yo.email_notif = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].email_notif
-          yo.sid = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].subs_id
+          yo.sid = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].sid
+          //console.log(JSON.stringify(yo))
         }
         else {
-          yo.status = 'DISABLED'
+          yo.status = 'ZISABLED'
           yo.qty = 0.005
           yo.key = ""
           yo.secret = ""
@@ -536,7 +540,6 @@ export default {
 
     const cancelSubs = async (subscription) => {
       console.log("cancelSubs", subscription.code, subscription.sid )
-
       await axios.put('/api/cancelsub?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
         { code: subscription.sid },
         { headers: {Authorization:`Bearer ${auth0.state.user?.token}`} }
@@ -550,15 +553,15 @@ export default {
         else {
           state.cancel_sub_result = "error"
         }
-        const index = state.subs?.findIndex( sub => (sub.code == subscription.code) )
-        if (index > -1) state.subs?.splice(index, 1)
+        const index = state.subscriptions?.findIndex( sub => (sub.code === subscription.code) )
+        if (index > -1) state.subscriptions?.splice(index, 1)
       })
       .catch( (error) => {
         subscription.confirm = false
         console.log("ERROR cancelSubs:", error)
         state.cancel_sub_result = "error"
-        const index = state.subs?.findIndex( sub => (sub.code == subscription.code) )
-        if (index > -1) state.subs?.splice(index, 1)
+        const index = state.subscriptions?.findIndex( sub => (sub.code === subscription.code) )
+        if (index > -1) state.subscriptions?.splice(index, 1)
       })
     }
 
