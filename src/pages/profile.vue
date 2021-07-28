@@ -442,7 +442,6 @@ export default {
       }
     }
 
-    getProducts()
 
     watch( () => auth0.state.user?.data, (user) => {
       //console.log("WATCH USER DATA", JSON.stringify(user.subs[0]))
@@ -453,14 +452,12 @@ export default {
       state.subs = user.subs
       state.subscriptions.map( yo => {
         if (state.subs?.findIndex(sub => (sub.code == yo.code)) > -1) {
-          //console.log(JSON.stringify(state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))]))
           yo.status = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].status
           yo.qty = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].qty
           yo.key = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].key
           yo.secret = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].secret
           yo.email_notif = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].email_notif
           yo.sid = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].sid
-          //console.log(JSON.stringify(yo))
         }
         else {
           yo.status = 'ZISABLED'
@@ -493,7 +490,8 @@ export default {
       }
     })
 
-    onMounted(() => {
+    onMounted( async () => {
+      await getProducts()
       console.log("onMounted...", auth0.state.user?.token, auth0.state.user?.data?.email)
       if (auth0.state.user?.token && auth0.state.user?.data?.email) {
         console.log("re run =======>", auth0.state.user?.token)
@@ -503,14 +501,12 @@ export default {
         state.email = auth0.state.user?.data?.email
         state.subscriptions.map( yo => {
           if (state.subs?.findIndex(sub => (sub.code == yo.code)) > -1) {
-            //console.log(JSON.stringify(state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))]))
             yo.status = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].status
             yo.qty = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].qty
             yo.key = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].key
             yo.secret = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].secret
             yo.email_notif = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].email_notif
             yo.sid = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].sid
-            //console.log(JSON.stringify(yo))
           }
           else {
             yo.status = 'ZISABLED'
