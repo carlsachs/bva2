@@ -8,10 +8,10 @@
             Just let our robot trader manage your crypto portfolio for you.
         </div>
         <div class="text-xl text-cyan-200 mt-10">
-            We are currently tracking more than <router-link to="/signals" class="underline">1000 strategies</router-link>.
+            This marketplace was created to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.
         </div>
         <div class="text-xl text-cyan-200 mt-3">
-            It was created to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.
+            We are currently tracking more than <router-link to="/signals" class="underline">1000 strategies</router-link>. Here are our best performing strategies:
         </div>
 
         <div v-for="(strategy, i) in strategies" :key="strategy.name" class="mx-2 my-7 py-4 border-2 border-blue-900 rounded-lg text-white relative">
