@@ -35,25 +35,25 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody v-if="signals" class="divide-y divide-gray-200 cursor-pointer hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in signals" :key="row.id">
+                                    <tbody v-if="signals" class="divide-y divide-gray-200 hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in signals" :key="row.id">
                                         <tr>
-                                            <td @click="openSignal(row)" v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                                {{ moment(Number(row.buy_time)).fromNow() }}
+                                            <td v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                <router-link :to="/signal/+row.id">{{ moment(Number(row.buy_time)).fromNow() }}</router-link>
                                             </td>
-                                            <td @click="openSignal(row)" v-else :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                                {{ moment(Number(row.sell_time)).fromNow() }}
+                                            <td v-else :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                <router-link :to="/signal/+row.id">{{ moment(Number(row.sell_time)).fromNow() }}</router-link>
                                             </td>
                                             <td @click="openStrat(row.stratid)" class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
-                                                {{ row.stratname }}
+                                                <router-link :to="/strat/+row.stratid">{{ row.stratname }}</router-link>
                                             </td>
-                                            <td @click="openSignal(row)" class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
-                                                {{ row.pair }}
+                                            <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
+                                                <router-link :to="/signal/+row.id">{{ row.pair }}</router-link>
                                             </td>
-                                            <td @click="openSignal(row)" v-if="row.pnl" :class="{ 'text-green-500': Number(row.pnl)>0, 'text-red-500': Number(row.pnl)<0 }" class="px-6 py-4 font-bold whitespace-no-wrap text-sm leading-5">
-                                                {{ Number(row.pnl).toFixed(2) }}%
+                                            <td v-if="row.pnl" :class="{ 'text-green-500': Number(row.pnl)>0, 'text-red-500': Number(row.pnl)<0 }" class="px-6 py-4 font-bold whitespace-no-wrap text-sm leading-5">
+                                                <router-link :to="/signal/+row.id">{{ Number(row.pnl).toFixed(2) }}%</router-link>
                                             </td>
-                                            <td @click="openSignal(row)" v-else class="italic px-6 py-4 text-gray-400 whitespace-no-wrap text-sm leading-5">
-                                                {{ prices && getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
+                                            <td v-else class="italic px-6 py-4 text-gray-400 whitespace-no-wrap text-sm leading-5">
+                                                <router-link :to="/signal/+row.id">{{ prices && getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%</router-link>
                                             </td>
                                             <!--
                                             <td v-if="Number(row.pnl)>0" :class="{ 'font-bold': row.pnl }" class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
@@ -63,17 +63,17 @@
                                                 {{ row.pnl ? Number(row.pnl).toFixed(2) : getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
                                             </td>
                                             -->
-                                            <td @click="openSignal(row)" v-if="row.type==='SHORT'" class="text-orange-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                                {{ row.type }}
+                                            <td v-if="row.type==='SHORT'" class="text-orange-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                <router-link :to="/signal/+row.id">{{ row.type }}</router-link>
                                             </td>
-                                            <td @click="openSignal(row)" v-else class="text-blue-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                                {{ row.type }}
+                                            <td v-else class="text-blue-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                <router-link :to="/signal/+row.id">{{ row.type }}</router-link>
                                             </td>
-                                            <td @click="openSignal(row)" class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                                {{ row.buy_price ? row.buy_price : '---' }}
+                                            <td class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                <router-link :to="/signal/+row.id">{{ row.buy_price ? row.buy_price : '---' }}</router-link>
                                             </td>
-                                            <td @click="openSignal(row)" class="text-red-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                                {{ row.sell_price ? row.sell_price : '---' }}
+                                            <td class="text-red-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                <router-link :to="/signal/+row.id">{{ row.sell_price ? row.sell_price : '---' }}</router-link>
                                             </td>
                                         </tr>
                                     </tbody>
