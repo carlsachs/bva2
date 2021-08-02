@@ -1,20 +1,19 @@
 <template>
     <div>
-
-        <div class="text-3xl text-cyan-200 mt-10">
-            Bitcoin Vs. Alts, BVA, is a marketplace offering subscriptions to the best crypto trading strategies.
-        </div>
-        <div class="text-3xl text-cyan-200 mt-10">
-            Just let our robot trader manage your crypto portfolio for you.
-        </div>
-        <div class="text-xl text-cyan-200 mt-10">
-            This marketplace was created to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.
-        </div>
-        <div class="text-xl text-cyan-200 mt-3">
-            We are currently tracking more than <router-link to="/signals" class="underline">1000 strategies</router-link>.
-        </div>
-        <div class="text-xl text-cyan-200 mt-3">
-            Here are our curated strategies.
+        <div class="p-4">
+            <div class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
+                <div class="text-2xl text-cyan-200 mt-3">
+                    Bitcoin Vs. Alts, BVA, is a marketplace offering subscriptions to the best crypto trading strategies.
+                </div>
+                <div class="text-xl text-cyan-200 mt-3">
+                    Just let our robot trader manage your crypto portfolio for you.
+                </div>
+                <div class="text-xl text-cyan-200 mt-3">
+                    This marketplace was created to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.
+                    We are currently tracking more than <router-link to="/signals" class="underline">1000 strategies</router-link>.
+                    Here are our curated strategies.
+                </div>
+            </div>
         </div>
 
         <div class="p-4 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1 sm:gap-5">
@@ -24,7 +23,7 @@
 
                 <apexchart type="area" height="400" :options="chartOptions" :series="strategy.series"></apexchart>
 
-                <div class="m-7 text-3xl">{{ strategy.description }}</div>
+                <div class="m-7 text-xl">{{ strategy.description }}</div>
 
                 <div v-if="!auth0.state.isAuthenticated" @click="login" class="mx-10 p-4 bg-indigo-900 text-orange-500 font-bold group flex-auto items-center shadow-xl gap-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     {{ strategy.price }} 

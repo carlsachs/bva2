@@ -9,7 +9,7 @@
     <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
       <div v-for="subscription in subscriptions" >
         <div v-if="subscription.count>0"  :class="{ 'bg-indigo-900 bg-opacity-20': subscription.status!=='ZISABLED' }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative"> 
-          <div class="text-5xl font-extrabold text-blue-600"><b>{{ subscription.name }}</b></div>
+          <div class="text-4xl font-extrabold text-blue-600"><b>{{ subscription.name }}</b></div>
           <hr class="w-5 mx-auto border-blue-400 my-8">
           <button v-if="!subs" class="blue_button" type="button">
             Loading <feather-loader class="ml-2" />
@@ -142,10 +142,6 @@
         <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
           <div class="flex-auto">Win Rate</div>
           <div class="flex-auto text-justify text-blue-300 block">{{ win_rate }}%</div>
-        </div>
-        <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
-          <div class="flex-auto">Verif. Trade History</div>
-          <div class="flex-auto text-justify text-blue-300 block">{{ strat_lifetime }} days</div>
         </div>
       </div>
       

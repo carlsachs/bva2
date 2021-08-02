@@ -2,11 +2,11 @@
     <div>
         <div ref="myEl" class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
-            <h1 class="text-5xl mb-7 text-uppercase font-semibold">{{ stratname }}</h1>
+            <h1 class="text-3xl mb-7 text-uppercase font-semibold">{{ stratname }}</h1>
 
             <apexchart ref="stratchart" type="area" height="400" :options="chartOptions" :series="series"></apexchart>
 
-            <div v-if="description" class="m-7 text-3xl">{{ description }}</div>
+            <div v-if="description" class="m-7 text-xl">{{ description }}</div>
             
             <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
                 <div class="flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
