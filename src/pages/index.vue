@@ -25,46 +25,46 @@
 
                 <div class="m-7 text-xl">{{ strategy.description }}</div>
 
-                <div v-if="!auth0.state.isAuthenticated" @click="login" class="mx-10 p-4 bg-indigo-900 text-orange-500 font-bold group flex-auto items-center shadow-xl gap-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                <div v-if="!auth0.state.isAuthenticated" @click="login" class="mx-10 p-4 bg-indigo-900 text-orange-500 font-bold group flex-auto items-center shadow-xl gap-5 rounded-lg mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                     {{ strategy.price }} 
                 </div>
                 <div class="p-4 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1 sm:gap-5 uppercase">
-                    <div class="flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5">
+                    <div class="flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5">
                         <div class="flex-auto">Total PnL</div>
                         <div class="flex-auto text-justify text-blue-300 block">{{ Number(strategy.total_pnl).toFixed(2) }}%</div>
                     </div>
 
-                    <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5">
+                    <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5">
                         <div class="flex-auto">Max. Concurrent Trades</div>
                         <div class="flex-auto text-justify text-blue-300 block">{{strategy.max_concurrent}}</div>
                     </div>
 
-                    <div class="flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5">
+                    <div class="flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5">
                         <div class="flex-auto">Portfolio PnL*</div>
                         <div class="flex-auto text-justify text-blue-300 block">{{ (Number(strategy.total_pnl)/Number(strategy.max_concurrent)).toFixed(2) }}%</div>
                     </div>
 
-                    <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5">
+                    <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5">
                         <div class="flex-auto">Trades Count</div>
                         <div class="flex-auto text-justify text-blue-300 block">{{ strategy.total_signals }}</div>
                     </div>
 
-                    <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5">
+                    <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5">
                         <div class="flex-auto">Avg. Profit per Trade</div>
                         <div class="flex-auto text-justify text-blue-300 block">{{ strategy.avg_pnl }}%</div>
                     </div>
 
-                    <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5">
+                    <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5">
                         <div class="flex-auto">Win Rate</div>
                         <div class="flex-auto text-justify text-blue-300 block">{{ strategy.win_rate }}%</div>
                     </div>
 
-                    <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5">
+                    <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5">
                         <div class="flex-auto">Verif. Trade History</div>
                         <div class="flex-auto text-justify text-blue-300 block">{{ strategy.strat_lifetime }} days</div>
                     </div>
 
-                    <router-link :to="'/strat/'+strategy.id" class="group bg-indigo-900 flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+                    <router-link :to="'/strat/'+strategy.id" class="group bg-indigo-900 flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                         <div class="flex-auto font-bold">See All Signals</div>
                     </router-link>
                 </div>
