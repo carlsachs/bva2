@@ -649,7 +649,7 @@ export default {
     const saveStratKey = async (subscription) => {
       console.log("saveStratKey", subscription.code, subscription.key, subscription.secret )
       await axios.put('/api/setsubkey?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
-        { key: subscription.key, secret: subscription.secret, code: subscription.code, email: auth0.state?.user?.email },
+        { key: subscription.key, secret: subscription.secret, code: subscription.sid, email: auth0.state?.user?.email },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
       .then( (response) => {
@@ -668,7 +668,7 @@ export default {
     }
 
     const saveQty = async (subscription) => {
-      console.log("saveQty", JSON.stringify(subscription))
+      //console.log("saveQty", JSON.stringify(subscription))
       if (Number(subscription.qty) >= 0.0005) {
         await axios.put('/api/setsubsqty?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
           { qty: subscription.qty, code: subscription.sid, email: auth0.state?.user?.email },
