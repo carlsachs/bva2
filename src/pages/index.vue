@@ -36,12 +36,12 @@
                         <div class="flex-auto text-justify text-blue-300 block">{{ Number(strategy.total_pnl).toFixed(2) }}%</div>
                     </div>
 
-                    <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5">
+                    <div v-if="strategy.max_concurrent>1" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5">
                         <div class="flex-auto">Max. Concurrent Trades</div>
                         <div class="flex-auto text-justify text-blue-300 block">{{strategy.max_concurrent}}</div>
                     </div>
 
-                    <div class="flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5">
+                    <div v-if="strategy.max_concurrent>1" class="flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5">
                         <div class="flex-auto">Portfolio PnL*</div>
                         <div class="flex-auto text-justify text-blue-300 block">{{ (Number(strategy.total_pnl)/Number(strategy.max_concurrent)).toFixed(2) }}%</div>
                     </div>
@@ -71,7 +71,7 @@
                     </router-link>
                 </div>
 
-                <div class="mt-5 italic">* PNL calculated using 1/{{strategy.max_concurrent}} of the whole BTC amount for each trade as recommended.</div>
+                <div v-if="strategy.max_concurrent>1" class="mt-5 italic">* PNL calculated using 1/{{strategy.max_concurrent}} of the whole BTC amount for each trade as recommended.</div>
             </div>
         </div>
 

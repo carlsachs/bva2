@@ -14,12 +14,12 @@
                     <div class="flex-auto text-justify text-blue-300 block">{{ Number(total_pnl).toFixed(2) }}%</div>
                 </div>
 
-                <div v-if="max_concurrent" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
+                <div v-if="max_concurrent>1" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
                     <div class="flex-auto">Max. Concurrent Trades</div>
                     <div class="flex-auto text-justify text-blue-300 block">{{ max_concurrent }}</div>
                 </div>
 
-                <div v-if="max_concurrent" class="flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
+                <div v-if="max_concurrent>1" class="flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 transition">
                     <div class="flex-auto">Portfolio PnL*</div>
                     <div class="flex-auto text-justify text-blue-300 block">{{ (Number(total_pnl)/Number(max_concurrent)).toFixed(2) }}%</div>
                 </div>
@@ -49,7 +49,7 @@
                 </div>
             </div>
             
-            <div v-if="max_concurrent" class="mt-5 italic">* PNL calculated using 1/{{max_concurrent}} of the whole BTC amount for each trade as recommended.</div>
+            <div v-if="max_concurrent>1" class="mt-5 italic">* PNL calculated using 1/{{max_concurrent}} of the whole BTC amount for each trade as recommended.</div>
 
             <div v-if="true" class="mt-4 p-4">
                 <div class="flex flex-col">
