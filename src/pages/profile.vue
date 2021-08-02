@@ -671,7 +671,7 @@ export default {
       //console.log("saveQty", JSON.stringify(subscription))
       if (Number(subscription.qty) >= 0.0005) {
         await axios.put('/api/setsubsqty?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
-          { qty: subscription.qty, code: subscription.code, email: auth0.state?.user?.email },
+          { qty: subscription.qty, code: subscription.subs_id, email: auth0.state?.user?.email },
           { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
         )
         .then( (response) => {
