@@ -3,7 +3,7 @@
         <div class="p-4">
             <div class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
                 <div class="text-2xl text-cyan-200 mt-3">
-                    Bitcoin vs. Alts is a marketplace offering subscriptions to the best crypto trading strategies.
+                    Bitcoin vs. Alts is a marketplace offering subscriptions to the best algo crypto trading strategies.
                 </div>
                 <div class="text-xl text-cyan-200 mt-3">
                     This marketplace was created to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.
