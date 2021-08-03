@@ -9,12 +9,12 @@
         Signal Firehose
       </button>
     </router-link>
-    <router-link v-if="isTradePage && auth0.state.isAuthenticated" to="/subscriptions">
+    <router-link v-if="!isSubPage && auth0.state.isAuthenticated" to="/subscriptions">
       <button class="green_button" type="button">
         Your Subscriptions
       </button>
     </router-link>
-    <router-link v-if="isSubPage && auth0.state.isAuthenticated" to="/trades">
+    <router-link v-if="!isTradePage && auth0.state.isAuthenticated" to="/trades">
       <button class="green_button" type="button">
         Your Trades
       </button>
