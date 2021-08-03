@@ -149,7 +149,6 @@ export default {
   setup() {
     startStats(Date.now())
 
-    //const smoothScroll = inject('smoothScroll')
     const loadMoreStore = useLoadMoreStore()
     loadMoreStore.resetStrat()
 
@@ -159,9 +158,6 @@ export default {
     const klines = useKlineStore()
     
     const auth0: any = inject("auth0")
-    const stats: any = inject("stats")
-
-    const router = useRouter()
 
     const state = reactive({ 
       ///////// ///////// ///////// /////////
@@ -205,7 +201,7 @@ export default {
     })
 
     watch( () => auth0.state.user?.data, (user) => {
-      //console.log("WATCH USER DATA", JSON.stringify(user.subs[0]))
+      console.log("WATCH USER DATA", JSON.stringify(user.subs[0]))
       state.username = user.nickname
       state.id = user.id
       state.email = user.email
