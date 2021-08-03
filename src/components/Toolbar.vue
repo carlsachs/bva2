@@ -9,12 +9,12 @@
         Signal Firehose
       </button>
     </router-link>
-    <router-link v-if="auth0.state.isAuthenticated" to="/subscriptions">
+    <router-link v-if="isTradePage && auth0.state.isAuthenticated" to="/subscriptions">
       <button class="green_button" type="button">
         Your Subscriptions
       </button>
     </router-link>
-    <router-link v-if="auth0.state.isAuthenticated" to="/trades">
+    <router-link v-if="isSubPage && auth0.state.isAuthenticated" to="/trades">
       <button class="green_button" type="button">
         Your Trades
       </button>
@@ -47,13 +47,21 @@ const router = useRouter()
 const state = reactive({ 
   auth0, 
   isHomePage:(router.currentRoute._rawValue.path==='/'),
+  isSubPage:(router.currentRoute._rawValue.path==='/subscriptions'),
+  isTradePage:(router.currentRoute._rawValue.path==='/trades'),
 })
 
 const isHomePage = toRef(state, "isHomePage");
+const isSubPage = toRef(state, "isSubPage");
+const isTradePage = toRef(state, "isTradePage");
 
 router.beforeEach( (to, from) => {
   if (to.name == 'index') { isHomePage.value = true }
   else { isHomePage.value = false }
+  if (to.name == 'subscriptions') { isSubPage.value = true }
+  else { isSubPage.value = false }
+  if (to.name == 'trades') { isTradePage.value = true }
+  else { isTradePage.value = false }
 })
 
 async function login() {
