@@ -4,20 +4,19 @@
     <button v-if="!isHomePage" class="dark_button p-2" type="button" @click="$router.go(-1)">
       <feather-chevron-left class="" />
     </button>
-    <!--router-link v-if="isHomePage && !auth0.state.isAuthenticated" to="/profile">
-      <button class="blue_button" type="button">
-        Account Preview
-      </button>
-    </router-link-->
     <router-link to="/signals">
       <button class="blue_button" type="button">
         Signal Firehose
       </button>
     </router-link>
-    
-    <router-link v-if="!isAccountPage && auth0.state.isAuthenticated" to="/profile">
-      <button class="green_button font-bold" type="button">
-        Your Account
+    <router-link v-if="auth0.state.isAuthenticated" to="/subscriptions">
+      <button class="green_button" type="button">
+        Your Subscriptions
+      </button>
+    </router-link>
+    <router-link v-if="auth0.state.isAuthenticated" to="/trades">
+      <button class="green_button" type="button">
+        Your Trades
       </button>
     </router-link>
     <button v-if="auth0.state.isLoading" class="blue_button" type="button">
@@ -48,24 +47,20 @@ const router = useRouter()
 const state = reactive({ 
   auth0, 
   isHomePage:(router.currentRoute._rawValue.path==='/'),
-  isAccountPage:(router.currentRoute._rawValue.path==='/profile') 
 })
 
 const isHomePage = toRef(state, "isHomePage");
-const isAccountPage = toRef(state, "isAccountPage");
 
 router.beforeEach( (to, from) => {
   if (to.name == 'index') { isHomePage.value = true }
   else { isHomePage.value = false }
-  if (to.name == 'profile') { isAccountPage.value = true }
-  else { isAccountPage.value = false }
 })
 
 async function login() {
   // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#loginwithredirect
   console.log("-0-0-0-0-0-0-", window.location.href)
   //auth0.client.loginWithRedirect({ appState: { targetUrl: window.location.href } })
-  await auth0.client.loginWithRedirect({ appState: { targetUrl: '/profile' }, screen_hint: 'signup' })
+  await auth0.client.loginWithRedirect({ appState: { targetUrl: '/subscriptions' }, screen_hint: 'signup' })
   //await auth0.client.loginWithPopup()
   //console.log("-1-1-1-1-1-1-", await auth0.client.getUser() )
 }

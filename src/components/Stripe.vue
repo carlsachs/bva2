@@ -32,10 +32,10 @@ export default defineComponent({
         //sessionId: data.sessionId,
         customerEmail: props.customerEmail,
         clientReferenceId: props.clientReferenceId,
-        successUrl: 'https://bitcoinvsalts.com/profile',
-        cancelUrl: 'https://bitcoinvsalts.com/profile',
-        //successUrl: 'http://localhost:3000/profile',
-        //cancelUrl: 'http://localhost:3000/profile',
+        successUrl: 'https://bitcoinvsalts.com/subscriptions',
+        cancelUrl: 'https://bitcoinvsalts.com/subscriptions',
+        //successUrl: 'http://localhost:3000/subscriptions',
+        //cancelUrl: 'http://localhost:3000/subscriptions',
         mode: "subscription",
         lineItems: [{ 'price': props.stripeId, 'quantity': 1 }]
       })

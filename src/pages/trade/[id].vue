@@ -237,7 +237,7 @@ export default defineComponent({
     watch( () => auth0.state?.user?.data, (user) => {
       console.log("WATCH USER DATA ::::::::::::: ", JSON.stringify(user.nickname),  user.id, state.userid)
       if ( user.id !== state.userid) {
-        router.replace("/profile")
+        router.replace("/subscriptions")
       }
       else {
         state.username = user.nickname

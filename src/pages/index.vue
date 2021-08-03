@@ -232,7 +232,7 @@ export default defineComponent({
         // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#loginwithredirect
         console.log("-0-0-0-0-0-0-0-", window.location.href)
         //auth0.client.loginWithRedirect({ appState: { targetUrl: window.location.href } })
-        await auth0.client.loginWithRedirect({ appState: { targetUrl: '/profile' } })
+        await auth0.client.loginWithRedirect({ appState: { targetUrl: '/subscriptions' } })
         //await auth0.client.loginWithPopup()
         //console.log("-1-1-1-1-1-1-", await auth0.client.getUser() )
     }
