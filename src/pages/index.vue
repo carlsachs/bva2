@@ -130,7 +130,7 @@ export default defineComponent({
         strategies: [
             {
                 id: 466,
-                name: "BVA Strategy",
+                name: "Our Flagship BVA Strat.",
                 series: [{ name: "BVA", data: [] }],
                 description: "The mission of the BVA strategy is simply to accumulate more BTC. It is the result of a prediction model trained using the latest Machine Learning practices. We use specific data sets made of crypto market data, social sentiments, TAs, traditional financial market data and some secret sauce.",
                 total_pnl: 0,
