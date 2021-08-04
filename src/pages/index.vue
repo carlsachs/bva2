@@ -18,7 +18,7 @@
         <div class="p-4 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1 sm:gap-5">
             <div v-for="(strategy, i) in strategies" :key="strategy.name" class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
                 
-                <h1 class="mb-0 text-3xl text-uppercase font-semibold">{{ strategy.name }}</h1>
+                <router-link :to="'/strat/'+strategy.id" class=""><h1 class="mb-0 text-3xl text-uppercase font-semibold">{{ strategy.name }}</h1></router-link>
 
                 <apexchart type="area" height="400" :options="chartOptions" :series="strategy.series"></apexchart>
 

@@ -9,7 +9,7 @@
     <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
       <div v-for="subscription in subscriptions" >
         <div v-if="subscription.count>0"  :class="{ 'bg-indigo-900 bg-opacity-20': subscription.status!=='ZISABLED' }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative"> 
-          <div class="text-3xl font-extrabold text-blue-600"><b>{{ subscription.name }}</b></div>
+          <div class="text-3xl font-extrabold text-blue-600"><router-link :to="'/strat/'+subscription.stratid" class=""><b>{{ subscription.name }}</b></router-link></div>
           <hr class="w-5 mx-auto border-blue-400 my-8">
           <button v-if="!subs" class="blue_button" type="button">
             Loading <feather-loader class="ml-2" />
@@ -254,6 +254,7 @@ export default {
         state.subscriptions.push({
           name: yo.name,
           code: yo.code,
+          stratid: yo.stratid,
           price: Number(yo.price),
           count: Number(yo.count),
           currency: yo.currency,
@@ -547,7 +548,8 @@ export default {
       await axios.put('/api/subscribe?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
         { 
           code: sub.code,
-          name: sub.name 
+          name: sub.name,
+          stratid: sub.stratid,
         },
         { headers: {Authorization:`Bearer ${auth0.state.user?.token}`} }
       )
