@@ -15,6 +15,7 @@
     <a href="https://github.com/bitcoinvsalts/node-binance-trader" class="text-green-500 font-bold" target="_new"><img class="mx-auto" width=20 alt="GitHub" src="/github.png"/></a> &nbsp;
     <a href="https://t.me/joinchat/lmQ_xPE0WBo5NzYx" class="text-green-500 font-bold" target="_new"><img class="mx-auto" width=20 alt="GitHub" src="/tg.png"/></a> &nbsp;
     <a href="https://discordapp.com/invite/4EQrEgj" target="_new" class="text-purple-500 font-bold"><img class="mx-auto" width=20 alt="Discord" src="/discord.png"/></a> &nbsp;
+    <a href="https://wallet.nimiq.com/nimiq:NQ38SDPGREC3USTALLCT87GQTCUYFH5L6PCQ" target="_new"><img class="mx-auto" width=20 alt="Nimiq" src="https://cryptologos.cc/logos/nimiq-nim-logo.svg?v=013"/></a>
     <router-link to="/about" class="text-gray-300 font-bold">Contact us</router-link>
   </div>
   <div class="text-center text-gray-300 p-5 m-6 flex flex-row items-center justify-center p-2 space-x-5 mb-5">
