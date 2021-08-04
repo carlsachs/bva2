@@ -143,9 +143,9 @@ export default defineComponent({
             },
             {
                 id: 595,
-                name: "BVA LONG ONLY Strategy",
-                series: [{ name: "BVA LONG ONLY", data: [] }],
-                description: "The BVA LONG ONLY strategy is the same than the BVA strategy but only trades LONG signals (no need of margin wallet)",
+                name: "BVA Long Only Strategy",
+                series: [{ name: "BVA Long Only", data: [] }],
+                description: "The BVA Long Only strategy is the same than the BVA strategy but only trades Long signals (no need of margin wallet)",
                 total_pnl: 0,
                 total_signals: 0,
                 avg_pnl: 0,
