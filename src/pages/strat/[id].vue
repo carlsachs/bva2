@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div ref="myEl" class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
+        <div v-if="!total_pnl" class="my-0 text-gray-300">Loading...</div>
 
-            <div v-if="!total_pnl" class="my-0 text-gray-300">Loading...</div>
+        <div ref="myEl" class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
             <h1 class="text-3xl mb-7 text-uppercase font-semibold">{{ stratname }}</h1>
 
