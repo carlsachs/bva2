@@ -141,6 +141,7 @@ export default defineComponent({
                 max_concurrent: 15,
                 price: "Limited Availability $19.80",
             },
+            /*
             {
                 id: 595,
                 name: "BVA Long Only Strategy",
@@ -154,11 +155,25 @@ export default defineComponent({
                 max_concurrent: 15,
                 price: "Limited Availability $19.80",
             },
+            */
+            {
+                id: 623,
+                name: "HITARUS_MODEL_ONE",
+                series: [{ name: "H1", data: [] }],
+                description: "If you don't want to hold BTC but want to trade USDT instead.",
+                total_pnl: 0,
+                total_signals: 0,
+                avg_pnl: 0,
+                strat_lifetime: 0,
+                win_rate: 0,
+                max_concurrent: 15,
+                price: "Limited Availability 0.07 BNB",
+            },
             {
                 id: 882,
                 name: "DS STRATEGY2 USDT",
                 series: [{ name: "DS2", data: [] }],
-                description: "If you don't want to hold BTC but want to trade USDT instead. Here is the best strategy for you.",
+                description: "Another USDT strategy.",
                 total_pnl: 0,
                 total_signals: 0,
                 avg_pnl: 0,
@@ -171,7 +186,7 @@ export default defineComponent({
                 id: 948,
                 name: "Fist4Fun.V02.ENJUSDT",
                 series: [{ name: "F4F", data: [] }],
-                description: "A very special and profitable One Margin Pair strategy.",
+                description: "An One Margin Pair strategy.",
                 total_pnl: 0,
                 total_signals: 0,
                 avg_pnl: 0,

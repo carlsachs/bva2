@@ -548,8 +548,7 @@ export default {
       await axios.put('/api/subscribe?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
         { 
           code: sub.code,
-          name: sub.name,
-          stratid: sub.stratid,
+          name: sub.name
         },
         { headers: {Authorization:`Bearer ${auth0.state.user?.token}`} }
       )
