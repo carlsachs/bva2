@@ -6,7 +6,9 @@
   </div>
   <div v-if="auth0.state.isAuthenticated && auth0.state.user" class="text-center text-gray-300">
 
-    <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
+    <div v-if="!total_pnl" class="my-0 text-gray-300">Loading...</div>
+
+    <div class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
       <h1 class="mb-7 text-5xl text-uppercase font-semibold">Your PNL</h1>
 
