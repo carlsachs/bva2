@@ -186,7 +186,7 @@ export default defineComponent({
                 id: 948,
                 name: "Fist4Fun.V02.ENJUSDT",
                 series: [{ name: "F4F", data: [] }],
-                description: "An One Margin Pair strategy.",
+                description: "One Future Pair Strategy.",
                 total_pnl: 0,
                 total_signals: 0,
                 avg_pnl: 0,
