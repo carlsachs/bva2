@@ -18,7 +18,7 @@
         <div class="p-4 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1 sm:gap-5">
             <div v-for="(strategy, i) in strategies" :key="strategy.name" class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
                 
-                <router-link :to="'/strat/'+strategy.id" class=""><h1 class="mb-0 text-3xl text-uppercase font-semibold">{{ strategy.name }}</h1></router-link>
+                <router-link :to="'/strat/'+strategy.id" class=""><h1 class="mb-0 text-2xl text-uppercase font-semibold">{{ strategy.name }}</h1></router-link>
 
                 <apexchart type="area" height="400" :options="chartOptions" :series="strategy.series"></apexchart>
 
@@ -76,13 +76,13 @@
             <div class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
                 <a href="https://www.binance.com/?ref=W5BD94FW" target="_new">
                     <img width=200 class="mx-auto mb-5" alt="BvA Discord" src="/binance.svg" />
-                    <div class="text-3xl text-white">Official Binance Broker</div>
+                    <div class="text-2xl text-white">Official Binance Broker</div>
                 </a>
             </div>
             <div class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
                 <a href="https://bitcoinvsaltcoins.com" target="_new">
                     <img width=132 class="mx-auto mb-5" alt="Strategy Incubator" src="/creator.png" />
-                    <div class="text-3xl text-white">Our Strategy Incubator</div>
+                    <div class="text-2xl text-white">Our Strategy Incubator</div>
                 </a>
             </div>
         </div>
@@ -90,13 +90,13 @@
             <div class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
                 <a href="https://discordapp.com/invite/4EQrEgj" target="_new">
                     <img width=132 class="mx-auto mb-5" alt="BvA Discord" src="/discord.png" />
-                    <div class="text-3xl text-white">1200+ Discord Members</div>
+                    <div class="text-2xl text-white">1200+ Discord Members</div>
                 </a>
             </div>
             <div class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
                 <a href="https://github.com/bitcoinvsalts/node-binance-trader" target="_new">
                     <img width=102 class="mx-auto mt-3 mb-10" alt="BvA GitHub" src="/github.png" />
-                    <div class="text-3xl text-white">840+ GitHub Stars</div>
+                    <div class="text-2xl text-white">840+ GitHub Stars</div>
                 </a>
             </div>
         </div>
@@ -130,7 +130,7 @@ export default defineComponent({
         strategies: [
             {
                 id: 466,
-                name: "Our Flagship BVA Strat.",
+                name: "Our Flagship BVA Strat",
                 series: [{ name: "BVA", data: [] }],
                 description: "The mission of the BVA strategy is simply to accumulate more BTC. It is the result of a prediction model trained using the latest Machine Learning practices. We use specific data sets made of crypto market data, social sentiments, TAs, traditional financial market data and some secret sauce.",
                 total_pnl: 0,

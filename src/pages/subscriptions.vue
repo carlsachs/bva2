@@ -9,7 +9,7 @@
     <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
       <div v-for="subscription in subscriptions" >
         <div v-if="subscription.count>0"  :class="{ 'bg-indigo-900 bg-opacity-20': subscription.status!=='ZISABLED' }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative"> 
-          <div class="text-3xl font-extrabold text-blue-600"><router-link :to="'/strat/'+subscription.stratid" class=""><b>{{ subscription.name }}</b></router-link></div>
+          <div class="text-2xl font-extrabold text-blue-600"><router-link :to="'/strat/'+subscription.stratid" class=""><b>{{ subscription.name }}</b></router-link></div>
           <hr class="w-5 mx-auto border-blue-400 my-8">
           <button v-if="!subs" class="blue_button" type="button">
             Loading <feather-loader class="ml-2" />
@@ -98,7 +98,7 @@
             </div>
             <div v-else>
               <div class="my-5 font-bold text-2xl text-blue-300">{{ subscription.count }} subscriptions left</div>
-              <div class="my-5 font-bold text-green-500 text-3xl">{{ subscription.price }} {{ subscription.currency }} per month</div>
+              <div class="my-5 font-bold text-green-500 text-2xl">{{ subscription.price }} {{ subscription.currency }} per month</div>
               <Stripe
                 v-if="subscription.stripe_id" 
                 :customerEmail="auth0.state.user?.email" 
