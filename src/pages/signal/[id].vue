@@ -155,6 +155,7 @@ export default defineComponent({
             if (signal.data[0].pnl == null) {
               const last_price = Number(prices.data[prices.data.length-1][4])
               state.pnl = (state.signal_type === 'LONG') ? (100 * (last_price-state.buy_price)/state.buy_price) : (100 * (state.sell_price-last_price)/last_price)
+              state.pnl = state.pnl - 0.1
               state.pnl = state.pnl.toFixed(2)
             }
 
