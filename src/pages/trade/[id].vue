@@ -66,7 +66,7 @@
             <div class="flex-auto font-bold">Confirm</div>
         </div>
 
-        <div v-if="auth0.state?.user?.data?.id===userid && (status==='TRADED' || status==='STOPPED') && !closeTradeconfirm && status!=='CLOSED' " @click="confirmCloseTrade" class="group flex items-center bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
+        <div v-if="auth0.state?.user?.data?.id===userid && (status==='TRADED' || status==='STOPPED' || status==='FAILED') && !closeTradeconfirm && status!=='CLOSED' " @click="confirmCloseTrade" class="group flex items-center bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
             <div class="flex-auto font-bold">Close</div>
         </div>
         <div v-if="auth0.state?.user?.data?.id===userid && (status==='TRADED' || status==='STOPPED') && closeTradeconfirm && status!=='CLOSED' " @click="closeTrade" class="group flex items-center bg-red-900 bg-opacity-90 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-opacity-100 transition">
