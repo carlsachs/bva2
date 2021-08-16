@@ -12,6 +12,9 @@
                     We are currently tracking more than <router-link to="/signals" class="underline">1000 strategies</router-link>.
                     Here are our curated strategies.
                 </div>
+                <!--div class="text-xl text-cyan-200 mt-3">
+                    All trading is high risk and one of the most difficult activities you will ever consider. To succeed takes time, effort, hard work, discipline grit and determination, and there is no guarantee you will succeed. Most traders lose money, and some lose all of their money, and more. You should only ever use money you can afford to lose, and if you do not understand leverage, stop immediately and find out.
+                </div-->
             </div>
         </div>
 
@@ -141,7 +144,6 @@ export default defineComponent({
                 max_concurrent: 15,
                 price: "Limited Availability $19.80",
             },
-            /*
             {
                 id: 595,
                 name: "BVA Long Only Strategy",
@@ -155,7 +157,6 @@ export default defineComponent({
                 max_concurrent: 15,
                 price: "Limited Availability $19.80",
             },
-            */
             {
                 id: 623,
                 name: "HITARUS_MODEL_ONE",
