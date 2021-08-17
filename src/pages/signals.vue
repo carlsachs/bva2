@@ -2,7 +2,7 @@
     <div>
         <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
-            <h1 class="text-5xl mb-7 text-uppercase font-semibold">Signal Firehose</h1>
+            <h1 class="text-2xl mb-7 text-uppercase font-semibold">Signal Firehose</h1>
 
             <div v-if="true" class="mt-4 p-4">
                 <div class="flex flex-col">
