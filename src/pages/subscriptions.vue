@@ -107,8 +107,11 @@
                 :description="subscription.name"
                 :price="subscription.price"
               />
-              <div v-if="!subscription.stripe_id"  class="m-5">
-                <button class="green_button font-bold text-xl" @click="subscribe(subscription)">Subscribe to {{ subscription.name }}</button>
+              <div v-if="!subscription.stripe_id && !subscription.confirm"  class="m-5">
+                <button class="green_button font-bold text-xl" @click="confirmSubscribe(subscription)">Subscribe to {{ subscription.name }}</button>
+              </div>
+              <div v-if="!subscription.stripe_id && subscription.confirm"  class="m-5">
+                <button class="red_button font-bold text-xl" @click="subscribe(subscription)">Please confirm</button>
               </div>
               <div v-if="subscription.currency==='USD'" class="mt-9">If you want to pay with cryptos,</div>
               <div v-if="subscription.currency==='USD'" class="">please contact us at <a href="mailto:support@bitcoinvsalts.com">support@bitcoinvsalts.com</a></div>
@@ -332,6 +335,11 @@ export default {
       subscription.confirm = true
     }
 
+    const confirmSubscribe = async (subscription) => {
+      console.log("confirmSubscribe", subscription)
+      subscription.confirm = true
+    }
+
     const cancelSubs = async (subscription) => {
       console.log("cancelSubs", subscription.code, subscription.sid )
       await axios.put('/api/cancelsub?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
@@ -544,6 +552,8 @@ export default {
     }
 
     const subscribe = async (sub) => {
+      sub.confirm = false
+      sub.status = 'PAUSED'
       console.log("subscribe", sub.code)
       await axios.put('/api/subscribe?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
         { 
@@ -580,7 +590,8 @@ export default {
       saveQty,
       changeStatus,
       changeNotif,
-      subscribe
+      subscribe,
+      confirmSubscribe
     }
 
   },
