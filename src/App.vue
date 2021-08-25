@@ -9,6 +9,13 @@
     </nav>
   </div>
   <router-view></router-view>
+  <div class="text-center mx-6 flex flex-row items-center justify-center p-2 space-x-5 mb-5">
+    <div class="text-cyan-200">
+      <u>Disclaimer</u>: There is a very high degree of risk involved in trading crypto. 
+      Past results are not indicative of future returns.
+      This platform is for educational purposes only.
+    </div>
+  </div>
   <div class="text-center p-5 m-6 flex flex-row items-center justify-center p-2 space-x-5 mb-5">
     <router-link to="/about" class="text-gray-300 font-bold">About us</router-link> &nbsp;
     <a href="https://twitter.com/BitcoinvsAlts" target="_new" class="text-blue-500 font-bold"><img class="mx-auto" width=30 alt="Twitter" src="/twitter.png"/></a> &nbsp;
