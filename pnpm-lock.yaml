@@ -7,6 +7,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': 4.29.3
   '@vitejs/plugin-vue': ^1.6.0
   '@vue/compiler-sfc': ^3.2.6
+  '@vue/server-renderer': ^3.2.6
   '@vueuse/core': ^6.0.0
   '@vueuse/head': ^0.6.0
   apexcharts: ^3.28.1
@@ -67,6 +68,7 @@ devDependencies:
   '@typescript-eslint/eslint-plugin': 4.29.3
   '@vitejs/plugin-vue': 1.6.0_@vue+compiler-sfc@3.2.6
   '@vue/compiler-sfc': 3.2.6
+  '@vue/server-renderer': 3.2.6_vue@3.2.6
   markdown-it-prism: 2.2.0
   vite: 2.5.1
   vite-plugin-components: 0.13.2_vite@2.5.1
@@ -75,7 +77,7 @@ devDependencies:
   vite-plugin-pages: 0.17.5_0af502564fb53278e4f42e4690bab263
   vite-plugin-pwa: 0.11.2_vite@2.5.1
   vite-plugin-vue-layouts: 0.3.1_vite@2.5.1
-  vite-ssg: 0.14.7_f5dea031e75c2d70b6b9902879e7c952
+  vite-ssg: 0.14.7_4e9547e4b620aa247274ba1a4e1b0961
   vue-tsc: 0.3.0
 
 packages:
@@ -1435,6 +1437,16 @@ packages:
       '@vue/runtime-core': 3.2.6
       '@vue/shared': 3.2.6
       csstype: 2.6.17
+
+  /@vue/server-renderer/3.2.6_vue@3.2.6:
+    resolution: {integrity: sha512-Izc4F79W8Q36qLV442Yp1xOdwekb5DwA2p8wFsWmhgDLDeZOP9LeyYqN5BduDtAfLVe7gHOwt2Xg7QQltSVuBA==}
+    peerDependencies:
+      vue: 3.2.6
+    dependencies:
+      '@vue/compiler-ssr': 3.2.6
+      '@vue/shared': 3.2.6
+      vue: 3.2.6
+    dev: true
 
   /@vue/shared/3.2.6:
     resolution: {integrity: sha512-uwX0Qs2e6kdF+WmxwuxJxOnKs/wEkMArtYpHSm7W+VY/23Tl8syMRyjnzEeXrNCAP0/8HZxEGkHJsjPEDNRuHw==}
@@ -4312,7 +4324,7 @@ packages:
       - typescript
     dev: false
 
-  /vite-ssg/0.14.7_f5dea031e75c2d70b6b9902879e7c952:
+  /vite-ssg/0.14.7_4e9547e4b620aa247274ba1a4e1b0961:
     resolution: {integrity: sha512-46E4NHEhe/lj3CPxXjDxKrqi0H3B5LY1Qpf3NPtFDkXUvA2zZYWIp+YDQ98o27QH2HentLcBKQeN6JZpNeOMWQ==}
     engines: {node: '>=14.0.0'}
     hasBin: true
@@ -4329,6 +4341,7 @@ packages:
         optional: true
     dependencies:
       '@vue/compiler-sfc': 3.2.6
+      '@vue/server-renderer': 3.2.6_vue@3.2.6
       '@vueuse/head': 0.6.0_vue@3.2.6
       chalk: 4.1.2
       fs-extra: 10.0.0
