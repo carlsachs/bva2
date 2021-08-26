@@ -3,7 +3,7 @@
   "version": "2.2.1",
   "scripts": {
     "dev": "vite --port 3000 --open",
-    "build": "cross-env NODE_ENV=production vite-ssg build",
+    "build": "vite-ssg build",
     "preview": "vite preview",
     "preview-https": "serve dist"
   },
