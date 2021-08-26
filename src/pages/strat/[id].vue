@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="!total_pnl" class="my-0 text-gray-300">Loading...</div>
+        <div v-if="!total_pnl" class="my-0 text-gray-300">Loading... <feather-loader class="ml-2" /></div>
 
         <div ref="myEl" class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
