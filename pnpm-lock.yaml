@@ -24,7 +24,7 @@ specifiers:
   vite-plugin-icons: ^0.6.5
   vite-plugin-md: ^0.11.0
   vite-plugin-pages: ^0.17.4
-  vite-plugin-pwa: ^0.11.2
+  vite-plugin-pwa: 0.5.6
   vite-plugin-vue-layouts: ^0.3.1
   vite-plugin-windicss: ^1.3.0
   vue: ^3.2.6
@@ -71,7 +71,7 @@ devDependencies:
   vite-plugin-icons: 0.6.5_346cae4599d96836b777e6b3520c90a2
   vite-plugin-md: 0.11.0_vite@2.5.1
   vite-plugin-pages: 0.17.5_0af502564fb53278e4f42e4690bab263
-  vite-plugin-pwa: 0.11.2_vite@2.5.1
+  vite-plugin-pwa: 0.5.6
   vite-plugin-vue-layouts: 0.3.1_vite@2.5.1
 
 packages:
@@ -3418,18 +3418,13 @@ packages:
       yaml: 2.0.0-7
     dev: true
 
-  /vite-plugin-pwa/0.11.2_vite@2.5.1:
-    resolution: {integrity: sha512-TlsXarwMrt8ccITZaag9yYkBfABn+HfUnZIFDxpX4TwON3F0KSpza72NSqVt8zIjt55+iU1tGonwjxvUAmKYxw==}
-    peerDependencies:
-      vite: ^2.0.0
+  /vite-plugin-pwa/0.5.6:
+    resolution: {integrity: sha512-CQjfKdSm0YMRRdMkfdI1RqJyrCjOFUl61+puGfMNAUMM5tex9rjF9gHxqDV5pN/2jFMQoTKkLLQ7HOYM0VbF2w==}
     dependencies:
       debug: 4.3.2
       fast-glob: 3.2.7
       pretty-bytes: 5.6.0
-      rollup: 2.56.3
-      vite: 2.5.1
       workbox-build: 6.2.4
-      workbox-window: 6.2.4
     transitivePeerDependencies:
       - '@types/babel__core'
       - supports-color
