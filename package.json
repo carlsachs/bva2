@@ -36,7 +36,6 @@
     "@typescript-eslint/eslint-plugin": "4.29.3",
     "@vitejs/plugin-vue": "^1.6.0",
     "@vue/compiler-sfc": "^3.2.6",
-    "@vue/server-renderer": "^3.2.6",
     "markdown-it-prism": "^2.2.0",
     "vite": "^2.5.1",
     "vite-plugin-components": "^0.13.2",
@@ -44,8 +43,6 @@
     "vite-plugin-md": "^0.11.0",
     "vite-plugin-pages": "^0.17.4",
     "vite-plugin-pwa": "^0.11.2",
-    "vite-plugin-vue-layouts": "^0.3.1",
-    "vite-ssg": "^0.14.6",
-    "vue-tsc": "^0.3.0"
+    "vite-plugin-vue-layouts": "^0.3.1"
   }
 }
