@@ -3,10 +3,10 @@
         <div class="p-4">
             <div class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
                 <div class="text-2xl text-cyan-200 mt-3">
-                    Bitcoin vs. Alts is an algo crypto trading marketplace.
+                    Our goal is to democratize access to the best crypto algo trading strategies. 
                 </div>
                 <div class="text-xl text-cyan-200 mt-3">
-                    It was created to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.
+                    We created this marketplace to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.
                 </div>
                 <div class="text-xl text-cyan-200 mt-3">
                     We are currently tracking more than <router-link to="/signals" class="underline">1200 strategies</router-link>.
