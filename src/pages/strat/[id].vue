@@ -210,11 +210,11 @@ export default defineComponent({
     })
 
     useHead({
-        title: computed( () => state.stratname + " Strategy PnL Tracking Record"),
+        title: computed( () => state.stratname + " Strategy PnL Track Record"),
         meta: [
             {
             name: `description`,
-            content: computed(() => state.stratname + " Strategy PnL Public Tracking Record " + state.description),
+            content: computed(() => state.stratname + " " + state.description + " Strategy PnL and Chart tracked by BVA."),
             },
         ],
     })
