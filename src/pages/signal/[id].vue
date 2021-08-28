@@ -56,12 +56,12 @@
 
 <script lang="ts">
 
-import { onMounted, reactive, ref, toRefs, defineComponent, watch, inject } from "vue"
+import { onMounted, reactive, ref, toRefs, computed, defineComponent, inject } from "vue"
 import axios from "~/utils/axios"
 import moment from "moment"
 import _ from "lodash"
 import { startStats, endStats } from '~/modules/stats'
-
+import { useHead } from '@vueuse/head'
 
 export default defineComponent({
   name: "signal",
@@ -98,6 +98,16 @@ export default defineComponent({
         yaxis: { show: false, tooltip: { enabled: false } }
       }
       ///////// ///////// ///////// /////////
+    })
+
+    useHead({
+        title: computed( () => state.stratname + " " + state.pair + " Signal Performnce History & Chart"),
+        meta: [
+            {
+            name: `description`,
+            content: computed(() => state.stratname + " " + state.pair + " signal chart and historical performance tracked by BVA."),
+            },
+        ],
     })
 
     onMounted(() => {

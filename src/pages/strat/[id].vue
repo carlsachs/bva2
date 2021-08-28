@@ -135,7 +135,7 @@
 
 <script lang="ts">
 
-import { onMounted, reactive, ref, toRefs, defineComponent, watch, inject } from "vue"
+import { onMounted, reactive, ref, computed, toRefs, defineComponent, watch, inject } from "vue"
 import axios from "~/utils/axios"
 import moment from "moment"
 import { useRouter } from "vue-router"
@@ -144,7 +144,7 @@ import { useRequest } from 'vue-request'
 import { usePriceStore } from '../../stores/prices'
 import { useLoadMoreStore } from '../../stores/loadmore'
 import { startStats, endStats } from '~/modules/stats'
-
+import { useHead } from '@vueuse/head'
 
 export default defineComponent({
   name: "strategy",
@@ -207,6 +207,16 @@ export default defineComponent({
             }
         },
         ///////// ///////// ///////// /////////
+    })
+
+    useHead({
+        title: computed( () => state.stratname + " Strategy PnL Tracking Record"),
+        meta: [
+            {
+            name: `description`,
+            content: computed(() => state.stratname + " Strategy PnL Public Tracking Record " + state.description),
+            },
+        ],
     })
 
     const myEl = ref(null)

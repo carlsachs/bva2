@@ -7,10 +7,14 @@ import App from './App.vue'
 import VueApexChart from 'vue3-apexcharts'
 import VueFinalModal from 'vue-final-modal'
 import VueSmoothScroll from 'vue3-smooth-scroll'
+import { createHead } from '@vueuse/head'
 
 setupAuth0(router)
 
 const app = createApp(App)
+const head = createHead()
+
+app.use(head)
 app.use(router)
 app.use(pinia)
 app.use(VueApexChart)
