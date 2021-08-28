@@ -101,11 +101,11 @@ export default defineComponent({
     })
 
     useHead({
-        title: computed( () => state.stratname + " " + state.pair + " Signal Performnce History & Chart"),
+        title: computed( () => state.stratname + " " + state.pair + " Trading Signal Performnce & Chart"),
         meta: [
             {
             name: `description`,
-            content: computed(() => state.stratname + " " + state.pair + " signal chart and historical performance tracked by BVA."),
+            content: computed(() => state.stratname + " " + state.pair + " trading signal chart and historical performance tracked by BVA."),
             },
         ],
     })
