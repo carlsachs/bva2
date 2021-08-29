@@ -152,7 +152,7 @@ export default {
     startStats(Date.now())
 
     useHead({
-        title: computed( () => "Your BVA Trades"),
+        title: computed( () => "Your Trades"),
     })
 
     const loadMoreStore = useLoadMoreStore()
