@@ -206,6 +206,7 @@ import _ from "lodash"
 import { startStats, endStats } from '~/modules/stats'
 import { updateUsername } from '~/modules/auth0'
 import axios from "~/utils/axios"
+import { useHead } from '@vueuse/head'
 
 export default {
   methods: {
@@ -248,6 +249,10 @@ export default {
       total_signals: 0,
       win_rate: 0,
       ///////// ///////// ///////// /////////
+    })
+
+    useHead({
+        title: computed( () => "Your Subscriptions"),
     })
   
     const getProducts = async () => {

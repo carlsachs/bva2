@@ -3,7 +3,7 @@
         <div class="p-4">
             <div class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
                 <div class="text-2xl text-cyan-200 mt-3">
-                    Our goal is to democratize access to the best crypto algo trading strategies. 
+                    Our goal is to democratize access to the best crypto trading algorithms. 
                 </div>
                 <div class="text-xl text-cyan-200 mt-3">
                     We created this marketplace to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.

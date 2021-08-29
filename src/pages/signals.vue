@@ -89,20 +89,29 @@
 
 <script lang="ts">
 
-import { onMounted, reactive, ref, toRefs, defineComponent, watch, inject } from "vue"
+import { reactive, computed, toRefs, defineComponent, watch, inject } from "vue"
 import axios from "~/utils/axios"
 import moment from "moment"
 import { useRouter } from "vue-router"
-import _ from "lodash"
 import { useRequest } from 'vue-request'
 import { usePriceStore } from '../stores/prices'
 import { startStats, endStats } from '~/modules/stats'
-
+import { useHead } from '@vueuse/head'
 
 export default defineComponent({
   name: "signals",
   setup: () => {
     startStats(Date.now())
+
+    useHead({
+        title: computed( () => "Crypto Algo Trading Signal Firehose"),
+        meta: [
+            {
+            name: `description`,
+            content: computed(() => "See the latest crypto algo trading signals tracked by the BVA platform"),
+            },
+        ],
+    })
     
     const prices = usePriceStore()
 

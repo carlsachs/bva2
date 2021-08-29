@@ -138,7 +138,7 @@ import { useTradedStore } from '../stores/traded'
 import { startStats, endStats } from '~/modules/stats'
 import { updateUsername } from '~/modules/auth0'
 import axios from "~/utils/axios"
-
+import { useHead } from '@vueuse/head'
 
 export default {
   methods: {
@@ -150,6 +150,10 @@ export default {
   },
   setup() {
     startStats(Date.now())
+
+    useHead({
+        title: computed( () => "Your BVA Trades"),
+    })
 
     const loadMoreStore = useLoadMoreStore()
     loadMoreStore.resetStrat()
