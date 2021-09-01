@@ -163,7 +163,7 @@ export default defineComponent({
                 id: 623,
                 name: "HITARUS_MODEL_ONE",
                 series: [{ name: "H1", data: [] }],
-                description: "If you don't want to hold BTC but want to trade USDT instead.",
+                description: "Targets small but stable profits. It only opens long positions and is also active when the market downs.",
                 total_pnl: 0,
                 total_signals: 0,
                 avg_pnl: 0,
