@@ -198,6 +198,7 @@ export default defineComponent({
                 max_concurrent: 20,
                 price: "Limited Availability 0.07 BNB",
             },
+            /*
             {
                 id: 948,
                 name: "Fist4Fun.V02.ENJUSDT",
@@ -211,6 +212,7 @@ export default defineComponent({
                 max_concurrent: 1,
                 price: "Limited Availability 0.07 BNB",
             }
+            */
         ],
         user: null,
         //rows: [],
