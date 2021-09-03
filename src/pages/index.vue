@@ -209,7 +209,7 @@ export default defineComponent({
                 price: "Limited Availability 0.07 BNB",
             },
             {
-                id: 2680,
+                id: 1262,
                 name: "BBWinner",
                 series: [{ name: "BB", data: [] }],
                 description: "A highly effective strategy that is based on going in favor of the global trend but against the micro trend when the price exceeds the Bollinger Bands. The strategy only sends cryptocurrency signals based on the historical profitability of these coins with this strategy.",
