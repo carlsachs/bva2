@@ -111,19 +111,29 @@
 
 <script lang="ts">
 
-import { onMounted, reactive, ref, toRefs, defineComponent, inject } from "vue"
+import { onMounted, reactive, computed, toRefs, defineComponent, inject } from "vue"
 import axios from "~/utils/axios"
 import _ from "lodash"
 import { useRouter } from "vue-router"
 import { useLoadMoreStore } from '../stores/loadmore'
 import { startStats, endStats } from '~/modules/stats'
-
+import { useHead } from '@vueuse/head'
 
 export default defineComponent({
   name: "Dashboard",
   setup: () => {
     startStats(Date.now())
     console.log("INDEX")
+
+    useHead({
+        title: computed( () => "Bitcoin vs. Alts"),
+        meta: [
+            {
+            name: `description`,
+            content: computed(() => "The goal of Bitcoin vs. Alts aka BVA is to democratize access to the best crypto trading algorithms."),
+            },
+        ],
+    })
 
     const router = useRouter()
 
@@ -197,6 +207,19 @@ export default defineComponent({
                 win_rate: 0,
                 max_concurrent: 20,
                 price: "Limited Availability 0.07 BNB",
+            },
+            {
+                id: 2680,
+                name: "BBWinner",
+                series: [{ name: "BB", data: [] }],
+                description: "A highly effective strategy that is based on going in favor of the global trend but against the micro trend when the price exceeds the Bollinger Bands. The strategy only sends cryptocurrency signals based on the historical profitability of these coins with this strategy.",
+                total_pnl: 0,
+                total_signals: 0,
+                avg_pnl: 0,
+                strat_lifetime: 0,
+                win_rate: 0,
+                max_concurrent: 20,
+                price: "Limited Availability 50 USDT",
             },
             /*
             {
