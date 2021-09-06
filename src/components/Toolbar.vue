@@ -9,7 +9,7 @@
         Signal Firehose
       </button>
     </router-link>
-     <router-link to="/strats">
+     <router-link to="/topstrats">
       <button class="blue_button" type="button">
         7d Top Strats
       </button>
