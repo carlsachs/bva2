@@ -9,11 +9,6 @@
         Signal Firehose
       </button>
     </router-link>
-     <router-link to="/topstrats">
-      <button class="blue_button" type="button">
-        7d Top Strats
-      </button>
-    </router-link>
     <router-link v-if="!isSubPage && auth0.state.isAuthenticated" to="/subscriptions">
       <button class="green_button" type="button">
         Your Subscriptions
@@ -22,6 +17,11 @@
     <router-link v-if="!isTradePage && auth0.state.isAuthenticated" to="/trades">
       <button class="green_button" type="button">
         Your Trades
+      </button>
+    </router-link>
+    <router-link to="/topstrats">
+      <button class="blue_button" type="button">
+        7d Top Strats
       </button>
     </router-link>
     <button v-if="auth0.state.isLoading" class="blue_button" type="button">

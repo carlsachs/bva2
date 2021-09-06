@@ -17,9 +17,9 @@
                                                 {{ row.max_concurrent }}
                                                 {{ row.description }}
                                                 <div :class="{ 'text-green-500': Number(row.sumpnl)>0, 'text-red-500': Number(row.sumpnl)<0 }">{{ Number(row.sumpnl).toFixed(2) }}%</div>
-                                                <div v-if="row.description" @click="login" class="font-bold flex-auto text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl px-6 py-5 rounded-lg cursor-pointer hover:bg-opacity-100 transition">
-                                                    <div class="text-green-500 text-xl font-semibold">Auto Trade This Strategy Today</div>
-                                                </div>
+                                                <button v-if="row.description" @click="login" class="font-bold mx-auto text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl px-6 py-5 rounded-lg cursor-pointer hover:bg-opacity-100 transition">
+                                                    <div class="text-green-500 text-xl font-semibold">Subscribe and Auto Trade It Now</div>
+                                                </button>
                                             </td>
                                         </tr>
                                     </tbody>
