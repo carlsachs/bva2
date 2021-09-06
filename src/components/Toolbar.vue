@@ -9,6 +9,11 @@
         Signal Firehose
       </button>
     </router-link>
+     <router-link to="/strats">
+      <button class="blue_button" type="button">
+        7d Top Strats
+      </button>
+    </router-link>
     <router-link v-if="!isSubPage && auth0.state.isAuthenticated" to="/subscriptions">
       <button class="green_button" type="button">
         Your Subscriptions
