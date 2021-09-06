@@ -154,7 +154,7 @@ export default defineComponent({
                 strat_lifetime: 0,
                 win_rate: 0,
                 max_concurrent: 10,
-                price: "Limited Availability 499 USDT",
+                price: "Limited Availability 499 USDT per month",
             },
             {
                 id: 1262,
@@ -167,7 +167,7 @@ export default defineComponent({
                 strat_lifetime: 0,
                 win_rate: 0,
                 max_concurrent: 20,
-                price: "Limited Availability 50 USDT",
+                price: "Limited Availability 50 USDT per month",
             },
             {
                 id: 882,
@@ -180,7 +180,7 @@ export default defineComponent({
                 strat_lifetime: 0,
                 win_rate: 0,
                 max_concurrent: 20,
-                price: "Limited Availability 0.07 BNB",
+                price: "Limited Availability 0.07 BNB per month",
             },
             {
                 id: 1024,
@@ -193,7 +193,7 @@ export default defineComponent({
                 strat_lifetime: 0,
                 win_rate: 0,
                 max_concurrent: 20,
-                price: "Limited Availability 0.07 BNB",
+                price: "Limited Availability 0.07 BNB per month",
             },
             {
                 id: 466,
@@ -206,7 +206,7 @@ export default defineComponent({
                 strat_lifetime: 0,
                 win_rate: 0,
                 max_concurrent: 15,
-                price: "Limited Availability $19.80",
+                price: "Limited Availability $19.80 per month",
             },
             {
                 id: 595,
@@ -219,7 +219,7 @@ export default defineComponent({
                 strat_lifetime: 0,
                 win_rate: 0,
                 max_concurrent: 15,
-                price: "Limited Availability $19.80",
+                price: "Limited Availability $19.80 per month",
             },
             {
                 id: 623,
