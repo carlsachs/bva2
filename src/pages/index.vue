@@ -144,17 +144,17 @@ export default defineComponent({
     const state = reactive({
         strategies: [
             {
-                id: 623,
-                name: "HITARUS_MODEL_ONE",
-                series: [{ name: "H1", data: [] }],
-                description: "Targets small but stable profits. It only opens long positions and is also active when the market downs.",
+                id: 1255,
+                name: "Dominus V5 10 pairs",
+                series: [{ name: "DOM", data: [] }],
+                description: "This is a trending strategy that can be used with any crypto and stock market pair and its designed to destroy buy and hold by a long margin. These signals are for 10 pairs, which allow to diversify risk and minimize drawdown (BTC - ETH - ADA - MATIC - BNB - DOGE - LINK - SOL - XRP - LTC).",
                 total_pnl: 0,
                 total_signals: 0,
                 avg_pnl: 0,
                 strat_lifetime: 0,
                 win_rate: 0,
-                max_concurrent: 15,
-                price: "Limited Availability 0.07 BNB",
+                max_concurrent: 10,
+                price: "Limited Availability 499 USDT",
             },
             {
                 id: 1262,
@@ -197,7 +197,7 @@ export default defineComponent({
             },
             {
                 id: 466,
-                name: "Our Flagship BVA Strat",
+                name: "The BVA Strat",
                 series: [{ name: "BVA", data: [] }],
                 description: "The mission of the BVA strategy is simply to accumulate more BTC. It is the result of a prediction model trained using the latest Machine Learning practices. We use specific data sets made of crypto market data, social sentiments, TAs, traditional financial market data and some secret sauce.",
                 total_pnl: 0,
@@ -221,7 +221,19 @@ export default defineComponent({
                 max_concurrent: 15,
                 price: "Limited Availability $19.80",
             },
-            /*
+            {
+                id: 623,
+                name: "HITARUS_MODEL_ONE",
+                series: [{ name: "H1", data: [] }],
+                description: "Targets small but stable profits. It only opens long positions and is also active when the market downs.",
+                total_pnl: 0,
+                total_signals: 0,
+                avg_pnl: 0,
+                strat_lifetime: 0,
+                win_rate: 0,
+                max_concurrent: 15,
+                price: "Limited Availability 0.07 BNB",
+            },
             {
                 id: 948,
                 name: "Fist4Fun.V02.ENJUSDT",
@@ -235,7 +247,6 @@ export default defineComponent({
                 max_concurrent: 1,
                 price: "Limited Availability 0.07 BNB",
             }
-            */
         ],
         user: null,
         //rows: [],
