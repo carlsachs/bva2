@@ -21,7 +21,7 @@
     </router-link>
     <router-link to="/topstrats">
       <button class="blue_button" type="button">
-        7d Top Strats
+        7Day Top Strats
       </button>
     </router-link>
     <button v-if="auth0.state.isLoading" class="blue_button" type="button">

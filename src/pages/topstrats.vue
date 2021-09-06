@@ -54,7 +54,7 @@ export default defineComponent({
         meta: [
             {
             name: `description`,
-            content: computed(() => ""),
+            content: computed(() => "Check out the best performing crypto trading strategies of the past 7 days on BVA."),
             },
         ],
     })
@@ -110,8 +110,6 @@ export default defineComponent({
     return {
       ...toRefs(state),
       moment,
-      openStrat,
-      prices,
       login,
       strats
     }
