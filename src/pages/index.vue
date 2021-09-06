@@ -5,11 +5,11 @@
                 <div class="text-2xl text-cyan-200 mt-3">
                     Our goal is to democratize access to the best crypto trading algorithms. 
                 </div>
-                <div class="text-xl text-cyan-200 mt-3">
+                <!--div class="text-xl text-cyan-200 mt-3">
                     We created this marketplace to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.
-                </div>
+                </div-->
                 <div class="text-xl text-cyan-200 mt-3">
-                    We are currently tracking more than <router-link to="/signals" class="underline">1200 strategies</router-link>.
+                    We are currently tracking more than <router-link to="/signals" class="underline">1300 strategies</router-link>.
                     Here are our curated strategies.
                 </div>
                 <div class="text-cyan-200 mt-3">
