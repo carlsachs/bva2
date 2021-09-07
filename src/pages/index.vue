@@ -218,7 +218,7 @@ export default defineComponent({
                 avg_pnl: 0,
                 strat_lifetime: 0,
                 win_rate: 0,
-                max_concurrent: 13,
+                max_concurrent: 11,
                 price: "Limited Availability 15 USDT",
             },
             {
