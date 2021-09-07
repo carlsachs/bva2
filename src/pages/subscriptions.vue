@@ -45,7 +45,7 @@
               <hr class="w-5 mx-auto border-blue-400 my-4">
 
               <div class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto" v-if="subscription.mode==='FUTURE'">
-                <div class="my-3">Automatically Set <b>Leverage to 5x</b> and <b>Isolated Mode</b>:</div>
+                <div class="my-3">Automatically Set <b>Leverage to 4x</b> and <b>Isolated Mode</b>:</div>
               </div>
               <div class="flex items-center justify-center">
                 <label :for="'toogles'+subscription.code" class="flex items-center cursor-pointer">
