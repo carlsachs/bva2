@@ -2,10 +2,14 @@
   <div v-if="auth0.state.isAuthenticated && auth0.state.user" class="text-center text-gray-300">
 
     <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
-      <div v-for="subscription in subscriptions" >
+      <div v-for="subscription in products" >
         <div v-if="subscription.count>0"  :class="{ 'bg-indigo-900 bg-opacity-20': subscription.status!=='ZISABLED' }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative"> 
-          <div class="text-2xl font-extrabold text-blue-600"><router-link :to="'/strat/'+subscription.stratid" class=""><b>{{ subscription.name }}</b></router-link></div>
-          <hr class="w-5 mx-auto border-blue-400 my-8">
+          <div class="text-2xl font-extrabold text-blue-600">
+            <router-link :to="'/strat/'+subscription.stratid" class=""><b>{{ subscription.name }}</b></router-link>
+          </div>
+          <hr class="w-5 mx-auto border-blue-400 my-4">
+          <div class="text-center font-bold text-xl">Trading Mode: <b class="text-green-200">{{subscription.mode}}</b></div>
+          <hr class="w-5 mx-auto border-blue-400 my-4">
           <button v-if="!subs" class="blue_button" type="button">
             Loading <feather-loader class="ml-2" />
           </button>
@@ -38,7 +42,22 @@
                 </div>
                 <span :class="{'text-orange-500' : qty_result!=='success', 'text-indigo-500':qty_result==='success'}">{{ qty_result }}</span>
               </div>
-              <hr class="w-5 mx-auto border-blue-400 my-8">
+              <hr class="w-5 mx-auto border-blue-400 my-4">
+
+              <div class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto" v-if="subscription.mode==='FUTURE'">
+                <div class="my-3">Automatically Set <b>Leverage to 5x</b> and <b>Isolated Mode</b>:</div>
+              </div>
+              <div class="flex items-center justify-center">
+                <label :for="'toogles'+subscription.code" class="flex items-center cursor-pointer">
+                  <div class="relative">
+                    <input :id="'toogles'+subscription.code" type="checkbox" class="sr-only" v-model="subscription.autoset" true-value="true" false-value="false" 
+                      @change="changeAutoSet(subscription)"/>
+                    <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+                    <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
+                  </div>
+                </label>
+              </div>
+              <hr v-if="subscription.mode==='FUTURE'" class="w-5 mx-auto border-blue-400 my-4">
               <div :class="{ 'bg-indigo-900 bg-opacity-20': !subscription.key || !subscription.secret }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
                 <div class="my-3 text-xl font-bold"><a href="https://www.binance.com/en/my/settings/api-management?ref=W5BD94FW" target="_new"><u>Binance API Key Information</u></a>&nbsp;</div>
                 <input
@@ -100,7 +119,7 @@
                 :clientReferenceId="auth0.state.user?.data?.id" 
                 :stripeId="subscription.stripe_id"
                 :description="subscription.name"
-                :price="subscription.price"
+                :price="Number(subscription.price)"
               />
               <div v-if="!subscription.stripe_id && !subscription.confirm"  class="m-5">
                 <button class="green_button font-bold text-xl" @click="confirmSubscribe(subscription)">Subscribe to {{ subscription.name }}</button>
@@ -198,6 +217,7 @@
 import { provide, reactive, ref, toRefs, watch, inject, computed, onMounted } from 'vue'
 import { useRouter } from "vue-router"
 import _ from "lodash"
+import { useProductStore } from '../stores/products'
 import { startStats, endStats } from '~/modules/stats'
 import { updateUsername } from '~/modules/auth0'
 import axios from "~/utils/axios"
@@ -214,12 +234,13 @@ export default {
   setup() {
     startStats(Date.now())
     
+    const prods = useProductStore()
     const auth0: any = inject("auth0")
 
     const state = reactive({ 
       ///////// ///////// ///////// /////////
       auth0, 
-      subscriptions: [],
+      products: [],
       ///////// ///////// ///////// /////////
       id: auth0.state.user?.data?.id,
       username: auth0.state.user?.data?.nickname,
@@ -254,9 +275,10 @@ export default {
       const res = await axios.get('/api/products')
       let result = {}
       for (const yo of res.data) {
-        state.subscriptions.push({
+        state.products.push({
           name: yo.name,
           code: yo.code,
+          mode: yo.mode,
           stratid: yo.stratid,
           price: Number(yo.price),
           count: Number(yo.count),
@@ -267,22 +289,26 @@ export default {
           status: 'ZISABLED',
         })
       }
+      console.log(JSON.stringify(state.products[0]))
     }
 
     watch( () => auth0.state.user?.data, (user) => {
       console.log("WATCH USER DATA", JSON.stringify(user.subs[0]))
+      console.log(prods.items.length)
+      console.log("======-=-=-=-=-=-=-======")
       state.username = user.nickname
       state.id = user.id
       state.email = user.email
       state.token = auth0.state.user?.token
       state.subs = user.subs
-      state.subscriptions.map( yo => {
+      prods.items.map( yo => {
         if (state.subs?.findIndex(sub => (sub.code == yo.code)) > -1) {
           yo.status = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].status
           yo.qty = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].qty
           yo.key = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].key
           yo.secret = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].secret
           yo.email_notif = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].email_notif
+          yo.autoset = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].autoset
           yo.sid = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].sid
         }
         else {
@@ -291,15 +317,16 @@ export default {
           yo.key = ""
           yo.secret = ""
           yo.email_notif = false
+          yo.autoset = true
           yo.sid = ""
         }
       })
-      state.subscriptions = _.orderBy(state.subscriptions, 'status', 'ASC')
+      state.products = _.orderBy(prods.items, 'status', 'ASC')
       endStats(Date.now())
     })
 
     onMounted( async () => {
-      await getProducts()
+      //await getProducts()
       console.log("onMounted...", auth0.state.user?.token, auth0.state.user?.data?.email)
       if (auth0.state.user?.token && auth0.state.user?.data?.email) {
         console.log("re run =======>", auth0.state.user?.token)
@@ -307,13 +334,14 @@ export default {
         state.username = auth0.state.user?.data?.nickname
         state.id = auth0.state.user?.data?.id
         state.email = auth0.state.user?.data?.email
-        state.subscriptions.map( yo => {
+        prods.items.map( yo => {
           if (state.subs?.findIndex(sub => (sub.code == yo.code)) > -1) {
             yo.status = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].status
             yo.qty = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].qty
             yo.key = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].key
             yo.secret = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].secret
             yo.email_notif = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].email_notif
+            yo.autoset = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].autoset
             yo.sid = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].sid
           }
           else {
@@ -322,10 +350,11 @@ export default {
             yo.key = ""
             yo.secret = ""
             yo.email_notif = false
+            yo.autoset = true
             yo.sid = ""
           }
         })
-        state.subscriptions = _.orderBy(state.subscriptions, 'status', 'ASC')
+        state.products = _.orderBy(prods.items, 'status', 'ASC')
         endStats(Date.now())
       }
     })
@@ -355,15 +384,15 @@ export default {
         else {
           state.cancel_sub_result = "error"
         }
-        const index = state.subscriptions?.findIndex( sub => (sub.code === subscription.code) )
-        if (index > -1) state.subscriptions?.splice(index, 1)
+        const index = state.products?.findIndex( sub => (sub.code === subscription.code) )
+        if (index > -1) state.products?.splice(index, 1)
       })
       .catch( (error) => {
         subscription.confirm = false
         console.log("ERROR cancelSubs:", error)
         state.cancel_sub_result = "error"
-        const index = state.subscriptions?.findIndex( sub => (sub.code === subscription.code) )
-        if (index > -1) state.subscriptions?.splice(index, 1)
+        const index = state.products?.findIndex( sub => (sub.code === subscription.code) )
+        if (index > -1) state.products?.splice(index, 1)
       })
     }
 
@@ -426,6 +455,28 @@ export default {
       })
       .catch( (error) => {
         console.log("ERROR changeNotif", error)
+      })
+    }
+
+    const changeAutoSet = async (sub) => {
+      console.log("changeAutoSet", sub.autoset)
+      await axios.put('/api/setautoset?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
+        { 
+          autoset:sub.autoset, 
+          sid:sub.sid, 
+        },
+        { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
+      )
+      .then( (response) => {
+        console.log("changeAutoSet.response.data:", response.data)
+        if (response.data.msg == 'success') {
+        }
+        else {
+          console.log("---->", response.data.err)
+        }
+      })
+      .catch( (error) => {
+        console.log("ERROR changeAutoSet", error)
       })
     }
 
@@ -590,6 +641,7 @@ export default {
       saveQty,
       changeStatus,
       changeNotif,
+      changeAutoSet,
       subscribe,
       confirmSubscribe
     }

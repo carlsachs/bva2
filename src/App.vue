@@ -38,6 +38,7 @@
 
 import { computed, inject } from "vue"
 import { usePriceStore } from './stores/prices'
+import { useProductStore } from './stores/products'
 import { useKlineStore } from './stores/klines'
 
 
@@ -45,13 +46,14 @@ export default {
   name: "App",
   setup() {
     console.log("APP")
-
     const stats: any = inject("stats")
     console.log("---=-=--=-")
     const prices = usePriceStore()
+    const products = useProductStore()
     const klines = useKlineStore()
     prices.getItems()
     klines.getItems()
+    products.getItems()
     //const prices: any = inject("prices")
     const btc = computed( () => prices.items.find(e => e.symbol === 'BTCUSDT') )
     return {
