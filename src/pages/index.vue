@@ -235,6 +235,20 @@ export default defineComponent({
                 price: "Limited Availability 0.07 BNB",
             },
             {
+                id: 1248,
+                name: "One Punch Algo Momentum",
+                series: [{ name: "Punch", data: [] }],
+                description: "OnePunch Algo team own several algorithms for Crypto & Equity markets. The latest and greatest algorithm we are introducing in the marketplace is called “One Punch Algo Momentum”. One Punch Algo Momentum (OPAM) strategy is design to utilize latest trends in the current crypto market. This is one of the best strategy for Short squeeze, momentum, hype and high volatility crypto coins. When combine with an auto-trading bots, this will generate huge gains without even using leverage. - Algorithm watches the paired coins 24/7 and as soon as it catches a momentum/strength/hype it will place the trades.",
+                total_pnl: 0,
+                total_signals: 0,
+                avg_pnl: 0,
+                strat_lifetime: 0,
+                win_rate: 0,
+                max_concurrent: 13,
+                price: "Limited Availability 15 USDT",
+            },
+            /*
+            {
                 id: 948,
                 name: "Fist4Fun.V02.ENJUSDT",
                 series: [{ name: "F4F", data: [] }],
@@ -247,6 +261,7 @@ export default defineComponent({
                 max_concurrent: 1,
                 price: "Limited Availability 0.07 BNB",
             }
+            */
         ],
         user: null,
         //rows: [],
