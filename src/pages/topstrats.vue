@@ -1,7 +1,6 @@
 <template>
     <div>
         <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
-
             <h1 class="text-xl mb-7 text-uppercase font-semibold">Top Strategies for the past 7 days</h1>
             <div v-if="!strats" class="my-0 text-gray-300">Loading... <img class="mx-auto mb-5" src="/spinner.svg" /></div>
             <div v-if="true" class="mt-4 p-4">
