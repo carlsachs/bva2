@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-row items-center justify-center p-2 space-x-5 mb-5">
+  <div class="flex-auto items-center justify-center p-2 space-x-5 mb-5">
     <!--DarkModeToggle /-->
-    <button v-if="!isHomePage" class="dark_button p-2" type="button" @click="$router.go(-1)">
+    <button v-if="!isHomePage" class="dark_button" type="button" @click="$router.go(-1)">
       <feather-chevron-left class="" />
     </button>
     <router-link to="/signals">
@@ -27,16 +27,12 @@
     <button v-if="auth0.state.isLoading" class="blue_button" type="button">
       Loading <feather-loader class="ml-2" />
     </button>
-    <div v-else>
-      <button v-if="auth0.state.isAuthenticated" class="dark_button" type="button" @click="logout">
-        <feather-log-out class="" />
-      </button>
-      <div v-else>
-        <button class="blue_button" type="button" @click="login">
-          Sign in<feather-log-in class="ml-1" />
-        </button>
-      </div>
-    </div>
+    <button v-if="!auth0.state.isLoading && auth0.state.isAuthenticated" class="dark_button" type="button" @click="logout">
+      <feather-log-out class="" />
+    </button>
+    <button v-if="!auth0.state.isLoading && !auth0.state.isAuthenticated" class="blue_button" type="button" @click="login">
+      Sign in<feather-log-in class="pt-2" />
+    </button>
   </div>
 </template>
 
@@ -87,18 +83,18 @@ function logout() {
 
 <style lang="postcss" scoped>
 .blue_button {
-  @apply text-blue-400 cursor-pointer border-2 border-blue-600 hover:bg-blue-600 hover:text-blue-200 px-3 py-2 rounded-lg items-center;
+  @apply text-blue-400 cursor-pointer border-2 border-blue-600 hover:bg-blue-600 hover:text-blue-200 px-3 py-2 my-2 rounded-lg;
 }
 .green_button {
-  @apply border-2 border-green-600 rounded-lg px-3 py-2 text-green-400 cursor-pointer hover:bg-green-600 hover:text-green-200 flex flex-row items-center;
+  @apply border-2 border-green-600 rounded-lg px-3 py-2 my-2 text-green-400 cursor-pointer hover:bg-green-600 hover:text-green-200;
 }
 .orange_button {
-  @apply border-2 border-yellow-600 rounded-lg px-3 py-2 text-yellow-400 cursor-pointer hover:bg-yellow-600 hover:text-yellow-200 flex flex-row items-center;
+  @apply border-2 border-yellow-600 rounded-lg px-3 py-2 my-2 text-yellow-400 cursor-pointer hover:bg-yellow-600 hover:text-yellow-200;
 }
 .red_button {
-  @apply border-2 border-red-600 rounded-lg px-3 py-2 text-red-400 cursor-pointer hover:bg-red-600 hover:text-red-200 flex flex-row items-center;
+  @apply border-2 border-red-600 rounded-lg px-3 py-2 my-2 text-red-400 cursor-pointer hover:bg-red-600 hover:text-red-200;
 }
 .dark_button {
-  @apply border-2 border-gray-800 rounded-lg px-3 py-2 text-gray-400 cursor-pointer hover:bg-gray-800 hover:text-gray-200 flex flex-row items-center;
+  @apply border-2 border-gray-800 rounded-lg px-3 py-2 my-2 text-gray-400 cursor-pointer hover:bg-gray-800 hover:text-gray-200;
 }
 </style>
