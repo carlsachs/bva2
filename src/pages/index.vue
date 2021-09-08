@@ -28,7 +28,7 @@
                 <div class="my-2 overflow-x-auto">
                     <div class="py-2 align-middle inline-block min-w-full">
                         <div class="mx-2 my-4 py-4 border-2 border-blue-900 brounded-lg text-white relative">
-                            <router-link :to="/strat/+row.id">
+                            <router-link class="h-40" :to="/strat/+row.id">
                                 <img v-if="row.logo" class="mx-auto my-10" width=200 heigth=200 alt="BvA" :src="row.logo"/>
                                 <div :class="{ 'text-green-500': Number(row.sumpnl)>0, 'text-red-500': Number(row.sumpnl)<0 }" class="text-xl font-bold">{{ Number(row.sumpnl).toFixed(2) }}%</div>
                             </router-link>
