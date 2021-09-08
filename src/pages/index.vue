@@ -70,7 +70,7 @@
             <div class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
                 <a href="https://github.com/bitcoinvsalts/node-binance-trader" target="_new">
                     <img width=102 class="mx-auto mt-3 mb-10" alt="BvA GitHub" src="/github.png" />
-                    <div class="text-2xl text-white">840+ GitHub Stars</div>
+                    <div class="text-2xl text-white">900+ GitHub Stars</div>
                 </a>
             </div>
         </div>
