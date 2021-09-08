@@ -32,12 +32,14 @@
                                     <tbody v-if="strats" class="divide-y divide-gray-200 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in strats" :key="row.id">
                                         <tr>
                                             <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
-                                                <div :class="{ 'text-green-500': Number(row.sumpnl)>0, 'text-red-500': Number(row.sumpnl)<0 }" class="text-xl mb-5">{{ Number(row.sumpnl).toFixed(2) }}%</div>
-                                                <button v-if="row.forsale" @click="login" class="font-bold mx-auto text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl px-6 py-5 rounded-lg cursor-pointer hover:bg-opacity-100 transition">
+                                                <router-link :to="/strat/+row.id">
+                                                    <div :class="{ 'text-green-500': Number(row.sumpnl)>0, 'text-red-500': Number(row.sumpnl)<0 }" class="text-xl">{{ Number(row.sumpnl).toFixed(2) }}%</div>
+                                                </router-link>
+                                                <button v-if="row.forsale" @click="login" class="my-4 font-bold mx-auto text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl px-6 py-5 rounded-lg cursor-pointer hover:bg-opacity-100 transition">
                                                     <div class="text-green-500 text-xl font-semibold">Subscribe</div>
                                                 </button>
-                                                <h1 :class="{ 'text-green-500': row.forsale, 'text-gray-500': !row.forsale }" class="mt-8 text-xl">
-                                                    {{ i+1 }}.&nbsp;<router-link :to="/strat/+row.id">{{ row.stratname }}</router-link>
+                                                <h1 :class="{ 'text-green-500': row.forsale, 'text-gray-500': !row.forsale }" class="text-xl">
+                                                    <router-link :to="/strat/+row.id">{{ row.stratname }}</router-link>
                                                 </h1>
                                                 {{ row.description }}
                                             </td>
