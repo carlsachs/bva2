@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
-            <h1 class="text-xl mb-7 text-uppercase font-semibold">Top Strategies for the past 7 days</h1>
-            <div v-if="!strats" class="my-0 text-gray-300">Loading... <img class="mx-auto mb-5" src="/spinner.svg" /></div>
+        <h1 class="text-xl text-white text-uppercase font-semibold">Top Strategies for the past 7 days</h1>
+        <div v-if="!strats" class="my-0 text-gray-300">Loading... <img class="mx-auto mb-5" src="/spinner.svg" /></div>
+        <div class="mx-2 my-7 py-4 border-2 border-blue-900 rounded-lg text-white relative">
             <div v-if="true" class="mt-4 p-4">
                 <div class="flex flex-col">
                     <div class="-my-2 overflow-x-auto">
@@ -16,7 +16,7 @@
                                                 {{ row.max_concurrent }}
                                                 {{ row.description }}
                                                 <div :class="{ 'text-green-500': Number(row.sumpnl)>0, 'text-red-500': Number(row.sumpnl)<0 }">{{ Number(row.sumpnl).toFixed(2) }}%</div>
-                                                <button v-if="row.description" @click="login" class="font-bold mx-auto text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl px-6 py-5 rounded-lg cursor-pointer hover:bg-opacity-100 transition">
+                                                <button v-if="row.forsale" @click="login" class="font-bold mx-auto text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl px-6 py-5 rounded-lg cursor-pointer hover:bg-opacity-100 transition">
                                                     <div class="text-green-500 text-xl font-semibold">Subscribe and Auto Trade It Now</div>
                                                 </button>
                                             </td>
