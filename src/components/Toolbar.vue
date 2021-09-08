@@ -19,6 +19,11 @@
         Your Trades
       </button>
     </router-link>
+    <router-link to="/topstrats">
+      <button class="blue_button" type="button">
+        Top Strats
+      </button>
+    </router-link>
     <button v-if="auth0.state.isLoading" class="blue_button" type="button">
       Loading <feather-loader class="ml-2" />
     </button>
