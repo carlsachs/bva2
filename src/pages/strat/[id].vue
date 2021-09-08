@@ -43,7 +43,7 @@
 
                 <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
                     <div class="flex-auto">Verif. Trade History</div>
-                    <div class="flex-auto text-justify text-blue-300 block">{{ strat_lifetime }} days</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ strat_lifetime }}</div>
                 </div>
 
                 <div v-if="!auth0.state.isAuthenticated" @click="login" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
@@ -81,7 +81,7 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody v-if="signals" class="divide-y divide-gray-200 hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in signals.slice(0, 10 * loadMoreStore.strat)" :key="row.id">
+                                    <tbody v-if="signals" class="divide-y divide-gray-200 hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in signals.slice(0, 30 * loadMoreStore.strat)" :key="row.id">
                                         <tr>
                                             <td v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                 <router-link :to="/signal/+row.id">{{ moment(Number(row.buy_time)).fromNow() }}</router-link>
@@ -177,7 +177,7 @@ export default defineComponent({
         description: '',
         total_pnl: 0,
         avg_pnl: 0,
-        strat_lifetime: 0,
+        strat_lifetime: "",
         total_signals: 0,
         win_rate: 0,
         ///////// ///////// ///////// /////////
@@ -234,14 +234,13 @@ export default defineComponent({
             return res.data
         },
         onSuccess: (res) => {
-            console.log("11111--1-1>", res.length)
+            console.log("SIGNALS=>", res.length)
         }
     })
     
     watch(signals, (signals) => {
 
-        console.log("signals...", signals.length)
-        console.log("signals...", signals[signals.length-1].sell_time)
+        console.log("watch signals...", signals[signals.length-1].sell_time)
     
         let tpnl_btc = []
         let tpnl_bva = []
@@ -250,8 +249,8 @@ export default defineComponent({
 
         state.stratname = signals[0].stratname
         state.series[1].name = signals[0].stratname
-        state.strat_lifetime = signals[signals.length-1].sell_time ? parseInt((Date.now() - signals[signals.length-1].sell_time)/86400000) : 0
-        const days = 10 + state.strat_lifetime
+        state.strat_lifetime = moment(Number(signals[signals.length-1].buy_time)).fromNow()
+        const days = 10 + (signals[signals.length-1].sell_time ? parseInt((Date.now() - signals[signals.length-1].sell_time)/86400000) : 0)
         state.total_signals = signals.length
         
         console.log("========>", Date.now(), days )

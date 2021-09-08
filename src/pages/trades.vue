@@ -62,7 +62,7 @@
                       </th>
                     </tr>
                   </thead>
-                  <tbody v-if="trades" v-for="(row, i) in trades.slice(0, 10 * loadMoreStore.profile)" :key="row.id" class="divide-y divide-gray-200 hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40">
+                  <tbody v-if="trades" v-for="(row, i) in trades.slice(0, 30 * loadMoreStore.profile)" :key="row.id" class="divide-y divide-gray-200 hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40">
                     <tr>
                       <td v-if="row.type === 'LONG'" :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                         <router-link :to="/trade/+row.id">{{ moment(Number(row.buy_time)).fromNow() }}</router-link>
