@@ -27,7 +27,7 @@
             <div class="mx-2">
                     <div class="my-2 overflow-x-auto">
                         <div class="py-2 align-middle inline-block min-w-full">
-                            <div v-if="strats" v-for="(row, i) in strats" :key="row.id" class="hover:bg-blue-900 hover:bg-opacity-40 mx-2 my-4 py-4 border-2 border-blue-900 brounded-lg text-white relative">
+                            <div v-if="strats" v-for="(row, i) in strats" :key="row.id" :class="{ 'hover:bg-blue-900 hover:bg-opacity-40': row.forsale }" class="mx-2 my-4 py-4 border-2 border-blue-900 brounded-lg text-white relative">
                                 <router-link :to="/strat/+row.id">
                                     <img v-if="row.logo" class="mx-auto my-3" width=200 alt="BvA" :src="row.logo"/>
                                     <div :class="{ 'text-green-500': Number(row.sumpnl)>0, 'text-red-500': Number(row.sumpnl)<0 }" class="text-xl font-bold">{{ Number(row.sumpnl).toFixed(2) }}%</div>
