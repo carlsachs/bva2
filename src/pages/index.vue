@@ -29,7 +29,7 @@
                     <div class="py-2 align-middle inline-block min-w-full">
                         <div class="mx-2 my-4 py-4 border-2 border-blue-900 brounded-lg text-white relative">
                             <router-link :to="/strat/+row.id">
-                                <img v-if="row.logo" class="mx-auto my-10 object-contain md:object-scale-down" alt="BvA" :src="row.logo"/>
+                                <img v-if="row.logo" class="mx-auto my-10 object-contain md:object-scale-down" width=200 :alt="row.stratname" :src="row.logo"/>
                                 <div :class="{ 'text-green-500': Number(row.sumpnl)>0, 'text-red-500': Number(row.sumpnl)<0 }" class="text-xl font-bold">{{ Number(row.sumpnl).toFixed(2) }}%</div>
                             </router-link>
                             <button v-if="row.forsale" @click="login" class="my-4 font-bold mx-auto text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl px-6 py-5 rounded-lg cursor-pointer hover:bg-opacity-100 transition">
