@@ -21,7 +21,18 @@
             </div>
         </div>
 
-        <h1 class="text-xl text-white text-uppercase font-semibold mt-6">Top Strategies for the past 7 days</h1>
+        <h1 class="text-xl text-white text-uppercase font-semibold mt-6">
+            Top Strategies for the Past 
+            <button @click="setDays(7)" :class="{ 'bg-indigo-900 bg-opacity-100':days==7, 'bg-indigo-900 bg-opacity-10':days!=7 }" class="mx-2 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                <div class="text-green-500 text-xl font-semibold">One Week</div>
+            </button>
+            <button @click="setDays(4*7)" :class="{ 'bg-indigo-900 bg-opacity-100':days==4*7, 'bg-indigo-900 bg-opacity-10':days!=4*7 }" class="my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                <div class="text-green-500 text-xl font-semibold">One Month</div>
+            </button>
+            <button @click="setDays(4*7*12)" :class="{ 'bg-indigo-900 bg-opacity-100':days==4*7*12, 'bg-indigo-900 bg-opacity-10':days!=4*7*12 }" class="mx-2 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                <div class="text-green-500 text-xl font-semibold">One Year</div>
+            </button>
+        </h1>
         <div v-if="!strats" class="my-4 text-gray-300">Loading... <img class="mx-auto mb-5" src="/spinner.svg" /></div>
         <div v-if="strats" v-for="(row, i) in strats" :key="row.id">
             <div class="mx-2">
@@ -43,8 +54,7 @@
                     </div>
                 </div>
             </div>
-        </div>  
-
+        </div>
 
         <div class="p-4 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1 sm:gap-5">
             <div class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
@@ -75,13 +85,12 @@
             </div>
         </div>
 
-
     </div>
 </template>
 
 <script lang="ts">
 
-import { reactive, computed, toRefs, defineComponent, watch, inject } from "vue"
+import { reactive, computed, toRefs, onMounted, defineComponent, watch, inject } from "vue"
 import axios from "~/utils/axios"
 import moment from "moment"
 import { useRouter } from "vue-router"
@@ -116,9 +125,20 @@ export default defineComponent({
     const auth0: any = inject("auth0")
 
     const state = reactive({
+        days: 7,
         ///////// ///////// ///////// /////////
         auth0,
         ///////// ///////// ///////// /////////
+    })
+
+    async function setDays(days) {
+        console.log("setDays", days)
+        state.days = days
+        run()
+    }
+
+    onMounted(() => {
+      run()
     })
 
     async function login() {
@@ -131,16 +151,17 @@ export default defineComponent({
     }
 
     const getStrats = () => {
-        console.log("getStrats...")
-        return axios.get('/api/topstrats')
-    }
+        console.log("getStrats...", state.days)
+        return axios.get('/api/topstrats?days='+state.days)
+    } 
 
-    const { data: strats } = useRequest( () =>  getStrats(), {
+    const { data: strats, run } = useRequest( () =>  getStrats(), {
         cacheKey: 'strats',
+        manual: true,
         //cacheTime: 300000,
         pollingInterval: 20000,
         formatResult: res => {
-            console.log(res)
+            //console.log(res)
             return res.data
         },
         onSuccess: (res) => {
@@ -157,7 +178,8 @@ export default defineComponent({
       ...toRefs(state),
       moment,
       login,
-      strats
+      strats,
+      setDays
     }
   },
 })
