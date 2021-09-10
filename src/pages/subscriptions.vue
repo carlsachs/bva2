@@ -184,31 +184,6 @@
       </div>
 
     </div>
-
-
-    <!--div class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-gray-200 relative">
-      <span>{{ auth0.state.user?.data }}</span>
-      <br/><br/>
-      <span>{{ subs }}</span>
-      <br/><br/>
-      <span>{{ auth0.state.user?.data?.email }} {{ auth0.state.user?.token }} {{ auth0.state.user?.data?.id }}</span>
-      <br/><br/>
-      <span>{{ subscriptions }}</span>
-      <br/><br/>
-      <span>{{ trades?.length }}</span>
-      <br/><br/>
-      <span>{{ series[1]?.data?.length }}</span>
-      <br/><br/>
-      <button @click="showModal = true">Open Modal</button>
-      <br/>
-      <br/>
-    </div-->
-
-
-    <vue-final-modal v-model="showModal" classes="modal-container" content-class="modal-content">
-      <div class="modal__title m-20">Hello, vue-final-modal</div>
-    </vue-final-modal>
-
   </div>
 </template>
 
@@ -254,7 +229,6 @@ export default {
       password: '',
       pwd_result: '',
       searchEnabled: true,
-      showModal: false,
       confirmPass: false,
       confirmUser: false,
       qty_result: '',
@@ -662,35 +636,6 @@ export default {
 
 .green_button {
   @apply border-2 px-3 py-2 border-green-600 rounded-lg text-green-400 cursor-pointer bg-green-600 text-green-200;
-}
-
-::v-deep .modal-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-::v-deep .modal-content {
-  display: flex;
-  flex-direction: column;
-  margin: 0 1rem;
-  padding: 1rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.25rem;
-  border-color: #2d3748;
-  background-color: #1a202c;
-}
-.modal__title {
-  font-size: 1.5rem;
-  font-weight: 700;
-}
-
-.modal {
-  width: 300px;
-  padding: 30px;
-  box-sizing: border-box;
-  background-color: #fff;
-  font-size: 20px;
-  text-align: center;
 }
 
 input[type=number]::-webkit-inner-spin-button, 

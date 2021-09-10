@@ -331,35 +331,6 @@ export default {
   @apply border-2 px-3 py-2 border-green-600 rounded-lg text-green-400 cursor-pointer bg-green-600 text-green-200;
 }
 
-::v-deep .modal-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-::v-deep .modal-content {
-  display: flex;
-  flex-direction: column;
-  margin: 0 1rem;
-  padding: 1rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.25rem;
-  border-color: #2d3748;
-  background-color: #1a202c;
-}
-.modal__title {
-  font-size: 1.5rem;
-  font-weight: 700;
-}
-
-.modal {
-  width: 300px;
-  padding: 30px;
-  box-sizing: border-box;
-  background-color: #fff;
-  font-size: 20px;
-  text-align: center;
-}
-
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 

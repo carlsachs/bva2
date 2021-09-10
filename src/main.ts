@@ -5,7 +5,6 @@ import { pinia } from './stores'
 import { router } from './routes'
 import App from './App.vue'
 import VueApexChart from 'vue3-apexcharts'
-import VueFinalModal from 'vue-final-modal'
 import VueSmoothScroll from 'vue3-smooth-scroll'
 import { createHead } from '@vueuse/head'
 
@@ -18,7 +17,6 @@ app.use(head)
 app.use(router)
 app.use(pinia)
 app.use(VueApexChart)
-app.use(VueFinalModal())
 app.use(VueSmoothScroll)
 
 Object.values(import.meta.globEager('./modules/*.ts')).map(i =>
