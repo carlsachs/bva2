@@ -24,7 +24,7 @@
         <h1 class="text-xl text-white text-uppercase font-semibold mt-6">
             Top Strategies for the Past 
             <button @click="setDays(1)" :class="{ 'bg-indigo-900 bg-opacity-100':days==1, 'bg-indigo-900 bg-opacity-10':days!=1 }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                <div class="text-green-500 text-xl font-semibold">One Day</div>
+                <div class="text-green-500 text-xl font-semibold">24H</div>
             </button>
             <button @click="setDays(7)" :class="{ 'bg-indigo-900 bg-opacity-100':days==7, 'bg-indigo-900 bg-opacity-10':days!=7 }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
                 <div class="text-green-500 text-xl font-semibold">One Week</div>
