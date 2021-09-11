@@ -26,7 +26,7 @@
       <feather-log-out class="" />
     </button>
     <button v-if="!auth0.state.isLoading && !auth0.state.isAuthenticated" class="blue_button" type="button" @click="login">
-      Sign In<feather-log-in class="pt-2" />
+      Sign In
     </button>
   </div>
 </template>
