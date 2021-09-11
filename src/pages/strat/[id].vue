@@ -49,6 +49,9 @@
                 <div v-if="!auth0.state.isAuthenticated" @click="login" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
                     <div class="flex-auto text-green-500 text-xl font-semibold">Subscribe</div>
                 </div>
+                <div v-if="auth0.state.isAuthenticated" @click="subscribe" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
+                    <div class="flex-auto text-green-500 text-xl font-semibold">Subscribe</div>
+                </div>
             </div>
             
             <div v-if="max_concurrent>1" class="mt-5 italic">* PNL calculated using 1/{{max_concurrent}} of the whole BTC amount for each trade as recommended.</div>
@@ -326,6 +329,10 @@ export default defineComponent({
       setTimeout(function(){ value?.toggleSeries('Bitcoin') }, 4000)
     })
 
+    const subscribe = () => {
+        router.push("/subscriptions")
+    }
+
     return {
       ...toRefs(state),
       moment,
@@ -337,7 +344,8 @@ export default defineComponent({
       loadMoreStore,
       prices,
       login,
-      stratchart
+      stratchart,
+      subscribe
     }
   },
 })
