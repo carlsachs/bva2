@@ -4,10 +4,10 @@
             <b>Add Your Strategy</b>
         </div>
         <div class="text-xl text-cyan-200 mt-10">
-            <b>To Send Your Signals to BVA from your TradingView Strategy</b>
+            <b>How To Send TradingView Signals to BVA</b>
         </div>
         <div class="text-xl text-cyan-200 mt-10">
-            You need to add our web hook into your TradingView alert setting:
+            You simply need to add our web hook into your TradingView alert setup:
         </div>
         <div class="text-xl text-cyan-200 mt-10">
             <b>https://api-bva.herokuapp.com/tv</b>
@@ -16,18 +16,18 @@
             <img class="mx-auto my-10 object-contain md:object-scale-down" alt="TradingView Alert Settings" src="/tv_alert_setting.png"/>
         </div>
         <div class="text-xl text-cyan-200 mt-10">
-            The format of your alert should be:
+            The format of the alert shall be:
         </div>
         <div class="text-cyan-200 mt-10">
             <code>{{ format }}</code>
         </div>
         <div class="text-xl text-cyan-200 mt-10">
             <ul class="list-disc list-inside">
-                <li><b>your_bva_key</b> is your BVA key  you find after signing up at <a href='https://bitcoinvsaltcoins.com/' target=_new>https://bitcoinvsaltcoins.com/</a></li>
+                <li><b>your_bva_key</b> is your BVA key you find after signing up at <a href='https://bitcoinvsaltcoins.com/' target=_new>https://bitcoinvsaltcoins.com/</a></li>
                 <li><b>your strategy name</b> is the name of your strategy, changing it will track a new strategy.</li>
                 <li><b>action</b> could be <i>buy</i>, <i>sell</i>, <i>take</i> or <i>close</i>.</li>
                 <li><b>ticker</b> should be a valid binance pair.</li>
-                <li><b>position</b> can be empty or be either <i>flat</i>, <i>long</i> or <i>short</i>.</li>
+                <li><b>position</b> is optional, it can be <i>flat</i>, <i>long</i> or <i>short</i>.</li>
             </ul>
         </div>
         <hr class="w-5 mx-auto border-blue-400 mt-6">
