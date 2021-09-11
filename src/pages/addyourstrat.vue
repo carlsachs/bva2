@@ -13,7 +13,7 @@
             <b>https://api-bva.herokuapp.com/tv</b>
         </div>
         <div class="text-xl text-cyan-200 mt-10">
-            <img class="mx-auto my-10 object-contain md:object-scale-down" alt="TradingView Alert Settings" src="tv_alert_setting.png"/>
+            <img class="mx-auto my-10 object-contain md:object-scale-down" alt="TradingView Alert Settings" src="/tv_alert_setting.png"/>
         </div>
         <div class="text-xl text-cyan-200 mt-10">
             The format of your alert should be:
