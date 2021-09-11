@@ -46,7 +46,7 @@
                                 <img v-if="row.logo" class="mx-auto my-10 object-contain md:object-scale-down" width=200 :alt="row.stratname" :src="row.logo"/>
                                 <div :class="{ 'text-green-500': Number(row.sumpnl)>0, 'text-red-500': Number(row.sumpnl)<0 }" class="text-xl font-bold">{{ Number(row.sumpnl).toFixed(2) }}%</div>
                             </router-link>
-                            <button v-if="row.forsale" @click="login" class="my-4 font-bold mx-auto text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl px-6 py-5 rounded-lg cursor-pointer hover:bg-opacity-100 transition">
+                            <button v-if="row.forsale" @click="subscribe" class="my-4 font-bold mx-auto text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl px-6 py-5 rounded-lg cursor-pointer hover:bg-opacity-100 transition">
                                 <div class="text-green-500 text-xl font-semibold">Subscribe</div>
                             </button>
                             <h1 :class="{ 'text-green-500': row.forsale, 'text-gray-500': !row.forsale }" class="text-xl">
@@ -144,13 +144,18 @@ export default defineComponent({
       run()
     })
 
-    async function login() {
-        // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#loginwithredirect
-        console.log("-0-0-0-0-0-0-0-", window.location.href)
-        //auth0.client.loginWithRedirect({ appState: { targetUrl: window.location.href } })
-        await auth0.client.loginWithRedirect({ appState: { targetUrl: '/subscriptions' } })
-        //await auth0.client.loginWithPopup()
-        //console.log("-1-1-1-1-1-1-", await auth0.client.getUser() )
+    async function subscribe() {
+        console.log("subscribe", !auth0.state.isAuthenticated)
+        if (!auth0.state.isAuthenticated) {
+            console.log("-0-0-0-0-0-0-0-", window.location.href)
+            //auth0.client.loginWithRedirect({ appState: { targetUrl: window.location.href } })
+            await auth0.client.loginWithRedirect({ appState: { targetUrl: '/subscriptions' } })  
+            // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#loginwithredirect   
+            //await auth0.client.loginWithPopup()
+        }
+        else {
+            router.push("/subscriptions")
+        }
     }
 
     const getStrats = () => {
@@ -180,7 +185,7 @@ export default defineComponent({
     return {
       ...toRefs(state),
       moment,
-      login,
+      subscribe,
       strats,
       setDays
     }
