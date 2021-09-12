@@ -52,6 +52,9 @@
                         <div class="text-center">STRAT NAME</div>
                       </th>
                       <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        <div class="text-center">QTY</div>
+                      </th>
+                      <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                         <div class="text-center">BUY PRICE</div>
                       </th>
                       <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
@@ -96,6 +99,9 @@
                           {{ row.pnl ? Number(row.pnl).toFixed(2) : getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
                       </td>
                       -->
+                      <td class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                        <router-link :to="/trade/+row.id">{{ row.qty }}</router-link>
+                      </td>
                       <td class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                         <router-link :to="/trade/+row.id">{{ row.buy_price ? row.buy_price : '---' }}</router-link>
                       </td>
