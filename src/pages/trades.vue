@@ -40,16 +40,19 @@
                         <div class="text-center">TIME</div>
                       </th>
                       <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                        <div class="text-center">PAIR</div>
+                        <div class="text-center">STRAT NAME</div>
                       </th>
-                      <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                       <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                         <div class="text-center">PNL</div>
                       </th>
                       <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                        <div class="text-center">TYPE</div>
+                        <div class="text-center">STATUS</div>
                       </th>
                       <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                        <div class="text-center">STRAT NAME</div>
+                        <div class="text-center">PAIR</div>
+                      </th>
+                      <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        <div class="text-center">TYPE</div>
                       </th>
                       <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                         <div class="text-center">QTY</div>
@@ -59,9 +62,6 @@
                       </th>
                       <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                         <div class="text-center">SELL PRICE</div>
-                      </th>
-                      <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                        <div class="text-center">STATUS</div>
                       </th>
                     </tr>
                   </thead>
@@ -74,7 +74,7 @@
                         <router-link :to="/trade/+row.id">{{ moment(Number(row.sell_time)).fromNow() }}</router-link>
                       </td>
                       <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
-                        <router-link :to="/trade/+row.id">{{ row.pair }}</router-link>
+                        <router-link :to="/strat/+row.stratid">{{ row.stratname }}</router-link>
                       </td>
                       <td v-if="row.pnl" :class="{ 'text-green-500': Number(row.pnl)>0, 'text-red-500': Number(row.pnl)<0 }" class="px-6 py-4 font-bold whitespace-no-wrap text-sm leading-5">
                         <router-link :to="/trade/+row.id">{{ Number(row.pnl).toFixed(2) }}%</router-link>
@@ -82,14 +82,17 @@
                       <td v-else class="italic px-6 py-4 text-gray-400 whitespace-no-wrap text-sm leading-5">
                         <router-link :to="/trade/+row.id"> {{ getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%</router-link>
                       </td>
+                      <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                        <router-link :to="/trade/+row.id">{{ row.status }}</router-link>
+                      </td>
+                      <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
+                        <router-link :to="/trade/+row.id">{{ row.pair }}</router-link>
+                      </td>
                       <td v-if="row.type==='SHORT'" class="text-orange-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                         <router-link :to="/trade/+row.id">{{ row.type }}</router-link>
                       </td>
                       <td v-else class="text-blue-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                         <router-link :to="/trade/+row.id">{{ row.type }}</router-link>
-                      </td>
-                      <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
-                        <router-link :to="/strat/+row.stratid">{{ row.stratname }}</router-link>
                       </td>
                       <!--
                       <td v-if="Number(row.pnl)>0" :class="{ 'font-bold': row.pnl }" class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
@@ -107,9 +110,6 @@
                       </td>
                       <td class="text-red-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                         <router-link :to="/trade/+row.id">{{ row.sell_price ? row.sell_price : '---' }}</router-link>
-                      </td>
-                      <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                        <router-link :to="/trade/+row.id">{{ row.status }}</router-link>
                       </td>
                     </tr>
                   </tbody>
