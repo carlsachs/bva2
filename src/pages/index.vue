@@ -1,8 +1,6 @@
 
 <template>
     <div>
-
-
         <div class="mx-2">
             <div class="my-2 overflow-x-auto">
                 <div class="py-2 align-middle inline-block min-w-full">
@@ -117,7 +115,7 @@ export default defineComponent({
         meta: [
             {
             name: `description`,
-            content: computed(() => "The goal of Bitcoin vs. Alts aka BVA is to democratize access to the best crypto trading algorithms."),
+            content: computed(() => "Our goal is to democratize access to the best crypto trading algorithms. We track and rank more than 1400 strategies."),
             },
         ],
     })

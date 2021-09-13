@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="text-xl text-cyan-200 mt-10">
-            We are a team passionated in algo crypto trading. Our goal is to democratize access to the best crypto algo trading strategies.
+            We are a team passionated in algo crypto trading. Our goal is to democratize access to the best crypto algo trading algorithms.
         </div>
         <div class="text-xl text-cyan-200 mt-10">
             We use the latest Machine Learning practices to train our prediction models.
