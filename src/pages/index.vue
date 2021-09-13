@@ -2,21 +2,26 @@
 <template>
     <div>
 
-        <div class="p-4">
-            <div class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
-                <div class="text-2xl text-cyan-200 mt-3">
-                    Our goal is to democratize access to the best crypto trading algorithms. 
-                </div>
-                <!--div class="text-xl text-cyan-200 mt-3">
-                    We created this marketplace to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.
-                </div-->
-                <div class="text-xl text-cyan-200 mt-3">
-                    We track the performance (PnL) of more than <router-link to="/signals" class="underline">1400 strategies</router-link>.
-                </div>
-                <div class="text-cyan-200 mt-3">
-                    <u>Disclaimer</u>: There is a very high degree of risk involved in trading crypto. 
-                    Past results are not indicative of future returns.
-                    This platform is for <b>educational</b> purposes only.
+
+        <div class="mx-2">
+            <div class="my-2 overflow-x-auto">
+                <div class="py-2 align-middle inline-block min-w-full">
+                    <div class="mx-2 my-4 p-4 border-2 border-blue-900 brounded-lg text-white relative">
+                        <div class="text-2xl text-cyan-200 mt-3">
+                            Our goal is to democratize access to the best crypto trading algorithms. 
+                        </div>
+                        <!--div class="text-xl text-cyan-200 mt-3">
+                            We created this marketplace to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.
+                        </div-->
+                        <div class="text-xl text-cyan-200 mt-3">
+                            We track the performance (PnL) of more than <router-link to="/signals" class="underline">1400 strategies</router-link>.
+                        </div>
+                        <div class="text-cyan-200 mt-3">
+                            <u>Disclaimer</u>: There is a very high degree of risk involved in trading crypto. 
+                            Past results are not indicative of future returns.
+                            This platform is for <b>educational</b> purposes only.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
