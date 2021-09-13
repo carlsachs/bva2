@@ -11,17 +11,17 @@
                     We created this marketplace to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.
                 </div-->
                 <div class="text-xl text-cyan-200 mt-3">
-                    We are currently tracking more than <router-link to="/signals" class="underline">1300 strategies</router-link>.
+                    We track the performance (PnL) of more than <router-link to="/signals" class="underline">1400 strategies</router-link>.
                 </div>
                 <div class="text-cyan-200 mt-3">
                     <u>Disclaimer</u>: There is a very high degree of risk involved in trading crypto. 
                     Past results are not indicative of future returns.
-                    This platform is for educational purposes only.
+                    This platform is for <b>educational</b> purposes only.
                 </div>
             </div>
         </div>
 
-        <h1 class="text-xl text-white text-uppercase font-semibold mt-6">
+        <h1 class="text-2xl text-white text-uppercase font-semibold mt-6">
             Top Strategies for the Past 
             <button @click="setDays(1)" :class="{ 'bg-indigo-900 bg-opacity-100':days==1, 'bg-indigo-900 bg-opacity-10':days!=1 }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
                 <div class="text-green-500 text-xl font-semibold">24H</div>
