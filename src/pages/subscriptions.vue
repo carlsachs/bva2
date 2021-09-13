@@ -1,7 +1,7 @@
 <template>
   <div v-if="auth0.state.isAuthenticated && auth0.state.user" class="text-center text-gray-300">
 
-    <h2>Your BVA Key: <b class="text-green-200">{{ auth0.state.user?.data?.sub?.replace("auth0|","") }}</b></h2>
+    <h2>To <a href="/addyourstrat">connect your TradingView alerts to BVA</a>. Here is your key: <b class="text-green-200">{{ auth0.state.user?.data?.sub?.replace("auth0|","") }}</b></h2>
     <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
       <div v-for="subscription in products" >
         <div v-if="subscription.count>0"  :class="{ 'bg-indigo-900 bg-opacity-20': subscription.status!=='ZISABLED' }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative"> 

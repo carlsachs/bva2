@@ -4,7 +4,7 @@
             <b>Add Your Strategy</b>
         </div>
         <div class="text-xl text-cyan-200 mt-10">
-            <b>How To Send TradingView Signals to BVA</b>
+            <b>How to send TradingView signals to our platform.</b>
         </div>
         <div class="text-xl text-cyan-200 mt-10">
             You simply need to add our web hook into your TradingView alert setup:
@@ -23,7 +23,9 @@
         </div>
         <div class="text-xl text-cyan-200 mt-10">
             <ul class="list-disc list-inside">
-                <li><b>your_bva_key</b> is your BVA key you find after signing up at <a href='https://bitcoinvsaltcoins.com/' target=_new>https://bitcoinvsaltcoins.com/</a></li>
+                <li><b>your_bva_key</b> is your BVA key 
+                    <b v-if="auth0.state.isAuthenticated && auth0.state.user" class="text-green-200">in your case, it's {{ auth0.state.user?.data?.sub?.replace("auth0|","") }}</b>
+                    <b @click="auth0.client.loginWithRedirect({ appState: { targetUrl: '/subscriptions' } })" v-if="!auth0.state.isAuthenticated && !auth0.state.user" class="text-green-200">you can find it here</b></li>
                 <li><b>your strategy name</b> is the name of your strategy, changing it will track a new strategy.</li>
                 <li><b>action</b> could be <i>buy</i>, <i>sell</i>, <i>take</i> or <i>close</i>.</li>
                 <li><b>ticker</b> should be a valid binance pair.</li>
@@ -54,7 +56,10 @@ export default defineComponent({
   name: "Dashboard",
   setup: () => {
 
+    const auth0: any = inject("auth0")
+
     const state = reactive({
+        auth0, 
         format: "your_bva_key|your strategy name|{{strategy.order.action}}|{{ticker}}|{{strategy.market_position}}",
     })
 
