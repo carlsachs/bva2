@@ -390,6 +390,7 @@ export default {
         await axios.put('/api/setsubstatus?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
           { 
             status:sub.status, 
+            id: sub.id,
             sid:sub.sid, 
             qty:sub.qty, 
             key:sub.key, 
