@@ -42,7 +42,7 @@
                                             <td v-else :class="{ 'italic': !row.pnl }" class="text-gray-400 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                 <router-link :to="/signal/+row.id">{{ moment(Number(row.sell_time)).fromNow() }}</router-link>
                                             </td>
-                                            <td @click="openStrat(row.stratid)" class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
+                                            <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
                                                 <router-link :to="/strat/+row.stratid">{{ row.stratname }}</router-link>
                                             </td>
                                             <td class="px-6 py-4 text-gray-300 font-bold whitespace-no-wrap text-sm leading-5">
