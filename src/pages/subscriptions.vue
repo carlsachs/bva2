@@ -402,7 +402,7 @@ export default {
           if (response.data.msg == 'success') {
           }
           else {
-            console.log("---->", response.data.err)
+            console.log("err 123", response.data.err)
           }
         })
         .catch( (error) => {
@@ -425,7 +425,7 @@ export default {
         if (response.data.msg == 'success') {
         }
         else {
-          console.log("---->", response.data.err)
+          console.log("err 1234 ->", response.data.err)
         }
       })
       .catch( (error) => {
@@ -447,7 +447,7 @@ export default {
         if (response.data.msg == 'success') {
         }
         else {
-          console.log("---->", response.data.err)
+          console.log("err 12323", response.data.err)
         }
       })
       .catch( (error) => {
@@ -500,7 +500,7 @@ export default {
             state.qty_result = response.data.msg
           }
           else {
-            console.log("---->", response.data.err)
+            console.log("err 123455 -->", response.data.err)
             state.qty_result = response.data.err
           }
         })
@@ -553,7 +553,7 @@ export default {
           updateUsername(state.username)
         }
         else {
-          console.log("---->", response.data.err)
+          console.log("err 123466", response.data.err)
           state.user_result = response.data.err
         }
       })
@@ -595,7 +595,7 @@ export default {
           auth0.state.user.data = user_data
         }
         else {
-          console.log("---->", response.data.err)
+          console.log("err 12398", response.data.err)
         }
       })
       .catch( (error) => {

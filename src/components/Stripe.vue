@@ -24,8 +24,6 @@ export default defineComponent({
       key: import.meta.env.VITE_APP_STRIPE_PUBLIC_KEY,
     })
 
-    console.log("STRIPPPPPPPPE")
-
     const subscribe = async () => {
       console.log("subscribe")
       const handleResult = await stripe.value.redirectToCheckout({
