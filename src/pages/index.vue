@@ -55,7 +55,7 @@
                             <h1 :class="{ 'text-green-500': row.forsale, 'text-gray-500': !row.forsale }" class="text-xl">
                                 <router-link :to="/strat/+row.id">{{ row.stratname }}</router-link>
                             </h1>
-                            {{ row.description }}
+                            <router-link :to="/strat/+row.id">{{ row.description }}</router-link>
                         </div>       
                     </div>
                 </div>
