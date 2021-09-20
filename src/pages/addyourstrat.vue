@@ -51,10 +51,21 @@
 <script lang="ts">
 
 import { onMounted, reactive, ref, toRefs, defineComponent, inject } from "vue"
+import { useHead } from '@vueuse/head'
 
 export default defineComponent({
   name: "Dashboard",
   setup: () => {
+
+    useHead({
+        title: computed( () => "Add your crypto trading signals into Bitcoin vs. Alts"),
+        meta: [
+            {
+            name: `description`,
+            content: computed(() => "To add your crypto trading signals into BVA, simply POST call our web hook either from your TradingView alerts or in your own scripts."),
+            },
+        ],
+    })
 
     const auth0: any = inject("auth0")
 
