@@ -29,6 +29,7 @@
                   </div>
                 </label>
               </div>
+              
               <div :class="{ 'bg-indigo-900 bg-opacity-20': subscription.qty===0 }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
                 <div v-if="subscription.code === 'bva_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> and <b>Margin</b> wallets. We recommend using 1/20th of your total BTC to safely cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
                 <div v-if="subscription.code === 'bva_long_only_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> wallet. We recommend using 1/20th of your total BTC to safely cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
@@ -43,12 +44,26 @@
                 </div>
                 <span :class="{'text-orange-500' : qty_result!=='success', 'text-indigo-500':qty_result==='success'}">{{ qty_result }}</span>
               </div>
-              <hr class="w-5 mx-auto border-blue-400 my-4">
+              <hr class="w-5 mx-auto border-blue-400">
+
+              <div class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto">
+                <div class="text-center font-bold text-xl">Max. Concurrent Trades : &nbsp;</div>
+                <input
+                  size="50" v-model="subscription.max" placeholder="" aria-label="Max Conc. Trade" type="number" autocomplete="false"
+                  class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-blue-900"
+                  @input="resetInput"
+                >
+                <div>
+                  <button class="dark_button" @click="saveMaxConcTrades(subscription)">Save</button>
+                </div>
+                <span :class="{'text-orange-500' : max_result!=='success', 'text-indigo-500':max_result==='success'}">{{ max_result }}</span>
+              </div>
+              <hr class="w-5 mx-auto border-blue-400 my-5">
 
               <div class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto" v-if="subscription.mode==='FUTURE'">
                 <div class="my-3">Automatically Set <b>Leverage to 4x</b> and <b>Isolated Mode</b>:</div>
               </div>
-              <div class="flex items-center justify-center">
+              <div class="flex items-center justify-center" v-if="subscription.mode==='FUTURE'">
                 <label :for="'toogles'+subscription.code" class="flex items-center cursor-pointer">
                   <div class="relative">
                     <input :id="'toogles'+subscription.code" type="checkbox" class="sr-only" v-model="subscription.autoset" true-value="true" false-value="false" 
@@ -58,6 +73,7 @@
                   </div>
                 </label>
               </div>
+
               <hr v-if="subscription.mode==='FUTURE'" class="w-5 mx-auto border-blue-400 my-4">
               <div :class="{ 'bg-indigo-900 bg-opacity-20': !subscription.key || !subscription.secret }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
                 <div class="my-3 text-xl font-bold"><a href="https://www.binance.com/en/my/settings/api-management?ref=W5BD94FW" target="_new"><u>Binance API Key Information</u></a>&nbsp;</div>
@@ -233,6 +249,7 @@ export default {
       confirmPass: false,
       confirmUser: false,
       qty_result: '',
+      max_result: '',
       ///////// ///////// ///////// /////////
       total_pnl: 0,
       avg_pnl: 0,
@@ -280,6 +297,7 @@ export default {
         if (state.subs?.findIndex(sub => (sub.code == yo.code)) > -1) {
           yo.status = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].status
           yo.qty = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].qty
+          yo.max = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].max
           yo.key = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].key
           yo.secret = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].secret
           yo.email_notif = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].email_notif
@@ -289,6 +307,7 @@ export default {
         else {
           yo.status = 'ZISABLED'
           yo.qty = 0.005
+          yo.max = 10
           yo.key = ""
           yo.secret = ""
           yo.email_notif = false
@@ -313,6 +332,7 @@ export default {
           if (state.subs?.findIndex(sub => (sub.code == yo.code)) > -1) {
             yo.status = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].status
             yo.qty = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].qty
+            yo.max = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].max
             yo.key = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].key
             yo.secret = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].secret
             yo.email_notif = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].email_notif
@@ -322,6 +342,7 @@ export default {
           else {
             yo.status = 'ZISABLED'
             yo.qty = 0.005
+            yo.max = 10
             yo.key = ""
             yo.secret = ""
             yo.email_notif = false
@@ -463,6 +484,7 @@ export default {
       state.user_result = null
       state.key_result = null
       state.qty_result = null
+      state.max_result = null
       state.cancel_sub_result = null
     }
 
@@ -485,6 +507,33 @@ export default {
         console.log("ERROR saveStratKey", error)
         state.key_result = "error"
       })
+    }
+
+    const saveMaxConcTrades = async (subscription) => {
+      console.log("saveMaxConcTrades", parseInt(subscription.max))
+      if (parseInt(subscription.max) > -1) {
+        await axios.put('/api/setsubsmax?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
+          { max: parseInt(subscription.max), code: subscription.sid, email: auth0.state?.user?.email },
+          { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
+        )
+        .then( (response) => {
+          console.log("saveMaxConcTrades.response.data:", response.data)
+          if (response.data.msg == 'success') {
+            state.max_result = response.data.msg
+          }
+          else {
+            console.log("err 12345max5 -->", response.data.err)
+            state.max_result = response.data.err
+          }
+        })
+        .catch( (error) => {
+          console.log("ERROR saveMaxConcTrades", error)
+          state.max_result = "error"
+        })
+      }
+      else {
+        state.max_result = "Please set a maximum concurent trades number."
+      }
     }
 
     const saveQty = async (subscription) => {
@@ -614,6 +663,7 @@ export default {
       confirmUsername,
       resetInput,
       saveQty,
+      saveMaxConcTrades,
       changeStatus,
       changeNotif,
       changeAutoSet,
