@@ -115,7 +115,7 @@ export default defineComponent({
         meta: [
             {
             name: `description`,
-            content: computed(() => "Our goal is to democratize access to the best crypto trading algorithms. We track and rank more than 1400 strategies."),
+            content: computed( () => "Our goal is to democratize access to the best crypto trading algorithms. We track and rank more than 1400 strategies."),
             },
         ],
     })

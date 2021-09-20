@@ -50,7 +50,7 @@
 
 <script lang="ts">
 
-import { onMounted, reactive, ref, toRefs, defineComponent, inject } from "vue"
+import { onMounted, reactive, ref, computed, toRefs, defineComponent, inject } from "vue"
 import { useHead } from '@vueuse/head'
 
 export default defineComponent({
@@ -62,7 +62,7 @@ export default defineComponent({
         meta: [
             {
             name: `description`,
-            content: computed(() => "To add your crypto trading signals into BVA, simply POST call our web hook either from your TradingView alerts or in your own scripts."),
+            content: computed( () => "To add your crypto trading signals into BVA, simply POST call our web hook either from your TradingView alerts or in your own scripts."),
             },
         ],
     })
@@ -73,7 +73,6 @@ export default defineComponent({
         auth0, 
         format: "your_bva_key|your strategy name|{{strategy.order.action}}|{{ticker}}|{{strategy.market_position}}",
     })
-
       
     return {
         ...toRefs(state),
