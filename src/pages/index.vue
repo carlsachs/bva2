@@ -131,7 +131,7 @@ export default defineComponent({
     const auth0: any = inject("auth0")
 
     const state = reactive({
-        days: 7,
+        days: 365,
         ///////// ///////// ///////// /////////
         auth0,
         ///////// ///////// ///////// /////////
