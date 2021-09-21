@@ -217,7 +217,7 @@ export default defineComponent({
         meta: [
             {
             name: `description`,
-            content: computed(() => state.stratname + " " + state.description + " Trading Strategy PnL and Chart tracked by BVA."),
+            content: computed(() => state.stratname + " " + state.description + " Trading Strategy PnL and Chart tracked by BVA. Crypto Trading Algo Ranking."),
             },
         ],
     })

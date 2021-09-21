@@ -103,7 +103,7 @@ export default defineComponent({
     startStats(Date.now())
 
     useHead({
-        title: computed( () => "Signal Firehose"),
+        title: computed( () => "BVA Crypto Algo Trading Signal Firehose"),
         meta: [
             {
             name: `description`,

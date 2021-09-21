@@ -111,7 +111,7 @@ export default defineComponent({
     startStats(Date.now())
 
     useHead({
-        title: computed( () => "Bitcoin vs. Alts"),
+        title: computed( () => "Bitcoin vs. Alts : Crypto Trading Algo Ranking"),
         meta: [
             {
             name: `description`,
