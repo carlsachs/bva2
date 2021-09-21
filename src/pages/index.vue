@@ -26,17 +26,17 @@
 
         <h1 class="text-2xl text-white text-uppercase font-semibold mt-6">
             Top Strategies for the Past 
-            <button :class="{ 'bg-indigo-900 bg-opacity-100':this.$route.query.d==1, 'bg-indigo-900 bg-opacity-10':this.$route.query.d!=1 }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                <router-link class="text-green-500 text-xl font-semibold" to="?d=1">24H</router-link>
+            <button @click="setDays(1)" :class="{ 'bg-indigo-900 bg-opacity-100':days==1, 'bg-indigo-900 bg-opacity-10':days!=1 }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                <div class="text-green-500 text-xl font-semibold">24H</div>
             </button>
-            <button :class="{ 'bg-indigo-900 bg-opacity-100':this.$route.query.d==7, 'bg-indigo-900 bg-opacity-10':this.$route.query.d!=7 }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                <router-link class="text-green-500 text-xl font-semibold" to="?d=7">One Week</router-link>
+            <button @click="setDays(7)" :class="{ 'bg-indigo-900 bg-opacity-100':days==7, 'bg-indigo-900 bg-opacity-10':days!=7 }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                <div class="text-green-500 text-xl font-semibold">One Week</div>
             </button>
-            <button :class="{ 'bg-indigo-900 bg-opacity-100':this.$route.query.d==31, 'bg-indigo-900 bg-opacity-10':this.$route.query.d!=31 }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                <router-link class="text-green-500 text-xl font-semibold" to="?d=31">One Month</router-link>
+            <button @click="setDays(4*7)" :class="{ 'bg-indigo-900 bg-opacity-100':days==4*7, 'bg-indigo-900 bg-opacity-10':days!=4*7 }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                <div class="text-green-500 text-xl font-semibold">One Month</div>
             </button>
-            <button :class="{ 'bg-indigo-900 bg-opacity-100':(this.$route.query.d==365 || !this.$route.query.d)}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                <router-link class="text-green-500 text-xl font-semibold" to="?d=365">One Year</router-link>
+            <button @click="setDays(4*7*12)" :class="{ 'bg-indigo-900 bg-opacity-100':days==4*7*12, 'bg-indigo-900 bg-opacity-10':days!=4*7*12 }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                <div class="text-green-500 text-xl font-semibold">One Year</div>
             </button>
         </h1>
         <div v-if="!strats" class="my-4 text-gray-300">Loading... <img class="mx-auto mb-5" src="/spinner.svg" /></div>
@@ -137,13 +137,11 @@ export default defineComponent({
         ///////// ///////// ///////// /////////
     })
 
-    /*
     async function setDays(days) {
         console.log("setDays", days)
         state.days = days
         run()
     }
-    */
 
     onMounted(() => {
       run()
@@ -164,8 +162,8 @@ export default defineComponent({
     }
 
     const getStrats = () => {
-        console.log("getStrats...", router.currentRoute.value.query.d)
-        return axios.get('/api/topstrats?days='+(router.currentRoute.value.query.d?router.currentRoute.value.query.d:365))
+        console.log("getStrats...", state.days)
+        return axios.get('/api/topstrats?days='+state.days)
     } 
 
     const { data: strats, run } = useRequest( () =>  getStrats(), {
@@ -183,6 +181,7 @@ export default defineComponent({
     })
     
     watch(strats, (strats) => {
+        console.log("strats...", strats.length)
         endStats(Date.now())
     })
 
@@ -191,6 +190,7 @@ export default defineComponent({
       moment,
       subscribe,
       strats,
+      setDays
     }
   },
 })
