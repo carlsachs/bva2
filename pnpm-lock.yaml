@@ -16,6 +16,7 @@ specifiers:
   markdown-it-prism: ^2.2.0
   moment: ^2.29.1
   nprogress: 0.2.0
+  particles.vue3: ^1.18.1
   pinia: ^2.0.0-rc.6
   prism-theme-vars: 0.2.2
   stripe: ^8.170.0
@@ -45,6 +46,7 @@ dependencies:
   lodash: 4.17.21
   moment: 2.29.1
   nprogress: 0.2.0
+  particles.vue3: 1.18.1_vue@3.2.6
   pinia: 2.0.0-rc.6_vue@3.2.6
   prism-theme-vars: 0.2.2
   stripe: 8.170.0
@@ -2639,6 +2641,17 @@ packages:
       mimic-fn: 2.1.0
     dev: false
 
+  /particles.vue3/1.18.1_vue@3.2.6:
+    resolution: {integrity: sha512-M8mBytDEZnss90Zz788m3BIaDzsHzkZMFTYf+SDtEn7CjhDAR94GgT5kZtSnRWZiG2B84plwFperFeyA/M4GrA==}
+    peerDependencies:
+      vue: '>=3'
+    dependencies:
+      core-js: 3.16.3
+      tsparticles: 1.35.1
+      vue: 3.2.6
+      vue-class-component: 8.0.0-rc.1_vue@3.2.6
+    dev: false
+
   /path-is-absolute/1.0.1:
     resolution: {integrity: sha1-F0uSaHNVNP+8es5r9TpanhtcX18=}
     engines: {node: '>=0.10.0'}
@@ -3248,6 +3261,11 @@ packages:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: true
 
+  /tsparticles/1.35.1:
+    resolution: {integrity: sha512-IXalxMl/H4BRunVeHrdNZuk6KoZo5BBoSQ1zab/2LVL1Bz1M+WMyS63TcFuveHRVQFsg70vsQlSE/gI7RGjgGQ==}
+    requiresBuild: true
+    dev: false
+
   /tsup/4.14.0:
     resolution: {integrity: sha512-77rWdzhikTP9mQ34XMRzK83tw++LF6f4ox/HNERlgesB7g6g5VQ1iJlueG9O0P9HAZGVKavUwyoZv0+322p6rg==}
     hasBin: true
@@ -3471,6 +3489,14 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
+
+  /vue-class-component/8.0.0-rc.1_vue@3.2.6:
+    resolution: {integrity: sha512-w1nMzsT/UdbDAXKqhwTmSoyuJzUXKrxLE77PCFVuC6syr8acdFDAq116xgvZh9UCuV0h+rlCtxXolr3Hi3HyPQ==}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      vue: 3.2.6
+    dev: false
 
   /vue-demi/0.6.2_vue@3.2.6:
     resolution: {integrity: sha512-4KfwxbqsZcDz7UryD11oHa6FLK9Gzx4MIwAEcP37IbUdXuF6DHg2w9L5Zv5t+FNqsuAjEQ2NnGVIZ3u71y435Q==}

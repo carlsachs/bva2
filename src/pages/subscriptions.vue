@@ -228,6 +228,7 @@ export default {
     
     const prods = useProductStore()
     const auth0: any = inject("auth0")
+    const router = useRouter()
 
     const state = reactive({ 
       ///////// ///////// ///////// /////////
@@ -639,13 +640,7 @@ export default {
       )
       .then( async (response) => {
         console.log("subscribe.response.data:", response.data)
-        if (response.data.msg == 'success') {
-          const user_data = await signInUser(auth0.state.user.token, auth0.state.user.sub)
-          auth0.state.user.data = user_data
-        }
-        else {
-          console.log("err 12398", response.data.err)
-        }
+        router.go()
       })
       .catch( (error) => {
         console.log("ERROR subscribe", error)

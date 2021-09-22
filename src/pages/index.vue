@@ -68,7 +68,7 @@
                                     Max. <router-link :to="/strat/+row.id" class="font-bold text-green-500 font-semibold">{{ Number(row.maxpnl).toFixed(2) }}%</router-link>
                                 </button>
                             </div>
-
+                            
                             <router-link :to="/strat/+row.id">
                                 <img v-if="row.logo" class="mx-auto object-contain md:object-scale-down" width=200 :alt="row.stratname" :src="row.logo"/>
                             </router-link>

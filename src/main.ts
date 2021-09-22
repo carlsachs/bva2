@@ -6,6 +6,7 @@ import { router } from './routes'
 import App from './App.vue'
 import VueApexChart from 'vue3-apexcharts'
 import VueSmoothScroll from 'vue3-smooth-scroll'
+import Particles from "particles.vue3"
 import { createHead } from '@vueuse/head'
 
 setupAuth0(router)
@@ -16,6 +17,7 @@ const head = createHead()
 app.use(head)
 app.use(router)
 app.use(pinia)
+app.use(Particles)
 app.use(VueApexChart)
 app.use(VueSmoothScroll)
 
