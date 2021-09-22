@@ -45,16 +45,42 @@
                 <div class="my-2 overflow-x-auto">
                     <div class="py-2 align-middle inline-block min-w-full">
                         <div class="mx-2 my-4 py-4 border-2 border-blue-900 brounded-lg text-white relative">
+
+                            <h1 :class="{ 'text-green-500': row.forsale, 'text-gray-500': !row.forsale }" class="text-xl font-semibold my-3">
+                                <router-link :to="/strat/+row.id">{{ row.stratname }}</router-link>
+                            </h1>
+                            <div class="text-white">
+                                <div class="items-center">
+                                    Tot. PnL
+                                    <button class="mx-1 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                                        <router-link :to="/strat/+row.id" class="text-green-500 text-xl font-semibold">{{ Number(row.sumpnl).toFixed(2) }}%</router-link>
+                                    </button>
+                                </div>
+                                Tot. Trades
+                                <button class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                                    <router-link :to="/strat/+row.id" class="text-green-500 font-semibold">{{ Number(row.countpnl).toFixed(0) }}</router-link>
+                                </button>
+                                Avg. PnL
+                                <button class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                                    <router-link :to="/strat/+row.id" class="text-green-500 font-semibold">{{ Number(row.avgpnl).toFixed(2) }}%</router-link>
+                                </button>
+                                Min.
+                                <button class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                                    <router-link :to="/strat/+row.id" class="text-green-500 font-semibold">{{ Number(row.minpnl).toFixed(2) }}%</router-link>
+                                </button>
+                                Max.
+                                <button class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                                    <router-link :to="/strat/+row.id" class="text-green-500 font-semibold">{{ Number(row.maxpnl).toFixed(2) }}%</router-link>
+                                </button>
+                            </div>
+
                             <router-link :to="/strat/+row.id">
-                                <div :class="{ 'text-green-500': Number(row.sumpnl)>0, 'text-red-500': Number(row.sumpnl)<0 }" class="text-xl font-bold">{{ Number(row.sumpnl).toFixed(2) }}%</div>
                                 <img v-if="row.logo" class="mx-auto object-contain md:object-scale-down" width=200 :alt="row.stratname" :src="row.logo"/>
                             </router-link>
                             <button v-if="row.forsale" @click="subscribe" class="my-4 font-bold mx-auto text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl px-6 py-5 rounded-lg cursor-pointer hover:bg-opacity-100 transition">
                                 <div class="text-green-500 text-xl font-semibold">Subscribe</div>
                             </button>
-                            <h1 :class="{ 'text-green-500': row.forsale, 'text-gray-500': !row.forsale }" class="text-xl">
-                                <router-link :to="/strat/+row.id">{{ row.stratname }}</router-link>
-                            </h1>
+                            
                             <router-link :to="/strat/+row.id">{{ row.description }}</router-link>
                         </div>       
                     </div>
