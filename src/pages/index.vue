@@ -50,27 +50,22 @@
                                 <router-link :to="/strat/+row.id">{{ row.stratname }}</router-link>
                             </h1>
                             <div class="text-white text-sm">
-                                <div class="items-center">
-                                    Tot. PnL
-                                    <button class="mx-1 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                                        <router-link :to="/strat/+row.id" class="text-green-500 text-xl font-semibold">{{ Number(row.sumpnl).toFixed(2) }}%</router-link>
+                                <div>
+                                    <button class="mx-1 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                                        Tot. PnL &nbsp; <router-link :to="/strat/+row.id" class="font-bold text-green-500 text-xl font-semibold">{{ Number(row.sumpnl).toFixed(2) }}%</router-link>
                                     </button>
                                 </div>
-                                Tot. Trades
-                                <button class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                                    <router-link :to="/strat/+row.id" class="text-green-500 font-semibold">{{ Number(row.countpnl).toFixed(0) }}</router-link>
+                                <button class="mx-1 my-2 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                                    Tot. Trades <router-link :to="/strat/+row.id" class="font-bold text-green-500 font-semibold">{{ Number(row.countpnl).toFixed(0) }}</router-link>
                                 </button>
-                                Avg. PnL
-                                <button class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                                    <router-link :to="/strat/+row.id" class="text-green-500 font-semibold">{{ Number(row.avgpnl).toFixed(2) }}%</router-link>
+                                <button class="mx-1 my-2 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                                    Avg. PnL <router-link :to="/strat/+row.id" class="font-bold text-green-500 font-semibold">{{ Number(row.avgpnl).toFixed(2) }}%</router-link>
                                 </button>
-                                Min.
-                                <button class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                                    <router-link :to="/strat/+row.id" class="text-red-500 font-semibold">{{ Number(row.minpnl).toFixed(2) }}%</router-link>
+                                <button class="mx-1 my-2 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                                    Min. <router-link :to="/strat/+row.id" class="font-bold text-red-500 font-semibold">{{ Number(row.minpnl).toFixed(2) }}%</router-link>
                                 </button>
-                                Max.
-                                <button class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                                    <router-link :to="/strat/+row.id" class="text-green-500 font-semibold">{{ Number(row.maxpnl).toFixed(2) }}%</router-link>
+                                <button class="mx-1 my-2 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                                    Max. <router-link :to="/strat/+row.id" class="font-bold text-green-500 font-semibold">{{ Number(row.maxpnl).toFixed(2) }}%</router-link>
                                 </button>
                             </div>
 

@@ -217,7 +217,7 @@ export default {
     })
 
     const getTrades = () => {
-      console.log("getTrades", auth0.state?.user?.data?.email, auth0.state?.user?.data?.id)
+      console.log("getTrades")
       return axios.get('/api/trades?sub='+auth0.state?.user?.data?.sub+'&id='+ auth0.state?.user?.data?.id, { headers: {Authorization:`Bearer ${auth0.state?.user?.token}`} })
     }
 
