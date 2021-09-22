@@ -66,7 +66,7 @@
                                 </button>
                                 Min.
                                 <button class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                                    <router-link :to="/strat/+row.id" class="text-green-500 font-semibold">{{ Number(row.minpnl).toFixed(2) }}%</router-link>
+                                    <router-link :to="/strat/+row.id" class="text-red-500 font-semibold">{{ Number(row.minpnl).toFixed(2) }}%</router-link>
                                 </button>
                                 Max.
                                 <button class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
