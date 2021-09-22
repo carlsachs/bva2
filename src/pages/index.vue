@@ -49,7 +49,7 @@
                             <h1 :class="{ 'text-green-500': row.forsale, 'text-gray-500': !row.forsale }" class="text-xl font-semibold my-3">
                                 <router-link :to="/strat/+row.id">{{ row.stratname }}</router-link>
                             </h1>
-                            <div class="text-white">
+                            <div class="text-white text-sm">
                                 <div class="items-center">
                                     Tot. PnL
                                     <button class="mx-1 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
@@ -83,7 +83,6 @@
                                     <div class="text-green-500 text-xl font-semibold">Subscribe</div>
                                 </button>
                             </div>
-                            
                             
                             <router-link :to="/strat/+row.id">{{ row.description }}</router-link>
                         </div>       
