@@ -74,14 +74,8 @@ export async function setupAuth0(router: any) {
 }
 
 function onRedirectCallback(appState, router) {
-  console.log("onRedirectCallback")
-  /*
-  router.push(
-    appState && appState.targetUrl
-      ? appState.targetUrl
-      : window.location.pathname
-  )
-  */
+  console.log("onRedirectCallback", appState?.targetUrl)
+  appState?.targetUrl && router.push('/strat/' + appState?.targetUrl)
 }
 
 function setupClient(): Promise<Auth0Client> {
