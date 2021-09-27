@@ -4,7 +4,8 @@
     <h2>To <a href="/addyourstrat">connect your TradingView alerts to BVA</a>. Here is your key: <b class="text-green-200">{{ auth0.state.user?.data?.sub?.replace("auth0|","") }}</b></h2>
     <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
       <div v-for="subscription in products" >
-        <div v-if="subscription.count>0"  :class="{ 'bg-indigo-900 bg-opacity-20': subscription.status!=='ZISABLED' }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative"> 
+        <div v-if="subscription.status!=='ZISABLED'" :class="{ 'bg-indigo-900 bg-opacity-20': subscription.status!=='ZISABLED' }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative"> 
+          
           <div class="text-2xl font-extrabold text-blue-600">
             <router-link :to="'/strat/'+subscription.stratid" class=""><b>{{ subscription.name }}</b></router-link>
           </div>
@@ -15,7 +16,8 @@
             Loading <feather-loader class="ml-2" />
           </button>
           <div v-else>
-            <div class="mt-9" v-if="subscription.status!=='ZISABLED'">
+            <div class="mt-9">
+
               <div class="flex items-center justify-center">
                 <label :for="'toogle'+subscription.code" class="flex items-center cursor-pointer">
                   <div class="relative">
@@ -127,26 +129,7 @@
                 </button>
               </div>
             </div>
-            <div v-else>
-              <div class="my-5 font-bold text-2xl text-blue-300">{{ subscription.count }} subscriptions left</div>
-              <div class="my-5 font-bold text-green-500 text-2xl">{{ subscription.price }} {{ subscription.currency }} per month</div>
-              <Stripe
-                v-if="subscription.stripe_id" 
-                :customerEmail="auth0.state.user?.email" 
-                :clientReferenceId="auth0.state.user?.data?.id" 
-                :stripeId="subscription.stripe_id"
-                :description="subscription.name"
-                :price="Number(subscription.price)"
-              />
-              <div v-if="!subscription.stripe_id && !subscription.confirm"  class="m-5">
-                <button class="green_button font-bold text-xl" @click="confirmSubscribe(subscription)">Subscribe to {{ subscription.name }}</button>
-              </div>
-              <div v-if="!subscription.stripe_id && subscription.confirm"  class="m-5">
-                <button class="red_button font-bold text-xl" @click="subscribe(subscription)">Please confirm</button>
-              </div>
-              <div v-if="subscription.currency==='USD'" class="mt-9">If you want to pay with cryptos,</div>
-              <div v-if="subscription.currency==='USD'" class="">please contact us at <a href="mailto:support@bitcoinvsalts.com">support@bitcoinvsalts.com</a></div>
-            </div>
+
           </div>
           <div v-if="cancel_sub_result" :class="{'text-red-500' : cancel_sub_result!=='success', 'text-indigo-500':cancel_sub_result==='success'}">{{ cancel_sub_result }}</div>
         </div>
@@ -358,11 +341,6 @@ export default {
 
     const confirmCancelSubs = async (subscription) => {
       console.log("confirmCancelSubs", subscription)
-      subscription.confirm = true
-    }
-
-    const confirmSubscribe = async (subscription) => {
-      console.log("confirmSubscribe", subscription)
       subscription.confirm = true
     }
 
@@ -663,7 +641,6 @@ export default {
       changeNotif,
       changeAutoSet,
       subscribe,
-      confirmSubscribe
     }
 
   },

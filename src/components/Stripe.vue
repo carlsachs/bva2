@@ -1,6 +1,6 @@
 <template>
-  <div class="m-5">
-    <button class="green_button font-bold text-xl" @click="subscribe">Subscribe to {{ description }}</button>
+  <div @click="subscribe" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
+      <div class="flex-auto text-green-500 text-xl font-semibold">Subscribe</div>
   </div>
 </template>
 
@@ -25,7 +25,7 @@ export default defineComponent({
     })
 
     const subscribe = async () => {
-      console.log("subscribe")
+      console.log("stripe subscribe")
       const handleResult = await stripe.value.redirectToCheckout({
         //sessionId: data.sessionId,
         customerEmail: props.customerEmail,

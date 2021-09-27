@@ -77,7 +77,7 @@
                             </router-link>
                             
                             <div>
-                                <button v-if="row.forsale" @click="subscribe" class="my-4 font-bold mx-auto text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl px-6 py-5 rounded-lg cursor-pointer hover:bg-opacity-100 transition">
+                                <button v-if="row.forsale" @click="subscribe(row)" class="my-4 font-bold mx-auto text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl px-6 py-5 rounded-lg cursor-pointer hover:bg-opacity-100 transition">
                                     <div class="text-green-500 text-xl font-semibold">Subscribe</div>
                                 </button>
                             </div>
@@ -174,7 +174,9 @@ export default defineComponent({
       run()
     })
 
-    async function subscribe() {
+    async function subscribe(row) {
+        router.push("/strat/"+ row.id)
+        /*
         console.log("subscribe", !auth0.state.isAuthenticated)
         if (!auth0.state.isAuthenticated) {
             console.log("-0-0-0-0-0-0-0-", window.location.href)
@@ -186,6 +188,7 @@ export default defineComponent({
         else {
             router.push("/subscriptions")
         }
+        */
     }
 
     const getStrats = () => {

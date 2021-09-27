@@ -10,7 +10,8 @@
 
             <div v-if="description" class="m-7 text-xl">{{ description }}</div>
             
-            <div class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-5 uppercase">
+            <div class="p-4 grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-1 sm:gap-5 uppercase">
+
                 <div class="flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
                     <div class="flex-auto">Total PnL</div>
                     <div class="flex-auto text-justify text-blue-300 block">{{ Number(total_pnl).toFixed(2) }}%</div>
@@ -46,12 +47,40 @@
                     <div class="flex-auto text-justify text-blue-300 block">{{ strat_lifetime }}</div>
                 </div>
 
-                <div v-if="!auth0.state.isAuthenticated" @click="login" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
+                <div v-if="_.find(products.items, {stratid:id})" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+                    <div class="flex-auto text-green-500">Available Subs.</div>
+                    <div class="flex-auto text-justify text-green-500 block">{{ _.find(products.items, {stratid:id}).count }}</div>
+                </div>
+
+                <div v-if="_.find(products.items, {stratid:id})" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+                    <div class="flex-auto text-green-500">Subs. Price</div>
+                    <div class="flex-auto text-justify text-green-500 block">{{ _.find(products.items, {stratid:id}).price }} USD / month</div>
+                </div>
+
+                <div v-if="_.find(products.items, {stratid:id}) && !auth0.state.isAuthenticated" @click="login" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
                     <div class="flex-auto text-green-500 text-xl font-semibold">Subscribe</div>
                 </div>
-                <div v-if="auth0.state.isAuthenticated" @click="subscribe" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
+                <Stripe
+                    v-if="_.find(products.items, {stratid:id}) && !_.find(auth0.state.user?.data?.subs, {code:_.find(products.items, {stratid:id}).code}) && _.find(products.items, {stratid:id}).stripe_id && auth0.state.isAuthenticated"
+                    :customerEmail="auth0.state.user?.email" 
+                    :clientReferenceId="auth0.state.user?.data?.id" 
+                    :stripeId="_.find(products.items, {stratid:id}).stripe_id"
+                    :description="_.find(products.items, {stratid:id}).name"
+                    :price="Number(_.find(products.items, {stratid:id}).price)"
+                />
+                <div v-if="_.find(products.items, {stratid:id}) && !_.find(auth0.state.user?.data?.subs, {code:_.find(products.items, {stratid:id}).code}) && _.find(products.items, {stratid:id}).stripe_id==null && auth0.state.isAuthenticated && !confirmed && !loading" @click="subscribe" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
                     <div class="flex-auto text-green-500 text-xl font-semibold">Subscribe</div>
                 </div>
+                <div v-if="_.find(products.items, {stratid:id}) && !_.find(auth0.state.user?.data?.subs, {code:_.find(products.items, {stratid:id}).code}) && _.find(products.items, {stratid:id}).stripe_id==null && auth0.state.isAuthenticated && confirmed && !loading" @click="confirm(_.find(products.items, {stratid:id}))" class="font-bold group flex text-xl items-center bg-red-800 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
+                    <div class="flex-auto text-green-500 text-xl font-semibold">Confirm</div>
+                </div>
+                <div v-if="_.find(products.items, {stratid:id}) && !_.find(auth0.state.user?.data?.subs, {code:_.find(products.items, {stratid:id}).code}) && _.find(products.items, {stratid:id}).stripe_id==null && auth0.state.isAuthenticated && loading" @click="confirm(_.find(products.items, {stratid:id}))" class="font-bold group flex text-xl items-center bg-red-800 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
+                    <div class="flex-auto text-green-500 text-xl font-semibold">Loading...</div>
+                </div>
+                <div v-if="_.find(products.items, {stratid:id}) && _.find(auth0.state.user?.data?.subs, {code:_.find(products.items, {stratid:id}).code}) && _.find(products.items, {stratid:id}).stripe_id==null && auth0.state.isAuthenticated && !confirmed" @click="setup" class="font-bold group flex text-xl items-center bg-red-800 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
+                    <div class="flex-auto text-green-500 text-xl font-semibold">Setup</div>
+                </div>
+
             </div>
             
             <div v-if="max_concurrent>1" class="mt-5 italic">* PNL calculated using 1/{{max_concurrent}} of the whole BTC amount for each trade as recommended.</div>
@@ -146,6 +175,7 @@ import _ from "lodash"
 import { useRequest } from 'vue-request'
 import { usePriceStore } from '../../stores/prices'
 import { useLoadMoreStore } from '../../stores/loadmore'
+import { useProductStore } from '../../stores/products'
 import { startStats, endStats } from '~/modules/stats'
 import { useHead } from '@vueuse/head'
 
@@ -159,6 +189,7 @@ export default defineComponent({
 
     const stratchart = ref(null)
     
+    //const prods = useProductStore()
     const prices = usePriceStore()
 
     const loadMoreStore = useLoadMoreStore()
@@ -183,6 +214,9 @@ export default defineComponent({
         strat_lifetime: "",
         total_signals: 0,
         win_rate: 0,
+        products: [],
+        confirmed: false,
+        loading: false,
         ///////// ///////// ///////// /////////
         series: [
             { name: "Bitcoin", data: [] },
@@ -211,6 +245,8 @@ export default defineComponent({
         },
         ///////// ///////// ///////// /////////
     })
+
+    state.products = useProductStore()
 
     useHead({
         title: computed( () => state.stratname + " Strategy PnL Trading Track Record"),
@@ -309,9 +345,9 @@ export default defineComponent({
         // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#loginwithredirect
         console.log("-0-0-0-0-0-0-0-", window.location.href)
         //auth0.client.loginWithRedirect({ appState: { targetUrl: window.location.href } })
-        await auth0.client.loginWithRedirect({ appState: { targetUrl: '/subscriptions' } })
+        await auth0.client.loginWithRedirect({ appState: { targetUrl: window.location.href } })
         //await auth0.client.loginWithPopup()
-        //console.log("-1-1-1-1-1-1-", await auth0.client.getUser() )
+        //console.log("-1-1-1-1-1-1-", await auth0.client.getUser()
     }
 
     onMounted(() => {
@@ -319,6 +355,9 @@ export default defineComponent({
         .then( s => {
             state.max_concurrent = s.data.max_concurrent
             state.description = s.data.description
+            //console.log("onMounted...", auth0.state.user?.token, auth0.state.user?.data?.email)
+            //console.log(prods.items.length)
+            //console.log("===>", JSON.stringify(auth0.state.user?.data?.subs))
         })
         .catch((err) => {
             console.log(err)
@@ -330,7 +369,33 @@ export default defineComponent({
     })
 
     const subscribe = () => {
+        state.confirmed = true
+    }
+
+    const setup = () => {
         router.push("/subscriptions")
+    }
+
+    const confirm = async (sub) => {
+        state.confirmed = false
+        state.loading = true
+        console.log("subscribe", JSON.stringify(sub.code))
+        await axios.put('/api/subscribe?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
+            { 
+            code: sub.code,
+            name: sub.name
+            },
+            { headers: {Authorization:`Bearer ${auth0.state.user?.token}`} }
+        )
+        .then( async (response) => {
+            console.log("subscribe.response.data:", response.data)
+            state.loading = false
+            router.go()
+        })
+        .catch( (error) => {
+            state.loading = false
+            console.log("ERROR subscribe", error)
+        })
     }
 
     return {
@@ -345,7 +410,10 @@ export default defineComponent({
       prices,
       login,
       stratchart,
-      subscribe
+      subscribe,
+      confirm,
+      setup,
+      _
     }
   },
 })
