@@ -295,6 +295,7 @@ export default {
       console.log("loadMore...", loadMoreStore.profile)
     }
 
+    /*
     async function signInUser(token: String, sub: String) {
       //axios.defaults.timeout = 30000;
       console.log("signInUser", token, sub)
@@ -308,6 +309,7 @@ export default {
           return 0
         })
     }
+    */
     
     return {
       ...toRefs(state),

@@ -341,13 +341,42 @@ export default defineComponent({
         return pnl.toFixed(2)
     }
 
+    /*
+    async function signInUser(token: String, sub: String) {
+      //axios.defaults.timeout = 30000;
+      console.log("signInUser", token, sub)
+      return axios
+        .get('/api/getusersignin?sub='+sub, { headers: {Authorization:`Bearer ${token}`} } )
+        .then( (response) => {
+          return response.data
+        })
+        .catch( (e) => {
+          console.log("signInUser ERROR", e)
+          return 0
+        })
+    }
+    */
+
     async function login() {
         // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#loginwithredirect
-        console.log("-0-0-0-0-0-0-0-", window.location.href)
+        //console.log("-0-0-0-0-0-0-0-", 'http://localhost:3000/strat/'+props.id)
         //auth0.client.loginWithRedirect({ appState: { targetUrl: window.location.href } })
-        await auth0.client.loginWithRedirect({ appState: { targetUrl: 'http://bitcoinvsalts.com/strat/'+props.id } })
-        //await auth0.client.loginWithPopup()
-        //console.log("-1-1-1-1-1-1-", await auth0.client.getUser()
+        await auth0.client.loginWithRedirect({ appState: { targetUrl: 'https://bitcoinvsalts.com/strat/'+props.id } })
+        /*
+        await auth0.client.loginWithPopup()
+        console.log("-1-1-1-1-1-1-", await auth0.client.getUser() )
+        auth0.state.user = await auth0.client.getUser()
+        auth0.state.user.token = await auth0.client.getTokenSilently()
+        const user_data = await signInUser(auth0.state.user.token, auth0.state.user.sub)
+        if (!user_data) {
+            auth0.state.user = null
+            console.log("USER UNKNOWN")
+        }
+        else {
+            auth0.state.user.data = user_data
+            console.log("WELCOME USER", auth0.state.user.data.id )
+        }
+        */
     }
 
     onMounted(() => {
