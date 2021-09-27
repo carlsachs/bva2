@@ -361,7 +361,7 @@ export default defineComponent({
         // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#loginwithredirect
         //console.log("-0-0-0-0-0-0-0-", 'http://localhost:3000/strat/'+props.id)
         //auth0.client.loginWithRedirect({ appState: { targetUrl: window.location.href } })
-        await auth0.client.loginWithRedirect({ appState: { targetUrl: props.id } })
+        await auth0.client.loginWithRedirect({ appState: { targetUrl: '/strat/' + props.id } })
         /*
         await auth0.client.loginWithPopup()
         console.log("-1-1-1-1-1-1-", await auth0.client.getUser() )
