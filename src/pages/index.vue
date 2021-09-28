@@ -12,7 +12,7 @@
                             We created this marketplace to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.
                         </div-->
                         <div class="text-xl text-cyan-200 mt-3">
-                            We track the performance (PnL) of more than <router-link to="/signals" class="underline">1400 strategies</router-link>.
+                            We track and compare the performance (PnL) of more than <router-link to="/signals" class="underline">1400 trading strategies</router-link>.
                         </div>
                         <div class="text-cyan-200 mt-3">
                             <u>Disclaimer</u>: There is a very high degree of risk involved in trading crypto. 
