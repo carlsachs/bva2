@@ -63,18 +63,21 @@
               <hr class="w-5 mx-auto border-blue-400 my-5">
 
               <div class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto" v-if="subscription.mode==='FUTURE'">
-                <div class="my-3">Automatically Set <b>Leverage to 4x</b> and <b>Isolated Mode</b>:</div>
+                <div class="my-3">The bot will use <b>Isolated Mode</b> with a <b>Leverage</b> set to: <b>{{ subscription.leverage }}x</b></div>
               </div>
               <div class="flex items-center justify-center" v-if="subscription.mode==='FUTURE'">
-                <label :for="'toogles'+subscription.code" class="flex items-center cursor-pointer">
-                  <div class="relative">
-                    <input disabled :id="'toogles'+subscription.code" type="checkbox" class="sr-only" v-model="subscription.autoset" true-value="true" false-value="false" 
-                      @change="changeAutoSet(subscription)"/>
-                    <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
-                    <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
-                  </div>
-                </label>
+                  <select v-model="subscription.leverage" @change="changeLeverage(subscription)" class="bg-indigo-900 border border-gray-400 hover:border-gray-500 p-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                    <option value=1>1x</option>
+                    <option value=2>2x</option>
+                    <option value=3>3x</option>
+                    <option value=4>4x</option>
+                    <option value=5>5x</option>
+                    <option value=6>6x</option>
+                    <option value=7>7x</option>
+                  </select>
               </div>
+              <span v-if="subscription.mode==='FUTURE'" :class="{'text-orange-500' : leverage_result!=='success', 'text-indigo-500':leverage_result==='success'}">{{ leverage_result }}</span>
+
 
               <hr v-if="subscription.mode==='FUTURE'" class="w-5 mx-auto border-blue-400 my-4">
               <div :class="{ 'bg-indigo-900 bg-opacity-20': !subscription.key || !subscription.secret }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
@@ -229,6 +232,7 @@ export default {
       user_result: '',
       password: '',
       pwd_result: '',
+      leverage_result: '',
       searchEnabled: true,
       confirmPass: false,
       confirmUser: false,
@@ -285,7 +289,7 @@ export default {
           yo.key = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].key
           yo.secret = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].secret
           yo.email_notif = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].email_notif
-          yo.autoset = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].autoset
+          yo.leverage = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].leverage
           yo.sid = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].sid
         }
         else {
@@ -295,7 +299,7 @@ export default {
           yo.key = ""
           yo.secret = ""
           yo.email_notif = false
-          yo.autoset = true
+          yo.leverage = true
           yo.sid = ""
         }
       })
@@ -320,7 +324,7 @@ export default {
             yo.key = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].key
             yo.secret = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].secret
             yo.email_notif = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].email_notif
-            yo.autoset = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].autoset
+            yo.leverage = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].leverage
             yo.sid = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].sid
           }
           else {
@@ -330,7 +334,7 @@ export default {
             yo.key = ""
             yo.secret = ""
             yo.email_notif = false
-            yo.autoset = true
+            yo.leverage = true
             yo.sid = ""
           }
         })
@@ -433,25 +437,29 @@ export default {
       })
     }
 
-    const changeAutoSet = async (sub) => {
-      console.log("changeAutoSet", sub.autoset)
-      await axios.put('/api/setautoset?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
+    const changeLeverage = async (sub) => {
+      console.log("changeLeverage", sub.leverage)
+      state.leverage_result = ''
+      await axios.put('/api/setleverage?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
         { 
-          autoset:sub.autoset, 
+          leverage:sub.leverage, 
           sid:sub.sid, 
         },
         { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
       )
       .then( (response) => {
-        console.log("changeAutoSet.response.data:", response.data)
+        console.log("changeleverage.response.data:", response.data)
         if (response.data.msg == 'success') {
+          state.leverage_result = 'success'
         }
         else {
           console.log("err 12323", response.data.err)
+          state.leverage_result = 'error'
         }
       })
       .catch( (error) => {
-        console.log("ERROR changeAutoSet", error)
+        console.log("ERROR changeleverage", error)
+        state.leverage_result = 'error'
       })
     }
 
@@ -464,6 +472,7 @@ export default {
       state.key_result = null
       state.qty_result = null
       state.max_result = null
+      state.leverage_result = null
       state.cancel_sub_result = null
     }
 
@@ -641,7 +650,7 @@ export default {
       saveMaxConcTrades,
       changeStatus,
       changeNotif,
-      changeAutoSet,
+      changeLeverage,
       subscribe,
     }
 
