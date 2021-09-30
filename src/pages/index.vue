@@ -138,11 +138,11 @@ export default defineComponent({
     startStats(Date.now())
 
     useHead({
-        title: computed( () => "Bitcoin vs. Alts : Crypto Trading Algo Ranking"),
+        title: computed( () => "Bitcoin vs. Alts : Top Crypto Auto Trading Algorithms"),
         meta: [
             {
             name: `description`,
-            content: computed( () => "Our goal is to democratize access to the best crypto trading algorithms. We track and rank more than 1400 strategies."),
+            content: computed( () => "Our goal is to democratize access to the best crypto auto trading algorithms. We track and compare the best auto trading strategies in the world."),
             },
         ],
     })

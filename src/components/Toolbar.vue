@@ -9,6 +9,11 @@
         Signal Firehose
       </button>
     </router-link>
+    <router-link to="/">
+      <button class="blue_button" type="button">
+        Top Strategies
+      </button>
+    </router-link>
     <router-link to="/topsignals">
       <button class="blue_button" type="button">
         Top Signals
