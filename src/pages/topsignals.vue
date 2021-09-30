@@ -178,7 +178,7 @@ export default defineComponent({
 
     const getTopSignals = () => {
         console.log("getTopSignals...", router.currentRoute.value.query.d)
-        return axios.get('/api/topsignals?days='+(router.currentRoute.value.query.d?router.currentRoute.value.query.d:31))
+        return axios.get('/api/topsignals?days='+(router.currentRoute.value.query.d?router.currentRoute.value.query.d:1))
     }
 
     const { data: signals, run } = useRequest( () =>  getTopSignals(), {
