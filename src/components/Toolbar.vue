@@ -9,6 +9,11 @@
         Signal Firehose
       </button>
     </router-link>
+    <router-link to="/topsignals">
+      <button class="blue_button" type="button">
+        Top Signals
+      </button>
+    </router-link>
     <router-link v-if="!isSubPage && auth0.state.isAuthenticated" to="/subscriptions">
       <button class="green_button" type="button">
         Your Subscriptions
