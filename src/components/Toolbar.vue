@@ -9,7 +9,7 @@
         Signal Firehose
       </button>
     </router-link>
-    <router-link to="/">
+    <router-link v-if="!isHomePage" to="/">
       <button class="blue_button" type="button">
         Top Strategies
       </button>
