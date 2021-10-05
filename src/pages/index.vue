@@ -77,7 +77,7 @@
                             </router-link>
                             
                             <div>
-                                <button v-if="row.forsale" @click="subscribe(row)" class="my-4 font-bold mx-auto text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl px-6 py-5 rounded-lg cursor-pointer hover:bg-opacity-100 transition">
+                                <button v-if="row.forsale" @click="subscribe(row)" class="my-4 font-bold mx-auto text-xl items-center bg-indigo-900 bg-opacity-90 shadow-xl px-6 py-5 rounded-lg cursor-pointer hover:bg-opacity-100 transition">
                                     <div class="text-green-500 text-xl font-semibold">Subscribe</div>
                                 </button>
                             </div>
