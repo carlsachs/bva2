@@ -1,5 +1,5 @@
 <template>
-  <div @click="subscribe" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
+  <div @click="subscribe" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-80 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
       <div class="flex-auto text-green-500 text-xl font-semibold">Subscribe</div>
   </div>
 </template>
