@@ -12,7 +12,7 @@
                             We created this marketplace to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.
                         </div-->
                         <div class="text-xl text-cyan-200 mt-3">
-                            We track and compare the performance (PnL) of more than <router-link to="/signals" class="underline">1400 trading strategies</router-link>.
+                            We track, compare and sell subscriptions to the best <router-link to="/signals" class="underline">crypto auto trading strategies</router-link> in the world.
                         </div>
                         <div class="text-cyan-200 mt-3">
                             <u>Disclaimer</u>: There is a very high degree of risk involved in trading crypto. 
@@ -142,7 +142,7 @@ export default defineComponent({
         meta: [
             {
             name: `description`,
-            content: computed( () => "Our goal is to democratize access to the best crypto auto trading algorithms. We track and compare the best auto trading strategies in the world."),
+            content: computed( () => "Our goal is to democratize access to the best crypto auto trading algorithms. We track, compare and sell subscriptions to the best crypto auto trading strategies in the world."),
             },
         ],
     })
