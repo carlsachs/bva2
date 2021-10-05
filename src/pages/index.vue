@@ -12,7 +12,7 @@
                             We created this marketplace to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.
                         </div-->
                         <div class="text-xl text-cyan-200 mt-3">
-                            We track, compare and sell subscriptions to the best <router-link to="/signals" class="underline">crypto auto trading strategies</router-link> in the world.
+                            We track, compare and sell subscriptions to the best <b>crypto auto trading strategies</b> in the world.
                         </div>
                         <div class="text-cyan-200 mt-3">
                             <u>Disclaimer</u>: There is a very high degree of risk involved in trading crypto. 
