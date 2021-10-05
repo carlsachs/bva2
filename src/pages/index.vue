@@ -58,7 +58,7 @@
                                 <button class="mx-1 my-2 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
                                     Tot. Trades <router-link :to="/strat/+row.id" class="font-bold text-green-500 font-semibold">{{ Number(row.countpnl).toFixed(0) }}</router-link>
                                 </button>
-                                <button class="mx-1 my-2 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                                <button v-if="row.max_concurrent" class="mx-1 my-2 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
                                     Max. Open Trades <router-link :to="/strat/+row.id" class="font-bold text-green-500 font-semibold">{{ row.max_concurrent }}</router-link>
                                 </button>
                                 <button class="mx-1 my-2 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
