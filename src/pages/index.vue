@@ -52,9 +52,12 @@
                             <div class="text-white text-sm">
                                 <div>
                                     <button class="mx-1 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                                        Tot. PnL &nbsp; <router-link :to="/strat/+row.id" class="font-bold text-green-500 text-xl font-semibold">{{ Number(row.sumpnl).toFixed(2) }}%</router-link>
+                                        Portfolio. PnL &nbsp; <router-link :to="/strat/+row.id" class="font-bold text-green-500 text-xl font-semibold">{{ Number(row.portfoliopnl).toFixed(2) }}%</router-link>
                                     </button>
                                 </div>
+                                <button class="mx-1 my-2 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                                    Tot. PnL <router-link :to="/strat/+row.id" class="font-bold text-green-500 font-semibold">{{ Number(row.sumpnl).toFixed(2) }}%</router-link>
+                                </button>
                                 <button class="mx-1 my-2 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
                                     Tot. Trades <router-link :to="/strat/+row.id" class="font-bold text-green-500 font-semibold">{{ Number(row.countpnl).toFixed(0) }}</router-link>
                                 </button>
