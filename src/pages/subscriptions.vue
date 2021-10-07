@@ -123,12 +123,12 @@
               <hr class="w-5 mx-auto border-blue-400 my-8">
               <div v-if="!subscription.confirm">
                 <button class="dark_button" @click="confirmCancelSubs(subscription)">
-                  Cancel your {{ subscription.name }} subscription
+                  Cancel your subscription
                 </button>
               </div>
               <div v-if="subscription.confirm">
                 <button class="red_button" type="button" @click="cancelSubs(subscription)">
-                  Confirm the cancelation of your subscription <feather-check class="ml-2" />
+                  Confirm the cancelation <feather-check class="ml-2" />
                 </button>
               </div>
             </div>
