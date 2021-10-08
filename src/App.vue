@@ -84,11 +84,9 @@
               detectRetina: true
           }"
         />
-        <img class="mx-auto my-6" width=100 alt="Binance" src="/binance.svg" />
         <router-link to="/">
-            <img class="my-6 mx-auto" width=200 alt="BvA" src="/bva_small.png"/>
+            <img class="mx-auto" width=200 alt="BvA" src="/bva_small.png"/>
         </router-link>
-        <img class="mx-auto my-6" width=100 alt="Binance" src="/binance.svg" />
         <Particles
           id="tsparticles2"
           :options="{
@@ -171,6 +169,7 @@
               detectRetina: true
           }"
         />
+        <img class="mx-auto" width=100 alt="Binance" src="/binance.svg" />
       </div>
     </nav>
   </div>
