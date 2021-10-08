@@ -169,7 +169,6 @@
               detectRetina: true
           }"
         />
-        <img class="mx-auto" width=100 alt="Binance" src="/binance.svg" />
       </div>
     </nav>
   </div>
