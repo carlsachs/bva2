@@ -12,10 +12,10 @@
                             We created this marketplace to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.
                         </div-->
                         <div class="text-xl text-cyan-200 mt-3">
-                            We track and compare <a href='https://bitcoinvsaltcoins.com' target="_new"><b class="text-green-500">{{ stratcount}}</b></a> <b>crypto auto trading strategies</b>.
+                            In addition of tracking and comparing <a href='https://bitcoinvsaltcoins.com' target="_new"><b class="text-green-500">{{ stratcount}}</b></a> <b>crypto auto trading strategies</b>,
                         </div>
                         <div class="text-xl text-cyan-200 mt-3">
-                            And we offer <b><span class="text-yellow-300">Binance</span> auto trading subscriptions</b> to the best strategies in the world.
+                            we offer <b><span class="text-yellow-300">Binance</span> auto trading subscriptions</b> to the best strategies in the world.
                         </div>
                         <div class="text-cyan-200 mt-3">
                             <u>Disclaimer</u>: There is a very high degree of risk involved in trading crypto. 
