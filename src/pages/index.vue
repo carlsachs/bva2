@@ -181,7 +181,7 @@ export default defineComponent({
 
     const getStratCount = async () => {
       const res = await axios.get('/api/stratcount')
-      state.stratcount = 500 + parseInt(res.data.count)
+      state.stratcount = parseInt(res.data.max)
       console.log("getStratCount:", state.stratcount)
     }
 
