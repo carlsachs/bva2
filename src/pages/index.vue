@@ -12,7 +12,10 @@
                             We created this marketplace to fund the #1 <a href='https://bitcoinvsaltcoins.com' target="_new" class="underline">open forward testing platform</a>.
                         </div-->
                         <div class="text-xl text-cyan-200 mt-3">
-                            We track, compare and sell subscriptions to the best <b>crypto auto trading strategies</b> in the world.
+                            We track and compare <b class="text-green-500">{{ stratcount}}</b> <b>crypto auto trading strategies</b>.
+                        </div>
+                        <div class="text-xl text-cyan-200 mt-3">
+                            And we allow <b>auto trading subscriptions</b> to the best strategies in the world.
                         </div>
                         <div class="text-cyan-200 mt-3">
                             <u>Disclaimer</u>: There is a very high degree of risk involved in trading crypto. 
@@ -165,9 +168,8 @@ export default defineComponent({
 
     const state = reactive({
         days: 4*7*12,
-        ///////// ///////// ///////// /////////
+        stratcount: 0,
         auth0,
-        ///////// ///////// ///////// /////////
     })
 
     
@@ -176,8 +178,16 @@ export default defineComponent({
         run()
     }
 
-    onMounted(() => {
-      run()
+
+    const getStratCount = async () => {
+      const res = await axios.get('/api/stratcount')
+      state.stratcount = 500 + parseInt(res.data.count)
+      console.log("getStratCount:", state.stratcount)
+    }
+
+    onMounted( async () => {
+        await getStratCount()
+        run()
     })
 
     async function subscribe(row) {
