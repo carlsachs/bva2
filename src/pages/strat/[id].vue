@@ -306,7 +306,7 @@ export default defineComponent({
                 const sum = signals.filter( bva => { 
                     return Number(bva.updated_time) > btc[0] && Number(bva.updated_time) <= btc[6] 
                 })
-                pnl_bva = _.sumBy(sum, o => { return Number(o.pnl) }) + pnl_bva
+                pnl_bva = state.max_concurrent ? _.sumBy(sum, o => { return Number(o.pnl) }) / state.max_concurrent + pnl_bva : _.sumBy(sum, o => { return Number(o.pnl) }) + pnl_bva
                 tpnl_bva.push([ btc[0], pnl_bva.toFixed(2) ])
             }
 
