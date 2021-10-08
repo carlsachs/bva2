@@ -280,6 +280,10 @@ export default defineComponent({
     watch(signals, (signals) => {
 
         console.log("watch signals...", signals[signals.length-1].sell_time)
+
+        if (signals[signals.length-1].pair.slice(-4) === 'USDT') {
+            state.chartOptions.chart.stacked = false
+        }
     
         let tpnl_btc = []
         let tpnl_bva = []
