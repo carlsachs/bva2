@@ -283,6 +283,7 @@ export default defineComponent({
 
         if (signals[signals.length-1].pair.slice(-4) === 'USDT') {
             state.chartOptions.chart.stacked = false
+            stratchart.value?.updateOptions(state.chartOptions)
         }
     
         let tpnl_btc = []
@@ -398,7 +399,9 @@ export default defineComponent({
     })
 
     watch( () => stratchart.value, (value) => {
-      setTimeout(function(){ value?.toggleSeries('Bitcoin') }, 4000)
+        setTimeout(function(){ 
+            value?.toggleSeries('Bitcoin');
+        }, 4000)
     })
 
     const subscribe = () => {
