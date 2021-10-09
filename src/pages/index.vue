@@ -51,12 +51,12 @@
                     <div class="py-2 align-middle inline-block min-w-full">
                         <div class="mx-2 my-4 py-4 border-2 border-blue-900 brounded-lg text-white relative">
 
-                            <h1 :class="{ 'text-green-500': row.forsale, 'text-gray-500': !row.forsale }" class="text-xl font-semibold my-3">
-                                <router-link :to="/strat/+row.id">{{ row.stratname }}</router-link>
+                            <h1 :class="{ 'text-blue-500': row.forsale, 'text-gray-500': !row.forsale }" class="text-xl font-semibold my-3">
+                                <b class="text-blue-400">{{i+1}}.</b> <router-link :to="/strat/+row.id">{{ row.stratname }}</router-link>
                             </h1>
                             <div class="text-white text-sm">
                                 <div>
-                                    <button class="mx-1 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                                    <button class="font-bold mx-1 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
                                         Portfolio PnL &nbsp; <router-link :to="/strat/+row.id" class="font-bold text-green-500 text-xl font-semibold">{{ Number(row.portfoliopnl).toFixed(2) }}%</router-link>
                                     </button>
                                 </div>
