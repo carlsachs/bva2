@@ -29,6 +29,7 @@ specifiers:
   vite-plugin-vue-layouts: ^0.3.1
   vite-plugin-windicss: ^1.3.0
   vue: ^3.2.6
+  vue-final-modal: ^3.3.0
   vue-request: ^1.2.0
   vue-router: ^4.0.11
   vue-use-stripe: ^0.1.1
@@ -52,6 +53,7 @@ dependencies:
   stripe: 8.170.0
   vite-plugin-windicss: 1.3.0_vite@2.5.1
   vue: 3.2.6
+  vue-final-modal: 3.4.2
   vue-request: 1.2.0_vue@3.2.6
   vue-router: 4.0.11_vue@3.2.6
   vue-use-stripe: 0.1.1_vue@3.2.6
@@ -3520,6 +3522,10 @@ packages:
         optional: true
     dependencies:
       vue: 3.2.6
+    dev: false
+
+  /vue-final-modal/3.4.2:
+    resolution: {integrity: sha512-wJhqVYjXeqVG0fIK/bhrJoDfhIE78aBUspdPEJhOsZhpsK5/Lz6AcG5wFcy6/QhkLB8slSzpWKY9An20fs2XCQ==}
     dev: false
 
   /vue-request/1.2.0_vue@3.2.6:

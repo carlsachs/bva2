@@ -8,6 +8,7 @@ import VueApexChart from 'vue3-apexcharts'
 import VueSmoothScroll from 'vue3-smooth-scroll'
 import Particles from "particles.vue3"
 import { createHead } from '@vueuse/head'
+import VueFinalModal from 'vue-final-modal'
 
 setupAuth0(router)
 
@@ -19,6 +20,7 @@ app.use(router)
 app.use(pinia)
 app.use(Particles)
 app.use(VueApexChart)
+app.use(VueFinalModal())
 app.use(VueSmoothScroll)
 
 Object.values(import.meta.globEager('./modules/*.ts')).map(i =>

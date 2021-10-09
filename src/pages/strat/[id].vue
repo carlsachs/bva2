@@ -68,16 +68,13 @@
                     :description="_.find(products.items, {stratid:id}).name"
                     :price="Number(_.find(products.items, {stratid:id}).price)"
                 />
-                <div v-if="_.find(products.items, {stratid:id}) && !_.find(auth0.state.user?.data?.subs, {code:_.find(products.items, {stratid:id}).code}) && _.find(products.items, {stratid:id}).stripe_id==null && auth0.state.isAuthenticated && !confirmed && !loading" @click="subscribe" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-80 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
+                <div v-if="_.find(products.items, {stratid:id}) && !_.find(auth0.state.user?.data?.subs, {code:_.find(products.items, {stratid:id}).code}) && _.find(products.items, {stratid:id}).stripe_id==null && auth0.state.isAuthenticated && !loading" @click="subscribe" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-80 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
                     <div class="flex-auto text-green-500 text-xl font-semibold">Subscribe</div>
                 </div>
-                <div v-if="_.find(products.items, {stratid:id}) && !_.find(auth0.state.user?.data?.subs, {code:_.find(products.items, {stratid:id}).code}) && _.find(products.items, {stratid:id}).stripe_id==null && auth0.state.isAuthenticated && confirmed && !loading" @click="confirm(_.find(products.items, {stratid:id}))" class="font-bold group flex text-xl items-center bg-red-800 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
-                    <div class="flex-auto text-green-500 text-xl font-semibold">Confirm</div>
-                </div>
-                <div v-if="_.find(products.items, {stratid:id}) && !_.find(auth0.state.user?.data?.subs, {code:_.find(products.items, {stratid:id}).code}) && _.find(products.items, {stratid:id}).stripe_id==null && auth0.state.isAuthenticated && loading" @click="confirm(_.find(products.items, {stratid:id}))" class="font-bold group flex text-xl items-center bg-red-800 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
+                <div v-if="_.find(products.items, {stratid:id}) && !_.find(auth0.state.user?.data?.subs, {code:_.find(products.items, {stratid:id}).code}) && _.find(products.items, {stratid:id}).stripe_id==null && auth0.state.isAuthenticated && loading" class="font-bold group flex text-xl items-center bg-red-800 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
                     <div class="flex-auto text-green-500 text-xl font-semibold">Loading...</div>
                 </div>
-                <div v-if="_.find(products.items, {stratid:id}) && _.find(auth0.state.user?.data?.subs, {code:_.find(products.items, {stratid:id}).code}) && _.find(products.items, {stratid:id}).stripe_id==null && auth0.state.isAuthenticated && !confirmed" @click="setup" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-80 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
+                <div v-if="_.find(products.items, {stratid:id}) && _.find(auth0.state.user?.data?.subs, {code:_.find(products.items, {stratid:id}).code}) && _.find(products.items, {stratid:id}).stripe_id==null && auth0.state.isAuthenticated" @click="setup" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-80 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
                     <div class="flex-auto text-green-500 text-xl font-semibold">Setup</div>
                 </div>
 
@@ -161,6 +158,31 @@
 
             <button class="mx-auto dark_button" type="button" @click="loadMore">Load More</button>
 
+            <vue-final-modal v-model="showModal" classes="modal-container" content-class="modal-content">
+            <div class="modal__content">
+                <span class="modal__title">Subscription Confirmation</span>
+                <div>
+                    <div class=" text-cyan-200 m-3">
+                    In order to activate your subscription, you need to deposit <b>{{ _.find(products.items, {stratid:id})?.price }} USDT</b> to the following BSC address: <b>0xf0c499c0accddd52d2f96d8afb6778be0659ee0c</b>
+                    </div>
+                    <div class=" text-cyan-200 m-3">
+                    <b>Once you made your deposit</b>, please click on the <b class="text-green-500">Activate</b> button.
+                    </div>
+                    <button class="mx-3 p-3 red_button" type="button" @click="cancel()">Cancel</button>
+                    <button class="mx-3 p-3 green_button" type="button" @click="confirm(_.find(products.items, {stratid:id}))">Activate</button>
+                    <div class="text-xl text-cyan-200">
+                        <div class="text-center p-5 m-6 flex flex-row items-center justify-center p-2 space-x-5 mb-5">
+                            <div class="text-gray-300 font-bold">Feel free to contact us </div> &nbsp;
+                            <a href="email:support@bitcoinvsalts.com" class="text-green-500 font-bold" target="_new"><img class="mx-auto" width=34 alt="GitHub" src="/email.png"/></a> &nbsp;
+                            <a href="https://t.me/joinchat/lmQ_xPE0WBo5NzYx" class="text-green-500 font-bold" target="_new"><img class="mx-auto" width=32 alt="GitHub" src="/tg.png"/></a> &nbsp;
+                            <a href="https://discordapp.com/invite/4EQrEgj" target="_new" class="text-purple-500 font-bold"><img class="mx-auto" width=40 alt="Discord" src="/discord.png"/></a> &nbsp;
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            </vue-final-modal>
+
         </div>
     </div>
 </template>
@@ -205,6 +227,7 @@ export default defineComponent({
 
     const state = reactive({
         ///////// ///////// ///////// /////////
+        showModal: false,
         auth0, 
         stratname: '',
         max_concurrent: 0,
@@ -215,7 +238,6 @@ export default defineComponent({
         total_signals: 0,
         win_rate: 0,
         products: [],
-        confirmed: false,
         loading: false,
         ///////// ///////// ///////// /////////
         series: [
@@ -405,16 +427,23 @@ export default defineComponent({
     })
 
     const subscribe = () => {
-        state.confirmed = true
+        state.showModal = true
     }
 
     const setup = () => {
         router.push("/subscriptions")
     }
+    
+    const cancel = (sub) => {
+        console.log("cancel")
+        state.showModal = false
+    }
 
     const confirm = async (sub) => {
-        state.confirmed = false
+        //state.confirmed = false
         state.loading = true
+        state.showModal = false
+        console.log("confirm", JSON.stringify(sub.code))
         console.log("subscribe", JSON.stringify(sub.code))
         await axios.put('/api/subscribe?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
             { 
@@ -449,6 +478,7 @@ export default defineComponent({
       subscribe,
       confirm,
       setup,
+      cancel,
       _
     }
   },
@@ -456,7 +486,60 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
+.blue_button {
+  @apply text-blue-400 cursor-pointer border-2 border-blue-600 hover:bg-blue-600 hover:text-blue-200 px-3 py-2 my-2 rounded-lg;
+}
+.green_button {
+  @apply border-2 border-green-600 rounded-lg px-3 py-2 my-2 text-green-400 cursor-pointer hover:bg-green-600 hover:text-green-200;
+}
+.orange_button {
+  @apply border-2 border-yellow-600 rounded-lg px-3 py-2 my-2 text-yellow-400 cursor-pointer hover:bg-yellow-600 hover:text-yellow-200;
+}
+.red_button {
+  @apply border-2 border-red-600 rounded-lg px-3 py-2 my-2 text-red-400 cursor-pointer hover:bg-red-600 hover:text-red-200;
+}
 .dark_button {
-  @apply border-2 px-3 py-2 border-blue-900 rounded-lg text-gray-400 cursor-pointer hover:bg-gray-800 hover:text-gray-200;
+  @apply border-2 border-gray-800 rounded-lg px-3 py-2 my-2 text-gray-400 cursor-pointer hover:bg-gray-800 hover:text-gray-200;
+}
+
+
+
+
+::v-deep .modal-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+::v-deep .modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-height: 90%;
+  margin: 0 1rem;
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.25rem;
+  border-color: #2d3748;
+  background-color: #1a202c;
+}
+.modal__title {
+  margin: 0 2rem 0 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.modal__content {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+.modal__close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
 }
 </style>
