@@ -35,7 +35,7 @@
               <div :class="{ 'bg-indigo-900 bg-opacity-20': subscription.qty===0 }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
                 <div v-if="subscription.code === 'bva_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> and <b>Margin</b> wallets. We recommend using 1/20th of your total BTC to safely cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
                 <div v-if="subscription.code === 'bva_long_only_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> wallet. We recommend using 1/20th of your total BTC to safely cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
-                <div class="mt-10 text-center font-bold text-xl">{{ subscription.base_asset }} amount to trade for each signal: &nbsp;</div>
+                <div class="mt-10 text-center font-bold text-xl">{{ subscription.base_asset }} amount to trade for each signal &nbsp;</div>
                 <input
                   size="50" v-model="subscription.qty" placeholder="" aria-label="btc qty" type="number" autocomplete="false"
                   class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-blue-900"
@@ -49,7 +49,7 @@
               <hr class="w-5 mx-auto border-blue-400">
 
               <div class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto">
-                <div class="text-center font-bold text-xl">Max. Concurrent Trades : &nbsp;</div>
+                <div class="text-center font-bold text-xl">Max. Concurrent Trades &nbsp;</div>
                 <input
                   size="50" v-model="subscription.max" placeholder="" aria-label="Max Conc. Trade" type="number" autocomplete="false"
                   class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-blue-900"
@@ -101,7 +101,7 @@
                   class="my-3 px-4 py-2 text-sm text-center bg-gray-900 border rounded outline-none active:outline-none border-gray-700"
                   @input="resetInput"
                 >
-                <div class="my-3"><a href="https://www.binance.com/en/my/settings/api-management?ref=W5BD94FW" target="_new"><u>You can find your API key here.</u></a>&nbsp;</div>
+                <div class="my-3"><a href="https://www.binance.com/en/my/settings/api-management?ref=W5BD94FW" target="_new"><u>You can find your API key here</u></a>&nbsp;</div>
                 <div><button class="dark_button" @click="saveStratKey(subscription)">Save</button></div>
                 <span :class="{'text-orange-500' : key_result!=='success', 'text-indigo-500':key_result==='success'}">{{ key_result }}</span>
                 <div v-if="!subscription.key || !subscription.secret" class="mt-4 font-bold">Please enter your Binance API key information.</div>
