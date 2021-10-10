@@ -103,8 +103,8 @@
                                 <button v-if="row.forsale" @click="subscribe(row)" class="my-4 font-bold mx-auto items-center bg-indigo-900 bg-opacity-90 shadow-xl px-6 py-5 rounded-lg cursor-pointer hover:bg-opacity-100 transition">
                                     <div class="text-green-500 text-xl font-semibold">SUBSCRIBE</div>
                                     <div class="text-white">
-                                        <div class="font-bold text-green-500 font-semibold">
-                                            {{ _.find(products.items, {stratid:row.id}).price }} {{ _.find(products.items, {stratid:row.id}).currency }} <span class="text-white text-sm">per month</span>
+                                        <div class="font-bold text-green-200 font-semibold">
+                                            {{ _.find(products.items, {stratid:row.id}).price }} {{ _.find(products.items, {stratid:row.id}).currency }} <span class="text-sm">per month</span>
                                         </div>
                                     </div>
                                 </button>
