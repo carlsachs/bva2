@@ -78,7 +78,6 @@
               </div>
               <span v-if="subscription.mode==='FUTURES'" :class="{'text-orange-500' : leverage_result!=='success', 'text-indigo-500':leverage_result==='success'}">{{ leverage_result }}</span>
 
-
               <hr v-if="subscription.mode==='FUTURES'" class="w-5 mx-auto border-blue-400 my-4">
               <div :class="{ 'bg-indigo-900 bg-opacity-20': !subscription.key || !subscription.secret }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
                 <div class="my-3 text-xl font-bold"><a href="https://www.binance.com/en/my/settings/api-management?ref=W5BD94FW" target="_new"><u>Binance API Key Information</u></a>&nbsp;</div>
