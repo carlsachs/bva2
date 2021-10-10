@@ -163,13 +163,16 @@
                 <span class="modal__title">Subscription Confirmation</span>
                 <div>
                     <div class=" text-cyan-200 m-3">
-                    In order to activate your subscription, you need to deposit <b>{{ _.find(products.items, {stratid:id})?.price }} USDT</b> to the following BSC address: <b>0xf0c499c0accddd52d2f96d8afb6778be0659ee0c</b>
+                    In order to activate your subscription, you need to deposit <b class="text-green-500">{{ _.find(products.items, {stratid:id})?.price }} USDT</b> to the following BSC address: <b>0xf0c499c0accddd52d2f96d8afb6778be0659ee0c</b>
                     </div>
                     <div class=" text-cyan-200 m-3">
                     <b>Once you made your deposit</b>, please click on the <b class="text-green-500">Activate</b> button.
                     </div>
                     <button class="mx-3 p-3 red_button" type="button" @click="cancel()">Cancel</button>
                     <button class="mx-3 p-3 green_button" type="button" @click="confirm(_.find(products.items, {stratid:id}))">Activate</button>
+                    <div class=" text-cyan-200 m-3">
+                    The <b>{{ stratname }} strategy</b> is designed to trade on the <b class="text-green-500">{{ _.find(products.items, {stratid:id}).mode }}</b> market on Binance.
+                    </div>
                     <div class="text-xl text-cyan-200">
                         <div class="text-center p-5 m-6 flex flex-row items-center justify-center p-2 space-x-5 mb-5">
                             <div class="text-gray-300 font-bold">Feel free to contact us </div> &nbsp;

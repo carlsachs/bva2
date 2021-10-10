@@ -62,10 +62,10 @@
               </div>
               <hr class="w-5 mx-auto border-blue-400 my-5">
 
-              <div class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto" v-if="subscription.mode==='FUTURE'">
+              <div class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto" v-if="subscription.mode==='FUTURES'">
                 <div class="my-3">The bot will use <b>Isolated Mode</b> with a <b>Leverage</b> set to: <b>{{ subscription.leverage }}x</b></div>
               </div>
-              <div class="flex items-center justify-center" v-if="subscription.mode==='FUTURE'">
+              <div class="flex items-center justify-center" v-if="subscription.mode==='FUTURES'">
                   <select v-model="subscription.leverage" @change="changeLeverage(subscription)" class="bg-indigo-900 border border-gray-400 hover:border-gray-500 p-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                     <option value=1>1x</option>
                     <option value=2>2x</option>
@@ -76,10 +76,10 @@
                     <option value=7>7x</option>
                   </select>
               </div>
-              <span v-if="subscription.mode==='FUTURE'" :class="{'text-orange-500' : leverage_result!=='success', 'text-indigo-500':leverage_result==='success'}">{{ leverage_result }}</span>
+              <span v-if="subscription.mode==='FUTURES'" :class="{'text-orange-500' : leverage_result!=='success', 'text-indigo-500':leverage_result==='success'}">{{ leverage_result }}</span>
 
 
-              <hr v-if="subscription.mode==='FUTURE'" class="w-5 mx-auto border-blue-400 my-4">
+              <hr v-if="subscription.mode==='FUTURES'" class="w-5 mx-auto border-blue-400 my-4">
               <div :class="{ 'bg-indigo-900 bg-opacity-20': !subscription.key || !subscription.secret }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
                 <div class="my-3 text-xl font-bold"><a href="https://www.binance.com/en/my/settings/api-management?ref=W5BD94FW" target="_new"><u>Binance API Key Information</u></a>&nbsp;</div>
                 <input
