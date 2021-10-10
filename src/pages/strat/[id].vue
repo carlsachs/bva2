@@ -48,6 +48,11 @@
                 </div>
 
                 <div v-if="_.find(products.items, {stratid:id})" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+                    <div class="flex-auto">Market</div>
+                    <div class="flex-auto text-justify text-green-500 block"><b>{{ _.find(products.items, {stratid:id}).mode }}</b></div>
+                </div>
+
+                <div v-if="_.find(products.items, {stratid:id})" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
                     <div class="flex-auto text-green-500">Available Subs.</div>
                     <div class="flex-auto text-justify text-green-500 block"><b>{{ _.find(products.items, {stratid:id}).count }}</b></div>
                 </div>

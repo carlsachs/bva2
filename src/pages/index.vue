@@ -54,7 +54,8 @@
                             <h1 :class="{ 'text-blue-500': row.forsale, 'text-gray-500': !row.forsale }" class="text-xl font-semibold my-3">
                                 <b class="text-blue-400">{{i+1}}.</b> <router-link :to="/strat/+row.id">{{ row.stratname }}</router-link>
                             </h1>
-                            <div class="text-white text-sm">
+
+                            <div class="text-white">
                                 <div>
                                     <button class="font-bold mx-1 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
                                         Portfolio PnL &nbsp; <router-link :to="/strat/+row.id" class="font-bold text-green-500 text-xl font-semibold">{{ Number(row.portfoliopnl).toFixed(2) }}%</router-link>
@@ -82,14 +83,30 @@
                                     Max. <router-link :to="/strat/+row.id" class="font-bold text-green-500 font-semibold">{{ Number(row.maxpnl).toFixed(2) }}%</router-link>
                                 </button>
                             </div>
+
+                            <div class="text-white mb-3">
+                                <div>
+                                    <button class="font-bold mx-1 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                                        Market <router-link :to="/strat/+row.id" class="font-bold text-green-500 text-md font-semibold">{{ _.find(products.items, {stratid:row.id}).mode }}</router-link>
+                                    </button>
+                                    <button class="font-bold mx-1 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                                        Base Asset <router-link :to="/strat/+row.id" class="font-bold text-green-500 text-md font-semibold">{{ _.find(products.items, {stratid:row.id}).base_asset }}</router-link>
+                                    </button>
+                                </div>
+                            </div>
                             
                             <router-link :to="/strat/+row.id">
                                 <img v-if="row.logo" class="mx-auto object-contain md:object-scale-down" width=200 :alt="row.stratname" :src="row.logo"/>
                             </router-link>
                             
                             <div>
-                                <button v-if="row.forsale" @click="subscribe(row)" class="my-4 font-bold mx-auto text-xl items-center bg-indigo-900 bg-opacity-90 shadow-xl px-6 py-5 rounded-lg cursor-pointer hover:bg-opacity-100 transition">
-                                    <div class="text-green-500 text-xl font-semibold">Subscribe</div>
+                                <button v-if="row.forsale" @click="subscribe(row)" class="my-4 font-bold mx-auto items-center bg-indigo-900 bg-opacity-90 shadow-xl px-6 py-5 rounded-lg cursor-pointer hover:bg-opacity-100 transition">
+                                    <div class="text-green-500 text-xl font-semibold">SUBSCRIBE</div>
+                                    <div class="text-white">
+                                        <div class="font-bold text-green-500 font-semibold">
+                                            {{ _.find(products.items, {stratid:row.id}).price }} {{ _.find(products.items, {stratid:row.id}).currency }} <span class="text-white text-sm">per month</span>
+                                        </div>
+                                    </div>
                                 </button>
                             </div>
                             
@@ -136,12 +153,15 @@
 
 import { reactive, computed, toRefs, onMounted, defineComponent, watch, inject } from "vue"
 import axios from "~/utils/axios"
+import _ from "lodash"
 import moment from "moment"
 import { useRouter } from "vue-router"
 import { useRequest } from 'vue-request'
 import { usePriceStore } from '../stores/prices'
 import { startStats, endStats } from '~/modules/stats'
 import { useHead } from '@vueuse/head'
+import { useProductStore } from '~/stores/products'
+
 
 export default defineComponent({
   name: "strats",
@@ -172,14 +192,15 @@ export default defineComponent({
         days: 4*7*12,
         stratcount: 0,
         auth0,
+        products: [],
     })
 
-    
+    state.products = useProductStore()
+
     async function setDays() {
         console.log("setDays")
         run()
     }
-
 
     const getStratCount = async () => {
       const res = await axios.get('/api/stratcount')
@@ -237,7 +258,8 @@ export default defineComponent({
       moment,
       subscribe,
       strats,
-      setDays
+      setDays,
+      _
     }
   },
 })
