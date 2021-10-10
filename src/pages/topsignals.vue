@@ -4,7 +4,7 @@
         <div class="mx-2 my-14 py-4 border-2 border-blue-900 rounded-lg text-white relative">
             <h1 class="text-2xl text-white text-uppercase font-semibold mt-6">
             Top Crypto Trading Signals
-            <button @click="setDays"  :class="{ 'bg-indigo-900 bg-opacity-100':this.$route.query.d==1 || !this.$route.query.d, 'bg-indigo-900 bg-opacity-10':this.$route.query.d!=1 || !this.$route.query.d }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+            <button @click="setDays"  :class="{ 'bg-indigo-900 bg-opacity-100':(this.$route.query.d==1 || !this.$route.query.d), 'bg-indigo-900 bg-opacity-10':(this.$route.query.d!=1 && this.$route.query.d) }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
                 <router-link class="text-green-500 text-xl font-semibold" to="?d=1">24H</router-link>
             </button>
             <button @click="setDays" :class="{ 'bg-indigo-900 bg-opacity-100':this.$route.query.d==7, 'bg-indigo-900 bg-opacity-10':this.$route.query.d!=7 }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
