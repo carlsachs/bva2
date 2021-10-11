@@ -49,7 +49,7 @@
             <div v-if="row.forsale" class="mx-2">
                 <div class="my-2 overflow-x-auto">
                     <div class="py-2 align-middle inline-block min-w-full">
-                        <div class="mx-2 my-4 py-4 border-2 border-blue-900 brounded-lg text-white relative">
+                        <div class="mx-2 my-4 py-4 border-2 border-blue-900 bg-dark-900 brounded-lg text-white relative">
 
                             <h1 :class="{ 'text-blue-500': row.forsale, 'text-gray-500': !row.forsale }" class="text-xl font-semibold my-3">
                                 <b class="text-blue-400">{{i+1}}.</b> <router-link :to="/strat/+row.id">{{ row.stratname }}</router-link>
