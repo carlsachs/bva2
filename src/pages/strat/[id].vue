@@ -59,7 +59,7 @@
 
                 <div v-if="_.find(products.items, {stratid:id})" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
                     <div class="flex-auto text-green-500"></div>
-                    <div class="flex-auto text-justify text-green-500 block"><b>{{ _.find(products.items, {stratid:id})?.price }} USD / month</b></div>
+                    <div class="flex-auto text-justify text-green-500 block"><b>{{ _.find(products.items, {stratid:id})?.price }} {{ _.find(products.items, {stratid:id})?.currency }} / month</b></div>
                 </div>
 
                 <div v-if="_.find(products.items, {stratid:id}) && !auth0.state.isAuthenticated" @click="login" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-80 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
