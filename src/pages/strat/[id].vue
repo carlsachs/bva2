@@ -49,17 +49,17 @@
 
                 <div v-if="_.find(products.items, {stratid:id})" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
                     <div class="flex-auto">Market</div>
-                    <div class="flex-auto text-justify text-blue-300 block"><b>{{ _.find(products.items, {stratid:id}).mode }}</b></div>
+                    <div class="flex-auto text-justify text-blue-300 block"><b>{{ _.find(products.items, {stratid:id})?.mode }}</b></div>
                 </div>
 
                 <div v-if="_.find(products.items, {stratid:id})" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
                     <div class="flex-auto text-green-500">Available Subs.</div>
-                    <div class="flex-auto text-justify text-blue-300 block"><b>{{ _.find(products.items, {stratid:id}).count }}</b></div>
+                    <div class="flex-auto text-justify text-blue-300 block"><b>{{ _.find(products.items, {stratid:id})?.count }}</b></div>
                 </div>
 
                 <div v-if="_.find(products.items, {stratid:id})" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
                     <div class="flex-auto text-green-500"></div>
-                    <div class="flex-auto text-justify text-green-500 block"><b>{{ _.find(products.items, {stratid:id}).price }} USD / month</b></div>
+                    <div class="flex-auto text-justify text-green-500 block"><b>{{ _.find(products.items, {stratid:id})?.price }} USD / month</b></div>
                 </div>
 
                 <div v-if="_.find(products.items, {stratid:id}) && !auth0.state.isAuthenticated" @click="login" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-80 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
@@ -79,7 +79,7 @@
                 <div v-if="_.find(products.items, {stratid:id}) && !_.find(auth0.state.user?.data?.subs, {code:_.find(products.items, {stratid:id}).code}) && _.find(products.items, {stratid:id}).stripe_id==null && auth0.state.isAuthenticated && loading" class="font-bold group flex text-xl items-center bg-red-800 bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
                     <div class="flex-auto text-green-500 text-xl font-semibold">Loading...</div>
                 </div>
-                <div v-if="_.find(products.items, {stratid:id}) && _.find(auth0.state.user?.data?.subs, {code:_.find(products.items, {stratid:id}).code}) && _.find(products.items, {stratid:id}).stripe_id==null && auth0.state.isAuthenticated" @click="setup" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-80 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
+                <div v-if="_.find(products.items, {stratid:id}) && _.find(auth0.state.user?.data?.subs, {code:_.find(products.items, {stratid:id}).code}) && auth0.state.isAuthenticated" @click="setup" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-80 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
                     <div class="flex-auto text-green-500 text-xl font-semibold">Setup</div>
                 </div>
 
