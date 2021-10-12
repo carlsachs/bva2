@@ -14,17 +14,17 @@
 
                 <div class="flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
                     <div class="flex-auto">Total PnL</div>
-                    <div class="flex-auto text-justify text-blue-300 block">{{ Number(total_pnl).toFixed(2) }}%</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ (Number(total_pnl) * Number(max_concurrent)).toFixed(2) }}%</div>
                 </div>
 
                 <div v-if="max_concurrent>=1" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
                     <div class="flex-auto">Max. Concurrent Trades</div>
-                    <div class="flex-auto text-justify text-blue-300 block">{{ max_concurrent }}</div>
+                    <div class="flex-auto text-justify text-blue-300 block font-bold">{{ max_concurrent }}</div>
                 </div>
 
                 <div v-if="max_concurrent>=1" class="flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
                     <div class="flex-auto">Portfolio PnL*</div>
-                    <div class="flex-auto text-justify text-blue-300 block">{{ (Number(total_pnl)/Number(max_concurrent)).toFixed(2) }}%</div>
+                    <div class="flex-auto text-justify text-blue-300 block font-bold">{{ Number(total_pnl).toFixed(2) }}%</div>
                 </div>
 
                 <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
@@ -49,16 +49,16 @@
 
                 <div v-if="_.find(products.items, {stratid:id})" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
                     <div class="flex-auto">Market</div>
-                    <div class="flex-auto text-justify text-green-500 block"><b>{{ _.find(products.items, {stratid:id}).mode }}</b></div>
+                    <div class="flex-auto text-justify text-blue-300 block"><b>{{ _.find(products.items, {stratid:id}).mode }}</b></div>
                 </div>
 
                 <div v-if="_.find(products.items, {stratid:id})" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
                     <div class="flex-auto text-green-500">Available Subs.</div>
-                    <div class="flex-auto text-justify text-green-500 block"><b>{{ _.find(products.items, {stratid:id}).count }}</b></div>
+                    <div class="flex-auto text-justify text-blue-300 block"><b>{{ _.find(products.items, {stratid:id}).count }}</b></div>
                 </div>
 
                 <div v-if="_.find(products.items, {stratid:id})" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-                    <div class="flex-auto text-green-500">Subs. Price</div>
+                    <div class="flex-auto text-green-500"></div>
                     <div class="flex-auto text-justify text-green-500 block"><b>{{ _.find(products.items, {stratid:id}).price }} USD / month</b></div>
                 </div>
 
