@@ -87,10 +87,10 @@
                             <div class="text-white mb-3">
                                 <div>
                                     <button class="font-bold mx-1 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                                        Market <router-link :to="/strat/+row.id" class="font-bold text-green-500 text-md font-semibold">{{ _.find(products.items, {stratid:row.id}).mode }}</router-link>
+                                        Market <router-link :to="/strat/+row.id" class="font-bold text-green-500 text-md font-semibold">{{ _.find(products.items, {stratid:row.id})?.mode }}</router-link>
                                     </button>
                                     <button class="font-bold mx-1 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                                        Base Asset <router-link :to="/strat/+row.id" class="font-bold text-green-500 text-md font-semibold">{{ _.find(products.items, {stratid:row.id}).base_asset }}</router-link>
+                                        Base Asset <router-link :to="/strat/+row.id" class="font-bold text-green-500 text-md font-semibold">{{ _.find(products.items, {stratid:row.id})?.base_asset }}</router-link>
                                     </button>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
                                     <div class="text-green-500 text-xl font-semibold">SUBSCRIBE</div>
                                     <div class="text-white">
                                         <div class="font-bold text-green-200 font-semibold">
-                                            {{ _.find(products.items, {stratid:row.id}).price }} {{ _.find(products.items, {stratid:row.id}).currency }} <span class="text-sm">per month</span>
+                                            {{ _.find(products.items, {stratid:row.id})?.price }} {{ _.find(products.items, {stratid:row.id})?.currency }} <span class="text-sm">per month</span>
                                         </div>
                                     </div>
                                 </button>
