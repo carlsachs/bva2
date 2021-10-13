@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-auto items-center justify-center p-2 space-x-5 mb-5">
+  <div class="flex-auto items-center justify-center p-2 space-x-5 my-20">
     <!--DarkModeToggle /-->
     <button v-if="!isHomePage" class="dark_button" type="button" @click="$router.go(-1)">
       <feather-chevron-left class="" />

@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <img class="mx-auto my-0" width=60 alt="Binance" src="/binance.svg" />
+        <img class="mx-auto my-20" width=60 alt="Binance" src="/binance.svg" />
 
         <h1 class="text-2xl text-white text-uppercase font-semibold mt-6">
             Top Strategies for the Past 
