@@ -38,6 +38,10 @@
         </div>
         <hr class="w-5 mx-auto border-blue-400 mt-6">
         <div class="text-xl text-cyan-200 mt-10">
+            <b>To add an auto trading subscription to your strat</b>, you decide its monthly price, <b>BVA takes 20%</b>.
+        </div>
+        <hr class="w-5 mx-auto border-blue-400 mt-6">
+        <div class="text-xl text-cyan-200 mt-10">
             <div class="text-center p-5 m-6 flex flex-row items-center justify-center p-2 space-x-5 mb-5">
                 <div class="text-gray-300 font-bold">Feel free to contact us </div> &nbsp;
                 <a href="email:support@bitcoinvsalts.com" class="text-green-500 font-bold" target="_new"><img class="mx-auto" width=24 alt="GitHub" src="/email.png"/></a> &nbsp;
