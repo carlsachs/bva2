@@ -14,7 +14,7 @@
 
                 <div class="flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
                     <div class="flex-auto">Total PnL</div>
-                    <div class="flex-auto text-justify text-blue-300 block">{{ (Number(total_pnl) * Number(max_concurrent)).toFixed(2) }}%</div>
+                    <div class="flex-auto text-justify text-blue-300 block">{{ max_concurrent ? (Number(total_pnl) * Number(max_concurrent)).toFixed(2) : Number(total_pnl).toFixed(2) }}%</div>
                 </div>
 
                 <div v-if="max_concurrent>=1" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
@@ -176,7 +176,7 @@
                     <button class="mx-3 p-3 red_button" type="button" @click="cancel()">Cancel</button>
                     <button class="mx-3 p-3 green_button" type="button" @click="confirm(_.find(products.items, {stratid:id}))">Activate</button>
                     <div class=" text-cyan-200 m-3">
-                    The <b>{{ stratname }} strategy</b> is designed to trade on the <b class="text-green-500">{{ _.find(products.items, {stratid:id}).mode }}</b> market on Binance.
+                    The <b>{{ stratname }} strategy</b> is designed to trade on the <b class="text-green-500">{{ _.find(products.items, {stratid:id})?.mode }}</b> market on Binance.
                     </div>
                     <div class="text-xl text-cyan-200">
                         <div class="text-center p-5 m-6 flex flex-row items-center justify-center p-2 space-x-5 mb-5">
