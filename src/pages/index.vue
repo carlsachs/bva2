@@ -251,7 +251,7 @@ export default defineComponent({
 
     const getStrats = () => {
         console.log("getStrats...", router.currentRoute.value.query.d)
-        return axios.get('/api/topstrats?days='+(router.currentRoute.value.query.d?router.currentRoute.value.query.d:31))
+        return axios.get('/api/topstrats?days='+(router.currentRoute.value.query.d?router.currentRoute.value.query.d:31)+'&base='+state.baseAsset)
     } 
 
     const { data: strats, run } = useRequest( () =>  getStrats(), {
