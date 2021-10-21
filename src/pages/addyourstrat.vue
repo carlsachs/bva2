@@ -4,7 +4,7 @@
             <b>Add Your Strategy</b>
         </div>
         <div class="text-xl text-cyan-200 mt-10">
-            <b>How to send TradingView signals to our platform.</b>
+            <b>1. How to send TradingView signals to our platform.</b>
         </div>
         <div class="text-xl text-cyan-200 mt-10">
             You simply need to add our web hook into your TradingView alert setup:
@@ -38,7 +38,7 @@
         </div>
         <hr class="w-5 mx-auto border-blue-400 mt-6">
         <div class="text-xl text-cyan-200 mt-10">
-            For the <b>developers</b>, simply <b>POST</b> call our web hook, and use the same format for the <b>BODY</b>.
+            <b>2.</b> For the <b>developers</b>, simply <b>POST</b> call our web hook, and use the same format for the <b>BODY</b>.
             <div class="w-200 mx-auto typing pl-2 mt-3">
                 <div class="text-left text-green-100 border-light-100 border-1 p-4">
                     <h2 class='font-bold text-cyan-200 mb-3'>Python Sample Code:</h2>
