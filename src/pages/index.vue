@@ -43,10 +43,16 @@
             <button @click="setDays" :class="{ 'bg-indigo-900 bg-opacity-100':this.$route.query.d==365, 'bg-indigo-900 bg-opacity-10': this.$route.query.d!=365}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
                 <router-link class="text-green-500 text-xl font-semibold" to="?d=365">One Year</router-link>
             </button>
+            <button @click="setBaseBTC" :class="{ 'bg-indigo-900 bg-opacity-100':baseAsset=='BTC', 'bg-indigo-900 bg-opacity-10':baseAsset!='BTC'}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                <div class="text-green-500 text-xl font-semibold">BTC</div>
+            </button>
+            <button @click="setBaseUSDT" :class="{ 'bg-indigo-900 bg-opacity-100':baseAsset=='USDT', 'bg-indigo-900 bg-opacity-10':baseAsset!='USDT'}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                <div class="text-green-500 text-xl font-semibold">USDT</div>
+            </button>
         </h1>
         <div v-if="!strats" class="my-4 text-gray-300">Loading... <img class="mx-auto mb-5" src="/spinner.svg" /></div>
         <div v-if="strats" v-for="(row, i) in strats" :key="row.id">
-            <div v-if="row.forsale" class="mx-2">
+            <div v-if="row.forsale && _.find(products.items, {stratid:row.id})?.base_asset == baseAsset" class="mx-2">
                 <div class="my-2 overflow-x-auto">
                     <div class="py-2 align-middle inline-block min-w-full">
                         <div class="mx-2 my-4 py-4 border-2 border-blue-900 bg-dark-900 brounded-lg text-white relative">
@@ -193,12 +199,25 @@ export default defineComponent({
         stratcount: 0,
         auth0,
         products: [],
+        baseAsset: 'USDT',
     })
 
     state.products = useProductStore()
 
     async function setDays() {
         console.log("setDays")
+        run()
+    }
+
+    async function setBaseBTC() {
+        console.log("setBaseBTC")
+        state.baseAsset = 'BTC'
+        run()
+    }
+
+    async function setBaseUSDT() {
+        console.log("setBaseUSDT")
+        state.baseAsset = 'USDT'
         run()
     }
 
@@ -259,7 +278,9 @@ export default defineComponent({
       subscribe,
       strats,
       setDays,
-      _
+      _,
+      setBaseBTC,
+      setBaseUSDT,
     }
   },
 })
