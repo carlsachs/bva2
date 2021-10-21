@@ -34,11 +34,34 @@
         </div>
         <hr class="w-5 mx-auto border-blue-400 mt-6">
         <div class="text-xl text-cyan-200 mt-10">
-            For the <b>developers</b>, simply <b>POST</b> call our web hook, and use the same format for the <b>BODY</b>.
+            <b>To add an auto trading subscription to your strat</b>, you decide its monthly price, <b>BVA takes 20%</b>.
         </div>
         <hr class="w-5 mx-auto border-blue-400 mt-6">
         <div class="text-xl text-cyan-200 mt-10">
-            <b>To add an auto trading subscription to your strat</b>, you decide its monthly price, <b>BVA takes 20%</b>.
+            For the <b>developers</b>, simply <b>POST</b> call our web hook, and use the same format for the <b>BODY</b>.
+            <div class="w-200 mx-auto typing pl-2 mt-3">
+                <div class="text-left text-green-100 border-light-100 border-1 p-4">
+                    <h2 class='font-bold text-cyan-200 mb-3'>Python Sample Code:</h2>
+                    import requests <br>
+                    urlbva = 'https://api-bva.herokuapp.com/tv' <br>
+                    xbva = requests.post(urlbva, json = 'your bva key|Strat Test ABC|buy|BTCUSDT|') <br>
+                    print(xbva.text) <br>
+                </div>
+            </div>
+            <div class="w-200 mx-auto typing pl-2 mt-3">
+                <div class="text-left text-green-100 border-light-100 border-1 p-4">
+                    <h2 class='font-bold text-cyan-200 mb-3'>Node JS Sample Code:</h2>
+                    const axios = require('axios') <br>
+                    const data = "your BVA key|Strat Test|buy|BTCUSDT" <br>
+                    axios.post('https://api-bva.herokuapp.com/tv', data, { headers: { "Content-Type": "text/plain" }} ) <br>
+                    .then( (response) => { <br>
+                        console.log("result:", response.data) <br>
+                    }) <br>
+                    .catch( (error) => { <br>
+                        console.log("ERROR:", error.response.data) <br>
+                    }) <br>
+                </div>
+            </div>
         </div>
         <hr class="w-5 mx-auto border-blue-400 mt-6">
         <div class="text-xl text-cyan-200 mt-10">
