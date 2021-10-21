@@ -18,7 +18,7 @@
         <div class="text-xl text-cyan-200 mt-10">
             The format of the alert shall be:
         </div>
-        <div class="text-cyan-200 mt-10">
+        <div class="text-green-400 mt-10">
             <code>{{ format }}</code>
         </div>
         <div class="text-xl text-cyan-200 mt-10">
