@@ -30,6 +30,12 @@
         <img class="mx-auto my-20" width=60 alt="Binance" src="/binance.svg" />
 
         <h1 class="text-2xl text-white text-uppercase font-semibold mt-6">
+            <button @click="setBaseBTC" :class="{ 'bg-indigo-900 bg-opacity-100':baseAsset=='BTC', 'bg-indigo-900 bg-opacity-10':baseAsset!='BTC'}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                <div class="text-green-500 text-xl font-semibold">BTC</div>
+            </button>
+            <button @click="setBaseUSDT" :class="{ 'bg-indigo-900 bg-opacity-100':baseAsset=='USDT', 'bg-indigo-900 bg-opacity-10':baseAsset!='USDT'}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                <div class="text-green-500 text-xl font-semibold">USDT</div>
+            </button>
             Top Strategies for the Past 
             <button @click="setDays" :class="{ 'bg-indigo-900 bg-opacity-100':this.$route.query.d==7, 'bg-indigo-900 bg-opacity-10':this.$route.query.d!=7 }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
                 <router-link class="text-green-500 text-xl font-semibold" to="?d=7">One Week</router-link>
@@ -42,12 +48,6 @@
             </button>
             <button @click="setDays" :class="{ 'bg-indigo-900 bg-opacity-100':this.$route.query.d==365, 'bg-indigo-900 bg-opacity-10': this.$route.query.d!=365}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
                 <router-link class="text-green-500 text-xl font-semibold" to="?d=365">One Year</router-link>
-            </button>
-            <button @click="setBaseBTC" :class="{ 'bg-indigo-900 bg-opacity-100':baseAsset=='BTC', 'bg-indigo-900 bg-opacity-10':baseAsset!='BTC'}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                <div class="text-green-500 text-xl font-semibold">BTC</div>
-            </button>
-            <button @click="setBaseUSDT" :class="{ 'bg-indigo-900 bg-opacity-100':baseAsset=='USDT', 'bg-indigo-900 bg-opacity-10':baseAsset!='USDT'}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                <div class="text-green-500 text-xl font-semibold">USDT</div>
             </button>
         </h1>
         <div v-if="!strats" class="my-4 text-gray-300">Loading... <img class="mx-auto mb-5" src="/spinner.svg" /></div>
