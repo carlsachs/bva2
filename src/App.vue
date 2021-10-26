@@ -30,7 +30,7 @@
                           duration: 2,
                           opacity: 0.8,
                           size: 40,
-                          speed: 3
+                          speed: 2
                       },
                       push: {
                           quantity: 4
@@ -60,7 +60,7 @@
                       enable: true,
                       outMode: 'bounce',
                       random: false,
-                      speed: 3,
+                      speed: 2,
                       straight: false
                   },
                   number: {
@@ -115,7 +115,7 @@
                           duration: 2,
                           opacity: 0.8,
                           size: 40,
-                          speed: 3
+                          speed: 2
                       },
                       push: {
                           quantity: 4
@@ -145,7 +145,7 @@
                       enable: true,
                       outMode: 'bounce',
                       random: false,
-                      speed: 3,
+                      speed: 2,
                       straight: false
                   },
                   number: {
