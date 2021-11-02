@@ -118,7 +118,7 @@
             </div>
           </div>
         </div>
-        <button v-if="trades?.length>0" class="mx-auto my-3 dark_button" type="button" @click="loadMore">Load More</button>
+        <button v-if="trades?.length>0 && loadMoreStore.profile * 30 < trades?.length" class="mx-auto my-3 dark_button" type="button" @click="loadMore">Load More</button>
       </div>
     </div>
 

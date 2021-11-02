@@ -161,7 +161,7 @@
                 </div>
             </div>
 
-            <button class="mx-auto dark_button" type="button" @click="loadMore">Load More</button>
+            <button v-if="signals?.length>0 && loadMoreStore.strat * 30 < signals?.length" class="mx-auto dark_button" type="button" @click="loadMore">Load More</button>
 
             <vue-final-modal v-model="showModal" classes="modal-container" content-class="modal-content">
             <div class="modal__content">
