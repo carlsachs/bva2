@@ -44,7 +44,7 @@
                 <div>
                   <button class="dark_button" @click="saveQty(subscription)">Save</button>
                 </div>
-                <span :class="{'text-orange-500' : qty_result!=='success', 'text-indigo-500':qty_result==='success'}">{{ qty_result }}</span>
+                <span :class="{'text-orange-500' : qty_result[subscription.sid]!=='success', 'text-indigo-500':qty_result[subscription.sid]==='success'}">{{ qty_result[subscription.sid] }}</span>
               </div>
               <hr class="w-5 mx-auto border-blue-400">
 
@@ -58,7 +58,7 @@
                 <div>
                   <button class="dark_button" @click="saveMaxConcTrades(subscription)">Save</button>
                 </div>
-                <span :class="{'text-orange-500' : max_result!=='success', 'text-indigo-500':max_result==='success'}">{{ max_result }}</span>
+                <span :class="{'text-orange-500' : max_result[subscription.sid]!=='success', 'text-indigo-500':max_result[subscription.sid]==='success'}">{{ max_result[subscription.sid] }}</span>
               </div>
               <hr class="w-5 mx-auto border-blue-400 my-5">
 
@@ -76,7 +76,7 @@
                     <option value=7>7x</option>
                   </select>
               </div>
-              <span v-if="subscription.mode==='FUTURES'" :class="{'text-orange-500' : leverage_result!=='success', 'text-indigo-500':leverage_result==='success'}">{{ leverage_result }}</span>
+              <span v-if="subscription.mode==='FUTURES'" :class="{'text-orange-500' : leverage_result[subscription.sid]!=='success', 'text-indigo-500':leverage_result[subscription.sid]==='success'}">{{ leverage_result[subscription.sid] }}</span>
 
               <hr v-if="subscription.mode==='FUTURES'" class="w-5 mx-auto border-blue-400 my-4">
               <div :class="{ 'bg-indigo-900 bg-opacity-20': !subscription.key || !subscription.secret }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
@@ -102,7 +102,7 @@
                 >
                 <div class="my-3"><a href="https://www.binance.com/en/my/settings/api-management?ref=W5BD94FW" target="_new"><u>You can find your API key here</u></a>&nbsp;</div>
                 <div><button class="dark_button" @click="saveStratKey(subscription)">Save</button></div>
-                <span :class="{'text-orange-500' : key_result!=='success', 'text-indigo-500':key_result==='success'}">{{ key_result }}</span>
+                <span :class="{'text-orange-500' : key_result[subscription.sid]!=='success', 'text-indigo-500':key_result[subscription.sid]==='success'}">{{ key_result[subscription.sid] }}</span>
                 <div v-if="!subscription.key || !subscription.secret" class="mt-4 font-bold">Please enter your Binance API key information.</div>
               </div>
               <hr class="w-5 mx-auto border-blue-400 my-8">
@@ -133,7 +133,7 @@
             </div>
 
           </div>
-          <div v-if="cancel_sub_result" :class="{'text-red-500' : cancel_sub_result!=='success', 'text-indigo-500':cancel_sub_result==='success'}">{{ cancel_sub_result }}</div>
+          <div v-if="cancel_sub_result[subscription.sid]" :class="{'text-red-500' : cancel_sub_result[subscription.sid]!=='success', 'text-indigo-500':cancel_sub_result==='success'}">{{ cancel_sub_result[subscription.sid] }}</div>
         </div>
       </div>
     </div>
@@ -226,17 +226,17 @@ export default {
       email: auth0.state.user?.data?.email,
       subs: auth0.state.user?.subs,
       ///////// ///////// ///////// /////////
-      cancel_sub_result: '',
-      key_result: '',
-      user_result: '',
       password: '',
+      cancel_sub_result: {},
+      leverage_result: {},
+      key_result: {},
+      qty_result: {},
+      max_result: {},
+      user_result: '',
       pwd_result: '',
-      leverage_result: '',
       searchEnabled: true,
       confirmPass: false,
       confirmUser: false,
-      qty_result: '',
-      max_result: '',
       ///////// ///////// ///////// /////////
       total_pnl: 0,
       avg_pnl: 0,
@@ -357,10 +357,11 @@ export default {
         console.log("cancelSubs result:", response.data)
         subscription.confirm = false
         if (response.data.msg == 'success') {
-          state.cancel_sub_result = response.data.msg
+          state.cancel_sub_result[subscription.sid] = response.data.msg
+          updUserSubs()
         }
         else {
-          state.cancel_sub_result = "error"
+          state.cancel_sub_result[subscription.sid] = "error"
         }
         const index = state.products?.findIndex( sub => (sub.code === subscription.code) )
         if (index > -1) state.products?.splice(index, 1)
@@ -368,7 +369,7 @@ export default {
       .catch( (error) => {
         subscription.confirm = false
         console.log("ERROR cancelSubs:", error)
-        state.cancel_sub_result = "error"
+        state.cancel_sub_result[subscription.sid] = "error"
         const index = state.products?.findIndex( sub => (sub.code === subscription.code) )
         if (index > -1) state.products?.splice(index, 1)
       })
@@ -380,8 +381,8 @@ export default {
 
     const changeStatus = async (sub) => {
       console.log("changeStatus", sub.status)
-      if (sub.status === 'ACTIVE' && Number(sub.qty)<0.0005) {
-        state.qty_result = "Please set an amount to trade >= 0.0005 BTC"
+      if (sub.status === 'ACTIVE' && Number(sub.qty)<=0) {
+        state.qty_result[sub.sid] = "Please set an amount to trade."
         sub.status = 'PAUSED'
       }
       else if (sub.status === 'ACTIVE' && (!sub.key || !sub.secret) ) {
@@ -440,7 +441,7 @@ export default {
 
     const changeLeverage = async (sub) => {
       console.log("changeLeverage", sub.leverage)
-      state.leverage_result = ''
+      state.leverage_result[sub.sid] = ''
       await axios.put('/api/setleverage?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
         { 
           leverage:sub.leverage, 
@@ -451,17 +452,17 @@ export default {
       .then( (response) => {
         console.log("changeleverage.response.data:", response.data)
         if (response.data.msg == 'success') {
-          state.leverage_result = 'success'
+          state.leverage_result[sub.sid] = 'success'
           updUserSubs()
         }
         else {
           console.log("err 12323", response.data.err)
-          state.leverage_result = 'error'
+          state.leverage_result[sub.sid] = 'error'
         }
       })
       .catch( (error) => {
         console.log("ERROR changeleverage", error)
-        state.leverage_result = 'error'
+        state.leverage_result[sub.sid] = 'error'
       })
     }
 
@@ -469,13 +470,13 @@ export default {
       console.log("resetInput")
       state.confirmPass = false
       state.confirmUser = false
-      state.pwd_result = null
-      state.user_result = null
-      state.key_result = null
-      state.qty_result = null
-      state.max_result = null
-      state.leverage_result = null
-      state.cancel_sub_result = null
+      state.pwd_result = ''
+      state.user_result = ''
+      state.key_result = {}
+      state.qty_result = {}
+      state.max_result = {}
+      state.leverage_result = {}
+      state.cancel_sub_result = {}
     }
 
     const saveStratKey = async (subscription) => {
@@ -487,16 +488,16 @@ export default {
       .then( (response) => {
         console.log("saveStratKey.response.data:", response.data)
         if (response.data.msg == 'success') {
-          state.key_result = response.data.msg
+          state.key_result[subscription.sid] = response.data.msg
           updUserSubs()
         }
         else {
-          state.key_result = "error"
+          state.key_result[subscription.sid] = "error"
         }
       })
       .catch( (error) => {
         console.log("ERROR saveStratKey", error)
-        state.key_result = "error"
+        state.key_result[subscription.sid] = "error"
       })
     }
 
@@ -510,50 +511,45 @@ export default {
         .then( async (response) => {
           console.log("saveMaxConcTrades.response.data:", response.data)
           if (response.data.msg == 'success') {
-            state.max_result = response.data.msg
+            state.max_result[subscription.sid] = response.data.msg
             updUserSubs()
           }
           else {
             console.log("err 12345max5 -->", response.data.err)
-            state.max_result = response.data.err
+            state.max_result[subscription.sid] = response.data.err
           }
         })
         .catch( (error) => {
           console.log("ERROR saveMaxConcTrades", error)
-          state.max_result = "error"
+          state.max_result[subscription.sid] = "error"
         })
       }
       else {
-        state.max_result = "Please set a maximum concurent trades number."
+        state.max_result[subscription.sid] = "Please set a maximum concurent trades number."
       }
     }
 
     const saveQty = async (subscription) => {
-      //console.log("saveQty", JSON.stringify(subscription))
-      if (Number(subscription.qty) >= 0.0005) {
-        await axios.put('/api/setsubsqty?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
-          { qty: subscription.qty, code: subscription.sid, email: auth0.state?.user?.email },
-          { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
-        )
-        .then( (response) => {
-          console.log("saveQty.response.data:", response.data)
-          if (response.data.msg == 'success') {
-            state.qty_result = response.data.msg
-            updUserSubs()
-          }
-          else {
-            console.log("err 123455 -->", response.data.err)
-            state.qty_result = response.data.err
-          }
-        })
-        .catch( (error) => {
-          console.log("ERROR saveQty", error)
-          state.qty_result = "error"
-        })
-      }
-      else {
-        state.qty_result = "Please set an amount to trade >= 0.0005 BTC"
-      }
+      console.log("====> saveQty", JSON.stringify(subscription.sid))
+      await axios.put('/api/setsubsqty?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
+        { qty: subscription.qty, code: subscription.sid, email: auth0.state?.user?.email },
+        { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
+      )
+      .then( (response) => {
+        console.log("saveQty.response.data:", response.data)
+        if (response.data.msg == 'success') {
+          state.qty_result[subscription.sid] = response.data.msg
+          updUserSubs()
+        }
+        else {
+          console.log("err 123455 -->", response.data.err)
+          state.qty_result[subscription.sid] = response.data.err
+        }
+      })
+      .catch( (error) => {
+        console.log("ERROR saveQty", error)
+        state.qty_result[subscription.sid] = "error"
+      })
     }
 
     const savePass = async () => {
