@@ -294,22 +294,6 @@ export default {
       loadMoreStore.moreProfile()
       console.log("loadMore...", loadMoreStore.profile)
     }
-
-    /*
-    async function signInUser(token: String, sub: String) {
-      //axios.defaults.timeout = 30000;
-      console.log("signInUser", token, sub)
-      return axios
-        .get('/api/getusersignin?sub='+sub, { headers: {Authorization:`Bearer ${token}`} } )
-        .then( (response) => {
-          return response.data
-        })
-        .catch( (e) => {
-          console.log("signInUser ERROR", e)
-          return 0
-        })
-    }
-    */
     
     return {
       ...toRefs(state),

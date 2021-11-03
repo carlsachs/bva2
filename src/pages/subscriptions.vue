@@ -196,7 +196,7 @@ import { useRouter } from "vue-router"
 import _ from "lodash"
 import { useProductStore } from '../stores/products'
 import { startStats, endStats } from '~/modules/stats'
-import { updateUsername } from '~/modules/auth0'
+import { updateUsername, updUserSubs } from '~/modules/auth0'
 import axios from "~/utils/axios"
 import { useHead } from '@vueuse/head'
 
@@ -403,6 +403,7 @@ export default {
         .then( (response) => {
           console.log("changeStatus.response.data:", response.data)
           if (response.data.msg == 'success') {
+            updUserSubs()
           }
           else {
             console.log("err 123", response.data.err)
@@ -426,6 +427,7 @@ export default {
       .then( (response) => {
         console.log("changeNotif.response.data:", response.data)
         if (response.data.msg == 'success') {
+          updUserSubs()
         }
         else {
           console.log("err 1234 ->", response.data.err)
@@ -450,6 +452,7 @@ export default {
         console.log("changeleverage.response.data:", response.data)
         if (response.data.msg == 'success') {
           state.leverage_result = 'success'
+          updUserSubs()
         }
         else {
           console.log("err 12323", response.data.err)
@@ -485,6 +488,7 @@ export default {
         console.log("saveStratKey.response.data:", response.data)
         if (response.data.msg == 'success') {
           state.key_result = response.data.msg
+          updUserSubs()
         }
         else {
           state.key_result = "error"
@@ -503,10 +507,11 @@ export default {
           { max: parseInt(subscription.max), code: subscription.sid, email: auth0.state?.user?.email },
           { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
         )
-        .then( (response) => {
+        .then( async (response) => {
           console.log("saveMaxConcTrades.response.data:", response.data)
           if (response.data.msg == 'success') {
             state.max_result = response.data.msg
+            updUserSubs()
           }
           else {
             console.log("err 12345max5 -->", response.data.err)
@@ -534,6 +539,7 @@ export default {
           console.log("saveQty.response.data:", response.data)
           if (response.data.msg == 'success') {
             state.qty_result = response.data.msg
+            updUserSubs()
           }
           else {
             console.log("err 123455 -->", response.data.err)
@@ -598,22 +604,6 @@ export default {
         state.user_result = "error"
       })
     }
-
-    /*
-    async function signInUser(token: String, sub: String) {
-      //axios.defaults.timeout = 30000;
-      console.log("signInUser", token, sub)
-      return axios
-        .get('/api/getusersignin?sub='+sub, { headers: {Authorization:`Bearer ${token}`} } )
-        .then( (response) => {
-          return response.data
-        })
-        .catch( (e) => {
-          console.log("signInUser ERROR", e)
-          return 0
-        })
-    }
-    */
 
     const subscribe = async (sub) => {
       sub.confirm = false

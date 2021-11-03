@@ -104,6 +104,12 @@ async function signInUser(token: String, sub: String) {
     })
 }
 
+export async function updUserSubs() {
+  console.log("getUserSubs")
+  const result = await axios.get('/api/usersubs?sub='+ $auth0.state.user.data.sub+'&id='+  $auth0.state.user.data.id+'&e='+  $auth0.state.user.data.email, { headers: {Authorization:`Bearer ${ $auth0.state.user.token}`} })
+  $auth0.state.user.data.subs = result.data 
+}
+
 export function updateUsername(nickname: String) {
   console.log("updateUsername", nickname)
   $auth0.state.user['data']['nickname'] = nickname

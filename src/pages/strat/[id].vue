@@ -376,22 +376,6 @@ export default defineComponent({
         return pnl.toFixed(2)
     }
 
-    /*
-    async function signInUser(token: String, sub: String) {
-      //axios.defaults.timeout = 30000;
-      console.log("signInUser", token, sub)
-      return axios
-        .get('/api/getusersignin?sub='+sub, { headers: {Authorization:`Bearer ${token}`} } )
-        .then( (response) => {
-          return response.data
-        })
-        .catch( (e) => {
-          console.log("signInUser ERROR", e)
-          return 0
-        })
-    }
-    */
-
     async function login() {
         // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#loginwithredirect
         //console.log("-0-0-0-0-0-0-0-", 'http://localhost:3000/strat/'+props.id)
