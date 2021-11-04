@@ -168,7 +168,9 @@
                 <span class="modal__title">Subscription Confirmation</span>
                 <div>
                     <div class=" text-cyan-200 m-3">
-                    In order to activate your subscription, you need to deposit <b class="text-green-500">{{ _.find(products.items, {stratid:id})?.price }} USDT</b> to the following BSC address: <b>0xf0c499c0accddd52d2f96d8afb6778be0659ee0c</b>
+                    In order to activate your subscription, you need to deposit <b class="text-green-500">{{ _.find(products.items, {stratid:id})?.price }} USDT</b> <br>
+                    to the following BEP2 address: <b>bnb136ns6lfw4zs5hg4n85vdthaad7hq5m4gtkgf23</b> <br>
+                    Make sure you use the <b>MEMO</b>: <b>102826610</b>
                     </div>
                     <div class=" text-cyan-200 m-3">
                     <b>Once you made your deposit</b>, please click on the <b class="text-green-500">Activate</b> button.
