@@ -30,10 +30,10 @@
         <img class="mx-auto my-20" width=60 alt="Binance" src="/binance.svg" />
 
         <h1 class="text-2xl text-white text-uppercase font-semibold mt-6">
-            <button @click="setBaseBTC" :class="{ 'bg-indigo-900 bg-opacity-100':baseAsset=='BTC'||!baseAsset, 'bg-indigo-900 bg-opacity-10':baseAsset!='BTC'&&baseAsset}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+            <button v-if="subOnly" @click="setBaseBTC" :class="{ 'bg-indigo-900 bg-opacity-100':baseAsset=='BTC'||!baseAsset, 'bg-indigo-900 bg-opacity-10':baseAsset!='BTC'&&baseAsset}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
                 <div class="text-green-500 text-xl font-semibold">BTC</div>
             </button>
-            <button @click="setBaseUSDT" :class="{ 'bg-indigo-900 bg-opacity-100':baseAsset=='USDT'||!baseAsset, 'bg-indigo-900 bg-opacity-10':baseAsset!='USDT'&&baseAsset}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+            <button v-if="subOnly" @click="setBaseUSDT" :class="{ 'bg-indigo-900 bg-opacity-100':baseAsset=='USDT'||!baseAsset, 'bg-indigo-900 bg-opacity-10':baseAsset!='USDT'&&baseAsset}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
                 <div class="text-green-500 text-xl font-semibold">USDT</div>
             </button>
             Top Strategies for the Past 
