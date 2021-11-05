@@ -136,9 +136,9 @@
                                         </td>
                                         <td>
                                             <div class="text-white">
-                                                <div class="font-bold text-green-200 text-sm font-semibold">
+                                                <router-link :to="/strat/+row.id" class="font-bold text-green-200 text-sm font-semibold">
                                                     {{ _.find(products.items, {stratid:row.id})?.price }} {{ _.find(products.items, {stratid:row.id})?.currency }}
-                                                </div>
+                                                </router-link>
                                             </div>
                                         </td>
                                         <td>
