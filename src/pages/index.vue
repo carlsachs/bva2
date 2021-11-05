@@ -73,14 +73,14 @@
                                         <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                             <div class="text-center">Name</div>
                                         </th>
-                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                        <th v-if="subOnly" class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                             <div class="text-center">Portfolio PnL</div>
                                         </th>
                                         <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            <div class="text-center">Max. Open Trades</div>
+                                            <div class="text-center">Total PnL</div>
                                         </th>
                                         <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            <div class="text-center">Total PnL</div>
+                                            <div class="text-center">Max. Open Trades</div>
                                         </th>
                                         <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                             <div class="text-center">Win Rate</div>
@@ -117,14 +117,14 @@
                                                 <router-link :to="/strat/+row.id">{{ row.stratname }}</router-link>
                                             </h1>
                                         </td>
-                                        <td>
+                                        <td v-if="subOnly">
                                             <router-link :to="/strat/+row.id" class="font-bold text-sm text-green-500 font-semibold">{{ Number(row.portfoliopnl).toFixed(2) }}%</router-link>
                                         </td>
                                         <td>
-                                            <router-link :to="/strat/+row.id" class="font-bold text-sm text-green-500 font-semibold">{{ row.max_concurrent }}</router-link>
+                                            <router-link :to="/strat/+row.id" class="font-bold text-sm text-green-500 font-semibold">{{ Number(row.sumpnl).toFixed(2) }}%</router-link>
                                         </td>
                                         <td>
-                                            <router-link :to="/strat/+row.id" class="font-bold text-sm text-green-500 font-semibold">{{ Number(row.sumpnl).toFixed(2) }}%</router-link>
+                                            <router-link :to="/strat/+row.id" class="font-bold text-sm text-green-500 font-semibold">{{ row.max_concurrent }}</router-link>
                                         </td>
                                         <td>
                                             <router-link :to="/strat/+row.id" class="font-bold text-sm text-green-500 font-semibold">{{ (Number(row.countppnl)*100/Number(row.countpnl)).toFixed(2) }}%</router-link>                                        </td>
