@@ -1,7 +1,12 @@
 <template>
   <div v-if="auth0.state.isAuthenticated && auth0.state.user" class="text-center text-gray-300">
+    <div v-if="empty_subs" class="text-xl text-cyan-200 my-20">
+      Welcome to your Subscriptions Board. <br><br>
+      This is where you can manage your subscriptions.<br><br>
+      Browse and subscribe to strategies <router-link to="/" class="">here</router-link>. 
+    </div>
 
-    <h2>To <a href="/addyourstrat">connect your TradingView alerts to BVA</a>. Here is your key: <b class="text-green-200">{{ auth0.state.user?.data?.sub?.replace("auth0|","") }}</b></h2>
+    <h2>To <a href="/addyourstrat">add your strat and connect your TradingView alerts to BVA</a>. Here is your key: <b class="text-green-200">{{ auth0.state.user?.data?.sub?.replace("auth0|","") }}</b></h2>
     <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
       <div v-for="subscription in products" >
         <div v-if="subscription.status!=='ZISABLED'" :class="{ 'bg-indigo-900 bg-opacity-20': subscription.status!=='ZISABLED' }" :key="subscription.code" class="mx-4 my-4 p-4 border-2 border-blue-900 rounded-lg text-white relative"> 
@@ -243,6 +248,7 @@ export default {
       strat_lifetime: 0,
       total_signals: 0,
       win_rate: 0,
+      empty_subs: true,
       ///////// ///////// ///////// /////////
     })
 
@@ -282,6 +288,7 @@ export default {
       state.subs = user.subs
       prods.items.map( yo => {
         if (state.subs?.findIndex(sub => (sub.code == yo.code)) > -1) {
+          state.empty_subs = false
           yo.status = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].status
           yo.qty = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].qty
           yo.max = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].max
@@ -317,6 +324,7 @@ export default {
         state.email = auth0.state.user?.data?.email
         prods.items.map( yo => {
           if (state.subs?.findIndex(sub => (sub.code == yo.code)) > -1) {
+            state.empty_subs = false
             yo.status = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].status
             yo.qty = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].qty
             yo.max = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].max
