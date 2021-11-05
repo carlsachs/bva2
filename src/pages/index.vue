@@ -49,6 +49,9 @@
             <button @click="setDays" :class="{ 'bg-indigo-900 bg-opacity-100':(this.$route.query.d==365|| !this.$route.query.d), 'bg-indigo-900 bg-opacity-10': (this.$route.query.d!=365 && this.$route.query.d)}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
                 <router-link class="text-green-500 text-xl font-semibold" to="?d=365">One Year</router-link>
             </button>
+            <button @click="setSubOnly" :class="{ 'bg-indigo-900 bg-opacity-100':subOnly, 'bg-indigo-900 bg-opacity-10':!subOnly}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                <router-link class="text-green-500 text-xl font-semibold" to="?d=365">Sub Only</router-link>
+            </button>
         </h1>
         <div v-if="!strats" class="my-4 text-gray-300">Loading... <img class="mx-auto mb-5" src="/spinner.svg" /></div>
 
@@ -106,7 +109,7 @@
                                         </td>
                                         <td>
                                             <router-link :to="/strat/+row.id">
-                                                <img v-if="row.logo" class="mx-auto object-contain md:object-scale-down" width=200 :alt="row.stratname" :src="row.logo"/>
+                                                <img v-if="row.logo" class="mx-auto object-contain md:object-scale-down my-2" width=200 :alt="row.stratname" :src="row.logo"/>
                                             </router-link>                                        
                                         </td>
                                         <td>
@@ -234,6 +237,7 @@ export default defineComponent({
         auth0,
         products: [],
         baseAsset: null,
+        subOnly: true,
     })
 
     state.products = useProductStore()
@@ -246,6 +250,12 @@ export default defineComponent({
     async function setBaseBTC() {
         console.log("setBaseBTC")
         state.baseAsset = 'BTC'
+        run()
+    }
+
+    async function setSubOnly() {
+        console.log("setSubOnly")
+        state.subOnly = !state.subOnly
         run()
     }
 
@@ -285,7 +295,7 @@ export default defineComponent({
 
     const getStrats = () => {
         console.log("getStrats...", router.currentRoute.value.query.d)
-        return axios.get('/api/topstrats?days='+(router.currentRoute.value.query.d?router.currentRoute.value.query.d:365)+'&base='+state.baseAsset)
+        return axios.get('/api/topstrats?days='+(router.currentRoute.value.query.d?router.currentRoute.value.query.d:365)+'&base='+state.baseAsset+'&so='+state.subOnly)
     } 
 
     const { data: strats, run } = useRequest( () =>  getStrats(), {
@@ -315,6 +325,7 @@ export default defineComponent({
       _,
       setBaseBTC,
       setBaseUSDT,
+      setSubOnly,
     }
   },
 })
