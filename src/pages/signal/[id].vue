@@ -71,7 +71,6 @@ export default defineComponent({
   setup: (props) => {
 
     startStats(Date.now())
-    const smoothScroll = inject('smoothScroll')
 
     const state = reactive({
       signal_type: null,
@@ -178,19 +177,6 @@ export default defineComponent({
       .catch((err) => {
         console.log(err)
       })
-      ////// ////// ////// ////// //////
-      /*
-      setTimeout(function(){ 
-          smoothScroll({
-              scrollTo: myEl.value,
-              hash: '#sampleHash',
-              duration: 1000,
-              offset: -30, 
-              updateHistory: false,
-          })
-        }, 1000);
-      */
-      ////// ////// ////// ////// //////
     })
 
     const myEl = ref(null)
