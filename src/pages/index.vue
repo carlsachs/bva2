@@ -50,7 +50,7 @@
                 <router-link class="text-green-500 text-xl font-semibold" to="?d=365">One Year</router-link>
             </button>
             <button @click="setSubOnly" :class="{ 'bg-indigo-900 bg-opacity-100':subOnly, 'bg-indigo-900 bg-opacity-10':!subOnly}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                <router-link class="text-green-500 text-xl font-semibold" to="?d=365">Sub Only</router-link>
+                <div class="text-green-500 text-xl font-semibold">Sub Only</div>
             </button>
         </h1>
         <div v-if="!strats" class="my-4 text-gray-300">Loading... <img class="mx-auto mb-5" src="/spinner.svg" /></div>
