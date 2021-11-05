@@ -51,73 +51,107 @@
             </button>
         </h1>
         <div v-if="!strats" class="my-4 text-gray-300">Loading... <img class="mx-auto mb-5" src="/spinner.svg" /></div>
-        <div v-if="strats" v-for="(row, i) in strats" :key="row.id">
-            <div v-if="row.forsale && _.find(products.items, {stratid:row.id})?.base_asset == baseAsset" class="mx-2">
-                <div class="my-2 overflow-x-auto">
+
+
+        <div v-if="true" class="mt-4 p-4">
+            <div class="flex flex-col">
+                <div class="-my-2 overflow-x-auto">
                     <div class="py-2 align-middle inline-block min-w-full">
-                        <div class="mx-2 my-4 py-4 border-2 border-blue-900 bg-dark-900 brounded-lg text-white relative">
-
-                            <h1 :class="{ 'text-blue-500': row.forsale, 'text-gray-500': !row.forsale }" class="text-xl font-semibold my-3">
-                                <b class="text-blue-400">{{i+1}}.</b> <router-link :to="/strat/+row.id">{{ row.stratname }}</router-link>
-                            </h1>
-
-                            <div class="text-white">
-                                <div>
-                                    <button class="font-bold mx-1 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                                        Portfolio PnL &nbsp; <router-link :to="/strat/+row.id" class="font-bold text-green-500 text-xl font-semibold">{{ Number(row.portfoliopnl).toFixed(2) }}%</router-link>
-                                    </button>
-                                </div>
-                                <button class="mx-1 my-2 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                                    Tot. PnL <router-link :to="/strat/+row.id" class="font-bold text-green-500 font-semibold">{{ Number(row.sumpnl).toFixed(2) }}%</router-link>
-                                </button>
-                                <button v-if="row.max_concurrent" class="mx-1 my-2 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                                    Max. Open Trades <router-link :to="/strat/+row.id" class="font-bold text-green-500 font-semibold">{{ row.max_concurrent }}</router-link>
-                                </button>
-                                <button class="mx-1 my-2 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                                    Tot. Trades <router-link :to="/strat/+row.id" class="font-bold text-green-500 font-semibold">{{ Number(row.countpnl).toFixed(0) }}</router-link>
-                                </button>
-                                <button class="mx-1 my-2 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                                    Win Rate <router-link :to="/strat/+row.id" class="font-bold text-green-500 font-semibold">{{ (Number(row.countppnl)*100/Number(row.countpnl)).toFixed(2) }}%</router-link>
-                                </button>
-                                <button class="mx-1 my-2 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                                    Avg. PnL <router-link :to="/strat/+row.id" class="font-bold text-green-500 font-semibold">{{ Number(row.avgpnl).toFixed(2) }}%</router-link>
-                                </button>
-                                <button class="mx-1 my-2 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                                    Min. <router-link :to="/strat/+row.id" class="font-bold text-red-500 font-semibold">{{ Number(row.minpnl).toFixed(2) }}%</router-link>
-                                </button>
-                                <button class="mx-1 my-2 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                                    Max. <router-link :to="/strat/+row.id" class="font-bold text-green-500 font-semibold">{{ Number(row.maxpnl).toFixed(2) }}%</router-link>
-                                </button>
-                            </div>
-
-                            <div class="text-white mb-3">
-                                <div>
-                                    <button class="font-bold mx-1 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                                        Market <router-link :to="/strat/+row.id" class="font-bold text-green-500 text-md font-semibold">{{ _.find(products.items, {stratid:row.id})?.mode }}</router-link>
-                                    </button>
-                                    <button class="font-bold mx-1 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                                        Base Asset <router-link :to="/strat/+row.id" class="font-bold text-green-500 text-md font-semibold">{{ _.find(products.items, {stratid:row.id})?.base_asset }}</router-link>
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <router-link :to="/strat/+row.id">
-                                <img v-if="row.logo" class="mx-auto object-contain md:object-scale-down" width=200 :alt="row.stratname" :src="row.logo"/>
-                            </router-link>
-                            
-                            <div>
-                                <button v-if="row.forsale" @click="subscribe(row)" class="my-4 font-bold mx-auto items-center bg-indigo-900 bg-opacity-90 shadow-xl px-6 py-5 rounded-lg cursor-pointer hover:bg-opacity-100 transition">
-                                    <div class="text-green-500 text-xl font-semibold">SUBSCRIBE</div>
-                                    <div class="text-white">
-                                        <div class="font-bold text-green-200 font-semibold">
-                                            {{ _.find(products.items, {stratid:row.id})?.price }} {{ _.find(products.items, {stratid:row.id})?.currency }} <span class="text-sm">per month</span>
-                                        </div>
-                                    </div>
-                                </button>
-                            </div>
-                            
-                            <router-link :to="/strat/+row.id">{{ row.description }}</router-link>
-                        </div>       
+                        <div class=" overflow-hidden border-1 border-blue-900 rounded-lg">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead>
+                                    <tr>
+                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                            <div class="text-center">#</div>
+                                        </th>
+                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                            <div class="text-center">Logo</div>
+                                        </th>
+                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                            <div class="text-center">Name</div>
+                                        </th>
+                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                            <div class="text-center">Portfolio PnL</div>
+                                        </th>
+                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                            <div class="text-center">Max. Open Trades</div>
+                                        </th>
+                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                            <div class="text-center">Total PnL</div>
+                                        </th>
+                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                            <div class="text-center">Win Rate</div>
+                                        </th>
+                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                            <div class="text-center">Tot. Trades</div>
+                                        </th>
+                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                            <div class="text-center">Avg. PnL</div>
+                                        </th>
+                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                            <div class="text-center">Price per month</div>
+                                        </th>
+                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                            <div class="text-center">Market</div>
+                                        </th>
+                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                            <div class="text-center">Base Asset</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody v-if="strats" class="divide-y divide-gray-200 hover:bg-blue-900 hover:bg-opacity-40 visited:bg-blue-900 visited:bg-opacity-40" v-for="(row, i) in strats" :key="row.id">
+                                    <tr>
+                                        <td>
+                                            <b class="text-blue-400">{{i+1}}.</b>
+                                        </td>
+                                        <td>
+                                            <router-link :to="/strat/+row.id">
+                                                <img v-if="row.logo" class="mx-auto object-contain md:object-scale-down" width=200 :alt="row.stratname" :src="row.logo"/>
+                                            </router-link>                                        
+                                        </td>
+                                        <td>
+                                            <h1 :class="{ 'text-blue-500': row.forsale, 'text-gray-500': !row.forsale }" class="text-md font-semibold m-3">
+                                                <router-link :to="/strat/+row.id">{{ row.stratname }}</router-link>
+                                            </h1>
+                                        </td>
+                                        <td>
+                                            <router-link :to="/strat/+row.id" class="font-bold text-sm text-green-500 font-semibold">{{ Number(row.portfoliopnl).toFixed(2) }}%</router-link>
+                                        </td>
+                                        <td>
+                                            <router-link :to="/strat/+row.id" class="font-bold text-sm text-green-500 font-semibold">{{ row.max_concurrent }}</router-link>
+                                        </td>
+                                        <td>
+                                            <router-link :to="/strat/+row.id" class="font-bold text-sm text-green-500 font-semibold">{{ Number(row.sumpnl).toFixed(2) }}%</router-link>
+                                        </td>
+                                        <td>
+                                            <router-link :to="/strat/+row.id" class="font-bold text-sm text-green-500 font-semibold">{{ (Number(row.countppnl)*100/Number(row.countpnl)).toFixed(2) }}%</router-link>                                        </td>
+                                        <td>
+                                            <router-link :to="/strat/+row.id" class="font-bold text-sm text-green-500 font-semibold">{{ Number(row.countpnl).toFixed(0) }}</router-link>
+                                        </td>
+                                        <td>
+                                            <router-link :to="/strat/+row.id" class="font-bold text-sm text-green-500 font-semibold">{{ Number(row.avgpnl).toFixed(2) }}%</router-link>
+                                        </td>
+                                        <td>
+                                            <div class="text-white">
+                                                <div class="font-bold text-green-200 text-sm font-semibold">
+                                                    {{ _.find(products.items, {stratid:row.id})?.price }} {{ _.find(products.items, {stratid:row.id})?.currency }}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="font-bold mx-1 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                                                <router-link :to="/strat/+row.id" class="font-bold text-green-500 font-semibold">{{ _.find(products.items, {stratid:row.id})?.mode }}</router-link>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button class="font-bold mx-1 text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                                                <router-link :to="/strat/+row.id" class="font-bold text-green-500 font-semibold">{{ _.find(products.items, {stratid:row.id})?.base_asset }}</router-link>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
