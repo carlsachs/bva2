@@ -63,7 +63,7 @@
                 </div>
 
                 <div v-if="_.find(products.items, {stratid:id}) && !auth0.state.isAuthenticated" @click="login" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-80 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
-                    <div class="flex-auto text-green-500 text-xl font-semibold">Sign In</div>
+                    <div class="flex-auto text-green-500 text-xl font-semibold">Subscribe</div>
                 </div>
                 <Stripe
                     v-if="_.find(products.items, {stratid:id}) && !_.find(auth0.state.user?.data?.subs, {code:_.find(products.items, {stratid:id}).code}) && _.find(products.items, {stratid:id}).stripe_id && auth0.state.isAuthenticated"
