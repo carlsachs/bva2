@@ -1,8 +1,6 @@
 <template>
   <div v-if="auth0.state.isAuthenticated && auth0.state.user" class="text-center text-gray-300">
 
-    <div v-if="loading" class="my-0 text-gray-300">Loading... <img class="mx-auto mb-5" src="/spinner.svg" /></div>
-
     <div class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
 
       <h1 class="my-7 text-3xl text-uppercase font-semibold">Your Subscription Sales</h1>
