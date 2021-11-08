@@ -29,6 +29,11 @@
         Your Trades
       </button>
     </router-link>
+    <router-link v-if="prods.items.findIndex(p => (p.user_id == auth0.state?.user?.data?.id)) > -1 && auth0.state.isAuthenticated" to="/sales">
+      <button class="green_button" type="button">
+        Your Sales
+      </button>
+    </router-link>
     <router-link to="/addyourstrat">
       <button class="blue_button" type="button">
         Add Your Strat
@@ -50,6 +55,9 @@
 
 import { useRouter } from 'vue-router'
 import { inject, reactive, toRef } from "vue"
+import { useProductStore } from '../stores/products'
+
+const prods = useProductStore()
 
 const auth0: any = inject("auth0")
 
