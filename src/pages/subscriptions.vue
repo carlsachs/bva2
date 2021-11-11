@@ -37,7 +37,7 @@
                 </label>
               </div>
               
-              <div :class="{ 'bg-indigo-900 bg-opacity-20': subscription.qty===0 }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
+              <div v-if="!subscription.external_client||subscription.external_client=='false'" :class="{ 'bg-indigo-900 bg-opacity-20': subscription.qty===0 }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
                 <div v-if="subscription.code === 'bva_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> and <b>Margin</b> wallets. We recommend using 1/20th of your total BTC to safely cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
                 <div v-if="subscription.code === 'bva_long_only_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> wallet. We recommend using 1/20th of your total BTC to safely cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
                 <div class="mt-10 text-center font-bold text-xl">{{ subscription.base_asset }} amount to trade for each signal &nbsp;</div>
@@ -51,9 +51,9 @@
                 </div>
                 <span :class="{'text-orange-500' : qty_result[subscription.sid]!=='success', 'text-indigo-500':qty_result[subscription.sid]==='success'}">{{ qty_result[subscription.sid] }}</span>
               </div>
-              <hr class="w-5 mx-auto border-blue-400">
+              <hr v-if="!subscription.external_client||subscription.external_client=='false'" class="w-5 mx-auto border-blue-400">
 
-              <div class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto">
+              <div v-if="!subscription.external_client||subscription.external_client=='false'" class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto">
                 <div class="text-center font-bold text-xl">Max. Concurrent Trades &nbsp;</div>
                 <input
                   size="50" v-model="subscription.max" placeholder="" aria-label="Max Conc. Trade" type="number" autocomplete="false"
@@ -65,12 +65,12 @@
                 </div>
                 <span :class="{'text-orange-500' : max_result[subscription.sid]!=='success', 'text-indigo-500':max_result[subscription.sid]==='success'}">{{ max_result[subscription.sid] }}</span>
               </div>
-              <hr class="w-5 mx-auto border-blue-400 my-5">
+              <hr v-if="!subscription.external_client||subscription.external_client=='false'" class="w-5 mx-auto border-blue-400 my-5">
 
-              <div class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto" v-if="subscription.mode==='FUTURES'">
+              <div v-if="subscription.mode==='FUTURES' && (!subscription.external_client||subscription.external_client=='false')" class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto">
                 <div class="my-3">The bot will use <b>Isolated Mode</b> with a <b>Leverage</b> set to: <b>{{ subscription.leverage }}x</b></div>
               </div>
-              <div class="flex items-center justify-center" v-if="subscription.mode==='FUTURES'">
+              <div v-if="subscription.mode==='FUTURES' && (!subscription.external_client||subscription.external_client=='false')" class="flex items-center justify-center">
                   <select v-model="subscription.leverage" @change="changeLeverage(subscription)" class="bg-indigo-900 border border-gray-400 hover:border-gray-500 p-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                     <option value=1>1x</option>
                     <option value=2>2x</option>
@@ -81,10 +81,10 @@
                     <option value=7>7x</option>
                   </select>
               </div>
-              <span v-if="subscription.mode==='FUTURES'" :class="{'text-orange-500' : leverage_result[subscription.sid]!=='success', 'text-indigo-500':leverage_result[subscription.sid]==='success'}">{{ leverage_result[subscription.sid] }}</span>
+              <span v-if="subscription.mode==='FUTURES' && (!subscription.external_client||subscription.external_client=='false')" :class="{'text-orange-500' : leverage_result[subscription.sid]!=='success', 'text-indigo-500':leverage_result[subscription.sid]==='success'}">{{ leverage_result[subscription.sid] }}</span>
 
-              <hr v-if="subscription.mode==='FUTURES'" class="w-5 mx-auto border-blue-400 my-4">
-              <div :class="{ 'bg-indigo-900 bg-opacity-20': !subscription.key || !subscription.secret }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
+              <hr v-if="subscription.mode==='FUTURES' && (!subscription.external_client||subscription.external_client=='false')" class="w-5 mx-auto border-blue-400 my-4">
+              <div v-if="!subscription.external_client||subscription.external_client=='false'" :class="{ 'bg-indigo-900 bg-opacity-20': !subscription.key || !subscription.secret }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
                 <div class="my-3 text-xl font-bold"><a href="https://www.binance.com/en/my/settings/api-management?ref=W5BD94FW" target="_new"><u>Binance API Key Information</u></a>&nbsp;</div>
                 <input
                   v-model="subscription.key"
@@ -110,15 +110,29 @@
                 <span :class="{'text-orange-500' : key_result[subscription.sid]!=='success', 'text-indigo-500':key_result[subscription.sid]==='success'}">{{ key_result[subscription.sid] }}</span>
                 <div v-if="!subscription.key || !subscription.secret" class="mt-4 font-bold">Please enter your Binance API key information.</div>
               </div>
-              <hr class="w-5 mx-auto border-blue-400 my-8">
-              <div class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto">
+              <hr v-if="!subscription.external_client||subscription.external_client=='false'" class="w-5 mx-auto border-blue-400 my-8">
+              <div v-if="!subscription.external_client||subscription.external_client=='false'" class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto">
                 <div class="my-3">Email notification:</div>
               </div>
-              <div class="flex items-center justify-center">
+              <div v-if="!subscription.external_client||subscription.external_client=='false'" class="flex items-center justify-center">
                 <label :for="'tooglen'+subscription.code" class="flex items-center cursor-pointer">
                   <div class="relative">
                     <input :id="'tooglen'+subscription.code" type="checkbox" class="sr-only" v-model="subscription.email_notif" true-value="true" false-value="false" 
                       @change="changeNotif(subscription)"/>
+                    <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+                    <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
+                  </div>
+                </label>
+              </div>
+              <hr v-if="!subscription.external_client||subscription.external_client=='false'" class="w-5 mx-auto border-blue-400 my-8">
+              <div class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto">
+                <div class="my-3">Third Party Client via Web Socket Signals:</div>
+              </div>
+              <div class="flex items-center justify-center">
+                <label :for="'toogglen'+subscription.code" class="flex items-center cursor-pointer">
+                  <div class="relative">
+                    <input :id="'toogglen'+subscription.code" type="checkbox" class="sr-only" v-model="subscription.external_client" true-value="true" false-value="false" 
+                      @change="changeTPC(subscription)"/>
                     <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
                     <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
                   </div>
@@ -297,6 +311,7 @@ export default {
           yo.email_notif = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].email_notif
           yo.leverage = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].leverage
           yo.sid = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].sid
+          yo.external_client = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].external_client
         }
         else {
           yo.status = 'ZISABLED'
@@ -307,6 +322,7 @@ export default {
           yo.email_notif = false
           yo.leverage = true
           yo.sid = ""
+          yo.external_client = false
         }
       })
       state.products = _.orderBy(prods.items, 'status', 'ASC')
@@ -333,6 +349,7 @@ export default {
             yo.email_notif = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].email_notif
             yo.leverage = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].leverage
             yo.sid = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].sid
+            yo.external_client = state.subs[state.subs?.findIndex(sub => (sub.code == yo.code))].external_client
           }
           else {
             yo.status = 'ZISABLED'
@@ -343,6 +360,7 @@ export default {
             yo.email_notif = false
             yo.leverage = true
             yo.sid = ""
+            yo.external_client = false
           }
         })
         state.products = _.orderBy(prods.items, 'status', 'ASC')
@@ -389,11 +407,11 @@ export default {
 
     const changeStatus = async (sub) => {
       console.log("changeStatus", sub.status)
-      if (sub.status === 'ACTIVE' && Number(sub.qty)<=0) {
+      if (sub.status === 'ACTIVE' && Number(sub.qty)<=0 && (!sub.external_client||sub.external_client=='false')) {
         state.qty_result[sub.sid] = "Please set an amount to trade."
         sub.status = 'PAUSED'
       }
-      else if (sub.status === 'ACTIVE' && (!sub.key || !sub.secret) ) {
+      else if (sub.status === 'ACTIVE' && (!sub.key || !sub.secret) && (!sub.external_client||sub.external_client=='false')) {
         state.key_result = "Please enter your Binance API key information."
         sub.status = 'PAUSED'
       }
@@ -444,6 +462,30 @@ export default {
       })
       .catch( (error) => {
         console.log("ERROR changeNotif", error)
+      })
+    }
+
+    const changeTPC = async (sub) => {
+      sub.status = 'PAUSED'
+      console.log("changeTPC", sub.external_client)
+      await axios.put('/api/setsubtpc?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
+        { 
+          external_client:sub.external_client, 
+          sid:sub.sid, 
+        },
+        { headers: {Authorization:`Bearer ${auth0.state.user.token}`} }
+      )
+      .then( (response) => {
+        console.log("changeTPC.response.data:", response.data)
+        if (response.data.msg == 'success') {
+          updUserSubs()
+        }
+        else {
+          console.log("err 123455 ->", response.data.err)
+        }
+      })
+      .catch( (error) => {
+        console.log("ERROR changeTPC", error)
       })
     }
 
@@ -643,6 +685,7 @@ export default {
       saveMaxConcTrades,
       changeStatus,
       changeNotif,
+      changeTPC,
       changeLeverage,
       subscribe,
     }
