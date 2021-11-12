@@ -441,8 +441,9 @@ export default defineComponent({
         console.log("subscribe", JSON.stringify(sub.code))
         await axios.put('/api/subscribe?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
             { 
-            code: sub.code,
-            name: sub.name
+                code: sub.code,
+                name: sub.name,
+                stratid: sub.stratid,
             },
             { headers: {Authorization:`Bearer ${auth0.state.user?.token}`} }
         )

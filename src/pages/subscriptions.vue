@@ -37,7 +37,7 @@
                 </label>
               </div>
               
-              <div v-if="!subscription.external_client||subscription.external_client=='false'" :class="{ 'bg-indigo-900 bg-opacity-20': subscription.qty===0 }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
+              <div :class="{ 'bg-indigo-900 bg-opacity-20': subscription.qty===0 }" class="text-indigo-200 mx-4 my-4 p-4 rounded-lg relative flex-auto">
                 <div v-if="subscription.code === 'bva_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> and <b>Margin</b> wallets. We recommend using 1/20th of your total BTC to safely cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
                 <div v-if="subscription.code === 'bva_long_only_subs'">You need to have some BTC (<i>and some BNB to pay for the Binance trading fees</i>) on your <b>Spot</b> wallet. We recommend using 1/20th of your total BTC to safely cover up to 15 concurent signals. The minimum amout is around 0.0005 BTC.</div>
                 <div class="mt-10 text-center font-bold text-xl">{{ subscription.base_asset }} amount to trade for each signal &nbsp;</div>
@@ -51,7 +51,7 @@
                 </div>
                 <span :class="{'text-orange-500' : qty_result[subscription.sid]!=='success', 'text-indigo-500':qty_result[subscription.sid]==='success'}">{{ qty_result[subscription.sid] }}</span>
               </div>
-              <hr v-if="!subscription.external_client||subscription.external_client=='false'" class="w-5 mx-auto border-blue-400">
+              <hr class="w-5 mx-auto border-blue-400">
 
               <div v-if="!subscription.external_client||subscription.external_client=='false'" class="text-indigo-200 mx-4 p-4 rounded-lg relative flex-auto">
                 <div class="text-center font-bold text-xl">Max. Concurrent Trades &nbsp;</div>
@@ -650,26 +650,6 @@ export default {
         state.user_result = "error"
       })
     }
-
-    const subscribe = async (sub) => {
-      sub.confirm = false
-      sub.status = 'PAUSED'
-      console.log("subscribe", sub.code)
-      await axios.put('/api/subscribe?sub=' + auth0.state.user?.sub + '&cid=' + auth0.state.user?.data?.id,
-        { 
-          code: sub.code,
-          name: sub.name
-        },
-        { headers: {Authorization:`Bearer ${auth0.state.user?.token}`} }
-      )
-      .then( async (response) => {
-        console.log("subscribe.response.data:", response.data)
-        router.go()
-      })
-      .catch( (error) => {
-        console.log("ERROR subscribe", error)
-      })
-    }
     
     return {
       ...toRefs(state),
@@ -687,7 +667,6 @@ export default {
       changeNotif,
       changeTPC,
       changeLeverage,
-      subscribe,
     }
 
   },
