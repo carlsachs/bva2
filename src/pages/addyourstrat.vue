@@ -81,7 +81,7 @@ We will need then the following information:  <br>
                     <h2 class='font-bold text-cyan-200 mb-3'><u>Python Sample Code:</u></h2>
                     import requests <br>
                     urlbva = 'https://api-bva.herokuapp.com/tv' <br>
-                    xbva = requests.post(urlbva, json = 'your bva key|Strat Test ABC|buy|BTCUSDT|') <br>
+                    xbva = requests.post(urlbva, data='your bva key|Strat Test ABC|buy|BTCUSDT|', headers={'Content-Type': 'text/plain'}) <br>
                     print(xbva.text) <br>
                 </div>
             </div>

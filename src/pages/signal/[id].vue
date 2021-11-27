@@ -82,6 +82,14 @@ export default defineComponent({
       sell_price: null,
       buy_time: null,
       sell_time: null,
+      buy_time_2: null,
+      sell_time_2: null,
+      buy_time_3: null,
+      sell_time_3: null,
+      buy_time_4: null,
+      sell_time_4: null,
+      buy_time_5: null,
+      sell_time_5: null,
       ///////// ///////// ///////// /////////
       series: [{ name: 'candle', data: [] }],
       chartOptions: {
@@ -89,6 +97,14 @@ export default defineComponent({
         tooltip: { enabled: true, theme: 'dark' },
         annotations: {
           points: [
+            { marker: { size: 8, fillColor: "red" }, label: { text: '' } },
+            { marker: { size: 8, fillColor: "green" }, label: { text: '' } },
+            { marker: { size: 8, fillColor: "red" }, label: { text: '' } },
+            { marker: { size: 8, fillColor: "green" }, label: { text: '' } },
+            { marker: { size: 8, fillColor: "red" }, label: { text: '' } },
+            { marker: { size: 8, fillColor: "green" }, label: { text: '' } },
+            { marker: { size: 8, fillColor: "red" }, label: { text: '' } },
+            { marker: { size: 8, fillColor: "green" }, label: { text: '' } },
             { marker: { size: 8, fillColor: "red" }, label: { text: '' } },
             { marker: { size: 8, fillColor: "green" }, label: { text: '' } },
           ]
@@ -124,10 +140,34 @@ export default defineComponent({
           state.sell_price = signal.data[0].sell_price
           state.buy_time = signal.data[0].buy_time
           state.sell_time = signal.data[0].sell_time
+          state.buy_time_2 = signal.data[0].buy_time_2
+          state.sell_time_2 = signal.data[0].sell_time_2
+          state.buy_time_3 = signal.data[0].buy_time_3
+          state.sell_time_3 = signal.data[0].sell_time_3
+          state.buy_time_4 = signal.data[0].buy_time_4
+          state.sell_time_4 = signal.data[0].sell_time_4
+          state.buy_time_5 = signal.data[0].buy_time_5
+          state.sell_time_5 = signal.data[0].sell_time_5
           state.pnl = Number(signal.data[0].pnl).toFixed(2)
 
           const startTime = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time) - 49000000 : Number(signal.data[0].sell_time) - 49000000
-          const endTime = signal.data[0].pnl ? (signal.data[0].type === "SHORT" ? Number(signal.data[0].buy_time) + 49000000 : Number(signal.data[0].sell_time) + 49000000) : Date.now()
+          let last_trade_time 
+          if (Number(signal.data[0].buy_time_5) > 0) {
+            last_trade_time = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time_5) + 49000000 : Number(signal.data[0].sell_time_5) + 49000000
+          } 
+          else if (Number(signal.data[0].buy_time_4) > 0) {
+            last_trade_time = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time_4) + 49000000 : Number(signal.data[0].sell_time_4) + 49000000
+          }
+          else if (Number(signal.data[0].buy_time_3) > 0) {
+            last_trade_time = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time_3) + 49000000 : Number(signal.data[0].sell_time_3) + 49000000
+          }
+          else if (Number(signal.data[0].buy_time_2) > 0) {
+            last_trade_time = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time_2) + 49000000 : Number(signal.data[0].sell_time_2) + 49000000
+          }
+          else {
+            last_trade_time = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time) + 49000000 : Number(signal.data[0].sell_time) + 49000000
+          }
+          const endTime = signal.data[0].pnl ? last_trade_time : Date.now()
           
           let interv = '15m'
           if ( ((endTime-startTime)/86400000) > 4) { interv = '1h' }
@@ -144,17 +184,63 @@ export default defineComponent({
               })
               
               if ( price[0] < Number(signal.data[0].sell_time) && Number(signal.data[0].sell_time) < (price[0]+86400000) ) {
-                //console.log( "=======>", price[0] , price[1] )
                 state.chartOptions.annotations.points[0].x = moment(price[0]).format('MMM DD HH:mm')
                 state.chartOptions.annotations.points[0].y = Number(signal.data[0].sell_price)
                 state.chartOptions.annotations.points[0].label.text = 'SELL'
               }
 
               if ( price[0] < Number(signal.data[0].buy_time) && Number(signal.data[0].buy_time) < (price[0]+86400000) ) {
-                //console.log( "=======>", price[0] , price[1] )
                 state.chartOptions.annotations.points[1].x = moment(price[0]).format('MMM DD HH:mm')
                 state.chartOptions.annotations.points[1].y = Number(signal.data[0].buy_price)
                 state.chartOptions.annotations.points[1].label.text = 'BUY'
+              }
+
+              if ( price[0] < Number(signal.data[0].sell_time_2) && Number(signal.data[0].sell_time_2) < (price[0]+86400000) ) {
+                state.chartOptions.annotations.points[2].x = moment(price[0]).format('MMM DD HH:mm')
+                state.chartOptions.annotations.points[2].y = Number(signal.data[0].sell_price_2)
+                state.chartOptions.annotations.points[2].label.text = 'SELL'
+              }
+
+              if ( price[0] < Number(signal.data[0].buy_time_2) && Number(signal.data[0].buy_time_2) < (price[0]+86400000) ) {
+                state.chartOptions.annotations.points[3].x = moment(price[0]).format('MMM DD HH:mm')
+                state.chartOptions.annotations.points[3].y = Number(signal.data[0].buy_price_2)
+                state.chartOptions.annotations.points[3].label.text = 'BUY'
+              }
+
+              if ( price[0] < Number(signal.data[0].sell_time_3) && Number(signal.data[0].sell_time_3) < (price[0]+86400000) ) {
+                state.chartOptions.annotations.points[4].x = moment(price[0]).format('MMM DD HH:mm')
+                state.chartOptions.annotations.points[4].y = Number(signal.data[0].sell_price_3)
+                state.chartOptions.annotations.points[4].label.text = 'SELL'
+              }
+
+              if ( price[0] < Number(signal.data[0].buy_time_3) && Number(signal.data[0].buy_time_3) < (price[0]+86400000) ) {
+                state.chartOptions.annotations.points[5].x = moment(price[0]).format('MMM DD HH:mm')
+                state.chartOptions.annotations.points[5].y = Number(signal.data[0].buy_price_3)
+                state.chartOptions.annotations.points[5].label.text = 'BUY'
+              }
+
+              if ( price[0] < Number(signal.data[0].sell_time_4) && Number(signal.data[0].sell_time_4) < (price[0]+86400000) ) {
+                state.chartOptions.annotations.points[6].x = moment(price[0]).format('MMM DD HH:mm')
+                state.chartOptions.annotations.points[6].y = Number(signal.data[0].sell_price_4)
+                state.chartOptions.annotations.points[6].label.text = 'SELL'
+              }
+
+              if ( price[0] < Number(signal.data[0].buy_time_4) && Number(signal.data[0].buy_time_4) < (price[0]+86400000) ) {
+                state.chartOptions.annotations.points[7].x = moment(price[0]).format('MMM DD HH:mm')
+                state.chartOptions.annotations.points[7].y = Number(signal.data[0].buy_price_4)
+                state.chartOptions.annotations.points[7].label.text = 'BUY'
+              }
+
+              if ( price[0] < Number(signal.data[0].sell_time_5) && Number(signal.data[0].sell_time_5) < (price[0]+86400000) ) {
+                state.chartOptions.annotations.points[8].x = moment(price[0]).format('MMM DD HH:mm')
+                state.chartOptions.annotations.points[8].y = Number(signal.data[0].sell_price_5)
+                state.chartOptions.annotations.points[8].label.text = 'SELL'
+              }
+
+              if ( price[0] < Number(signal.data[0].buy_time_5) && Number(signal.data[0].buy_time_5) < (price[0]+86400000) ) {
+                state.chartOptions.annotations.points[9].x = moment(price[0]).format('MMM DD HH:mm')
+                state.chartOptions.annotations.points[9].y = Number(signal.data[0].buy_price_5)
+                state.chartOptions.annotations.points[9].label.text = 'BUY'
               }
             }
             //state.series.push({'data': data})
