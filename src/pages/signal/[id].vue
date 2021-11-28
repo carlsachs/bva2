@@ -153,19 +153,19 @@ export default defineComponent({
           const startTime = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time) - 49000000 : Number(signal.data[0].sell_time) - 49000000
           let last_trade_time 
           if (Number(signal.data[0].buy_time_5) > 0) {
-            last_trade_time = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time_5) + 49000000 : Number(signal.data[0].sell_time_5) + 49000000
+            last_trade_time = state.signal_type === 'SHORT' ? Number(signal.data[0].buy_time_5) + 49000000 : Number(signal.data[0].sell_time_5) + 49000000
           } 
           else if (Number(signal.data[0].buy_time_4) > 0) {
-            last_trade_time = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time_4) + 49000000 : Number(signal.data[0].sell_time_4) + 49000000
+            last_trade_time = state.signal_type === 'SHORT' ? Number(signal.data[0].buy_time_4) + 49000000 : Number(signal.data[0].sell_time_4) + 49000000
           }
           else if (Number(signal.data[0].buy_time_3) > 0) {
-            last_trade_time = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time_3) + 49000000 : Number(signal.data[0].sell_time_3) + 49000000
+            last_trade_time = state.signal_type === 'SHORT' ? Number(signal.data[0].buy_time_3) + 49000000 : Number(signal.data[0].sell_time_3) + 49000000
           }
           else if (Number(signal.data[0].buy_time_2) > 0) {
-            last_trade_time = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time_2) + 49000000 : Number(signal.data[0].sell_time_2) + 49000000
+            last_trade_time = state.signal_type === 'SHORT' ? Number(signal.data[0].buy_time_2) + 49000000 : Number(signal.data[0].sell_time_2) + 49000000
           }
           else {
-            last_trade_time = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time) + 49000000 : Number(signal.data[0].sell_time) + 49000000
+            last_trade_time = state.signal_type === 'SHORT' ? Number(signal.data[0].buy_time) + 49000000 : Number(signal.data[0].sell_time) + 49000000
           }
           const endTime = signal.data[0].pnl ? last_trade_time : Date.now()
           
