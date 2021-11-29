@@ -45,6 +45,86 @@
                 <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(sell_time)).format('YYYY MMM DD HH:mm') }}</div>
             </div>
 
+            <div v-if="buy_time_2" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+                <div class="flex-auto">Buy Time 2</div>
+                <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(buy_time_2)).format('YYYY MMM DD HH:mm') }}</div>
+            </div>
+
+            <div v-if="buy_price_2" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+                <div class="flex-auto">Buy Price 2</div>
+                <div class="flex-auto text-justify text-blue-300 block">{{ buy_price_2 }}</div>
+            </div>
+
+            <div v-if="sell_time_2" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+                <div class="flex-auto">Sell Time 2</div>
+                <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(sell_time_2)).format('YYYY MMM DD HH:mm') }}</div>
+            </div>
+
+            <div v-if="sell_price_2" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+                <div class="flex-auto">Sell Price 2</div>
+                <div class="flex-auto text-justify text-blue-300 block">{{ sell_price_2 }}</div>
+            </div>
+
+            <div v-if="buy_time_3" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+                <div class="flex-auto">Buy Time 3</div>
+                <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(buy_time_3)).format('YYYY MMM DD HH:mm') }}</div>
+            </div>
+
+            <div v-if="buy_price_3" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+                <div class="flex-auto">Buy Price 3</div>
+                <div class="flex-auto text-justify text-blue-300 block">{{ buy_price_3 }}</div>
+            </div>
+
+            <div v-if="sell_time_3" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+                <div class="flex-auto">Sell Time 3</div>
+                <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(sell_time_3)).format('YYYY MMM DD HH:mm') }}</div>
+            </div>
+
+            <div v-if="sell_price_3" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+                <div class="flex-auto">Sell Price 3</div>
+                <div class="flex-auto text-justify text-blue-300 block">{{ sell_price_3 }}</div>
+            </div>
+
+            <div v-if="buy_time_4" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+                <div class="flex-auto">Buy Time 4</div>
+                <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(buy_time_4)).format('YYYY MMM DD HH:mm') }}</div>
+            </div>
+
+            <div v-if="buy_price_4" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+                <div class="flex-auto">Buy Price 4</div>
+                <div class="flex-auto text-justify text-blue-300 block">{{ buy_price_4 }}</div>
+            </div>
+
+            <div v-if="sell_time_4" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+                <div class="flex-auto">Sell Time 4</div>
+                <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(sell_time_4)).format('YYYY MMM DD HH:mm') }}</div>
+            </div>
+
+            <div v-if="sell_price_4" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+                <div class="flex-auto">Sell Price 4</div>
+                <div class="flex-auto text-justify text-blue-300 block">{{ sell_price_4 }}</div>
+            </div>
+
+            <div v-if="buy_time_5" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+                <div class="flex-auto">Buy Time 2</div>
+                <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(buy_time_5)).format('YYYY MMM DD HH:mm') }}</div>
+            </div>
+
+            <div v-if="buy_price_5" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+                <div class="flex-auto">Buy Price 5</div>
+                <div class="flex-auto text-justify text-blue-300 block">{{ buy_price_5 }}</div>
+            </div>
+
+            <div v-if="sell_time_5" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+                <div class="flex-auto">Sell Time 2</div>
+                <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(sell_time_5)).format('YYYY MMM DD HH:mm') }}</div>
+            </div>
+
+            <div v-if="sell_price_5" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+                <div class="flex-auto">Sell Price 5</div>
+                <div class="flex-auto text-justify text-blue-300 block">{{ sell_price_5 }}</div>
+            </div>
+
             <a target="_new" :href="'https://www.binance.com/en/trade/'+pair+'?theme=dark&type=cross&ref=W5BD94FW'" class="group bg-indigo-900 flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
                 <div class="flex-auto font-bold" style="color:#F0B90B;">Binance</div>
             </a>
@@ -84,12 +164,20 @@ export default defineComponent({
       sell_time: null,
       buy_time_2: null,
       sell_time_2: null,
+      buy_price_2: null,
+      sell_price_2: null,
       buy_time_3: null,
       sell_time_3: null,
+      buy_price_3: null,
+      sell_price_3: null,
       buy_time_4: null,
       sell_time_4: null,
+      buy_price_4: null,
+      sell_price_4: null,
       buy_time_5: null,
       sell_time_5: null,
+      buy_price_5: null,
+      sell_price_5: null,
       ///////// ///////// ///////// /////////
       series: [{ name: 'candle', data: [] }],
       chartOptions: {
@@ -142,26 +230,36 @@ export default defineComponent({
           state.sell_time = signal.data[0].sell_time
           state.buy_time_2 = signal.data[0].buy_time_2
           state.sell_time_2 = signal.data[0].sell_time_2
+          state.buy_price_2 = signal.data[0].buy_price_2
+          state.sell_price_2 = signal.data[0].sell_price_2
           state.buy_time_3 = signal.data[0].buy_time_3
           state.sell_time_3 = signal.data[0].sell_time_3
+          state.buy_price_3 = signal.data[0].buy_price_3
+          state.sell_price_3 = signal.data[0].sell_price_3
           state.buy_time_4 = signal.data[0].buy_time_4
           state.sell_time_4 = signal.data[0].sell_time_4
+          state.buy_price_4 = signal.data[0].buy_price_4
+          state.sell_price_4 = signal.data[0].sell_price_4
           state.buy_time_5 = signal.data[0].buy_time_5
           state.sell_time_5 = signal.data[0].sell_time_5
+          state.buy_price_5 = signal.data[0].buy_price_5
+          state.sell_price_5 = signal.data[0].sell_price_5
           state.pnl = Number(signal.data[0].pnl).toFixed(2)
+
+          console.log(state.sell_time, state.sell_time_2, state.sell_time_3, state.sell_time_4)
 
           const startTime = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time) - 49000000 : Number(signal.data[0].sell_time) - 49000000
           let last_trade_time 
-          if (Number(signal.data[0].buy_time_5) > 0) {
+          if (Number(signal.data[0].buy_time_5) > 0 || Number(signal.data[0].sell_time_5) > 0) {
             last_trade_time = state.signal_type === 'SHORT' ? Number(signal.data[0].buy_time_5) + 49000000 : Number(signal.data[0].sell_time_5) + 49000000
           } 
-          else if (Number(signal.data[0].buy_time_4) > 0) {
+          else if (Number(signal.data[0].buy_time_4 || Number(signal.data[0].sell_time_4) > 0) > 0) {
             last_trade_time = state.signal_type === 'SHORT' ? Number(signal.data[0].buy_time_4) + 49000000 : Number(signal.data[0].sell_time_4) + 49000000
           }
-          else if (Number(signal.data[0].buy_time_3) > 0) {
+          else if (Number(signal.data[0].buy_time_3 || Number(signal.data[0].sell_time_3) > 0) > 0) {
             last_trade_time = state.signal_type === 'SHORT' ? Number(signal.data[0].buy_time_3) + 49000000 : Number(signal.data[0].sell_time_3) + 49000000
           }
-          else if (Number(signal.data[0].buy_time_2) > 0) {
+          else if (Number(signal.data[0].buy_time_2 || Number(signal.data[0].sell_time_2) > 0) > 0) {
             last_trade_time = state.signal_type === 'SHORT' ? Number(signal.data[0].buy_time_2) + 49000000 : Number(signal.data[0].sell_time_2) + 49000000
           }
           else {
@@ -198,49 +296,49 @@ export default defineComponent({
               if ( price[0] < Number(signal.data[0].sell_time_2) && Number(signal.data[0].sell_time_2) < (price[0]+86400000) ) {
                 state.chartOptions.annotations.points[2].x = moment(price[0]).format('MMM DD HH:mm')
                 state.chartOptions.annotations.points[2].y = Number(signal.data[0].sell_price_2)
-                state.chartOptions.annotations.points[2].label.text = 'SELL'
+                state.chartOptions.annotations.points[2].label.text = 'SELL2'
               }
 
               if ( price[0] < Number(signal.data[0].buy_time_2) && Number(signal.data[0].buy_time_2) < (price[0]+86400000) ) {
                 state.chartOptions.annotations.points[3].x = moment(price[0]).format('MMM DD HH:mm')
                 state.chartOptions.annotations.points[3].y = Number(signal.data[0].buy_price_2)
-                state.chartOptions.annotations.points[3].label.text = 'BUY'
+                state.chartOptions.annotations.points[3].label.text = 'BUY2'
               }
 
               if ( price[0] < Number(signal.data[0].sell_time_3) && Number(signal.data[0].sell_time_3) < (price[0]+86400000) ) {
                 state.chartOptions.annotations.points[4].x = moment(price[0]).format('MMM DD HH:mm')
                 state.chartOptions.annotations.points[4].y = Number(signal.data[0].sell_price_3)
-                state.chartOptions.annotations.points[4].label.text = 'SELL'
+                state.chartOptions.annotations.points[4].label.text = 'SELL3'
               }
 
               if ( price[0] < Number(signal.data[0].buy_time_3) && Number(signal.data[0].buy_time_3) < (price[0]+86400000) ) {
                 state.chartOptions.annotations.points[5].x = moment(price[0]).format('MMM DD HH:mm')
                 state.chartOptions.annotations.points[5].y = Number(signal.data[0].buy_price_3)
-                state.chartOptions.annotations.points[5].label.text = 'BUY'
+                state.chartOptions.annotations.points[5].label.text = 'BUY3'
               }
 
               if ( price[0] < Number(signal.data[0].sell_time_4) && Number(signal.data[0].sell_time_4) < (price[0]+86400000) ) {
                 state.chartOptions.annotations.points[6].x = moment(price[0]).format('MMM DD HH:mm')
                 state.chartOptions.annotations.points[6].y = Number(signal.data[0].sell_price_4)
-                state.chartOptions.annotations.points[6].label.text = 'SELL'
+                state.chartOptions.annotations.points[6].label.text = 'SELL4'
               }
 
               if ( price[0] < Number(signal.data[0].buy_time_4) && Number(signal.data[0].buy_time_4) < (price[0]+86400000) ) {
                 state.chartOptions.annotations.points[7].x = moment(price[0]).format('MMM DD HH:mm')
                 state.chartOptions.annotations.points[7].y = Number(signal.data[0].buy_price_4)
-                state.chartOptions.annotations.points[7].label.text = 'BUY'
+                state.chartOptions.annotations.points[7].label.text = 'BUY4'
               }
 
               if ( price[0] < Number(signal.data[0].sell_time_5) && Number(signal.data[0].sell_time_5) < (price[0]+86400000) ) {
                 state.chartOptions.annotations.points[8].x = moment(price[0]).format('MMM DD HH:mm')
                 state.chartOptions.annotations.points[8].y = Number(signal.data[0].sell_price_5)
-                state.chartOptions.annotations.points[8].label.text = 'SELL'
+                state.chartOptions.annotations.points[8].label.text = 'SELL5'
               }
 
               if ( price[0] < Number(signal.data[0].buy_time_5) && Number(signal.data[0].buy_time_5) < (price[0]+86400000) ) {
                 state.chartOptions.annotations.points[9].x = moment(price[0]).format('MMM DD HH:mm')
                 state.chartOptions.annotations.points[9].y = Number(signal.data[0].buy_price_5)
-                state.chartOptions.annotations.points[9].label.text = 'BUY'
+                state.chartOptions.annotations.points[9].label.text = 'BUY5'
               }
             }
             //state.series.push({'data': data})
