@@ -370,7 +370,7 @@ export default defineComponent({
                 if (type === 'LONG') {
                     pnl = (100 * (currentPrice - buy_price) / buy_price) - 0.2
                 }
-                else if (buy_price > 0) {
+                else {
                     pnl = (100 * (sell_price - currentPrice) / currentPrice) - 0.2
                 }
             }
