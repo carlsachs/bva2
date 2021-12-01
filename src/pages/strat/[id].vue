@@ -368,10 +368,10 @@ export default defineComponent({
             const currentPrice = prices.items.find( (r) => { return r.symbol === symbol }).price
             if (currentPrice) {
                 if (type === 'LONG') {
-                    pnl = 100 * (currentPrice - buy_price) / buy_price
+                    pnl = (100 * (currentPrice - buy_price) / buy_price) - 0.2
                 }
                 else if (buy_price > 0) {
-                    pnl = 100 * (sell_price - currentPrice) / currentPrice
+                    pnl = (100 * (sell_price - currentPrice) / currentPrice) - 0.2
                 }
             }
         }
