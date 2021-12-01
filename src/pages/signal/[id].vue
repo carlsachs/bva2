@@ -246,8 +246,6 @@ export default defineComponent({
           state.sell_price_5 = signal.data[0].sell_price_5
           state.pnl = Number(signal.data[0].pnl).toFixed(2)
 
-          console.log(state.sell_time, state.sell_time_2, state.sell_time_3, state.sell_time_4)
-
           const startTime = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time) - 49000000 : Number(signal.data[0].sell_time) - 49000000
           let last_trade_time 
           if (Number(signal.data[0].buy_time_5) > 0 || Number(signal.data[0].sell_time_5) > 0) {

@@ -130,7 +130,7 @@
                                                 <router-link :to="/signal/+row.id">{{ Number(row.pnl).toFixed(2) }}%</router-link>
                                             </td>
                                             <td v-else class="italic px-6 py-4 text-gray-400 whitespace-no-wrap text-sm leading-5">
-                                                <router-link :to="/signal/+row.id">{{ prices && getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%</router-link>
+                                                <router-link :to="/signal/+row.id">{{ prices && getCurrentPnL(row.type, row.pair, Number(row.sell_price), Number(row.buy_price)) }}%</router-link>
                                             </td>
                                             <!--
                                             <td v-if="Number(row.pnl)>0" :class="{ 'font-bold': row.pnl }" class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
@@ -362,16 +362,16 @@ export default defineComponent({
         console.log("loadMore...", loadMoreStore.strat)
     }
 
-    const getCurrentPnL = (symbol, sell_price, buy_price) => {
+    const getCurrentPnL = (type, symbol, sell_price, buy_price) => {
         let pnl = 0
         if (prices.items.length) {
             const currentPrice = prices.items.find( (r) => { return r.symbol === symbol }).price
             if (currentPrice) {
-                if (sell_price > 0) {
-                    pnl = 100 * (sell_price - currentPrice) / currentPrice
+                if (type === 'LONG') {
+                    pnl = 100 * (currentPrice - buy_price) / buy_price
                 }
                 else if (buy_price > 0) {
-                    pnl = 100 * (currentPrice - buy_price) / buy_price
+                    pnl = 100 * (sell_price - currentPrice) / currentPrice
                 }
             }
         }
