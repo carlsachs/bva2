@@ -176,7 +176,7 @@
                     <b>Once you made your deposit</b>, please click on the <b class="text-green-500">Activate</b> button.
                     </div>
                      <div class=" text-cyan-200 m-3">
-                    The <b>{{ stratname }} strategy</b> is designed to trade on the <b class="text-green-500">{{ _.find(products.items, {stratid:id})?.mode }}</b> market on Binance.
+                    The <b>{{ stratname }} strategy</b> is designed to trade <b class="text-green-500">{{ _.find(products.items, {stratid:id})?.base_asset }}</b> on the <b class="text-green-500">{{ _.find(products.items, {stratid:id})?.mode }}</b> market on Binance.
                     </div>
                     <button class="mx-3 p-3 red_button" type="button" @click="cancel()">Cancel</button>
                     <button class="mx-3 p-3 green_button" type="button" @click="confirm(_.find(products.items, {stratid:id}))">Activate</button>
@@ -444,6 +444,9 @@ export default defineComponent({
                 code: sub.code,
                 name: sub.name,
                 stratid: sub.stratid,
+                base_asset: sub.base_asset,
+                price: sub.price,
+                mode: sub.mode,
             },
             { headers: {Authorization:`Bearer ${auth0.state.user?.token}`} }
         )
