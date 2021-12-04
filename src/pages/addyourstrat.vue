@@ -42,7 +42,7 @@
                 <li><b class="text-green-400">market_position</b> is only used for exit signals to swing trade: <i>flat</i>, <i>long</i> or <i>short</i></li>
                 <li><b class="text-green-400">extra_data</b> can be anything you want</li>
                 <li><b class="text-green-400">published</b> set it to true if you want your signal to be public.</li>
-                <li><b class="text-green-400">trade_size_pct</b> 0-100, the pourcentage of the trade size (used for DCA orders)</li>
+                <li><b class="text-green-400">trade_size_pct</b> 0-100, the percentage of the trade size (used for DCA orders)</li>
                 <li><b class="text-green-400">trading_market</b> can be: spot, margin or futures</li>
             </ul>
         </div>
