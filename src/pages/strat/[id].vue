@@ -17,6 +17,11 @@
                     <div class="flex-auto text-justify text-blue-300 block">{{ max_concurrent ? (Number(total_pnl) * Number(max_concurrent)).toFixed(2) : Number(total_pnl).toFixed(2) }}%</div>
                 </div>
 
+                 <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+                    <div class="flex-auto">Currently Open</div>
+                    <div class="flex-auto text-justify text-blue-300 block font-bold">{{ open_count }}</div>
+                </div>
+
                 <div v-if="max_concurrent>=1" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
                     <div class="flex-auto">Max. Concurrent Trades</div>
                     <div class="flex-auto text-justify text-blue-300 block font-bold">{{ max_concurrent }}</div>
@@ -241,6 +246,7 @@ export default defineComponent({
         auth0, 
         stratname: '',
         max_concurrent: 0,
+        open_count: 0,
         description: '',
         total_pnl: 0,
         avg_pnl: 0,
@@ -404,6 +410,7 @@ export default defineComponent({
         axios.get('/api/strategy?id=' + props.id)
         .then( s => {
             state.max_concurrent = s.data.max_concurrent
+            state.open_count = s.data.open_count
             state.description = s.data.description
             //console.log("onMounted...", auth0.state.user?.token, auth0.state.user?.data?.email)
             //console.log(prods.items.length)
