@@ -76,7 +76,7 @@
                                         <th v-if="subOnly" class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                             <div class="text-center">Portfolio PnL</div>
                                         </th>
-                                        <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                        <th v-if="!subOnly" class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                             <div class="text-center">Total PnL</div>
                                         </th>
                                         <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
@@ -123,7 +123,7 @@
                                         <td v-if="subOnly">
                                             <router-link :to="/strat/+row.id" class="font-bold text-sm text-green-500 font-semibold">{{ Number(row.portfoliopnl).toFixed(2) }}%</router-link>
                                         </td>
-                                        <td>
+                                        <td v-if="!subOnly">
                                             <router-link :to="/strat/+row.id" class="font-bold text-sm text-green-500 font-semibold">{{ Number(row.sumpnl).toFixed(2) }}%</router-link>
                                         </td>
                                         <td>
