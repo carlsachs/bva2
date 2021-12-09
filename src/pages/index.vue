@@ -174,9 +174,9 @@
                 </a>
             </div>
             <div class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
-                <a href="https://bitcoinvsaltcoins.com" target="_new">
-                    <img width=132 class="mx-auto mb-5" alt="Strategy Incubator" src="/creator.png" />
-                    <div class="text-2xl text-white">Our Strategy Incubator</div>
+                <a href="https://thesupertrades.com/" target="_new">
+                    <img width=132 class="mx-auto mb-5" alt="Strategy Incubator" src="/super_trades_logo.png" />
+                    <div class="text-2xl text-white">The Super Trades</div>
                 </a>
             </div>
         </div>
