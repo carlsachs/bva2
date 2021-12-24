@@ -90,7 +90,8 @@
 
             </div>
             
-            <div v-if="max_concurrent>1" class="mt-5 italic">* PNL calculated using Tot. PnL / Max. Concurrent Trades</div>
+            <div v-if="max_concurrent>=1" class="mt-5 italic">* PNL calculated using Tot. PnL / Max. Concurrent Trades</div>
+            <div class="mt-5 italic">** All our calculated PNL include some trading fees (0.2% for each signal)</div>
 
             <div v-if="true" class="mt-4 p-4">
                 <div class="flex flex-col">
@@ -107,7 +108,7 @@
                                                 <div class="text-center">PAIR</div>
                                             </th>
                                             <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                <div class="text-center">PNL</div>
+                                                <div class="text-center">PNL**</div>
                                             </th>
                                             <th class="px-6 py-3 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                                 <div class="text-center">TYPE</div>
