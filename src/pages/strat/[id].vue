@@ -371,11 +371,9 @@ export default defineComponent({
     }
 
     const getCurrentPnL = (row) => {
-        console.log("getCurrentPnL...", JSON.stringify(row))
+        //console.log("getCurrentPnL...", JSON.stringify(row))
         const type = row.type
         const symbol = row.pair
-        const sell_price = Number(row.sell_price)
-        const buy_price = Number(row.buy_price)
         let pnl = 0
         if (prices.items.length) {
             const currentPrice = prices.items.find( (r) => { return r.symbol === symbol }).price
@@ -403,13 +401,14 @@ export default defineComponent({
                         pnl = Number(pnl_1.plus(pnl_2).minus(0.2).toString())
                     }
                     else {
-                        const pnl_1 = last_price.minus(row.buy_price).times(row.buy_trade_size).times(100).dividedBy(row.buy_price).dividedBy(sum_trade_size)
+                        const pnl_1 = last_price.minus(row.buy_price).times(100).dividedBy(row.buy_price)
                         pnl = Number(pnl_1.minus(0.2).toString())
                     }
                 }
                 // SHORT //
                 else {
                     const sum_trade_size = Number(row.sell_trade_size_4) + Number(row.sell_trade_size_3) + Number(row.sell_trade_size_2) + Number(row.sell_trade_size)
+                    //////// //////// //////// //////// ////////
                     if ( Number(row.sell_price_4) > 0 ) {
                         const sell_price_4 = new BigNumber(row.sell_price_4)
                         const sell_price_3 = new BigNumber(row.sell_price_3)
@@ -438,7 +437,8 @@ export default defineComponent({
                         pnl = Number(pnl_1.plus(pnl_2).minus(0.2).toString())
                     }
                     else {
-                        const pnl_1 = last_price.minus(row.buy_price).times(row.buy_trade_size).times(100).dividedBy(row.buy_price).dividedBy(sum_trade_size)
+                        const sell_price = new BigNumber(row.sell_price)
+                        const pnl_1 = sell_price.minus(last_price).times(100).dividedBy(last_price)
                         pnl = Number(pnl_1.minus(0.2).toString())
                     }
                 }
