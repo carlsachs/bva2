@@ -501,7 +501,7 @@ export default defineComponent({
                     state.pnl = Number(pnl_1.toString())
                 }
               }
-              state.pnl = state.pnl - 0.1
+              state.pnl = state.pnl - 0.2
               state.pnl = state.pnl.toFixed(2)
             }
 
