@@ -142,6 +142,7 @@ import moment from "moment"
 import _ from "lodash"
 import { startStats, endStats } from '~/modules/stats'
 import { useHead } from '@vueuse/head'
+import BigNumber from 'bignumber.js'
 
 export default defineComponent({
   name: "signal",
@@ -162,22 +163,34 @@ export default defineComponent({
       sell_price: null,
       buy_time: null,
       sell_time: null,
+      buy_trade_size: null,
+      sell_trade_size: null,
       buy_time_2: null,
       sell_time_2: null,
       buy_price_2: null,
       sell_price_2: null,
+      trade_size_2: null,
+      buy_trade_size_2: null,
+      sell_trade_size_2: null,
       buy_time_3: null,
       sell_time_3: null,
       buy_price_3: null,
       sell_price_3: null,
+      trade_size_3: null,
+      buy_trade_size_3: null,
+      sell_trade_size_3: null,
       buy_time_4: null,
       sell_time_4: null,
       buy_price_4: null,
       sell_price_4: null,
+      buy_trade_size_4: null,
+      sell_trade_size_4: null,
       buy_time_5: null,
       sell_time_5: null,
       buy_price_5: null,
       sell_price_5: null,
+      buy_trade_size_5: null,
+      sell_trade_size_5: null,
       ///////// ///////// ///////// /////////
       series: [{ name: 'candle', data: [] }],
       chartOptions: {
@@ -228,40 +241,69 @@ export default defineComponent({
           state.sell_price = signal.data[0].sell_price
           state.buy_time = signal.data[0].buy_time
           state.sell_time = signal.data[0].sell_time
+          state.buy_trade_size = signal.data[0].buy_trade_size
+          state.sell_trade_size = signal.data[0].sell_trade_size
           state.buy_time_2 = signal.data[0].buy_time_2
           state.sell_time_2 = signal.data[0].sell_time_2
           state.buy_price_2 = signal.data[0].buy_price_2
           state.sell_price_2 = signal.data[0].sell_price_2
+          state.buy_trade_size_2 = signal.data[0].buy_trade_size_2
+          state.sell_trade_size_2 = signal.data[0].sell_trade_size_2
           state.buy_time_3 = signal.data[0].buy_time_3
           state.sell_time_3 = signal.data[0].sell_time_3
           state.buy_price_3 = signal.data[0].buy_price_3
           state.sell_price_3 = signal.data[0].sell_price_3
+          state.buy_trade_size_3 = signal.data[0].buy_trade_size_3
+          state.sell_trade_size_3 = signal.data[0].sell_trade_size_3
           state.buy_time_4 = signal.data[0].buy_time_4
           state.sell_time_4 = signal.data[0].sell_time_4
           state.buy_price_4 = signal.data[0].buy_price_4
           state.sell_price_4 = signal.data[0].sell_price_4
+          state.buy_trade_size_4 = signal.data[0].buy_trade_size_4
+          state.sell_trade_size_4 = signal.data[0].sell_trade_size_4
           state.buy_time_5 = signal.data[0].buy_time_5
           state.sell_time_5 = signal.data[0].sell_time_5
           state.buy_price_5 = signal.data[0].buy_price_5
           state.sell_price_5 = signal.data[0].sell_price_5
+          state.buy_trade_size_5 = signal.data[0].buy_trade_size_5
+          state.sell_trade_size_5 = signal.data[0].sell_trade_size_5
           state.pnl = Number(signal.data[0].pnl).toFixed(2)
 
           const startTime = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time) - 49000000 : Number(signal.data[0].sell_time) - 49000000
-          let last_trade_time 
-          if (Number(signal.data[0].buy_time_5) > 0 || Number(signal.data[0].sell_time_5) > 0) {
-            last_trade_time = state.signal_type === 'SHORT' ? Number(signal.data[0].buy_time_5) + 49000000 : Number(signal.data[0].sell_time_5) + 49000000
-          } 
-          else if (Number(signal.data[0].buy_time_4 || Number(signal.data[0].sell_time_4) > 0) > 0) {
-            last_trade_time = state.signal_type === 'SHORT' ? Number(signal.data[0].buy_time_4) + 49000000 : Number(signal.data[0].sell_time_4) + 49000000
-          }
-          else if (Number(signal.data[0].buy_time_3 || Number(signal.data[0].sell_time_3) > 0) > 0) {
-            last_trade_time = state.signal_type === 'SHORT' ? Number(signal.data[0].buy_time_3) + 49000000 : Number(signal.data[0].sell_time_3) + 49000000
-          }
-          else if (Number(signal.data[0].buy_time_2 || Number(signal.data[0].sell_time_2) > 0) > 0) {
-            last_trade_time = state.signal_type === 'SHORT' ? Number(signal.data[0].buy_time_2) + 49000000 : Number(signal.data[0].sell_time_2) + 49000000
+          let last_trade_time = 0
+          if (state.signal_type === 'SHORT') {
+            if (Number(signal.data[0].buy_time_5) > 0) {
+              last_trade_time = Number(signal.data[0].buy_time_5) + 49000000
+            } 
+            else if (Number(signal.data[0].buy_time_4) > 0) {
+              last_trade_time = Number(signal.data[0].buy_time_4) + 49000000
+            }
+            else if (Number(signal.data[0].buy_time_3) > 0) {
+              last_trade_time = Number(signal.data[0].buy_time_3) + 49000000
+            }
+            else if (Number(signal.data[0].buy_time_2) > 0) {
+              last_trade_time = Number(signal.data[0].buy_time_2) + 49000000
+            }
+            else {
+              last_trade_time = Number(signal.data[0].buy_time) + 49000000
+            }
           }
           else {
-            last_trade_time = state.signal_type === 'SHORT' ? Number(signal.data[0].buy_time) + 49000000 : Number(signal.data[0].sell_time) + 49000000
+            if (Number(signal.data[0].sell_time_5) > 0) {
+              last_trade_time = Number(signal.data[0].sell_time_5) + 49000000
+            } 
+            else if (Number(signal.data[0].sell_time_4) > 0) {
+              last_trade_time = Number(signal.data[0].sell_time_4) + 49000000
+            }
+            else if (Number(signal.data[0].sell_time_3) > 0) {
+              last_trade_time = Number(signal.data[0].sell_time_3) + 49000000
+            }
+            else if (Number(signal.data[0].sell_time_2) > 0) {
+              last_trade_time = Number(signal.data[0].sell_time_2) + 49000000
+            }
+            else {
+              last_trade_time = Number(signal.data[0].sell_time) + 49000000
+            }
           }
           const endTime = signal.data[0].pnl ? last_trade_time : Date.now()
           
@@ -342,10 +384,71 @@ export default defineComponent({
             //state.series.push({'data': data})
             //console.log(JSON.stringify(state.series))
             state.series[0].data = data
-
-            if (signal.data[0].pnl == null) {
-              const last_price = Number(prices.data[prices.data.length-1][4])
-              state.pnl = (state.signal_type === 'LONG') ? (100 * (last_price-state.buy_price)/state.buy_price) : (100 * (state.sell_price-last_price)/last_price)
+            if (signal.data[0].pnl === null) {
+              const last_price = new BigNumber(prices.data[prices.data.length-1][4])
+              console.log("===last_price===>", last_price.toString() )
+              // LONG //
+              if (state.signal_type === 'LONG') {
+                if ( Number(signal.data[0].buy_price_4) > 0 ) {
+                  const pnl_4 = last_price.minus(signal.data[0].buy_price_4).times(signal.data[0].buy_trade_size_4).dividedBy(signal.data[0].buy_price_4)
+                  const pnl_3 = last_price.minus(signal.data[0].buy_price_3).times(signal.data[0].buy_trade_size_3).dividedBy(signal.data[0].buy_price_3)
+                  const pnl_2 = last_price.minus(signal.data[0].buy_price_2).times(signal.data[0].buy_trade_size_2).dividedBy(signal.data[0].buy_price_2)
+                  const pnl_1 = last_price.minus(signal.data[0].buy_price).times(signal.data[0].buy_trade_size).dividedBy(signal.data[0].buy_price)
+                  state.pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).toString())
+                  console.log("===PNL===>", signal.data[0].buy_trade_size_4 )
+                }
+                else if ( Number(signal.data[0].buy_price_3) > 0 ) {
+                  const pnl_3 = last_price.minus(signal.data[0].buy_price_3).times(signal.data[0].buy_trade_size_3).dividedBy(signal.data[0].buy_price_3)
+                  const pnl_2 = last_price.minus(signal.data[0].buy_price_2).times(signal.data[0].buy_trade_size_2).dividedBy(signal.data[0].buy_price_2)
+                  const pnl_1 = last_price.minus(signal.data[0].buy_price).times(signal.data[0].buy_trade_size).dividedBy(signal.data[0].buy_price)
+                  state.pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).toString())
+                }
+                else if ( Number(signal.data[0].buy_price_2) > 0 ) {
+                  const pnl_2 = last_price.minus(signal.data[0].buy_price_2).times(signal.data[0].buy_trade_size_2).dividedBy(signal.data[0].buy_price_2)
+                  const pnl_1 = last_price.minus(signal.data[0].buy_price).times(signal.data[0].buy_trade_size).dividedBy(signal.data[0].buy_price)
+                  state.pnl = Number(pnl_1.plus(pnl_2).toString())
+                }
+                else {
+                  const pnl_1 = last_price.minus(signal.data[0].buy_price).times(signal.data[0].buy_trade_size).dividedBy(signal.data[0].buy_price)
+                  state.pnl = Number(pnl_1.toString())
+                }
+                console.log('pnl: ' + state.pnl)
+              }
+              // SHORT //
+              else {
+                if ( Number(signal.data[0].sell_price_4) > 0 ) {
+                    const sell_price_4 = new BigNumber(signal.data[0].sell_price_4)
+                    const sell_price_3 = new BigNumber(signal.data[0].sell_price_3)
+                    const sell_price_2 = new BigNumber(signal.data[0].sell_price_2)
+                    const sell_price = new BigNumber(signal.data[0].sell_price)
+                    const pnl_4 = sell_price_4.minus(last_price).times(signal.data[0].sell_trade_size_4).dividedBy(last_price)
+                    const pnl_3 = sell_price_3.minus(last_price).times(signal.data[0].sell_trade_size_3).dividedBy(last_price)
+                    const pnl_2 = sell_price_2.minus(last_price).times(signal.data[0].sell_trade_size_2).dividedBy(last_price)
+                    const pnl_1 = sell_price.minus(last_price).times(signal.data[0].sell_trade_size).dividedBy(last_price)
+                    state.pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).toString())
+                }
+                else if ( Number(signal.data[0].sell_price_3) > 0 ) {
+                    const sell_price_3 = new BigNumber(signal.data[0].sell_price_3)
+                    const sell_price_2 = new BigNumber(signal.data[0].sell_price_2)
+                    const sell_price = new BigNumber(signal.data[0].sell_price)
+                    const pnl_3 = sell_price_3.minus(last_price).times(signal.data[0].sell_trade_size_3).dividedBy(last_price)
+                    const pnl_2 = sell_price_2.minus(last_price).times(signal.data[0].sell_trade_size_2).dividedBy(last_price)
+                    const pnl_1 = sell_price.minus(last_price).times(signal.data[0].sell_trade_size).dividedBy(last_price)
+                    state.pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).toString())
+                }
+                else if ( Number(signal.data[0].sell_price_2) > 0 ) {
+                    const sell_price_2 = new BigNumber(signal.data[0].sell_price_2)
+                    const sell_price = new BigNumber(signal.data[0].sell_price)
+                    const pnl_2 = sell_price_2.minus(last_price).times(signal.data[0].sell_trade_size_2).dividedBy(last_price)
+                    const pnl_1 = sell_price.minus(last_price).times(signal.data[0].sell_trade_size).dividedBy(last_price)
+                    state.pnl = Number(pnl_1.plus(pnl_2).toString())
+                }
+                else {
+                    const sell_price = new BigNumber(signal.data[0].sell_price)
+                    const pnl_1 = sell_price.minus(last_price).times(signal.data[0].sell_trade_size).dividedBy(last_price)
+                    state.pnl = Number(pnl_1.toString())
+                }
+              }
               state.pnl = state.pnl - 0.1
               state.pnl = state.pnl.toFixed(2)
             }
