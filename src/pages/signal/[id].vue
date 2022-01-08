@@ -282,7 +282,6 @@ export default defineComponent({
       axios.get('/api/signal?id='+props.id)
         .then( signal => {
           //console.log(signal.data[0])
-
           state.pair = signal.data[0].pair
           state.stratname = signal.data[0].stratname
           state.stratid = signal.data[0].stratid
@@ -436,7 +435,6 @@ export default defineComponent({
             state.series[0].data = data
             if (signal.data[0].pnl === null) {
               const last_price = new BigNumber(prices.data[prices.data.length-1][4])
-              console.log("===last_price===>", last_price.toString() )
               // LONG //
               if (state.signal_type === 'LONG') {
                 const sum_trade_size = Number(signal.data[0].buy_trade_size_4) + Number(signal.data[0].buy_trade_size_3) + Number(signal.data[0].buy_trade_size_2) + Number(signal.data[0].buy_trade_size)
@@ -446,7 +444,6 @@ export default defineComponent({
                   const pnl_2 = last_price.minus(signal.data[0].buy_price_2).times(signal.data[0].buy_trade_size_2).times(100).dividedBy(signal.data[0].buy_price_2).dividedBy(sum_trade_size)
                   const pnl_1 = last_price.minus(signal.data[0].buy_price).times(signal.data[0].buy_trade_size).times(100).dividedBy(signal.data[0].buy_price).dividedBy(sum_trade_size)
                   state.pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).toString())
-                  console.log("===PNL===>", signal.data[0].buy_trade_size_4 )
                 }
                 else if ( Number(signal.data[0].buy_price_3) > 0 ) {
                   const pnl_3 = last_price.minus(signal.data[0].buy_price_3).times(signal.data[0].buy_trade_size_3).times(100).dividedBy(signal.data[0].buy_price_3).dividedBy(sum_trade_size)
@@ -460,10 +457,9 @@ export default defineComponent({
                   state.pnl = Number(pnl_1.plus(pnl_2).toString())
                 }
                 else {
-                  const pnl_1 = last_price.minus(signal.data[0].buy_price).times(signal.data[0].buy_trade_size).times(100).dividedBy(signal.data[0].buy_price).dividedBy(sum_trade_size)
+                  const pnl_1 = last_price.minus(signal.data[0].buy_price).times(100).dividedBy(signal.data[0].buy_price)
                   state.pnl = Number(pnl_1.toString())
                 }
-                console.log('pnl: ' + state.pnl)
               }
               // SHORT //
               else {                
@@ -497,10 +493,12 @@ export default defineComponent({
                 }
                 else {
                     const sell_price = new BigNumber(signal.data[0].sell_price)
-                    const pnl_1 = sell_price.minus(last_price).times(signal.data[0].sell_trade_size).times(100).dividedBy(last_price).dividedBy(sum_trade_size)
+                    const pnl_1 = sell_price.minus(last_price).times(100).dividedBy(last_price)
                     state.pnl = Number(pnl_1.toString())
                 }
+                
               }
+              //console.log('pnl: ' + state.pnl)
               state.pnl = state.pnl - 0.2
               state.pnl = state.pnl.toFixed(2)
             }
