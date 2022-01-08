@@ -383,61 +383,63 @@ export default defineComponent({
             if (currentPrice) {
                 // LONG //
                 if (type === 'LONG') {
+                    const sum_trade_size = Number(row.buy_trade_size_4) + Number(row.buy_trade_size_3) + Number(row.buy_trade_size_2) + Number(row.buy_trade_size)
                     if ( Number(row.buy_price_4) > 0 ) {
-                        const pnl_4 = last_price.minus(row.buy_price_4).times(row.buy_trade_size_4).dividedBy(row.buy_price_4)
-                        const pnl_3 = last_price.minus(row.buy_price_3).times(row.buy_trade_size_3).dividedBy(row.buy_price_3)
-                        const pnl_2 = last_price.minus(row.buy_price_2).times(row.buy_trade_size_2).dividedBy(row.buy_price_2)
-                        const pnl_1 = last_price.minus(row.buy_price).times(row.buy_trade_size).dividedBy(row.buy_price)
-                        pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).toString())
+                        const pnl_4 = last_price.minus(row.buy_price_4).times(row.buy_trade_size_4).times(100).dividedBy(row.buy_price_4).dividedBy(sum_trade_size)
+                        const pnl_3 = last_price.minus(row.buy_price_3).times(row.buy_trade_size_3).times(100).dividedBy(row.buy_price_3).dividedBy(sum_trade_size)
+                        const pnl_2 = last_price.minus(row.buy_price_2).times(row.buy_trade_size_2).times(100).dividedBy(row.buy_price_2).dividedBy(sum_trade_size)
+                        const pnl_1 = last_price.minus(row.buy_price).times(row.buy_trade_size).times(100).dividedBy(row.buy_price).dividedBy(sum_trade_size)
+                        pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).minus(0.1).toString())
                     }
                     else if ( Number(row.buy_price_3) > 0 ) {
-                        const pnl_3 = last_price.minus(row.buy_price_3).times(row.buy_trade_size_3).dividedBy(row.buy_price_3)
-                        const pnl_2 = last_price.minus(row.buy_price_2).times(row.buy_trade_size_2).dividedBy(row.buy_price_2)
-                        const pnl_1 = last_price.minus(row.buy_price).times(row.buy_trade_size).dividedBy(row.buy_price)
-                        pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).toString())
+                        const pnl_3 = last_price.minus(row.buy_price_3).times(row.buy_trade_size_3).times(100).dividedBy(row.buy_price_3).dividedBy(sum_trade_size)
+                        const pnl_2 = last_price.minus(row.buy_price_2).times(row.buy_trade_size_2).times(100).dividedBy(row.buy_price_2).dividedBy(sum_trade_size)
+                        const pnl_1 = last_price.minus(row.buy_price).times(row.buy_trade_size).times(100).dividedBy(row.buy_price).dividedBy(sum_trade_size)
+                        pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).minus(0.1).toString())
                     }
                     else if ( Number(row.buy_price_2) > 0 ) {
-                        const pnl_2 = last_price.minus(row.buy_price_2).times(row.buy_trade_size_2).dividedBy(row.buy_price_2)
-                        const pnl_1 = last_price.minus(row.buy_price).times(row.buy_trade_size).dividedBy(row.buy_price)
-                        pnl = Number(pnl_1.plus(pnl_2).toString())
+                        const pnl_2 = last_price.minus(row.buy_price_2).times(row.buy_trade_size_2).times(100).dividedBy(row.buy_price_2).dividedBy(sum_trade_size)
+                        const pnl_1 = last_price.minus(row.buy_price).times(row.buy_trade_size).times(100).dividedBy(row.buy_price).dividedBy(sum_trade_size)
+                        pnl = Number(pnl_1.plus(pnl_2).minus(0.1).toString())
                     }
                     else {
-                        const pnl_1 = last_price.minus(row.buy_price).times(row.buy_trade_size).dividedBy(row.buy_price)
-                        pnl = Number(pnl_1.toString())
+                        const pnl_1 = last_price.minus(row.buy_price).times(row.buy_trade_size).times(100).dividedBy(row.buy_price).dividedBy(sum_trade_size)
+                        pnl = Number(pnl_1.minus(0.1).toString())
                     }
                 }
                 // SHORT //
                 else {
+                    const sum_trade_size = Number(row.sell_trade_size_4) + Number(row.sell_trade_size_3) + Number(row.sell_trade_size_2) + Number(row.sell_trade_size)
                     if ( Number(row.sell_price_4) > 0 ) {
                         const sell_price_4 = new BigNumber(row.sell_price_4)
                         const sell_price_3 = new BigNumber(row.sell_price_3)
                         const sell_price_2 = new BigNumber(row.sell_price_2)
                         const sell_price = new BigNumber(row.sell_price)
-                        const pnl_4 = sell_price_4.minus(last_price).times(row.sell_trade_size_4).dividedBy(last_price)
-                        const pnl_3 = sell_price_3.minus(last_price).times(row.sell_trade_size_3).dividedBy(last_price)
-                        const pnl_2 = sell_price_2.minus(last_price).times(row.sell_trade_size_2).dividedBy(last_price)
-                        const pnl_1 = sell_price.minus(last_price).times(row.sell_trade_size).dividedBy(last_price)
-                        pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).toString())
+                        const pnl_4 = sell_price_4.minus(last_price).times(row.sell_trade_size_4).times(100).dividedBy(last_price).dividedBy(sum_trade_size)
+                        const pnl_3 = sell_price_3.minus(last_price).times(row.sell_trade_size_3).times(100).dividedBy(last_price).dividedBy(sum_trade_size)
+                        const pnl_2 = sell_price_2.minus(last_price).times(row.sell_trade_size_2).times(100).dividedBy(last_price).dividedBy(sum_trade_size)
+                        const pnl_1 = sell_price.minus(last_price).times(row.sell_trade_size).times(100).dividedBy(last_price).dividedBy(sum_trade_size)
+                        pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).minus(0.1).toString())
                     }
                     else if ( Number(row.buy_price_3) > 0 ) {
                         const sell_price_3 = new BigNumber(row.sell_price_3)
                         const sell_price_2 = new BigNumber(row.sell_price_2)
                         const sell_price = new BigNumber(row.sell_price)
-                        const pnl_3 = sell_price_3.minus(last_price).times(row.sell_trade_size_3).dividedBy(last_price)
-                        const pnl_2 = sell_price_2.minus(last_price).times(row.sell_trade_size_2).dividedBy(last_price)
-                        const pnl_1 = sell_price.minus(last_price).times(row.sell_trade_size).dividedBy(last_price)
-                        pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).toString())
+                        const pnl_3 = sell_price_3.minus(last_price).times(row.sell_trade_size_3).times(100).dividedBy(last_price).dividedBy(sum_trade_size)
+                        const pnl_2 = sell_price_2.minus(last_price).times(row.sell_trade_size_2).times(100).dividedBy(last_price).dividedBy(sum_trade_size)
+                        const pnl_1 = sell_price.minus(last_price).times(row.sell_trade_size).times(100).dividedBy(last_price).dividedBy(sum_trade_size)
+                        pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).minus(0.1).toString())
                     }
                     else if ( Number(row.buy_price_2) > 0 ) {
                         const sell_price_2 = new BigNumber(row.sell_price_2)
                         const sell_price = new BigNumber(row.sell_price)
-                        const pnl_2 = sell_price_2.minus(last_price).times(row.sell_trade_size_2).dividedBy(last_price)
-                        const pnl_1 = sell_price.minus(last_price).times(row.sell_trade_size).dividedBy(last_price)
-                        pnl = Number(pnl_1.plus(pnl_2).toString())
+                        const pnl_2 = sell_price_2.minus(last_price).times(row.sell_trade_size_2).times(100).dividedBy(last_price).dividedBy(sum_trade_size)
+                        const pnl_1 = sell_price.minus(last_price).times(row.sell_trade_size).times(100).dividedBy(last_price).dividedBy(sum_trade_size)
+                        pnl = Number(pnl_1.plus(pnl_2).minus(0.1).toString())
                     }
                     else {
-                        const pnl_1 = last_price.minus(row.buy_price).times(row.buy_trade_size).dividedBy(row.buy_price)
-                        pnl = Number(pnl_1.toString())
+                        const pnl_1 = last_price.minus(row.buy_price).times(row.buy_trade_size).times(100).dividedBy(row.buy_price).dividedBy(sum_trade_size)
+                        pnl = Number(pnl_1.minus(0.1).toString())
                     }
                 }
             }
