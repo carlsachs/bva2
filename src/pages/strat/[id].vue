@@ -385,35 +385,26 @@ export default defineComponent({
                     + Number(row?.buy_trade_size_3) 
                     + Number(row?.buy_trade_size_4) 
                     + Number(row?.buy_trade_size_5)
-                console.log("sum_buy_trade_size", sum_buy_trade_size.toFixed(2))
 
                 const sum_sell_trade_size = Number(row?.sell_trade_size) 
                     + Number(row?.sell_trade_size_2) 
                     + Number(row?.sell_trade_size_3) 
                     + Number(row?.sell_trade_size_4) 
                     + Number(row?.sell_trade_size_5)
-                console.log("sum_sell_trade_size", sum_sell_trade_size.toFixed(2))
 
                 if (type === 'LONG') {
 
                     const buy_price_5 = new BigNumber(row?.buy_price_5||0)
                     const dca_buy_price_5 = buy_price_5.times(row?.buy_trade_size_5||0).div(sum_buy_trade_size)
-                    console.log("dca_buy_price_5", dca_buy_price_5.toFixed(2))
                     const buy_price_4 = new BigNumber(row?.buy_price_4||0)
                     const dca_buy_price_4 = buy_price_4.times(row?.buy_trade_size_4||0).div(sum_buy_trade_size)
-                    console.log("dca_buy_price_4", dca_buy_price_4.toFixed(2))
                     const buy_price_3 = new BigNumber(row?.buy_price_3||0)
                     const dca_buy_price_3 = buy_price_3.times(row?.buy_trade_size_3||0).div(sum_buy_trade_size)
-                    console.log("dca_buy_price_3", dca_buy_price_3.toFixed(2))
                     const buy_price_2 = new BigNumber(row?.buy_price_2||0)
                     const dca_buy_price_2 = buy_price_2.times(row?.buy_trade_size_2||0).div(sum_buy_trade_size)
-                    console.log("dca_buy_price_2", dca_buy_price_2.toFixed(2))
                     const buy_price_1 = new BigNumber(row?.buy_price||0)
                     const dca_buy_price_1 = buy_price_1.times(row?.buy_trade_size||0).div(sum_buy_trade_size)
-                    console.log("dca_buy_price_1", dca_buy_price_1.toFixed(2))
                     const dca_buy_price = dca_buy_price_1.plus(dca_buy_price_2).plus(dca_buy_price_3).plus(dca_buy_price_4).plus(dca_buy_price_5)
-                    console.log("dca_buy_price", dca_buy_price.toFixed(2))
-                    console.log("last_price", last_price.toFixed(2))
 
                     if (sum_sell_trade_size) {
                         if (row?.sell_trade_size_4) {
@@ -465,21 +456,15 @@ export default defineComponent({
 
                     const sell_price_5 = new BigNumber(row?.sell_price_5||0)
                     const dca_sell_price_5 = sell_price_5.times(row?.sell_trade_size_5||0).div(sum_sell_trade_size)
-                    console.log("dca_sell_price_5", dca_sell_price_5)
                     const sell_price_4 = new BigNumber(row?.sell_price_4||0)
                     const dca_sell_price_4 = sell_price_4.times(row?.sell_trade_size_4||0).div(sum_sell_trade_size)
-                    console.log("dca_sell_price_4", dca_sell_price_4)
                     const sell_price_3 = new BigNumber(row?.sell_price_3||0)
                     const dca_sell_price_3 = sell_price_3.times(row?.sell_trade_size_3||0).div(sum_sell_trade_size)
-                    console.log("dca_sell_price_3", dca_sell_price_3)
                     const sell_price_2 = new BigNumber(row?.sell_price_2||0)
                     const dca_sell_price_2 = sell_price_2.times(row?.sell_trade_size_2||0).div(sum_sell_trade_size)
-                    console.log("dca_sell_price_2", dca_sell_price_2)
                     const sell_price_1 = new BigNumber(row?.sell_price||0)
                     const dca_sell_price_1 = sell_price_1.times(row?.sell_trade_size||0).div(sum_sell_trade_size)
-                    console.log("dca_sell_price_1", dca_sell_price_1)
                     const dca_sell_price = dca_sell_price_1.plus(dca_sell_price_2).plus(dca_sell_price_3).plus(dca_sell_price_4).plus(dca_sell_price_5)
-                    console.log("dca_sell_price", dca_sell_price)
 
                     if (sum_buy_trade_size) {
                         if (row?.buy_trade_size_4) {
