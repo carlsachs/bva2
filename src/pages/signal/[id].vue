@@ -436,7 +436,7 @@ export default defineComponent({
             if (signal.data[0].pnl === null) {
               const last_price = new BigNumber(prices.data[prices.data.length-1][4])
 
-              if (signal.data[0]?.buy_trade_size || signal.data[0]?.sell_trade_size) {
+              if (Number(signal.data[0]?.buy_trade_size)>0 || Number(signal.data[0]?.sell_trade_size)>0) {
                 //DCA
                 const sum_buy_trade_size = Number(signal.data[0]?.buy_trade_size) 
                     + Number(signal.data[0]?.buy_trade_size_2) 

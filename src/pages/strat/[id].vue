@@ -379,14 +379,14 @@ export default defineComponent({
             const currentPrice = prices.items.find( (r) => { return r.symbol === symbol }).price
             const last_price = new BigNumber(currentPrice)
             if (currentPrice) {
-                if (row.buy_trade_size || row.sell_trade_size) {
+
+                if (Number(row.buy_trade_size)>0 || Number(row.sell_trade_size)>0) {
                     // DCA
                     const sum_buy_trade_size = Number(row?.buy_trade_size) 
                         + Number(row?.buy_trade_size_2) 
                         + Number(row?.buy_trade_size_3) 
                         + Number(row?.buy_trade_size_4) 
                         + Number(row?.buy_trade_size_5)
-                    console.log(">>>>", JSON.stringify(row))
 
                     const sum_sell_trade_size = Number(row?.sell_trade_size) 
                         + Number(row?.sell_trade_size_2) 
