@@ -65,7 +65,7 @@
                 <div class="flex-auto text-justify text-blue-300 block">{{ buy_price_2 }}</div>
             </div>
 
-            <div v-if="buy_trade_size_5" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div v-if="buy_trade_size_2" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
                 <div class="flex-auto">Buy Size 2</div>
                 <div class="flex-auto text-justify text-blue-300 block">{{ buy_trade_size_2 }}</div>
             </div>
