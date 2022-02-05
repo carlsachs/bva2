@@ -29,6 +29,11 @@
             <div class="flex-auto text-justify text-blue-300 block">{{ buy_price }}</div>
         </div>
 
+        <div v-if="buy_trade_size" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Buy Size</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ buy_trade_size }}</div>
+        </div>
+
         <div v-if="sell_price" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
             <div class="flex-auto">Sell Price</div>
             <div class="flex-auto text-justify text-blue-300 block">{{ sell_price }}</div>
@@ -44,10 +49,141 @@
             <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(sell_time)).format('YYYY MMM DD HH:mm') }}</div>
         </div>
 
+        <div v-if="sell_trade_size" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+          <div class="flex-auto">Sell Size</div>
+          <div class="flex-auto text-justify text-blue-300 block">{{ sell_trade_size }}</div>
+        </div>
+
         <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
             <div class="flex-auto">Quantity</div>
             <div class="flex-auto text-justify text-blue-300 block">{{ qty }}</div>
         </div>
+
+
+
+
+        <div v-if="buy_time_2" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Buy Time 2</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(buy_time_2)).format('YYYY MMM DD HH:mm') }}</div>
+        </div>
+
+        <div v-if="buy_price_2" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Buy Price 2</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ buy_price_2 }}</div>
+        </div>
+
+        <div v-if="buy_trade_size_2" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Buy Size 2</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ buy_trade_size_2 }}</div>
+        </div>
+
+        <div v-if="sell_time_2" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Sell Time 2</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(sell_time_2)).format('YYYY MMM DD HH:mm') }}</div>
+        </div>
+
+        <div v-if="sell_price_2" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Sell Price 2</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ sell_price_2 }}</div>
+        </div>
+
+        <div v-if="sell_trade_size_2" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Sell Size 2</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ sell_trade_size_2 }}</div>
+        </div>
+
+        <div v-if="buy_time_3" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Buy Time 3</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(buy_time_3)).format('YYYY MMM DD HH:mm') }}</div>
+        </div>
+
+        <div v-if="buy_price_3" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Buy Price 3</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ buy_price_3 }}</div>
+        </div>
+
+        <div v-if="buy_trade_size_3" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Buy Size 3</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ buy_trade_size_3 }}</div>
+        </div>
+
+        <div v-if="sell_time_3" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Sell Time 3</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(sell_time_3)).format('YYYY MMM DD HH:mm') }}</div>
+        </div>
+
+        <div v-if="sell_price_3" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Sell Price 3</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ sell_price_3 }}</div>
+        </div>
+
+        <div v-if="sell_trade_size_3" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Sell Size 3</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ sell_trade_size_3 }}</div>
+        </div>
+
+        <div v-if="buy_time_4" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Buy Time 4</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(buy_time_4)).format('YYYY MMM DD HH:mm') }}</div>
+        </div>
+
+        <div v-if="buy_price_4" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Buy Price 4</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ buy_price_4 }}</div>
+        </div>
+
+        <div v-if="buy_trade_size_4" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Buy Size 4</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ buy_trade_size_4 }}</div>
+        </div>
+
+        <div v-if="sell_time_4" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Sell Time 4</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(sell_time_4)).format('YYYY MMM DD HH:mm') }}</div>
+        </div>
+
+        <div v-if="sell_price_4" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Sell Price 4</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ sell_price_4 }}</div>
+        </div>
+
+        <div v-if="sell_trade_size_4" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Sell Size 4</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ sell_trade_size_4 }}</div>
+        </div>
+
+        <div v-if="buy_time_5" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Buy Time 5</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(buy_time_5)).format('YYYY MMM DD HH:mm') }}</div>
+        </div>
+
+        <div v-if="buy_price_5" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Buy Price 5</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ buy_price_5 }}</div>
+        </div>
+
+        <div v-if="buy_trade_size_5" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Buy Size 5</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{buy_trade_size_5 }}</div>
+        </div>
+
+        <div v-if="sell_time_5" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Sell Time 5</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(sell_time_5)).format('YYYY MMM DD HH:mm') }}</div>
+        </div>
+
+        <div v-if="sell_price_5" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Sell Price 5</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ sell_price_5 }}</div>
+        </div>
+
+        <div v-if="sell_trade_size_5" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+            <div class="flex-auto">Sell Size 5</div>
+            <div class="flex-auto text-justify text-blue-300 block">{{ sell_trade_size_5 }}</div>
+        </div>
+
+
+
 
         <div v-if="status" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
             <div class="flex-auto">Status</div>
@@ -162,7 +298,7 @@ import _ from "lodash"
 import { startStats, endStats } from '~/modules/stats'
 import { useRequest } from 'vue-request'
 import { useRouter } from "vue-router"
-
+import BigNumber from 'bignumber.js'
 
 export default defineComponent({
   name: "trade",
@@ -193,6 +329,36 @@ export default defineComponent({
       buy_time: null,
       sell_time: null,
       qty: null,
+      ///////// ///////// ///////// /////////
+      buy_trade_size: null,
+      sell_trade_size: null,
+      buy_time_2: null,
+      sell_time_2: null,
+      buy_price_2: null,
+      sell_price_2: null,
+      trade_size_2: null,
+      buy_trade_size_2: null,
+      sell_trade_size_2: null,
+      buy_time_3: null,
+      sell_time_3: null,
+      buy_price_3: null,
+      sell_price_3: null,
+      trade_size_3: null,
+      buy_trade_size_3: null,
+      sell_trade_size_3: null,
+      buy_time_4: null,
+      sell_time_4: null,
+      buy_price_4: null,
+      sell_price_4: null,
+      buy_trade_size_4: null,
+      sell_trade_size_4: null,
+      buy_time_5: null,
+      sell_time_5: null,
+      buy_price_5: null,
+      sell_price_5: null,
+      buy_trade_size_5: null,
+      sell_trade_size_5: null,
+      ///////// ///////// ///////// /////////
       status: null,
       market_type: null,
       userid: null,
@@ -217,7 +383,7 @@ export default defineComponent({
     })
 
     const getOrders = () => {
-      console.log("getOrders", auth0.state?.user?.data.email, props.id, auth0.state?.user?.token)
+      console.log("getOrdersXXXXXXXXX", auth0.state?.user?.data.email, props.id, auth0.state?.user?.token)
       return axios.get('/api/orders?sub='+auth0.state?.user?.data.sub+'&id='+props.id, { headers: {Authorization:`Bearer ${auth0.state?.user?.token}`} })
     }
 
@@ -227,6 +393,7 @@ export default defineComponent({
       //cacheTime: 300000,
       pollingInterval: 9000,
       formatResult: res => {
+        console.log("formatResult=======>", res)
         return res.data
       },
       onSuccess: (res) => {
@@ -251,7 +418,7 @@ export default defineComponent({
 
     onMounted(() => {
       ////// ////// ////// ////// //////
-      console.log("ID", props.id, auth0.state?.user?.data?.nickname)
+      console.log("ID", props.id, auth0.state?.user?.data?.nickname, auth0.state.user?.token)
       if (auth0.state.user?.token) {
         console.log("run =======>", auth0.state.user?.token)
         run()
@@ -267,12 +434,75 @@ export default defineComponent({
           state.sell_price = signal.data[0].sell_price
           state.buy_time = signal.data[0].buy_time
           state.sell_time = signal.data[0].sell_time
+          state.buy_trade_size = signal.data[0].buy_trade_size
+          state.sell_trade_size = signal.data[0].sell_trade_size
+          state.buy_time_2 = signal.data[0].buy_time_2
+          state.sell_time_2 = signal.data[0].sell_time_2
+          state.buy_price_2 = signal.data[0].buy_price_2
+          state.sell_price_2 = signal.data[0].sell_price_2
+          state.buy_trade_size_2 = signal.data[0].buy_trade_size_2
+          state.sell_trade_size_2 = signal.data[0].sell_trade_size_2
+          state.buy_time_3 = signal.data[0].buy_time_3
+          state.sell_time_3 = signal.data[0].sell_time_3
+          state.buy_price_3 = signal.data[0].buy_price_3
+          state.sell_price_3 = signal.data[0].sell_price_3
+          state.buy_trade_size_3 = signal.data[0].buy_trade_size_3
+          state.sell_trade_size_3 = signal.data[0].sell_trade_size_3
+          state.buy_time_4 = signal.data[0].buy_time_4
+          state.sell_time_4 = signal.data[0].sell_time_4
+          state.buy_price_4 = signal.data[0].buy_price_4
+          state.sell_price_4 = signal.data[0].sell_price_4
+          state.buy_trade_size_4 = signal.data[0].buy_trade_size_4
+          state.sell_trade_size_4 = signal.data[0].sell_trade_size_4
+          state.buy_time_5 = signal.data[0].buy_time_5
+          state.sell_time_5 = signal.data[0].sell_time_5
+          state.buy_price_5 = signal.data[0].buy_price_5
+          state.sell_price_5 = signal.data[0].sell_price_5
+          state.buy_trade_size_5 = signal.data[0].buy_trade_size_5
+          state.sell_trade_size_5 = signal.data[0].sell_trade_size_5
           state.pnl = Number(signal.data[0].pnl).toFixed(2)
           state.qty = Number(signal.data[0].qty)
           state.market_type = signal.data[0].market_type
           state.status = signal.data[0].status
+
           const startTime = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time) - 49000000 : Number(signal.data[0].sell_time) - 49000000
-          const endTime = signal.data[0].pnl ? (signal.data[0].type === "SHORT" ? Number(signal.data[0].buy_time) + 49000000 : Number(signal.data[0].sell_time) + 49000000) : Date.now()
+          let last_trade_time = 0
+          if (state.signal_type === 'SHORT') {
+            if (Number(signal.data[0].buy_time_5) > 0) {
+              last_trade_time = Number(signal.data[0].buy_time_5) + 49000000
+            } 
+            else if (Number(signal.data[0].buy_time_4) > 0) {
+              last_trade_time = Number(signal.data[0].buy_time_4) + 49000000
+            }
+            else if (Number(signal.data[0].buy_time_3) > 0) {
+              last_trade_time = Number(signal.data[0].buy_time_3) + 49000000
+            }
+            else if (Number(signal.data[0].buy_time_2) > 0) {
+              last_trade_time = Number(signal.data[0].buy_time_2) + 49000000
+            }
+            else {
+              last_trade_time = Number(signal.data[0].buy_time) + 49000000
+            }
+          }
+          else {
+            if (Number(signal.data[0].sell_time_5) > 0) {
+              last_trade_time = Number(signal.data[0].sell_time_5) + 49000000
+            } 
+            else if (Number(signal.data[0].sell_time_4) > 0) {
+              last_trade_time = Number(signal.data[0].sell_time_4) + 49000000
+            }
+            else if (Number(signal.data[0].sell_time_3) > 0) {
+              last_trade_time = Number(signal.data[0].sell_time_3) + 49000000
+            }
+            else if (Number(signal.data[0].sell_time_2) > 0) {
+              last_trade_time = Number(signal.data[0].sell_time_2) + 49000000
+            }
+            else {
+              last_trade_time = Number(signal.data[0].sell_time) + 49000000
+            }
+          }
+          const endTime = signal.data[0].pnl ? last_trade_time : Date.now()
+
           let interv = '15m'
           if ( ((endTime-startTime)/86400000) > 4) { interv = '1h' }
           else if ( ((endTime-startTime)/86400000) > 20) { interv = '1d' }
@@ -296,15 +526,222 @@ export default defineComponent({
                 state.chartOptions.annotations.points[1].y = Number(signal.data[0].buy_price)
                 state.chartOptions.annotations.points[1].label.text = 'BUY'
               }
+              if ( price[0] < Number(signal.data[0].sell_time_2) && Number(signal.data[0].sell_time_2) < (price[0]+86400000) ) {
+                state.chartOptions.annotations.points[2].x = moment(price[0]).format('MMM DD HH:mm')
+                state.chartOptions.annotations.points[2].y = Number(signal.data[0].sell_price_2)
+                state.chartOptions.annotations.points[2].label.text = 'SELL2'
+              }
+              if ( price[0] < Number(signal.data[0].buy_time_2) && Number(signal.data[0].buy_time_2) < (price[0]+86400000) ) {
+                state.chartOptions.annotations.points[3].x = moment(price[0]).format('MMM DD HH:mm')
+                state.chartOptions.annotations.points[3].y = Number(signal.data[0].buy_price_2)
+                state.chartOptions.annotations.points[3].label.text = 'BUY2'
+              }
+              if ( price[0] < Number(signal.data[0].sell_time_3) && Number(signal.data[0].sell_time_3) < (price[0]+86400000) ) {
+                state.chartOptions.annotations.points[4].x = moment(price[0]).format('MMM DD HH:mm')
+                state.chartOptions.annotations.points[4].y = Number(signal.data[0].sell_price_3)
+                state.chartOptions.annotations.points[4].label.text = 'SELL3'
+              }
+              if ( price[0] < Number(signal.data[0].buy_time_3) && Number(signal.data[0].buy_time_3) < (price[0]+86400000) ) {
+                state.chartOptions.annotations.points[5].x = moment(price[0]).format('MMM DD HH:mm')
+                state.chartOptions.annotations.points[5].y = Number(signal.data[0].buy_price_3)
+                state.chartOptions.annotations.points[5].label.text = 'BUY3'
+              }
+              if ( price[0] < Number(signal.data[0].sell_time_4) && Number(signal.data[0].sell_time_4) < (price[0]+86400000) ) {
+                state.chartOptions.annotations.points[6].x = moment(price[0]).format('MMM DD HH:mm')
+                state.chartOptions.annotations.points[6].y = Number(signal.data[0].sell_price_4)
+                state.chartOptions.annotations.points[6].label.text = 'SELL4'
+              }
+              if ( price[0] < Number(signal.data[0].buy_time_4) && Number(signal.data[0].buy_time_4) < (price[0]+86400000) ) {
+                state.chartOptions.annotations.points[7].x = moment(price[0]).format('MMM DD HH:mm')
+                state.chartOptions.annotations.points[7].y = Number(signal.data[0].buy_price_4)
+                state.chartOptions.annotations.points[7].label.text = 'BUY4'
+              }
+              if ( price[0] < Number(signal.data[0].sell_time_5) && Number(signal.data[0].sell_time_5) < (price[0]+86400000) ) {
+                state.chartOptions.annotations.points[8].x = moment(price[0]).format('MMM DD HH:mm')
+                state.chartOptions.annotations.points[8].y = Number(signal.data[0].sell_price_5)
+                state.chartOptions.annotations.points[8].label.text = 'SELL5'
+              }
+              if ( price[0] < Number(signal.data[0].buy_time_5) && Number(signal.data[0].buy_time_5) < (price[0]+86400000) ) {
+                state.chartOptions.annotations.points[9].x = moment(price[0]).format('MMM DD HH:mm')
+                state.chartOptions.annotations.points[9].y = Number(signal.data[0].buy_price_5)
+                state.chartOptions.annotations.points[9].label.text = 'BUY5'
+              }
             }
+
             //state.series.push({'data': data})
             //console.log(JSON.stringify(state.series))
+            /*
             state.series[0].data = data
             if (signal.data[0].pnl == null) {
               const last_price = Number(prices.data[prices.data.length-1][4])
               state.pnl = (state.signal_type === 'LONG') ? (100 * (last_price-state.buy_price)/state.buy_price) : (100 * (state.sell_price-last_price)/last_price)
               state.pnl = state.pnl.toFixed(2)
             }
+            */
+
+            state.series[0].data = data
+            if (signal.data[0].pnl === null) {
+              const last_price = new BigNumber(prices.data[prices.data.length-1][4])
+
+              if (Number(signal.data[0]?.buy_trade_size)>0 || Number(signal.data[0]?.sell_trade_size)>0) {
+                //DCA
+                const sum_buy_trade_size = Number(signal.data[0]?.buy_trade_size) 
+                    + Number(signal.data[0]?.buy_trade_size_2) 
+                    + Number(signal.data[0]?.buy_trade_size_3) 
+                    + Number(signal.data[0]?.buy_trade_size_4) 
+                    + Number(signal.data[0]?.buy_trade_size_5)
+                console.log("sum_buy_trade_size", sum_buy_trade_size.toFixed(2))
+
+                const sum_sell_trade_size = Number(signal.data[0]?.sell_trade_size) 
+                    + Number(signal.data[0]?.sell_trade_size_2) 
+                    + Number(signal.data[0]?.sell_trade_size_3) 
+                    + Number(signal.data[0]?.sell_trade_size_4) 
+                    + Number(signal.data[0]?.sell_trade_size_5)
+                console.log("sum_sell_trade_size", sum_sell_trade_size.toFixed(2))
+
+                if (state.signal_type === 'LONG') {
+
+                  const buy_price_5 = new BigNumber(signal.data[0]?.buy_price_5||0)
+                  const dca_buy_price_5 = buy_price_5.times(signal.data[0]?.buy_trade_size_5||0).div(sum_buy_trade_size)
+                  console.log("dca_buy_price_5", dca_buy_price_5.toFixed(2))
+                  const buy_price_4 = new BigNumber(signal.data[0]?.buy_price_4||0)
+                  const dca_buy_price_4 = buy_price_4.times(signal.data[0]?.buy_trade_size_4||0).div(sum_buy_trade_size)
+                  console.log("dca_buy_price_4", dca_buy_price_4.toFixed(2))
+                  const buy_price_3 = new BigNumber(signal.data[0]?.buy_price_3||0)
+                  const dca_buy_price_3 = buy_price_3.times(signal.data[0]?.buy_trade_size_3||0).div(sum_buy_trade_size)
+                  console.log("dca_buy_price_3", dca_buy_price_3.toFixed(2))
+                  const buy_price_2 = new BigNumber(signal.data[0]?.buy_price_2||0)
+                  const dca_buy_price_2 = buy_price_2.times(signal.data[0]?.buy_trade_size_2||0).div(sum_buy_trade_size)
+                  console.log("dca_buy_price_2", dca_buy_price_2.toFixed(2))
+                  const buy_price_1 = new BigNumber(signal.data[0]?.buy_price||0)
+                  const dca_buy_price_1 = buy_price_1.times(signal.data[0]?.buy_trade_size||0).div(sum_buy_trade_size)
+                  console.log("dca_buy_price_1", dca_buy_price_1.toFixed(2))
+                  const dca_buy_price = dca_buy_price_1.plus(dca_buy_price_2).plus(dca_buy_price_3).plus(dca_buy_price_4).plus(dca_buy_price_5)
+                  console.log("dca_buy_price", dca_buy_price.toFixed(2))
+                  console.log("last_price", last_price.toFixed(2))
+
+                  if (sum_sell_trade_size) {
+                    if (signal.data[0]?.sell_trade_size_4) {
+                        const sell_price_4 = new BigNumber(signal.data[0].sell_price_4)
+                        const sell_price_3 = new BigNumber(signal.data[0].sell_price_3)
+                        const sell_price_2 = new BigNumber(signal.data[0].sell_price_2)
+                        const sell_price_1 = new BigNumber(signal.data[0].sell_price)
+                        const pnl_1 = sell_price_1.minus(dca_buy_price).times(signal.data[0].sell_trade_size).dividedBy(dca_buy_price)
+                        const pnl_2 = sell_price_2.minus(dca_buy_price).times(signal.data[0].sell_trade_size_2).dividedBy(dca_buy_price)
+                        const pnl_3 = sell_price_3.minus(dca_buy_price).times(signal.data[0].sell_trade_size_3).dividedBy(dca_buy_price)
+                        const pnl_4 = sell_price_4.minus(dca_buy_price).times(signal.data[0].sell_trade_size_4).dividedBy(dca_buy_price) 
+                        const pnl_5 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price)
+                        state.pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).plus(pnl_5).times(100).minus(0.2).toFixed(2))
+                    }
+                    else if (signal.data[0]?.sell_trade_size_3) {
+                        const sell_price_3 = new BigNumber(signal.data[0].sell_price_3)
+                        const sell_price_2 = new BigNumber(signal.data[0].sell_price_2)
+                        const sell_price_1 = new BigNumber(signal.data[0].sell_price)
+                        const pnl_1 = sell_price_1.minus(dca_buy_price).times(signal.data[0].sell_trade_size).dividedBy(dca_buy_price)
+                        const pnl_2 = sell_price_2.minus(dca_buy_price).times(signal.data[0].sell_trade_size_2).dividedBy(dca_buy_price)
+                        const pnl_3 = sell_price_3.minus(dca_buy_price).times(signal.data[0].sell_trade_size_3).dividedBy(dca_buy_price)
+                        const pnl_4 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price)
+                        state.pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).times(100).minus(0.2).toFixed(2))
+                    }
+                    else if (signal.data[0]?.sell_trade_size_2) {
+                        const sell_price_2 = new BigNumber(signal.data[0].sell_price_2)
+                        const sell_price_1 = new BigNumber(signal.data[0].sell_price)
+                        const pnl_1 = sell_price_1.minus(dca_buy_price).times(signal.data[0].sell_trade_size).dividedBy(dca_buy_price)
+                        const pnl_2 = sell_price_2.minus(dca_buy_price).times(signal.data[0].sell_trade_size_2).dividedBy(dca_buy_price)
+                        const pnl_3 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price)
+                        state.pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).times(100).minus(0.2).toFixed(2))
+                    }
+                    else if (signal.data[0]?.sell_trade_size) {
+                        const sell_price_1 = new BigNumber(signal.data[0].sell_price)
+                        const pnl_1 = sell_price_1.minus(dca_buy_price).times(signal.data[0].sell_trade_size).dividedBy(dca_buy_price)
+                        const pnl_2 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price)
+                        state.pnl = Number(pnl_1.plus(pnl_2).times(100).minus(0.2).toFixed(2))
+                    }
+                  }
+                  else {
+                      state.pnl = Number(last_price.minus(dca_buy_price).div(dca_buy_price).times(100).minus(0.2).toFixed(2))
+                      console.log("pnl", state.pnl)
+                  }
+
+                }
+                else {
+                  // SHORT //
+
+                  const sell_price_5 = new BigNumber(signal.data[0]?.sell_price_5||0)
+                  const dca_sell_price_5 = sell_price_5.times(signal.data[0]?.sell_trade_size_5||0).div(sum_sell_trade_size)
+                  console.log("dca_sell_price_5", dca_sell_price_5.toFixed(2))
+                  const sell_price_4 = new BigNumber(signal.data[0]?.sell_price_4||0)
+                  const dca_sell_price_4 = sell_price_4.times(signal.data[0]?.sell_trade_size_4||0).div(sum_sell_trade_size)
+                  console.log("dca_sell_price_4", dca_sell_price_4.toFixed(2))
+                  const sell_price_3 = new BigNumber(signal.data[0]?.sell_price_3||0)
+                  const dca_sell_price_3 = sell_price_3.times(signal.data[0]?.sell_trade_size_3||0).div(sum_sell_trade_size)
+                  console.log("dca_sell_price_3", dca_sell_price_3.toFixed(2))
+                  const sell_price_2 = new BigNumber(signal.data[0]?.sell_price_2||0)
+                  const dca_sell_price_2 = sell_price_2.times(signal.data[0]?.sell_trade_size_2||0).div(sum_sell_trade_size)
+                  console.log("dca_sell_price_2", dca_sell_price_2.toFixed(2))
+                  const sell_price_1 = new BigNumber(signal.data[0]?.sell_price||0)
+                  const dca_sell_price_1 = sell_price_1.times(signal.data[0]?.sell_trade_size||0).div(sum_sell_trade_size)
+                  console.log("dca_sell_price_1", dca_sell_price_1.toFixed(2))
+                  const dca_sell_price = dca_sell_price_1.plus(dca_sell_price_2).plus(dca_sell_price_3).plus(dca_sell_price_4).plus(dca_sell_price_5)
+                  console.log("dca_sell_price", dca_sell_price.toFixed(2))
+                  console.log("last_price", last_price.toFixed(2))
+
+                  if (sum_buy_trade_size) {
+                    if (signal.data[0]?.buy_trade_size_4) {
+                        const buy_price_4 = new BigNumber(signal.data[0].buy_price_4)
+                        const buy_price_3 = new BigNumber(signal.data[0].buy_price_3)
+                        const buy_price_2 = new BigNumber(signal.data[0].buy_price_2)
+                        const buy_price_1 = new BigNumber(signal.data[0].buy_price)
+                        const pnl_1 = dca_sell_price.minus(buy_price_1).times(signal.data[0].buy_trade_size).dividedBy(buy_price_1)
+                        const pnl_2 = dca_sell_price.minus(buy_price_2).times(signal.data[0].buy_trade_size_2).dividedBy(buy_price_2)
+                        const pnl_3 = dca_sell_price.minus(buy_price_3).times(signal.data[0].buy_trade_size_3).dividedBy(buy_price_3)
+                        const pnl_4 = dca_sell_price.minus(buy_price_4).times(signal.data[0].buy_trade_size_4).dividedBy(buy_price_4) 
+                        const pnl_5 = dca_sell_price.minus(last_price).times(100 - sum_sell_trade_size).dividedBy(last_price)
+                        state.pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).plus(pnl_5).times(100).minus(0.2).toFixed(2))
+                    }
+                    else if (signal.data[0]?.buy_trade_size_3) {
+                        const buy_price_3 = new BigNumber(signal.data[0].buy_price_3)
+                        const buy_price_2 = new BigNumber(signal.data[0].buy_price_2)
+                        const buy_price_1 = new BigNumber(signal.data[0].buy_price)
+                        const pnl_1 = dca_sell_price.minus(buy_price_1).times(signal.data[0].buy_trade_size).dividedBy(buy_price_1)
+                        const pnl_2 = dca_sell_price.minus(buy_price_2).times(signal.data[0].buy_trade_size_2).dividedBy(buy_price_2)
+                        const pnl_3 = dca_sell_price.minus(buy_price_3).times(signal.data[0].buy_trade_size_3).dividedBy(buy_price_3)
+                        const pnl_4 = dca_sell_price.minus(last_price).times(100 - sum_sell_trade_size).dividedBy(last_price)
+                        state.pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).times(100).minus(0.2).toFixed(2))
+                    }
+                    else if (signal.data[0]?.buy_trade_size_2) {
+                        const buy_price_2 = new BigNumber(signal.data[0].buy_price_2)
+                        const buy_price_1 = new BigNumber(signal.data[0].buy_price)
+                        const pnl_1 = dca_sell_price.minus(buy_price_1).times(signal.data[0].buy_trade_size).dividedBy(buy_price_1)
+                        const pnl_2 = dca_sell_price.minus(buy_price_2).times(signal.data[0].buy_trade_size_2).dividedBy(buy_price_2)
+                        const pnl_3 = dca_sell_price.minus(last_price).times(100 - sum_sell_trade_size).dividedBy(last_price)
+                        state.pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).times(100).minus(0.2).toFixed(2))
+                    }
+                    else if (signal.data[0]?.buy_trade_size) {
+                        const buy_price_1 = new BigNumber(signal.data[0].buy_price)
+                        const pnl_1 = dca_sell_price.minus(buy_price_1).times(signal.data[0].buy_trade_size).dividedBy(buy_price_1)
+                        const pnl_2 = dca_sell_price.minus(last_price).times(100 - sum_sell_trade_size).dividedBy(last_price)
+                        state.pnl = Number(pnl_1.plus(pnl_2).times(100).minus(0.2).toFixed(2))
+                    }
+                  }
+                  else {
+                      state.pnl = Number(dca_sell_price.minus(last_price).div(last_price).times(100).minus(0.2).toFixed(2))
+                  }
+                }
+              }
+              else {
+                const sell_price = Number(signal.data[0]?.sell_price)
+                const buy_price = Number(signal.data[0]?.buy_price)
+                if (state.signal_type === 'LONG') {
+                    state.pnl = ((100 * (Number(last_price) - buy_price) / buy_price) - 0.2).toFixed(2)
+                }
+                else {
+                    state.pnl = ((100 * (sell_price - Number(last_price)) / Number(last_price)) - 0.2 ).toFixed(2)                   
+                }
+              }
+            }
+
+
             endStats(Date.now())
           })
           .catch((err) => {
