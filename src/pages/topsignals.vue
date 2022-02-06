@@ -61,16 +61,8 @@
                                                 <router-link :to="/signal/+row.id">{{ Number(row.pnl).toFixed(2) }}%</router-link>
                                             </td>
                                             <td v-else class="italic px-6 py-4 text-gray-400 whitespace-no-wrap text-sm leading-5">
-                                                <router-link :to="/signal/+row.id">{{ prices && getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%</router-link>
+                                                <router-link :to="/signal/+row.id">{{ prices && getCurrentPnL(row) }}%</router-link>
                                             </td>
-                                            <!--
-                                            <td v-if="Number(row.pnl)>0" :class="{ 'font-bold': row.pnl }" class="text-green-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                                {{ row.pnl ? Number(row.pnl).toFixed(2) : getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
-                                            </td>
-                                            <td v-else :class="{ 'font-bold': row.pnl }" class="text-red-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                                {{ row.pnl ? Number(row.pnl).toFixed(2) : getCurrentPnL(row.pair, Number(row.sell_price), Number(row.buy_price)) }}%
-                                            </td>
-                                            -->
                                             <td v-if="row.type==='SHORT'" class="text-orange-500 px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                 <router-link :to="/signal/+row.id">{{ row.type }}</router-link>
                                             </td>
@@ -105,6 +97,7 @@ import { useRequest } from 'vue-request'
 import { usePriceStore } from '../stores/prices'
 import { startStats, endStats } from '~/modules/stats'
 import { useHead } from '@vueuse/head'
+import BigNumber from 'bignumber.js'
 
 export default defineComponent({
   name: "topsignals",
@@ -151,16 +144,158 @@ export default defineComponent({
         ///////// ///////// ///////// /////////
     })
 
-    const getCurrentPnL = (symbol, sell_price, buy_price) => {
+const getCurrentPnL = (row) => {
+        //console.log("getCurrentPnL...", JSON.stringify(row))
+        const type = row.type
+        const symbol = row.pair
         let pnl = 0
         if (prices.items.length) {
             const currentPrice = prices.items.find( (r) => { return r.symbol === symbol }).price
+            const last_price = new BigNumber(currentPrice)
             if (currentPrice) {
-                if (sell_price > 0) {
-                    pnl = 100 * (sell_price - currentPrice) / currentPrice
+
+                if (Number(row.buy_trade_size)>0 || Number(row.sell_trade_size)>0) {
+                    // DCA
+                    const sum_buy_trade_size = Number(row?.buy_trade_size) 
+                        + Number(row?.buy_trade_size_2) 
+                        + Number(row?.buy_trade_size_3) 
+                        + Number(row?.buy_trade_size_4) 
+                        + Number(row?.buy_trade_size_5)
+
+                    const sum_sell_trade_size = Number(row?.sell_trade_size) 
+                        + Number(row?.sell_trade_size_2) 
+                        + Number(row?.sell_trade_size_3) 
+                        + Number(row?.sell_trade_size_4) 
+                        + Number(row?.sell_trade_size_5)
+
+                    if (type === 'LONG') {
+
+                        const buy_price_5 = new BigNumber(row?.buy_price_5||0)
+                        const dca_buy_price_5 = buy_price_5.times(row?.buy_trade_size_5||0).div(sum_buy_trade_size)
+                        const buy_price_4 = new BigNumber(row?.buy_price_4||0)
+                        const dca_buy_price_4 = buy_price_4.times(row?.buy_trade_size_4||0).div(sum_buy_trade_size)
+                        const buy_price_3 = new BigNumber(row?.buy_price_3||0)
+                        const dca_buy_price_3 = buy_price_3.times(row?.buy_trade_size_3||0).div(sum_buy_trade_size)
+                        const buy_price_2 = new BigNumber(row?.buy_price_2||0)
+                        const dca_buy_price_2 = buy_price_2.times(row?.buy_trade_size_2||0).div(sum_buy_trade_size)
+                        const buy_price_1 = new BigNumber(row?.buy_price||0)
+                        const dca_buy_price_1 = buy_price_1.times(row?.buy_trade_size||0).div(sum_buy_trade_size)
+                        const dca_buy_price = dca_buy_price_1.plus(dca_buy_price_2).plus(dca_buy_price_3).plus(dca_buy_price_4).plus(dca_buy_price_5)
+
+                        console.log("dca_buy_price_1", dca_buy_price_1, row?.buy_price||0, buy_price_1, sum_buy_trade_size)
+
+                        if (sum_sell_trade_size) {
+                            if (row?.sell_trade_size_4) {
+                                const sell_price_4 = new BigNumber(row.sell_price_4)
+                                const sell_price_3 = new BigNumber(row.sell_price_3)
+                                const sell_price_2 = new BigNumber(row.sell_price_2)
+                                const sell_price_1 = new BigNumber(row.sell_price)
+                                const pnl_1 = sell_price_1.minus(dca_buy_price).times(row.sell_trade_size).dividedBy(dca_buy_price)
+                                const pnl_2 = sell_price_2.minus(dca_buy_price).times(row.sell_trade_size_2).dividedBy(dca_buy_price)
+                                const pnl_3 = sell_price_3.minus(dca_buy_price).times(row.sell_trade_size_3).dividedBy(dca_buy_price)
+                                const pnl_4 = sell_price_4.minus(dca_buy_price).times(row.sell_trade_size_4).dividedBy(dca_buy_price) 
+                                const pnl_5 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price)
+                                pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).plus(pnl_5).times(100).minus(0.2).toFixed(2))
+                                console.log("PNL", pnl)
+                            }
+                            else if (row?.sell_trade_size_3) {
+                                const sell_price_3 = new BigNumber(row.sell_price_3)
+                                const sell_price_2 = new BigNumber(row.sell_price_2)
+                                const sell_price_1 = new BigNumber(row.sell_price)
+                                const pnl_1 = sell_price_1.minus(dca_buy_price).times(row.sell_trade_size).dividedBy(dca_buy_price)
+                                const pnl_2 = sell_price_2.minus(dca_buy_price).times(row.sell_trade_size_2).dividedBy(dca_buy_price)
+                                const pnl_3 = sell_price_3.minus(dca_buy_price).times(row.sell_trade_size_3).dividedBy(dca_buy_price)
+                                const pnl_4 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price)
+                                pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).times(100).minus(0.2).toFixed(2))
+                                console.log("PNL", pnl)
+                            }
+                            else if (row?.sell_trade_size_2) {
+                                const sell_price_2 = new BigNumber(row.sell_price_2)
+                                const sell_price_1 = new BigNumber(row.sell_price)
+                                const pnl_1 = sell_price_1.minus(dca_buy_price).times(row.sell_trade_size).dividedBy(dca_buy_price)
+                                const pnl_2 = sell_price_2.minus(dca_buy_price).times(row.sell_trade_size_2).dividedBy(dca_buy_price)
+                                const pnl_3 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price)
+                                pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).times(100).minus(0.2).toFixed(2))
+                                console.log("PNL", pnl)
+                            }
+                            else if (row?.sell_trade_size) {
+                                const sell_price_1 = new BigNumber(row.sell_price)
+                                const pnl_1 = sell_price_1.minus(dca_buy_price).times(row.sell_trade_size).dividedBy(dca_buy_price)
+                                const pnl_2 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price)
+                                pnl = Number(pnl_1.plus(pnl_2).times(100).minus(0.2).toFixed(2))
+                            }
+                        }
+                        else {
+                            pnl = Number(last_price.minus(dca_buy_price).div(dca_buy_price).times(100).minus(0.2).toFixed(2))
+                        }
+                    }
+                    else {
+                        // SHORT //
+
+                        const sell_price_5 = new BigNumber(row?.sell_price_5||0)
+                        const dca_sell_price_5 = sell_price_5.times(row?.sell_trade_size_5||0).div(sum_sell_trade_size)
+                        const sell_price_4 = new BigNumber(row?.sell_price_4||0)
+                        const dca_sell_price_4 = sell_price_4.times(row?.sell_trade_size_4||0).div(sum_sell_trade_size)
+                        const sell_price_3 = new BigNumber(row?.sell_price_3||0)
+                        const dca_sell_price_3 = sell_price_3.times(row?.sell_trade_size_3||0).div(sum_sell_trade_size)
+                        const sell_price_2 = new BigNumber(row?.sell_price_2||0)
+                        const dca_sell_price_2 = sell_price_2.times(row?.sell_trade_size_2||0).div(sum_sell_trade_size)
+                        const sell_price_1 = new BigNumber(row?.sell_price||0)
+                        const dca_sell_price_1 = sell_price_1.times(row?.sell_trade_size||0).div(sum_sell_trade_size)
+                        const dca_sell_price = dca_sell_price_1.plus(dca_sell_price_2).plus(dca_sell_price_3).plus(dca_sell_price_4).plus(dca_sell_price_5)
+
+                        if (sum_buy_trade_size) {
+                            if (row?.buy_trade_size_4) {
+                                const buy_price_4 = new BigNumber(row.buy_price_4)
+                                const buy_price_3 = new BigNumber(row.buy_price_3)
+                                const buy_price_2 = new BigNumber(row.buy_price_2)
+                                const buy_price_1 = new BigNumber(row.buy_price)
+                                const pnl_1 = dca_sell_price.minus(buy_price_1).times(row.buy_trade_size).dividedBy(buy_price_1)
+                                const pnl_2 = dca_sell_price.minus(buy_price_2).times(row.buy_trade_size_2).dividedBy(buy_price_2)
+                                const pnl_3 = dca_sell_price.minus(buy_price_3).times(row.buy_trade_size_3).dividedBy(buy_price_3)
+                                const pnl_4 = dca_sell_price.minus(buy_price_4).times(row.buy_trade_size_4).dividedBy(buy_price_4) 
+                                const pnl_5 = dca_sell_price.minus(last_price).times(100 - sum_buy_trade_size).dividedBy(last_price)
+                                pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).plus(pnl_5).times(100).minus(0.2).toFixed(2))
+                            }
+                            else if (row?.buy_trade_size_3) {
+                                const buy_price_3 = new BigNumber(row.buy_price_3)
+                                const buy_price_2 = new BigNumber(row.buy_price_2)
+                                const buy_price_1 = new BigNumber(row.buy_price)
+                                const pnl_1 = dca_sell_price.minus(buy_price_1).times(row.buy_trade_size).dividedBy(buy_price_1)
+                                const pnl_2 = dca_sell_price.minus(buy_price_2).times(row.buy_trade_size_2).dividedBy(buy_price_2)
+                                const pnl_3 = dca_sell_price.minus(buy_price_3).times(row.buy_trade_size_3).dividedBy(buy_price_3)
+                                const pnl_4 = dca_sell_price.minus(last_price).times(100 - sum_buy_trade_size).dividedBy(last_price)
+                                pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).times(100).minus(0.2).toFixed(2))
+                            }
+                            else if (row?.buy_trade_size_2) {
+                                const buy_price_2 = new BigNumber(row.buy_price_2)
+                                const buy_price_1 = new BigNumber(row.buy_price)
+                                const pnl_1 = dca_sell_price.minus(buy_price_1).times(row.buy_trade_size).dividedBy(buy_price_1)
+                                const pnl_2 = dca_sell_price.minus(buy_price_2).times(row.buy_trade_size_2).dividedBy(buy_price_2)
+                                const pnl_3 = dca_sell_price.minus(last_price).times(100 - sum_buy_trade_size).dividedBy(last_price)
+                                pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).times(100).minus(0.2).toFixed(2))
+                            }
+                            else if (row?.buy_trade_size) {
+                                const buy_price_1 = new BigNumber(row.buy_price)
+                                const pnl_1 = dca_sell_price.minus(buy_price_1).times(row.buy_trade_size).dividedBy(buy_price_1)
+                                const pnl_2 = dca_sell_price.minus(last_price).times(100 - sum_buy_trade_size).dividedBy(last_price)
+                                pnl = Number(pnl_1.plus(pnl_2).times(100).minus(0.2).toFixed(2))
+                            }
+                        }
+                        else {
+                            pnl = Number(dca_sell_price.minus(last_price).div(last_price).times(100).minus(0.2).toFixed(2))
+                        }               
+                    }
                 }
-                else if (buy_price > 0) {
-                    pnl = 100 * (currentPrice - buy_price) / buy_price
+                else {
+                    const sell_price = Number(row.sell_price)
+                    const buy_price = Number(row.buy_price)
+                    if (type === 'LONG') {
+                        pnl = (100 * (currentPrice - buy_price) / buy_price) - 0.2
+                    }
+                    else {
+                        pnl = (100 * (sell_price - currentPrice) / currentPrice) - 0.2                    
+                    }
                 }
             }
         }
