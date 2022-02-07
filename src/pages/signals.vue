@@ -162,8 +162,7 @@ export default defineComponent({
                         const buy_price_1 = new BigNumber(row?.buy_price||0)
                         const dca_buy_price_1 = buy_price_1.times(row?.buy_trade_size||0).div(sum_buy_trade_size)
                         const dca_buy_price = dca_buy_price_1.plus(dca_buy_price_2).plus(dca_buy_price_3).plus(dca_buy_price_4).plus(dca_buy_price_5)
-
-                        console.log("dca_buy_price_1", dca_buy_price_1, row?.buy_price||0, buy_price_1, sum_buy_trade_size)
+                        //console.log("dca_buy_price_1", dca_buy_price_1, row?.buy_price||0, buy_price_1, sum_buy_trade_size)
 
                         if (sum_sell_trade_size) {
                             if (row?.sell_trade_size_4) {

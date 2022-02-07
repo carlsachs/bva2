@@ -399,8 +399,7 @@ export default defineComponent({
                         const buy_price_1 = new BigNumber(row?.buy_price||0)
                         const dca_buy_price_1 = buy_price_1.times(row?.buy_trade_size||0).div(sum_buy_trade_size)
                         const dca_buy_price = dca_buy_price_1.plus(dca_buy_price_2).plus(dca_buy_price_3).plus(dca_buy_price_4).plus(dca_buy_price_5)
-
-                        console.log("dca_buy_price_1", dca_buy_price_1, row?.buy_price||0, buy_price_1, sum_buy_trade_size)
+                        //console.log("dca_buy_price_1", dca_buy_price_1, row?.buy_price||0, buy_price_1, sum_buy_trade_size)
 
                         if (sum_sell_trade_size) {
                             if (row?.sell_trade_size_4) {
@@ -408,11 +407,11 @@ export default defineComponent({
                                 const sell_price_3 = new BigNumber(row.sell_price_3)
                                 const sell_price_2 = new BigNumber(row.sell_price_2)
                                 const sell_price_1 = new BigNumber(row.sell_price)
-                                const pnl_1 = sell_price_1.minus(dca_buy_price).times(row.sell_trade_size).dividedBy(dca_buy_price)
-                                const pnl_2 = sell_price_2.minus(dca_buy_price).times(row.sell_trade_size_2).dividedBy(dca_buy_price)
-                                const pnl_3 = sell_price_3.minus(dca_buy_price).times(row.sell_trade_size_3).dividedBy(dca_buy_price)
-                                const pnl_4 = sell_price_4.minus(dca_buy_price).times(row.sell_trade_size_4).dividedBy(dca_buy_price) 
-                                const pnl_5 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price)
+                                const pnl_1 = sell_price_1.minus(dca_buy_price).times(row.sell_trade_size).dividedBy(dca_buy_price).dividedBy(sum_buy_trade_size)
+                                const pnl_2 = sell_price_2.minus(dca_buy_price).times(row.sell_trade_size_2).dividedBy(dca_buy_price).dividedBy(sum_buy_trade_size)
+                                const pnl_3 = sell_price_3.minus(dca_buy_price).times(row.sell_trade_size_3).dividedBy(dca_buy_price).dividedBy(sum_buy_trade_size)
+                                const pnl_4 = sell_price_4.minus(dca_buy_price).times(row.sell_trade_size_4).dividedBy(dca_buy_price).dividedBy(sum_buy_trade_size)
+                                const pnl_5 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price).dividedBy(sum_buy_trade_size)
                                 pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).plus(pnl_5).times(100).minus(0.2).toFixed(2))
                                 console.log("PNL", pnl)
                             }
@@ -420,26 +419,26 @@ export default defineComponent({
                                 const sell_price_3 = new BigNumber(row.sell_price_3)
                                 const sell_price_2 = new BigNumber(row.sell_price_2)
                                 const sell_price_1 = new BigNumber(row.sell_price)
-                                const pnl_1 = sell_price_1.minus(dca_buy_price).times(row.sell_trade_size).dividedBy(dca_buy_price)
-                                const pnl_2 = sell_price_2.minus(dca_buy_price).times(row.sell_trade_size_2).dividedBy(dca_buy_price)
-                                const pnl_3 = sell_price_3.minus(dca_buy_price).times(row.sell_trade_size_3).dividedBy(dca_buy_price)
-                                const pnl_4 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price)
+                                const pnl_1 = sell_price_1.minus(dca_buy_price).times(row.sell_trade_size).dividedBy(dca_buy_price).dividedBy(sum_buy_trade_size)
+                                const pnl_2 = sell_price_2.minus(dca_buy_price).times(row.sell_trade_size_2).dividedBy(dca_buy_price).dividedBy(sum_buy_trade_size)
+                                const pnl_3 = sell_price_3.minus(dca_buy_price).times(row.sell_trade_size_3).dividedBy(dca_buy_price).dividedBy(sum_buy_trade_size)
+                                const pnl_4 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price).dividedBy(sum_buy_trade_size)
                                 pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).times(100).minus(0.2).toFixed(2))
                                 console.log("PNL", pnl)
                             }
                             else if (row?.sell_trade_size_2) {
                                 const sell_price_2 = new BigNumber(row.sell_price_2)
                                 const sell_price_1 = new BigNumber(row.sell_price)
-                                const pnl_1 = sell_price_1.minus(dca_buy_price).times(row.sell_trade_size).dividedBy(dca_buy_price)
-                                const pnl_2 = sell_price_2.minus(dca_buy_price).times(row.sell_trade_size_2).dividedBy(dca_buy_price)
-                                const pnl_3 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price)
+                                const pnl_1 = sell_price_1.minus(dca_buy_price).times(row.sell_trade_size).dividedBy(dca_buy_price).dividedBy(sum_buy_trade_size)
+                                const pnl_2 = sell_price_2.minus(dca_buy_price).times(row.sell_trade_size_2).dividedBy(dca_buy_price).dividedBy(sum_buy_trade_size)
+                                const pnl_3 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price).dividedBy(sum_buy_trade_size)
                                 pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).times(100).minus(0.2).toFixed(2))
                                 console.log("PNL", pnl)
                             }
                             else if (row?.sell_trade_size) {
                                 const sell_price_1 = new BigNumber(row.sell_price)
-                                const pnl_1 = sell_price_1.minus(dca_buy_price).times(row.sell_trade_size).dividedBy(dca_buy_price)
-                                const pnl_2 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price)
+                                const pnl_1 = sell_price_1.minus(dca_buy_price).times(row.sell_trade_size).dividedBy(dca_buy_price).dividedBy(sum_buy_trade_size)
+                                const pnl_2 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price).dividedBy(sum_buy_trade_size)
                                 pnl = Number(pnl_1.plus(pnl_2).times(100).minus(0.2).toFixed(2))
                             }
                         }
