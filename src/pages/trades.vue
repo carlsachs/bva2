@@ -218,7 +218,7 @@ export default {
       cacheKey: 'trades',
       manual: true,
       //cacheTime: 300000,
-      pollingInterval: 8000,
+      pollingInterval: 28000,
       formatResult: res => {
         return res.data
       },
