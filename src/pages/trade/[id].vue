@@ -24,176 +24,15 @@
             <div class="flex-auto text-justify text-blue-300 block">{{ pnl }}%</div>
         </div>
 
-        <div v-if="buy_price" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Buy Price</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ buy_price }}</div>
-        </div>
-
-        <div v-if="buy_trade_size" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Buy Size</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ buy_trade_size }}</div>
-        </div>
-
-        <div v-if="sell_price" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Sell Price</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ sell_price }}</div>
-        </div>
-
-        <div v-if="buy_time" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Buy Time</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(buy_time)).format('YYYY MMM DD HH:mm') }}</div>
-        </div>
-
-        <div v-if="sell_time" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Sell Time</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(sell_time)).format('YYYY MMM DD HH:mm') }}</div>
-        </div>
-
-        <div v-if="sell_trade_size" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-          <div class="flex-auto">Sell Size</div>
-          <div class="flex-auto text-justify text-blue-300 block">{{ sell_trade_size }}</div>
-        </div>
-
-        <div class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Quantity</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ qty }}</div>
-        </div>
-
-
-
-
-        <div v-if="buy_time_2" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Buy Time 2</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(buy_time_2)).format('YYYY MMM DD HH:mm') }}</div>
-        </div>
-
-        <div v-if="buy_price_2" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Buy Price 2</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ buy_price_2 }}</div>
-        </div>
-
-        <div v-if="buy_trade_size_2" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Buy Size 2</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ buy_trade_size_2 }}</div>
-        </div>
-
-        <div v-if="sell_time_2" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Sell Time 2</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(sell_time_2)).format('YYYY MMM DD HH:mm') }}</div>
-        </div>
-
-        <div v-if="sell_price_2" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Sell Price 2</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ sell_price_2 }}</div>
-        </div>
-
-        <div v-if="sell_trade_size_2" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Sell Size 2</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ sell_trade_size_2 }}</div>
-        </div>
-
-        <div v-if="buy_time_3" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Buy Time 3</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(buy_time_3)).format('YYYY MMM DD HH:mm') }}</div>
-        </div>
-
-        <div v-if="buy_price_3" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Buy Price 3</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ buy_price_3 }}</div>
-        </div>
-
-        <div v-if="buy_trade_size_3" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Buy Size 3</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ buy_trade_size_3 }}</div>
-        </div>
-
-        <div v-if="sell_time_3" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Sell Time 3</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(sell_time_3)).format('YYYY MMM DD HH:mm') }}</div>
-        </div>
-
-        <div v-if="sell_price_3" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Sell Price 3</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ sell_price_3 }}</div>
-        </div>
-
-        <div v-if="sell_trade_size_3" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Sell Size 3</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ sell_trade_size_3 }}</div>
-        </div>
-
-        <div v-if="buy_time_4" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Buy Time 4</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(buy_time_4)).format('YYYY MMM DD HH:mm') }}</div>
-        </div>
-
-        <div v-if="buy_price_4" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Buy Price 4</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ buy_price_4 }}</div>
-        </div>
-
-        <div v-if="buy_trade_size_4" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Buy Size 4</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ buy_trade_size_4 }}</div>
-        </div>
-
-        <div v-if="sell_time_4" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Sell Time 4</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(sell_time_4)).format('YYYY MMM DD HH:mm') }}</div>
-        </div>
-
-        <div v-if="sell_price_4" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Sell Price 4</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ sell_price_4 }}</div>
-        </div>
-
-        <div v-if="sell_trade_size_4" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Sell Size 4</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ sell_trade_size_4 }}</div>
-        </div>
-
-        <div v-if="buy_time_5" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Buy Time 5</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(buy_time_5)).format('YYYY MMM DD HH:mm') }}</div>
-        </div>
-
-        <div v-if="buy_price_5" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Buy Price 5</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ buy_price_5 }}</div>
-        </div>
-
-        <div v-if="buy_trade_size_5" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Buy Size 5</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{buy_trade_size_5 }}</div>
-        </div>
-
-        <div v-if="sell_time_5" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Sell Time 5</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ moment(Number(sell_time_5)).format('YYYY MMM DD HH:mm') }}</div>
-        </div>
-
-        <div v-if="sell_price_5" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Sell Price 5</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ sell_price_5 }}</div>
-        </div>
-
-        <div v-if="sell_trade_size_5" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
-            <div class="flex-auto">Sell Size 5</div>
-            <div class="flex-auto text-justify text-blue-300 block">{{ sell_trade_size_5 }}</div>
-        </div>
-
-
-
-
         <div v-if="status" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
             <div class="flex-auto">Status</div>
             <div class="flex-auto text-justify text-blue-300 block">{{ status }}</div>
         </div>
 
-        <div v-if="market_type" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
+        <!--div v-if="market_type" class="group flex items-center bg-opacity-40 shadow-xl gap-5 px-6 py-5  mt-5 transition">
             <div class="flex-auto">Type</div>
             <div class="flex-auto text-justify text-blue-300 block">{{ market_type }}</div>
-        </div>
+        </div-->
 
         <div v-if="auth0.state?.user?.data?.id===userid && !delTradeconfirm && status!=='DELETED' " @click="confirmDelTrade" class="group flex items-center bg-opacity-10 shadow-xl gap-5 px-6 py-5 rounded-lg ring-2 ring-offset-2 ring-offset-blue-800 ring-cyan-700 mt-5 cursor-pointer hover:bg-blue-900 hover:bg-opacity-100 transition">
             <div class="flex-auto font-bold">Delete</div>
@@ -338,6 +177,8 @@ export default defineComponent({
       sell_price_2: null,
       trade_size_2: null,
       buy_trade_size_2: null,
+      qty_buy_2: null,
+      qty_sell_2: null,
       sell_trade_size_2: null,
       buy_time_3: null,
       sell_time_3: null,
@@ -430,10 +271,11 @@ export default defineComponent({
           state.stratname = signal.data[0].stratname
           state.stratid = signal.data[0].stratid
           state.signal_type = signal.data[0].type
-          state.buy_price = signal.data[0].buy_price
-          state.sell_price = signal.data[0].sell_price
           state.buy_time = signal.data[0].buy_time
           state.sell_time = signal.data[0].sell_time
+          
+          state.buy_price = signal.data[0].buy_price
+          state.sell_price = signal.data[0].sell_price
           state.buy_trade_size = signal.data[0].buy_trade_size
           state.sell_trade_size = signal.data[0].sell_trade_size
           state.buy_time_2 = signal.data[0].buy_time_2
@@ -460,11 +302,11 @@ export default defineComponent({
           state.sell_price_5 = signal.data[0].sell_price_5
           state.buy_trade_size_5 = signal.data[0].buy_trade_size_5
           state.sell_trade_size_5 = signal.data[0].sell_trade_size_5
-          state.pnl = Number(signal.data[0].pnl).toFixed(2)
+
           state.qty = Number(signal.data[0].qty)
+          state.pnl = Number(signal.data[0].pnl).toFixed(2)
           state.market_type = signal.data[0].market_type
           state.status = signal.data[0].status
-
           const startTime = state.signal_type === 'LONG' ? Number(signal.data[0].buy_time) - 49000000 : Number(signal.data[0].sell_time) - 49000000
           let last_trade_time = 0
           if (state.signal_type === 'SHORT') {
