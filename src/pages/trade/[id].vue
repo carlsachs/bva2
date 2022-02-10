@@ -366,8 +366,8 @@ export default defineComponent({
                 x: moment(price[0]).format('MMM DD HH:mm'),
                 y: [ Number(price[1]), Number(price[2]), Number(price[3]), Number(price[4]) ]
               })
-
-              console.log(price[0] < Number(signal.data[0].buy_time_2), Number(signal.data[0].buy_time_2) < (price[0]+86400000))
+            
+              console.log(price[0], Number(signal.data[0].buy_time_2), Number(signal.data[0].buy_time_2), (price[0]+86400000))
 
               if ( price[0] < Number(signal.data[0].sell_time) && Number(signal.data[0].sell_time) < (price[0]+86400000) ) {
                 state.chartOptions.annotations.points[0].x = moment(price[0]).format('MMM DD HH:mm')
@@ -386,7 +386,7 @@ export default defineComponent({
                 state.chartOptions.annotations.points[2].label.text = 'SELL2'
               }
               if ( price[0] < Number(signal.data[0].buy_time_2) && Number(signal.data[0].buy_time_2) < (price[0]+86400000) ) {
-                //console.log("==========>BUY2", moment(price[0]).format('MMM DD HH:mm'), Number(signal.data[0].buy_price_2))
+                console.log("==========>BUY2", moment(price[0]).format('MMM DD HH:mm'), Number(signal.data[0].buy_price_2))
                 state.chartOptions.annotations.points[3].x = moment(price[0]).format('MMM DD HH:mm')
                 state.chartOptions.annotations.points[3].y = Number(signal.data[0].buy_price_2)
                 state.chartOptions.annotations.points[3].label.text = 'BUY2'
