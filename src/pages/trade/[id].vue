@@ -212,6 +212,14 @@ export default defineComponent({
           points: [
             { marker: { size: 8, fillColor: "red" }, label: { text: '' } },
             { marker: { size: 8, fillColor: "green" }, label: { text: '' } },
+            { marker: { size: 8, fillColor: "red" }, label: { text: '' } },
+            { marker: { size: 8, fillColor: "green" }, label: { text: '' } },
+            { marker: { size: 8, fillColor: "red" }, label: { text: '' } },
+            { marker: { size: 8, fillColor: "green" }, label: { text: '' } },
+            { marker: { size: 8, fillColor: "red" }, label: { text: '' } },
+            { marker: { size: 8, fillColor: "green" }, label: { text: '' } },
+            { marker: { size: 8, fillColor: "red" }, label: { text: '' } },
+            { marker: { size: 8, fillColor: "green" }, label: { text: '' } },
           ]
         },
         xaxis: { type: 'category', floating: true },
@@ -357,13 +365,11 @@ export default defineComponent({
                 y: [ Number(price[1]), Number(price[2]), Number(price[3]), Number(price[4]) ]
               })
               if ( price[0] < Number(signal.data[0].sell_time) && Number(signal.data[0].sell_time) < (price[0]+86400000) ) {
-                //console.log( "=======>", price[0] , price[1] )
                 state.chartOptions.annotations.points[0].x = moment(price[0]).format('MMM DD HH:mm')
                 state.chartOptions.annotations.points[0].y = Number(signal.data[0].sell_price)
                 state.chartOptions.annotations.points[0].label.text = 'SELL'
               }
               if ( price[0] < Number(signal.data[0].buy_time) && Number(signal.data[0].buy_time) < (price[0]+86400000) ) {
-                //console.log( "=======>", price[0] , price[1] )
                 state.chartOptions.annotations.points[1].x = moment(price[0]).format('MMM DD HH:mm')
                 state.chartOptions.annotations.points[1].y = Number(signal.data[0].buy_price)
                 state.chartOptions.annotations.points[1].label.text = 'BUY'
