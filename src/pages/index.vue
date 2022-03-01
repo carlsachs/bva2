@@ -37,7 +37,7 @@
 
 
         <h1 class="text-2xl text-white text-uppercase font-semibold mt-12">
-            Top Strategies for the Past 
+            Top Strats 
             <button @click="setDays" :class="{ 'bg-indigo-900 bg-opacity-100':this.$route.query.d==7, 'bg-indigo-900 bg-opacity-10': this.$route.query.d!=7 }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
                 <router-link class="text-green-500 text-xl font-semibold" to="?d=7">One Week</router-link>
             </button>
