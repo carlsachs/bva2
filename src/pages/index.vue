@@ -27,15 +27,16 @@
             </div>
         </div>
 
-        <img class="mx-auto my-20" width=60 alt="Binance" src="/binance.svg" />
 
-        <h1 class="text-2xl text-white text-uppercase font-semibold mt-6">
-            <button v-if="subOnly" @click="setBaseBTC" :class="{ 'bg-indigo-900 bg-opacity-100':baseAsset=='BTC'||!baseAsset, 'bg-indigo-900 bg-opacity-10':baseAsset!='BTC'&&baseAsset}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                <div class="text-green-500 text-xl font-semibold">BTC</div>
-            </button>
-            <button v-if="subOnly" @click="setBaseUSDT" :class="{ 'bg-indigo-900 bg-opacity-100':baseAsset=='USDT'||!baseAsset, 'bg-indigo-900 bg-opacity-10':baseAsset!='USDT'&&baseAsset}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
-                <div class="text-green-500 text-xl font-semibold">USDT</div>
-            </button>
+
+        <div ref="myEl" class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
+            <h1 class="text-2xl mb-7 text-uppercase font-semibold">Strat Of The Month: <router-link to="/strat/2605" class="text-green-500">{{ stratname }}</router-link></h1>
+            <apexchart ref="stratchart" type="area" height="400" :options="chartOptions" :series="series"></apexchart>
+        </div>
+
+
+
+        <h1 class="text-2xl text-white text-uppercase font-semibold mt-12">
             Top Strategies for the Past 
             <button @click="setDays" :class="{ 'bg-indigo-900 bg-opacity-100':this.$route.query.d==7, 'bg-indigo-900 bg-opacity-10': this.$route.query.d!=7 }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
                 <router-link class="text-green-500 text-xl font-semibold" to="?d=7">One Week</router-link>
@@ -51,6 +52,12 @@
             </button>
             <button @click="setSubOnly" :class="{ 'bg-indigo-900 bg-opacity-100':subOnly, 'bg-indigo-900 bg-opacity-10':!subOnly}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
                 <div class="text-green-500 text-xl font-semibold">Sub Only</div>
+            </button>
+            <button v-if="subOnly" @click="setBaseBTC" :class="{ 'bg-indigo-900 bg-opacity-100':baseAsset=='BTC'||!baseAsset, 'bg-indigo-900 bg-opacity-10':baseAsset!='BTC'&&baseAsset}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                <div class="text-green-500 text-xl font-semibold">BTC</div>
+            </button>
+            <button v-if="subOnly" @click="setBaseUSDT" :class="{ 'bg-indigo-900 bg-opacity-100':baseAsset=='USDT'||!baseAsset, 'bg-indigo-900 bg-opacity-10':baseAsset!='USDT'&&baseAsset}" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+                <div class="text-green-500 text-xl font-semibold">USDT</div>
             </button>
         </h1>
         <div v-if="!strats" class="my-4 text-gray-300">Loading... <img class="mx-auto mb-5" src="/spinner.svg" /></div>
@@ -200,17 +207,18 @@
 
 <script lang="ts">
 
-import { reactive, computed, toRefs, onMounted, defineComponent, watch, inject } from "vue"
+import { onMounted, reactive, ref, computed, toRefs, defineComponent, watch, inject } from "vue"
 import axios from "~/utils/axios"
 import _ from "lodash"
 import moment from "moment"
 import { useRouter } from "vue-router"
 import { useRequest } from 'vue-request'
 import { usePriceStore } from '../stores/prices'
+import { useProductStore } from '../stores/products'
 import { startStats, endStats } from '~/modules/stats'
 import { useHead } from '@vueuse/head'
 import { useProductStore } from '~/stores/products'
-
+import BigNumber from 'bignumber.js'
 
 export default defineComponent({
   name: "strats",
@@ -226,6 +234,16 @@ export default defineComponent({
             },
         ],
     })
+
+    /////////// /////////// ///////////
+
+    const stratchart = ref(null)
+
+    const openSignal = (row) => {
+        router.push("/signal/"+ row.id)
+    }
+
+    /////////// /////////// ///////////
     
     const prices = usePriceStore()
 
@@ -244,9 +262,96 @@ export default defineComponent({
         products: [],
         baseAsset: null,
         subOnly: true,
+        ///////// ///////// ///////// /////////
+        stratname: '',
+        total_pnl: 0,
+        ///////// ///////// ///////// /////////
+        series: [
+            { name: "Bitcoin", data: [] },
+            { name: "", data: [] }
+        ],
+        chartOptions: {
+            chart: { width: "100%", type: 'area', stacked: true },
+            colors: ['#00E396','#0080FB'],
+            dataLabels: { enabled: false, enabledOnSeries: false },
+            legend: {
+                show: true,
+                offsetY: 20, itemMargin: { horizontal: 10, vertical: 20 },
+                labels: { colors: '#ffffff', },
+            },
+            fill: { type: 'gradient', gradient: { opacityFrom: 0.6, opacityTo: 0.8 } },
+            stroke: { curve: 'smooth', width: 2, },
+            tooltip: { enabled: true, theme: 'dark', },
+            xaxis: {
+                type: "datetime",
+                labels: { show: true, style: { colors: '#FFFFFF', fontSize: '12px' }, }
+            },
+            yaxis: { forceNiceScale: true, labels: { show: true, style: { colors: '#FFFFFF', fontSize: '10px' },
+                    formatter: (value) => { return value+'%' },
+                },
+            }
+        },
+        ///////// ///////// ///////// /////////
     })
 
     state.products = useProductStore()
+
+    ///////// ///////// ///////// /////////
+
+    const myEl = ref(null)
+
+     const getStratData = () => {
+        console.log("getStratData...")
+        return axios.get('/api/stratdata?id=2605')
+    }
+
+    const { data: signals } = useRequest( () =>  getStratData(), {
+        cacheKey: 'signals',
+        //cacheTime: 300000,
+        pollingInterval: 10000,
+        formatResult: res => {
+            return res.data
+        },
+        onSuccess: (res) => {
+            console.log("SIGNALS=>", res.length)
+        }
+    })
+    
+    watch(signals, (signals) => {
+        console.log("watch signals...", signals[signals.length-1].sell_time)
+    
+        let tpnl_btc = []
+        let tpnl_bva = []
+        let pnl_btc = 0
+        let pnl_bva = 0
+
+        state.stratname = signals[0].stratname
+        state.series[1].name = signals[0].stratname
+        const days = 10 + (signals[signals.length-1].sell_time ? parseInt((Date.now() - signals[signals.length-1].sell_time)/86400000) : 0)
+        
+        axios.get('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit='+days)
+        .then( btcs => {
+
+            for ( var btc of btcs.data ) {
+                pnl_btc = 100 * (Number(btc[4]) - Number(btc[1])) / Number(btc[1]) + pnl_btc
+                tpnl_btc.push([ btc[0], pnl_btc.toFixed(2) ])
+                const sum = signals.filter( bva => { 
+                    return Number(bva.updated_time) > btc[0] && Number(bva.updated_time) <= btc[6] 
+                })
+                pnl_bva = state.max_concurrent ? _.sumBy(sum, o => { return Number(o.pnl) }) / state.max_concurrent + pnl_bva : _.sumBy(sum, o => { return Number(o.pnl) }) + pnl_bva
+                tpnl_bva.push([ btc[0], pnl_bva.toFixed(2) ])
+            }
+
+            if (state.series[0].data.length===0) state.series[0].data = tpnl_btc
+            if (state.series[1].data.length===0) state.series[1].data = tpnl_bva
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+        endStats(Date.now())
+    })
+
+    ///////// ///////// ///////// /////////
 
     async function setDays() {
         console.log("setDays")
@@ -278,11 +383,18 @@ export default defineComponent({
     }
 
     onMounted( async () => {
+        axios.get('/api/strategy?id=2605')
+        .then( s => {
+            state.max_concurrent = s.data.max_concurrent
+        })
+        .catch((err) => {
+            console.log(err)
+        })
         await getStratCount()
         run()
     })
 
-    async function subscribe(row) {
+    async function gotostrat(row) {
         router.push("/strat/"+ row.id)
         /*
         console.log("subscribe", !auth0.state.isAuthenticated)
@@ -325,17 +437,20 @@ export default defineComponent({
     return {
       ...toRefs(state),
       moment,
-      subscribe,
+      gotostrat,
       strats,
       setDays,
       _,
       setBaseBTC,
       setBaseUSDT,
       setSubOnly,
+      myEl,
+      stratchart,
     }
   },
 })
 </script>
+
 
 <style lang="postcss" scoped>
 </style>
