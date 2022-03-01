@@ -37,10 +37,10 @@
                 <div class="text-green-500 text-xl font-semibold">USDT</div>
             </button>
             Top Strategies for the Past 
-            <button @click="setDays" :class="{ 'bg-indigo-900 bg-opacity-100':(this.$route.query.d==7||!this.$route.query.d), 'bg-indigo-900 bg-opacity-10': (this.$route.query.d!=7 && this.$route.query.d) }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+            <button @click="setDays" :class="{ 'bg-indigo-900 bg-opacity-100':this.$route.query.d==7, 'bg-indigo-900 bg-opacity-10': this.$route.query.d!=7 }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
                 <router-link class="text-green-500 text-xl font-semibold" to="?d=7">One Week</router-link>
             </button>
-            <button @click="setDays" :class="{ 'bg-indigo-900 bg-opacity-100':this.$route.query.d==31, 'bg-indigo-900 bg-opacity-10': this.$route.query.d!=31 }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
+            <button @click="setDays" :class="{ 'bg-indigo-900 bg-opacity-100':(this.$route.query.d==31||!this.$route.query.d), 'bg-indigo-900 bg-opacity-10': (this.$route.query.d!=31 && this.$route.query.d) }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
                 <router-link class="text-green-500 text-xl font-semibold" to="?d=31">One Month</router-link>
             </button>
             <button @click="setDays" :class="{ 'bg-indigo-900 bg-opacity-100':this.$route.query.d==180, 'bg-indigo-900 bg-opacity-10': this.$route.query.d!=180 }" class="mx-1 my-2 font-bold text-sm items-center shadow-xl px-2 py-2 rounded-lg cursor-pointer">
@@ -238,7 +238,7 @@ export default defineComponent({
     const auth0: any = inject("auth0")
 
     const state = reactive({
-        days: 7,
+        days: 31,
         stratcount: 0,
         auth0,
         products: [],
@@ -301,7 +301,7 @@ export default defineComponent({
 
     const getStrats = () => {
         console.log("getStrats...", router.currentRoute.value.query.d)
-        return axios.get('/api/topstrats?days='+(router.currentRoute.value.query.d?router.currentRoute.value.query.d:7)+'&base='+state.baseAsset+'&so='+state.subOnly)
+        return axios.get('/api/topstrats?days='+(router.currentRoute.value.query.d?router.currentRoute.value.query.d:31)+'&base='+state.baseAsset+'&so='+state.subOnly)
     } 
 
     const { data: strats, run } = useRequest( () =>  getStrats(), {
