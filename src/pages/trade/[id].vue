@@ -477,37 +477,40 @@ export default defineComponent({
                         const sell_price_3 = new BigNumber(signal.data[0].sell_price_3)
                         const sell_price_2 = new BigNumber(signal.data[0].sell_price_2)
                         const sell_price_1 = new BigNumber(signal.data[0].sell_price)
-                        const pnl_1 = sell_price_1.minus(dca_buy_price).times(signal.data[0].sell_trade_size).dividedBy(dca_buy_price)
-                        const pnl_2 = sell_price_2.minus(dca_buy_price).times(signal.data[0].sell_trade_size_2).dividedBy(dca_buy_price)
-                        const pnl_3 = sell_price_3.minus(dca_buy_price).times(signal.data[0].sell_trade_size_3).dividedBy(dca_buy_price)
-                        const pnl_4 = sell_price_4.minus(dca_buy_price).times(signal.data[0].sell_trade_size_4).dividedBy(dca_buy_price) 
-                        const pnl_5 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price)
+                        const pnl_1 = sell_price_1.minus(dca_buy_price).times(signal.data[0].sell_trade_size).dividedBy(dca_buy_price).dividedBy(100)
+                        const pnl_2 = sell_price_2.minus(dca_buy_price).times(signal.data[0].sell_trade_size_2).dividedBy(dca_buy_price).dividedBy(100)
+                        const pnl_3 = sell_price_3.minus(dca_buy_price).times(signal.data[0].sell_trade_size_3).dividedBy(dca_buy_price).dividedBy(100)
+                        const pnl_4 = sell_price_4.minus(dca_buy_price).times(signal.data[0].sell_trade_size_4).dividedBy(dca_buy_price).dividedBy(100)
+                        const pnl_5 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price).dividedBy(100)
                         state.pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).plus(pnl_5).times(100).minus(0.2).toFixed(2))
                     }
                     else if (signal.data[0]?.sell_trade_size_3) {
                         const sell_price_3 = new BigNumber(signal.data[0].sell_price_3)
                         const sell_price_2 = new BigNumber(signal.data[0].sell_price_2)
                         const sell_price_1 = new BigNumber(signal.data[0].sell_price)
-                        const pnl_1 = sell_price_1.minus(dca_buy_price).times(signal.data[0].sell_trade_size).dividedBy(dca_buy_price)
-                        const pnl_2 = sell_price_2.minus(dca_buy_price).times(signal.data[0].sell_trade_size_2).dividedBy(dca_buy_price)
-                        const pnl_3 = sell_price_3.minus(dca_buy_price).times(signal.data[0].sell_trade_size_3).dividedBy(dca_buy_price)
-                        const pnl_4 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price)
+                        const pnl_1 = sell_price_1.minus(dca_buy_price).times(signal.data[0].sell_trade_size).dividedBy(dca_buy_price).dividedBy(100)
+                        const pnl_2 = sell_price_2.minus(dca_buy_price).times(signal.data[0].sell_trade_size_2).dividedBy(dca_buy_price).dividedBy(100)
+                        const pnl_3 = sell_price_3.minus(dca_buy_price).times(signal.data[0].sell_trade_size_3).dividedBy(dca_buy_price).dividedBy(100)
+                        const pnl_4 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price).dividedBy(100)
                         state.pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).times(100).minus(0.2).toFixed(2))
                     }
                     else if (signal.data[0]?.sell_trade_size_2) {
                         const sell_price_2 = new BigNumber(signal.data[0].sell_price_2)
                         const sell_price_1 = new BigNumber(signal.data[0].sell_price)
-                        const pnl_1 = sell_price_1.minus(dca_buy_price).times(signal.data[0].sell_trade_size).dividedBy(dca_buy_price)
-                        const pnl_2 = sell_price_2.minus(dca_buy_price).times(signal.data[0].sell_trade_size_2).dividedBy(dca_buy_price)
-                        const pnl_3 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price)
+                        const pnl_1 = sell_price_1.minus(dca_buy_price).times(signal.data[0].sell_trade_size).dividedBy(dca_buy_price).dividedBy(100)
+                        const pnl_2 = sell_price_2.minus(dca_buy_price).times(signal.data[0].sell_trade_size_2).dividedBy(dca_buy_price).dividedBy(100)
+                        const pnl_3 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price).dividedBy(100)
                         state.pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).times(100).minus(0.2).toFixed(2))
                     }
                     else if (signal.data[0]?.sell_trade_size) {
                         const sell_price_1 = new BigNumber(signal.data[0].sell_price)
-                        const pnl_1 = sell_price_1.minus(dca_buy_price).times(signal.data[0].sell_trade_size).dividedBy(dca_buy_price)
-                        const pnl_2 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price)
+                        const pnl_1 = sell_price_1.minus(dca_buy_price).times(signal.data[0].sell_trade_size).dividedBy(dca_buy_price).dividedBy(100)
+                        const pnl_2 = last_price.minus(dca_buy_price).times(100 - sum_sell_trade_size).dividedBy(dca_buy_price).dividedBy(100)
                         state.pnl = Number(pnl_1.plus(pnl_2).times(100).minus(0.2).toFixed(2))
                     }
+                  }
+                  else if (sum_buy_trade_size) {
+                      state.pnl = Number(last_price.minus(dca_buy_price).times(sum_buy_trade_size).div(dca_buy_price).minus(0.2).toFixed(2))
                   }
                   else {
                       state.pnl = Number(last_price.minus(dca_buy_price).div(dca_buy_price).times(100).minus(0.2).toFixed(2))
@@ -543,37 +546,40 @@ export default defineComponent({
                         const buy_price_3 = new BigNumber(signal.data[0].buy_price_3)
                         const buy_price_2 = new BigNumber(signal.data[0].buy_price_2)
                         const buy_price_1 = new BigNumber(signal.data[0].buy_price)
-                        const pnl_1 = dca_sell_price.minus(buy_price_1).times(signal.data[0].buy_trade_size).dividedBy(buy_price_1)
-                        const pnl_2 = dca_sell_price.minus(buy_price_2).times(signal.data[0].buy_trade_size_2).dividedBy(buy_price_2)
-                        const pnl_3 = dca_sell_price.minus(buy_price_3).times(signal.data[0].buy_trade_size_3).dividedBy(buy_price_3)
-                        const pnl_4 = dca_sell_price.minus(buy_price_4).times(signal.data[0].buy_trade_size_4).dividedBy(buy_price_4) 
-                        const pnl_5 = dca_sell_price.minus(last_price).times(100 - sum_sell_trade_size).dividedBy(last_price)
+                        const pnl_1 = dca_sell_price.minus(buy_price_1).times(signal.data[0].buy_trade_size).dividedBy(buy_price_1).dividedBy(100)
+                        const pnl_2 = dca_sell_price.minus(buy_price_2).times(signal.data[0].buy_trade_size_2).dividedBy(buy_price_2).dividedBy(100)
+                        const pnl_3 = dca_sell_price.minus(buy_price_3).times(signal.data[0].buy_trade_size_3).dividedBy(buy_price_3).dividedBy(100)
+                        const pnl_4 = dca_sell_price.minus(buy_price_4).times(signal.data[0].buy_trade_size_4).dividedBy(buy_price_4).dividedBy(100)
+                        const pnl_5 = dca_sell_price.minus(last_price).times(100 - sum_sell_trade_size).dividedBy(last_price).dividedBy(100)
                         state.pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).plus(pnl_5).times(100).minus(0.2).toFixed(2))
                     }
                     else if (signal.data[0]?.buy_trade_size_3) {
                         const buy_price_3 = new BigNumber(signal.data[0].buy_price_3)
                         const buy_price_2 = new BigNumber(signal.data[0].buy_price_2)
                         const buy_price_1 = new BigNumber(signal.data[0].buy_price)
-                        const pnl_1 = dca_sell_price.minus(buy_price_1).times(signal.data[0].buy_trade_size).dividedBy(buy_price_1)
-                        const pnl_2 = dca_sell_price.minus(buy_price_2).times(signal.data[0].buy_trade_size_2).dividedBy(buy_price_2)
-                        const pnl_3 = dca_sell_price.minus(buy_price_3).times(signal.data[0].buy_trade_size_3).dividedBy(buy_price_3)
-                        const pnl_4 = dca_sell_price.minus(last_price).times(100 - sum_sell_trade_size).dividedBy(last_price)
+                        const pnl_1 = dca_sell_price.minus(buy_price_1).times(signal.data[0].buy_trade_size).dividedBy(buy_price_1).dividedBy(100)
+                        const pnl_2 = dca_sell_price.minus(buy_price_2).times(signal.data[0].buy_trade_size_2).dividedBy(buy_price_2).dividedBy(100)
+                        const pnl_3 = dca_sell_price.minus(buy_price_3).times(signal.data[0].buy_trade_size_3).dividedBy(buy_price_3).dividedBy(100)
+                        const pnl_4 = dca_sell_price.minus(last_price).times(100 - sum_sell_trade_size).dividedBy(last_price).dividedBy(100)
                         state.pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).plus(pnl_4).times(100).minus(0.2).toFixed(2))
                     }
                     else if (signal.data[0]?.buy_trade_size_2) {
                         const buy_price_2 = new BigNumber(signal.data[0].buy_price_2)
                         const buy_price_1 = new BigNumber(signal.data[0].buy_price)
-                        const pnl_1 = dca_sell_price.minus(buy_price_1).times(signal.data[0].buy_trade_size).dividedBy(buy_price_1)
-                        const pnl_2 = dca_sell_price.minus(buy_price_2).times(signal.data[0].buy_trade_size_2).dividedBy(buy_price_2)
-                        const pnl_3 = dca_sell_price.minus(last_price).times(100 - sum_sell_trade_size).dividedBy(last_price)
+                        const pnl_1 = dca_sell_price.minus(buy_price_1).times(signal.data[0].buy_trade_size).dividedBy(buy_price_1).dividedBy(100)
+                        const pnl_2 = dca_sell_price.minus(buy_price_2).times(signal.data[0].buy_trade_size_2).dividedBy(buy_price_2).dividedBy(100)
+                        const pnl_3 = dca_sell_price.minus(last_price).times(100 - sum_sell_trade_size).dividedBy(last_price).dividedBy(100)
                         state.pnl = Number(pnl_1.plus(pnl_2).plus(pnl_3).times(100).minus(0.2).toFixed(2))
                     }
                     else if (signal.data[0]?.buy_trade_size) {
                         const buy_price_1 = new BigNumber(signal.data[0].buy_price)
-                        const pnl_1 = dca_sell_price.minus(buy_price_1).times(signal.data[0].buy_trade_size).dividedBy(buy_price_1)
-                        const pnl_2 = dca_sell_price.minus(last_price).times(100 - sum_sell_trade_size).dividedBy(last_price)
+                        const pnl_1 = dca_sell_price.minus(buy_price_1).times(signal.data[0].buy_trade_size).dividedBy(buy_price_1).dividedBy(100)
+                        const pnl_2 = dca_sell_price.minus(last_price).times(100 - sum_sell_trade_size).dividedBy(last_price).dividedBy(100)
                         state.pnl = Number(pnl_1.plus(pnl_2).times(100).minus(0.2).toFixed(2))
                     }
+                  }
+                  else if (sum_sell_trade_size) {
+                      state.pnl = Number(dca_sell_price.minus(last_price).div(last_price).times(sum_sell_trade_size).minus(0.2).toFixed(2))
                   }
                   else {
                       state.pnl = Number(dca_sell_price.minus(last_price).div(last_price).times(100).minus(0.2).toFixed(2))
