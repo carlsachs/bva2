@@ -271,7 +271,7 @@ export default defineComponent({
             { name: "", data: [] }
         ],
         chartOptions: {
-            chart: { width: "100%", type: 'area', stacked: true },
+            chart: { width: "100%", type: 'area', stacked: false },
             colors: ['#00E396','#0080FB'],
             dataLabels: { enabled: false, enabledOnSeries: false },
             legend: {
