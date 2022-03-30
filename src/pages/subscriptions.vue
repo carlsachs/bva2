@@ -79,6 +79,9 @@
                     <option value=5>5x</option>
                     <option value=6>6x</option>
                     <option value=7>7x</option>
+                    <option value=8>8x</option>
+                    <option value=9>9x</option>
+                    <option value=10>10x</option>
                   </select>
               </div>
               <span v-if="subscription.mode==='FUTURES' && (!subscription.external_client||subscription.external_client=='false')" :class="{'text-orange-500' : leverage_result[subscription.sid]!=='success', 'text-indigo-500':leverage_result[subscription.sid]==='success'}">{{ leverage_result[subscription.sid] }}</span>
