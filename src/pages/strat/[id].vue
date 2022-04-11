@@ -67,7 +67,7 @@
                     <div class="flex-auto text-justify text-green-500 block"><b><span class="text-blue-300">{{ _.find(products.items, {stratid:id})?.price }}</span> {{ _.find(products.items, {stratid:id})?.currency }} / month</b></div>
                 </div>
 
-                <div v-if="_.find(products.items, {stratid:id})?.forsale && !auth0.state.isAuthenticated" @click="login" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-80 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
+                <div v-if="Number(_.find(products.items, {stratid:id})?.count)>0 && _.find(products.items, {stratid:id})?.forsale && !auth0.state.isAuthenticated" @click="login" class="font-bold group flex text-xl items-center bg-indigo-900 bg-opacity-80 shadow-xl gap-5 px-6 py-5 rounded-lg mt-5 cursor-pointer hover:bg-opacity-100 transition">
                     <div class="flex-auto text-green-500 text-xl font-semibold">Subscribe</div>
                 </div>
                 <Stripe
