@@ -30,7 +30,7 @@
 
 
         <div ref="myEl" class="mx-2 my-4 py-4 border-2 border-blue-900 rounded-lg text-white relative">
-            <h1 class="text-2xl mb-7 text-uppercase font-semibold">Strat Of The Month: <router-link to="/strat/3026" class="text-green-500">{{ stratname }}</router-link></h1>
+            <h1 class="text-2xl mb-7 text-uppercase font-semibold">Strat Of The Month: <router-link to="/strat/2934" class="text-green-500">{{ stratname }}</router-link></h1>
             <apexchart ref="stratchart" type="area" height="400" :options="chartOptions" :series="series"></apexchart>
         </div>
 
@@ -302,7 +302,7 @@ export default defineComponent({
 
      const getStratData = () => {
         console.log("getStratData...")
-        return axios.get('/api/stratdata?id=3026')
+        return axios.get('/api/stratdata?id=2934')
     }
 
     const { data: signals } = useRequest( () =>  getStratData(), {
@@ -383,7 +383,7 @@ export default defineComponent({
     }
 
     onMounted( async () => {
-        axios.get('/api/strategy?id=3026')
+        axios.get('/api/strategy?id=2934')
         .then( s => {
             state.max_concurrent = s.data.max_concurrent
         })
