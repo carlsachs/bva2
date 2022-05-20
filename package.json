@@ -34,7 +34,6 @@
   "devDependencies": {
     "@iconify/json": "^1.1.393",
     "@types/nprogress": "0.2.0",
-    "@typescript-eslint/eslint-plugin": "4.29.3",
     "@vitejs/plugin-vue": "^1.6.0",
     "@vue/compiler-sfc": "^3.2.6",
     "markdown-it-prism": "^2.2.0",
