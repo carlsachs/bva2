@@ -298,7 +298,7 @@ export default defineComponent({
 
     ///////// ///////// ///////// /////////
 
-    const myEl = ref(null)
+    const myEl = ref(null);
 
      const getStratData = () => {
         console.log("getStratData...")
