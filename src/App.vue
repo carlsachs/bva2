@@ -186,7 +186,7 @@
     <a href="https://github.com/bitcoinvsalts/node-binance-trader" class="text-green-500 font-bold" target="_new"><img class="mx-auto" width=20 alt="GitHub" src="/github.png"/></a> &nbsp;
     <a href="https://t.me/joinchat/lmQ_xPE0WBo5NzYx" class="text-green-500 font-bold" target="_new"><img class="mx-auto" width=20 alt="GitHub" src="/tg.png"/></a> &nbsp;
     <a href="https://discordapp.com/invite/4EQrEgj" target="_new" class="text-purple-500 font-bold"><img class="mx-auto" width=20 alt="Discord" src="/discord.png"/></a> &nbsp;
-    <a href="email:support@bitcoinvsalts.com" class="text-green-500 font-bold" target="_new"><img class="mx-auto" width=20 alt="GitHub" src="/email.png"/></a> &nbsp;
+    <a href="email:bitcoinvsalts@gmail.com" class="text-green-500 font-bold" target="_new"><img class="mx-auto" width=20 alt="GitHub" src="/email.png"/></a> &nbsp;
     <a href="https://wallet.nimiq.com/nimiq:NQ38SDPGREC3USTALLCT87GQTCUYFH5L6PCQ" target="_new"><img class="mx-auto" width=20 alt="Nimiq" src="https://cryptologos.cc/logos/nimiq-nim-logo.svg?v=013"/></a>
     <router-link to="/addyourstrat" class="text-gray-300 font-bold">Add your strategy</router-link>
   </div>
