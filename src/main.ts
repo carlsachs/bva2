@@ -5,7 +5,6 @@ import { pinia } from './stores'
 import { router } from './routes'
 import App from './App.vue'
 import VueApexChart from 'vue3-apexcharts'
-import Particles from "particles.vue3"
 import { createHead } from '@vueuse/head'
 import VueFinalModal from 'vue-final-modal'
 
@@ -17,7 +16,6 @@ const head = createHead()
 app.use(head)
 app.use(router)
 app.use(pinia)
-app.use(Particles)
 app.use(VueApexChart)
 app.use(VueFinalModal())
 

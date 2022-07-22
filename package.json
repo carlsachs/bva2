@@ -18,7 +18,6 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "nprogress": "0.2.0",
-    "particles.vue3": "^1.18.1",
     "pinia": "^2.0.0-rc.6",
     "prism-theme-vars": "0.2.2",
     "stripe": "^8.170.0",
